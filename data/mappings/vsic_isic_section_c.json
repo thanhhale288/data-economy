@@ -1,0 +1,20 @@
+[
+  {"vsic_code": "C", "isic_code": "C", "level": 1, "name_vi": "Công nghiệp chế biến, chế tạo", "name_en": "Manufacturing", "parent_code": null},
+  {"vsic_code": "10", "isic_code": "10", "level": 2, "name_vi": "Sản xuất thực phẩm", "name_en": "Manufacture of food products", "parent_code": "C"},
+  {"vsic_code": "1050", "isic_code": "1050", "level": 4, "name_vi": "Sản xuất sữa và sản phẩm từ sữa", "name_en": "Manufacture of dairy products", "parent_code": "10"},
+  {"vsic_code": "1071", "isic_code": "1071", "level": 4, "name_vi": "Sản xuất bánh kẹo", "name_en": "Manufacture of bakery products", "parent_code": "10"},
+  {"vsic_code": "20", "isic_code": "20", "level": 2, "name_vi": "Sản xuất hóa chất và sản phẩm hóa chất", "name_en": "Manufacture of chemicals", "parent_code": "C"},
+  {"vsic_code": "2011", "isic_code": "2011", "level": 4, "name_vi": "Sản xuất hóa chất cơ bản", "name_en": "Manufacture of basic chemicals", "parent_code": "20"},
+  {"vsic_code": "22", "isic_code": "22", "level": 2, "name_vi": "Sản xuất sản phẩm từ cao su và plastic", "name_en": "Manufacture of rubber and plastic products", "parent_code": "C"},
+  {"vsic_code": "2211", "isic_code": "2211", "level": 4, "name_vi": "Sản xuất lốp xe và ruột xe", "name_en": "Manufacture of rubber tyres and tubes", "parent_code": "22"},
+  {"vsic_code": "2220", "isic_code": "2220", "level": 4, "name_vi": "Sản xuất sản phẩm plastic", "name_en": "Manufacture of plastics products", "parent_code": "22"},
+  {"vsic_code": "24", "isic_code": "24", "level": 2, "name_vi": "Sản xuất kim loại", "name_en": "Manufacture of basic metals", "parent_code": "C"},
+  {"vsic_code": "2410", "isic_code": "2410", "level": 4, "name_vi": "Sản xuất sắt, thép", "name_en": "Manufacture of basic iron and steel", "parent_code": "24"},
+  {"vsic_code": "26", "isic_code": "26", "level": 2, "name_vi": "Sản xuất thiết bị điện tử, máy vi tính", "name_en": "Manufacture of computer, electronic products", "parent_code": "C"},
+  {"vsic_code": "2620", "isic_code": "2620", "level": 4, "name_vi": "Sản xuất thiết bị điện tử dân dụng", "name_en": "Manufacture of computers and peripheral equipment", "parent_code": "26"},
+  {"vsic_code": "27", "isic_code": "27", "level": 2, "name_vi": "Sản xuất thiết bị điện", "name_en": "Manufacture of electrical equipment", "parent_code": "C"},
+  {"vsic_code": "2710", "isic_code": "2710", "level": 4, "name_vi": "Sản xuất động cơ, máy phát, biến thế điện", "name_en": "Manufacture of electric motors, generators", "parent_code": "27"},
+  {"vsic_code": "2740", "isic_code": "2740", "level": 4, "name_vi": "Sản xuất thiết bị chiếu sáng", "name_en": "Manufacture of electric lighting equipment", "parent_code": "27"},
+  {"vsic_code": "32", "isic_code": "32", "level": 2, "name_vi": "Sản xuất sản phẩm khác", "name_en": "Other manufacturing", "parent_code": "C"},
+  {"vsic_code": "3211", "isic_code": "3211", "level": 4, "name_vi": "Đúc đồng tiền", "name_en": "Striking of coins", "parent_code": "32"}
+]

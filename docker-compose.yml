@@ -1,0 +1,76 @@
+services:
+  db:
+    image: postgres:16-alpine
+    environment:
+      POSTGRES_USER: mfg_economy
+      POSTGRES_PASSWORD: mfg_economy_pass
+      POSTGRES_DB: mfg_economy
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U mfg_economy"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    environment:
+      DATABASE_URL: postgresql://mfg_economy:mfg_economy_pass@db:5432/mfg_economy
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./backend:/app/backend
+      - ./crawlers:/app/crawlers
+      - ./pipeline:/app/pipeline
+      - ./ml:/app/ml
+      - ./data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+    command: uvicorn backend.app.main:app --host 0.0.0.0 --port 8000 --reload
+
+  worker:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    environment:
+      DATABASE_URL: postgresql://mfg_economy:mfg_economy_pass@db:5432/mfg_economy
+      REDIS_URL: redis://redis:6379/0
+    volumes:
+      - ./backend:/app/backend
+      - ./crawlers:/app/crawlers
+      - ./pipeline:/app/pipeline
+      - ./ml:/app/ml
+      - ./data:/app/data
+    depends_on:
+      db:
+        condition: service_healthy
+    command: python -m pipeline.dags.scheduler
+
+  frontend:
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile
+    ports:
+      - "5173:5173"
+    volumes:
+      - ./frontend:/app
+      - /app/node_modules
+    environment:
+      VITE_API_URL: http://localhost:8000
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
