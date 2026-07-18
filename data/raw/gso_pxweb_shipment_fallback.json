@@ -1,0 +1,243 @@
+{
+  "_provenance": {
+    "source_url": "https://pxweb.nso.gov.vn/api/v1/en/Industry/E07.03.px",
+    "table_id": "E07.03.px",
+    "retrieved_at": "2026-07-18",
+    "selection": "Industrial activity=WHOLE MANUFACTURING (0)",
+    "notes": "Official NSO PX-Web annual series; not fabricated."
+  },
+  "meta": {
+    "variables": [
+      {
+        "code": "Industrial activity",
+        "text": "Industrial activity",
+        "values": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12",
+          "13",
+          "14",
+          "15",
+          "16",
+          "17",
+          "18",
+          "19",
+          "20",
+          "21",
+          "22",
+          "23"
+        ],
+        "valueTexts": [
+          "WHOLE MANUFACTURING",
+          "Manufacture of food products",
+          "Manufacture of beverages",
+          "Manufacture of tobacco products",
+          "Manufacture of textiles",
+          "Manufacture of wearing apparel",
+          "Manufacture of leather and related products",
+          "Manufacture of wood and of products of wood and cork, except furniture; manufacture of articles of straw and plaiting materials",
+          "Manufacture of paper and paper products",
+          "Printing and reproduction of recorded media",
+          "Manufacture of coke and refined petroleum products",
+          "Manufacture of chemicals and chemical products",
+          "Manufacture of pharmaceuticals, medicinal chemical and botanical products",
+          "Manufacture of rubber and plastics products",
+          "Manufacture of other non-metallic mineral products",
+          "Manufacture of basic metals",
+          "Manufacture of fabricated metal products, (except machinery and equipment)",
+          "Manufacture of computer, electronic and optical products",
+          "Manufacture of electrical equipment",
+          "Manufacture of machinery and equipment n.e.c",
+          "Manufacture of motor vehicles; trailers and semi-trailers",
+          "Manufacture of other transport equipment",
+          "Manufacture of furniture",
+          "Other manufacturing"
+        ]
+      },
+      {
+        "code": "Year",
+        "text": "Year",
+        "values": [
+          "0",
+          "1",
+          "2",
+          "3",
+          "4",
+          "5",
+          "6",
+          "7",
+          "8",
+          "9",
+          "10",
+          "11",
+          "12"
+        ],
+        "valueTexts": [
+          "2012",
+          "2013",
+          "2014",
+          "2015",
+          "2016",
+          "2017",
+          "2018",
+          "2019",
+          "2020",
+          "2021",
+          "2022",
+          "2023",
+          "Prel. 2024"
+        ]
+      }
+    ],
+    "title": "Index of industrial shipment of manufacturing by industrial activity (*)"
+  },
+  "data": {
+    "columns": [
+      {
+        "code": "Industrial activity",
+        "text": "Industrial activity",
+        "type": "d"
+      },
+      {
+        "code": "Year",
+        "text": "Year",
+        "type": "d"
+      },
+      {
+        "code": "Index of industrial shipment of manufacturing by industrial activity (*)",
+        "text": "Index of industrial shipment of manufacturing by industrial activity (*)",
+        "type": "c"
+      }
+    ],
+    "comments": [],
+    "data": [
+      {
+        "key": [
+          "0",
+          "0"
+        ],
+        "values": [
+          "103.70"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "1"
+        ],
+        "values": [
+          "110.10"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "2"
+        ],
+        "values": [
+          "111.00"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "3"
+        ],
+        "values": [
+          "112.40"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "4"
+        ],
+        "values": [
+          "108.50"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "5"
+        ],
+        "values": [
+          "110.20"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "6"
+        ],
+        "values": [
+          "112.38"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "7"
+        ],
+        "values": [
+          "109.52"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "8"
+        ],
+        "values": [
+          "103.28"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "9"
+        ],
+        "values": [
+          "104.80"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "10"
+        ],
+        "values": [
+          "106.82"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "11"
+        ],
+        "values": [
+          "101.46"
+        ]
+      },
+      {
+        "key": [
+          "0",
+          "12"
+        ],
+        "values": [
+          "111.38"
+        ]
+      }
+    ]
+  }
+}

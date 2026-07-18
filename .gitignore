@@ -8,7 +8,11 @@ dist/
 *.egg-info/
 .pytest_cache/
 .mypy_cache/
-data/raw/
+data/raw/*
+!data/raw/.gitkeep
+!data/raw/*fallback*
+!data/raw/*.PROVENANCE.md
+!data/raw/oecd_indigo_vnm.json
 data/models/*.pkl
 data/models/*.pt
 *.log

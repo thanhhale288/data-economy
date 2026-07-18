@@ -12,16 +12,21 @@ router = APIRouter()
 def _run_crawler(crawler: str, job_id: int):
     db = SessionLocal()
     job = db.query(PipelineJob).get(job_id)
+    notes: list[str] = []
     try:
         records = 0
         if crawler in ("gso", "all"):
-            from crawlers.gso.iip_crawler import run_gso_crawl
+            from crawlers.gso.iip_crawler import fetch_gso_macro, save_gso_records
 
-            records += run_gso_crawl(db)
+            result = fetch_gso_macro()
+            records += save_gso_records(db, result.records)
+            notes.append(f"gso:{result.status}:{result.detail[:400]}")
         if crawler in ("oecd", "all"):
-            from crawlers.oecd.sdmx_client import run_oecd_crawl
+            from crawlers.oecd.sdmx_client import fetch_oecd_indicators, save_oecd_records
 
-            records += run_oecd_crawl(db)
+            result = fetch_oecd_indicators(country="VNM", include_peers=True)
+            records += save_oecd_records(db, result.records)
+            notes.append(f"oecd:{result.detail_summary}")
         if crawler in ("companies", "all"):
             from crawlers.companies.listed_companies import run_company_crawl
 
@@ -43,7 +48,9 @@ def _run_crawler(crawler: str, job_id: int):
 
             records += train_all_models(db)
 
-        pipeline_service.finish_job(db, job, "success", records)
+        # Persist crawl notes on success (fallback / unavailable series visibility).
+        message = " | ".join(notes) if notes else None
+        pipeline_service.finish_job(db, job, "success", records, error=message)
     except Exception as e:
         pipeline_service.finish_job(db, job, "failed", error=str(e))
     finally:

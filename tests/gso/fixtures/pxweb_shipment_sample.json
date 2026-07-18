@@ -1,0 +1,28 @@
+{
+  "meta": {
+    "title": "Index of industrial shipment of manufacturing by industrial activity (*)",
+    "variables": [
+      {
+        "code": "Industrial activity",
+        "text": "Industrial activity",
+        "values": ["0", "1"],
+        "valueTexts": ["WHOLE MANUFACTURING", "Manufacture of food products"]
+      },
+      {
+        "code": "Year",
+        "text": "Year",
+        "values": ["10", "11", "12"],
+        "valueTexts": ["2022", "2023", "Prel. 2024"]
+      }
+    ]
+  },
+  "data": {
+    "columns": [],
+    "data": [
+      {"key": ["0", "10"], "values": ["106.82"]},
+      {"key": ["0", "11"], "values": ["101.46"]},
+      {"key": ["0", "12"], "values": ["111.38"]},
+      {"key": ["1", "10"], "values": ["99.00"]}
+    ]
+  }
+}

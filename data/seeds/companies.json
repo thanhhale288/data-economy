@@ -296,7 +296,7 @@
     "exchange": "HOSE",
     "website_url": "https://bmp.com.vn",
     "has_ecommerce_site": false,
-    "description": "Sản xuất ống nhựa",
+    "description": "Mẫu seed ngành nhựa (VSIC 2220) theo docs/plan.md — ticker cố định BWE trong AGENTS.md; profile/website tham chiếu DN nhựa Bình Minh dùng cho demo micro-level",
     "digital_channels": {"website": true, "shopee": false, "tiktok": false},
     "financial": {
       "period": "2024-12-31",

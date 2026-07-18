@@ -18,10 +18,12 @@ python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
 
-# 2. Khởi động PostgreSQL (Docker)
+# 2. Khởi động PostgreSQL (Docker) — hoặc dùng SQLite mặc định trong .env.example
 docker compose up -d db redis
+# export DATABASE_URL=postgresql://mfg_economy:mfg_economy_pass@localhost:5432/mfg_economy
 
-# 3. Seed dữ liệu mẫu
+# 3. Migrate schema (Alembic) rồi seed
+alembic upgrade head
 PYTHONPATH=. python -m backend.app.seed
 
 # 4. Chạy pipeline tính metrics + train models

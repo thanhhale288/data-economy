@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message:StructureSpecificData xmlns:ss="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/structurespecific" xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=IMF:ECOFIN_DSD(1.0):ObsLevelDim:TIME_PERIOD">
+  <message:Header>
+    <message:ID>TEST</message:ID>
+    <message:Test>true</message:Test>
+    <message:Prepared>2024-11-13T06:48:52Z</message:Prepared>
+    <message:Sender id="GSO"/>
+  </message:Header>
+  <message:DataSet>
+    <Series DATA_DOMAIN="IND" REF_AREA="VN" INDICATOR="AIP_ISIC4_IX" FREQ="M" BASE_PER="2015" UNIT_MULT="0">
+      <Obs TIME_PERIOD="2017-01" OBS_VALUE="96.8"/>
+      <Obs TIME_PERIOD="2017-02" OBS_VALUE="96.26"/>
+    </Series>
+    <Series DATA_DOMAIN="IND" REF_AREA="VN" INDICATOR="AIP_ISIC4_C_IX" FREQ="M" BASE_PER="2015" UNIT_MULT="0">
+      <Obs TIME_PERIOD="2017-01" OBS_VALUE="97.47"/>
+      <Obs TIME_PERIOD="2017-02" OBS_VALUE="96.88"/>
+      <Obs TIME_PERIOD="2017-03" OBS_VALUE=""/>
+      <Obs TIME_PERIOD="2017-04" OBS_VALUE="NA"/>
+      <Obs TIME_PERIOD="bad-period" OBS_VALUE="100"/>
+      <Obs TIME_PERIOD="2017-05" OBS_VALUE="116.5"/>
+    </Series>
+  </message:DataSet>
+</message:StructureSpecificData>
