@@ -1,0 +1,104 @@
+# provenance: Manufacturing IIP (AIP_ISIC4_C_IX) from GSO NSDP SDMX IIPVNM.xml
+# official_url: https://nsdp.gso.gov.vn/GSO-chung/SDMXFiles/GSO/IIPVNM.xml
+# archive_mirror: https://raw.githubusercontent.com/thanhqtran/gso-macro-monitor/main/2024q3/IIPVNM.xml
+# wayback_url: https://web.archive.org/web/20230325152851/https://nsdp.gso.gov.vn/GSO-chung/SDMXFiles/GSO/IIPVNM.xml
+# sdmx_header_prepared: 2024-11-13T06:48:52Z
+# retrieved: 2026-07-17
+# unit: index, base year 2015=100 (Series/@BASE_PER=2015)
+# scope: VSIC/ISIC Section C manufacturing only; shipment/inventory not present in this NSDP file
+# source_field: GSO_FALLBACK
+vsic_code,indicator_code,indicator_name,period,value,unit,source
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-01-01,97.47,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-02-01,96.88,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-03-01,116.5,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-04-01,122.18,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-05-01,120.08,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-06-01,114.03,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-07-01,116.56,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-08-01,128.49,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-09-01,133.99,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-10-01,135.62,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-11-01,137.47,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2017-12-01,140.23,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-01-01,131.86,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-02-01,104.11,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-03-01,132.37,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-04-01,129.33,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-05-01,132.48,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-06-01,131.12,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-07-01,134.5,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-08-01,144.23,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-09-01,142.71,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-10-01,147.7,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-11-01,152.68,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2018-12-01,154.54,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-01-01,141.35,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-02-01,111.26,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-03-01,139.97,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-04-01,139.54,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-05-01,143.95,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-06-01,138.61,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-07-01,149.37,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-08-01,160.6,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-09-01,161.28,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-10-01,164.66,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-11-01,157.17,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2019-12-01,157.68,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-01-01,129.3,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-02-01,134.35,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-03-01,143.56,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-04-01,117.95,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-05-01,134.03,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-06-01,145.65,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-07-01,153.73,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-08-01,163.63,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-09-01,170.19,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-10-01,174.86,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-11-01,170.98,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2020-12-01,171.23,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-01-01,165.89,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-02-01,124.95,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-03-01,152.7,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-04-01,150.23,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-05-01,153.98,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-06-01,151.35,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-07-01,151.69,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-08-01,145.24,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-09-01,157.41,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-10-01,166.27,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-11-01,176.12,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2021-12-01,179.62,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-01-01,175.6,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-02-01,155.8,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-03-01,180.93,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-04-01,185.8,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-05-01,193.6,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-06-01,190.63,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-07-01,192.67,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-08-01,195.6,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-09-01,193.7,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-10-01,198.09,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-11-01,190.64,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2022-12-01,183.84,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-01-01,139.86,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-02-01,142.4,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-03-01,155.61,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-04-01,151.78,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-05-01,153.14,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-06-01,155.08,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-07-01,160.19,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-08-01,167.95,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-09-01,165.41,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-10-01,175.91,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-11-01,176.36,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2023-12-01,176.13,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-01-01,168.1,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-02-01,136.63999999999999,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-03-01,164.67,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-04-01,167.55,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-05-01,175.58,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-06-01,181.02,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-07-01,183.19,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-08-01,184.73,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-09-01,182.22,index_2015=100,GSO_FALLBACK
+C,IIP_C,Chỉ số SXCN - Chế biến chế tạo,2024-10-01,188.73,index_2015=100,GSO_FALLBACK

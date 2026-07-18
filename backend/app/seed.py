@@ -1,48 +1,85 @@
-"""Seed VSIC mappings and sample companies into the database."""
+"""Seed VSIC mappings and sample companies into the database.
+
+Schema must come from Alembic (`alembic upgrade head`) — not create_all.
+"""
 
 import json
-from datetime import date, datetime
+from datetime import date, datetime, timezone
 from pathlib import Path
 
-from backend.app.database import Base, SessionLocal, engine
+from backend.app.database import SessionLocal, engine
 from backend.app.models import (
     Company,
-    DigitalMetric,
     DigitalPresence,
     FinancialReport,
-    GsoMacro,
     MarketplaceListing,
-    OecdIndicator,
     VsicCode,
 )
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
 
-def load_vsic_mappings(db) -> int:
+def _ensure_schema_ready() -> None:
+    """Fail fast if migrations have not been applied."""
+    from sqlalchemy import inspect
+
+    inspector = inspect(engine)
+    tables = set(inspector.get_table_names())
+    required = {"vsic_codes", "companies", "alembic_version"}
+    missing = required - tables
+    if missing:
+        raise SystemExit(
+            "Database schema incomplete (missing: "
+            + ", ".join(sorted(missing))
+            + "). Run: alembic upgrade head"
+        )
+
+
+def load_vsic_mappings(db) -> tuple[int, int]:
     path = DATA_DIR / "mappings" / "vsic_isic_section_c.json"
     with open(path) as f:
         mappings = json.load(f)
 
-    count = 0
+    inserted = 0
+    updated = 0
     for m in mappings:
         existing = db.query(VsicCode).filter(VsicCode.vsic_code == m["vsic_code"]).first()
         if not existing:
             db.add(VsicCode(**m))
-            count += 1
+            inserted += 1
+            continue
+        changed = False
+        for field in ("isic_code", "level", "name_vi", "name_en", "parent_code"):
+            if getattr(existing, field) != m.get(field):
+                setattr(existing, field, m.get(field))
+                changed = True
+        if changed:
+            updated += 1
     db.commit()
-    return count
+    return inserted, updated
 
 
-def load_companies(db) -> int:
+def load_companies(db) -> tuple[int, int]:
     path = DATA_DIR / "seeds" / "companies.json"
     with open(path) as f:
         companies = json.load(f)
 
-    count = 0
+    inserted = 0
+    updated = 0
     for c in companies:
         existing = db.query(Company).filter(Company.stock_code == c["stock_code"]).first()
         if existing:
+            for field in (
+                "name",
+                "vsic_code",
+                "exchange",
+                "website_url",
+                "has_ecommerce_site",
+                "digital_channels",
+                "description",
+            ):
+                setattr(existing, field, c.get(field) if field != "has_ecommerce_site" else c.get(field, False))
+            updated += 1
             continue
 
         company = Company(
@@ -89,7 +126,7 @@ def load_companies(db) -> int:
                     url=dp["url"],
                     has_checkout=dp.get("has_checkout", False),
                     match_confidence=dp.get("match_confidence"),
-                    crawled_at=datetime.utcnow(),
+                    crawled_at=datetime.now(timezone.utc),
                 )
             )
 
@@ -103,105 +140,48 @@ def load_companies(db) -> int:
                     units_sold_est=ml.get("units_sold_est"),
                     revenue_est=ml.get("revenue_est"),
                     rating=ml.get("rating"),
-                    crawled_at=datetime.utcnow(),
+                    crawled_at=datetime.now(timezone.utc),
                 )
             )
 
-        count += 1
+        inserted += 1
 
     db.commit()
-    return count
+    return inserted, updated
 
 
 def seed_gso_sample(db) -> int:
-    """Seed sample GSO IIP data for demo when live crawl unavailable."""
-    existing = db.query(GsoMacro).count()
-    if existing > 0:
+    """Load GSO macro via crawler (NSO SDMX IIP + PX-Web shipment/inventory)."""
+    from crawlers.gso.iip_crawler import fetch_gso_macro, save_gso_records
+
+    result = fetch_gso_macro()
+    print(f"GSO crawl status={result.status}: {result.detail[:240]}")
+    if not result.records:
         return 0
-
-    import random
-
-    base_date = date(2020, 1, 1)
-    indicators = [
-        ("C", "IIP_C", "Chỉ số SXCN - Chế biến chế tạo"),
-        ("C", "SHIPMENT_C", "Chỉ số xuất hàng công nghiệp"),
-        ("C", "INVENTORY_C", "Chỉ số tồn kho công nghiệp"),
-    ]
-    count = 0
-    value = 100.0
-    for month_offset in range(60):
-        y = 2020 + month_offset // 12
-        m = (month_offset % 12) + 1
-        period = date(y, m, 1)
-        value *= 1 + random.uniform(-0.02, 0.035)
-
-        for vsic, code, name in indicators:
-            noise = random.uniform(0.95, 1.05)
-            db.add(
-                GsoMacro(
-                    vsic_code=vsic,
-                    indicator_code=code,
-                    indicator_name=name,
-                    period=period,
-                    value=round(value * noise, 2),
-                    unit="index_2015=100",
-                )
-            )
-            count += 1
-
-    db.commit()
-    return count
+    return save_gso_records(db, result.records)
 
 
 def seed_oecd_sample(db) -> int:
-    existing = db.query(OecdIndicator).count()
-    if existing > 0:
+    """Load OECD indicators via SDMX client (VNM + peer EA20 MEI_IP). No random data."""
+    from crawlers.oecd.sdmx_client import fetch_oecd_indicators, save_oecd_records
+
+    result = fetch_oecd_indicators(country="VNM", include_peers=True)
+    print(f"OECD crawl: {result.detail_summary}")
+    if not result.records:
         return 0
-
-    import random
-
-    indicators = [
-        ("MEI_IP", "Industrial Production Index"),
-        ("MEI_BCI", "Business Confidence Index"),
-        ("INDIGO", "Digital Trade Openness Index"),
-    ]
-    count = 0
-    value = 100.0
-    for month_offset in range(60):
-        y = 2020 + month_offset // 12
-        m = (month_offset % 12) + 1
-        period = date(y, m, 1)
-        value *= 1 + random.uniform(-0.015, 0.025)
-
-        for code, name in indicators:
-            db.add(
-                OecdIndicator(
-                    indicator_code=code,
-                    indicator_name=name,
-                    country="VNM",
-                    isic_code="C",
-                    period=period,
-                    value=round(value * random.uniform(0.96, 1.04), 2),
-                    unit="index",
-                    frequency="monthly",
-                )
-            )
-            count += 1
-
-    db.commit()
-    return count
+    return save_oecd_records(db, result.records)
 
 
 def run_seed():
-    Base.metadata.create_all(bind=engine)
+    _ensure_schema_ready()
     db = SessionLocal()
     try:
-        vsic_count = load_vsic_mappings(db)
-        company_count = load_companies(db)
+        vsic_ins, vsic_upd = load_vsic_mappings(db)
+        company_ins, company_upd = load_companies(db)
         gso_count = seed_gso_sample(db)
         oecd_count = seed_oecd_sample(db)
         print(
-            f"Seeded: {vsic_count} VSIC codes, {company_count} companies, "
+            f"Seeded: VSIC +{vsic_ins}/~{vsic_upd}, companies +{company_ins}/~{company_upd}, "
             f"{gso_count} GSO records, {oecd_count} OECD records"
         )
     finally:

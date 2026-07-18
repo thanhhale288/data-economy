@@ -9,7 +9,7 @@ Hệ thống thu thập theo **3 luồng song song**:
 #### Luồng A — Macro ngành (GSO)
 | Dataset | Chỉ tiêu | Tần suất | Công cụ |
 |---------|----------|----------|---------|
-| IIP | Chỉ số SXCN Section C | Tháng | SDMX XML (`nsdp.gso.gov.vn`) |
+| IIP | Chỉ số SXCN Section C | Tháng | SDMX XML (`nsdp.nso.gov.vn`) |
 | Shipment | Chỉ số xuất hàng công nghiệp | Tháng | PX-Web / fallback |
 | Inventory | Chỉ số tồn kho công nghiệp | Tháng | PX-Web / fallback |
 

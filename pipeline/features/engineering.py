@@ -1,12 +1,18 @@
-"""Feature engineering for ML models."""
+"""Feature engineering for ML models.
+
+Vietnam-first: GSO IIP_C is the target. OECD joins:
+- INDIGO @ VNM (annual→monthly step-hold already applied at ingest)
+- MEI_IP @ EA20 peer (source=OECD_PEER) as mei_ip — never treat as Vietnam data
+- MEI_BCI omitted when unavailable for VNM (no fabrication)
+"""
 
 import pandas as pd
 from sqlalchemy.orm import Session
 
 from backend.app.models import GsoMacro, OecdIndicator
-from pipeline.cleaning.cleaner import clean_timeseries, resample_quarterly_to_monthly
+from pipeline.cleaning.cleaner import clean_timeseries
 
-FEATURES_PATH = __file__.replace("engineering.py", "../../data/processed/features.parquet")
+from crawlers.oecd.sdmx_client import PEER_MEI_IP_COUNTRY
 
 
 def load_macro_dataframe(db: Session) -> pd.DataFrame:
@@ -16,33 +22,48 @@ def load_macro_dataframe(db: Session) -> pd.DataFrame:
         .order_by(GsoMacro.period)
         .all()
     )
-    gso_df = pd.DataFrame(
-        [{"period": r.period, "iip": r.value} for r in gso]
-    )
+    gso_df = pd.DataFrame([{"period": r.period, "iip": r.value} for r in gso])
 
-    oecd_codes = ["MEI_IP", "MEI_BCI", "INDIGO"]
     oecd_dfs = []
-    for code in oecd_codes:
-        rows = (
-            db.query(OecdIndicator)
-            .filter(OecdIndicator.indicator_code == code)
-            .order_by(OecdIndicator.period)
-            .all()
+
+    indigo = (
+        db.query(OecdIndicator)
+        .filter(
+            OecdIndicator.indicator_code == "INDIGO",
+            OecdIndicator.country == "VNM",
         )
-        if rows:
-            oecd_dfs.append(
-                pd.DataFrame(
-                    [{"period": r.period, code.lower(): r.value} for r in rows]
-                )
+        .order_by(OecdIndicator.period)
+        .all()
+    )
+    if indigo:
+        oecd_dfs.append(
+            pd.DataFrame([{"period": r.period, "indigo": r.value} for r in indigo])
+        )
+
+    mei_peer = (
+        db.query(OecdIndicator)
+        .filter(
+            OecdIndicator.indicator_code == "MEI_IP",
+            OecdIndicator.country == PEER_MEI_IP_COUNTRY,
+        )
+        .order_by(OecdIndicator.period)
+        .all()
+    )
+    if mei_peer:
+        oecd_dfs.append(
+            pd.DataFrame(
+                [{"period": r.period, "mei_ip": r.value} for r in mei_peer]
             )
+        )
 
     df = gso_df
     for oecd_df in oecd_dfs:
         df = df.merge(oecd_df, on="period", how="outer")
 
     df = df.sort_values("period").reset_index(drop=True)
-    df = clean_timeseries(df.rename(columns={"iip": "value"}), "value")
-    df = df.rename(columns={"value": "iip"})
+    if not df.empty and "iip" in df.columns:
+        df = clean_timeseries(df.rename(columns={"iip": "value"}), "value")
+        df = df.rename(columns={"value": "iip"})
     return df
 
 
@@ -61,14 +82,15 @@ def add_rolling_features(df: pd.DataFrame, col: str, windows: list[int]) -> pd.D
 def build_features(db: Session) -> pd.DataFrame:
     df = load_macro_dataframe(db)
 
-    for col in ["mei_ip", "mei_bci", "indigo"]:
+    for col in ["mei_ip", "indigo"]:
         if col in df.columns:
             df = add_lag_features(df, col, [1, 2, 3])
             df = add_rolling_features(df, col, [3, 6])
 
-    df = add_lag_features(df, "iip", [1, 2, 3])
-    df = add_rolling_features(df, "iip", [3, 6])
-    df["iip_growth"] = df["iip"].pct_change()
+    if "iip" in df.columns:
+        df = add_lag_features(df, "iip", [1, 2, 3])
+        df = add_rolling_features(df, "iip", [3, 6])
+        df["iip_growth"] = df["iip"].pct_change()
     df = df.dropna()
     return df
 

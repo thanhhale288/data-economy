@@ -162,6 +162,8 @@ class OecdIndicator(Base):
     value: Mapped[float] = mapped_column(Float)
     unit: Mapped[str] = mapped_column(String(50), default="index")
     frequency: Mapped[str] = mapped_column(String(20), default="monthly")
+    # OECD | OECD_FALLBACK | OECD_PEER — never invent VNM values for missing series.
+    source: Mapped[str] = mapped_column(String(50), default="OECD")
 
 
 class ModelPrediction(Base):
