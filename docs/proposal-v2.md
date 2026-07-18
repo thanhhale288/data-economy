@@ -22,7 +22,7 @@ Hệ thống thu thập theo **3 luồng song song**:
 | Shop Shopee/TikTok | Marketplace scrape | ML shop-matcher (fuzzy + TF-IDF) |
 | Ước lượng doanh thu online | Product listings | Σ(price × units_sold) |
 
-**DN mẫu**: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE
+**DN mẫu**: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP
 
 #### Luồng C — Quốc tế (OECD)
 | Dataset | Vai trò | Mapping |

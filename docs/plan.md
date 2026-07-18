@@ -120,7 +120,7 @@ flowchart TB
 | MSN   | Masan                 | 1071 (thực phẩm)           | Đa kênh bán           |
 | PNJ   | PNJ                   | 3211 (trang sức)           | Bán lẻ + TMĐT         |
 | REE   | REE Electric          | 2710                       | Thiết bị điện         |
-| BWE   | Bình Minh Plastics    | 2220                       | Nhựa                  |
+| BMP   | Bình Minh Plastics    | 2220                       | Nhựa                  |
 
 
 **Dữ liệu crawl từng DN:**
@@ -319,17 +319,25 @@ erDiagram
 
 ## 6. Lộ trình triển khai (~18 tuần / 1 học kỳ)
 
-### Tiến độ thực tế (cập nhật 2026-07-18)
+### Tiến độ thực tế (cập nhật 2026-07-19)
 
 | Giai đoạn | Trạng thái | Ghi chú |
 | --------- | ---------- | ------- |
-| **1 — Nền tảng & Macro** | **Hoàn thành** | Branch `cursor/phase1-macro-crawlers`, commit `62a9054` (local; **chưa push**) |
-| 2 — Enterprise crawl & Digital | Chưa bắt đầu | Seed 10 DN có sẵn; crawler micro còn stub/scaffold |
+| **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
+| **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Branch `cursor/phase2-enterprise-digital`. Caveat bên dưới |
 | 3 — Clean, Features & ML | Một phần scaffold | Feature eng đã join GSO IIP + INDIGO + MEI_IP@EA20; ML chưa train thật |
 | 4 — Web hoàn thiện | Scaffold | React shell / API skeleton có; dashboard chưa hoàn thiện |
 | 5 — Benchmark & Báo cáo | Chưa | |
 
-**Git:** đã tạo branch + commit Phase 1 trên máy local. **Chưa** `git push` lên remote (không có upstream).
+**Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
+
+- 10 DN mẫu: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, **BMP** (Nhựa Bình Minh; thay slot BWE/Biwase).
+- Company enrich + website detector + shop-matcher (fuzzy ≥ 0.65) + digital metrics (Digital VA đúng CONTEXT).
+- **BCTC live:** CafeF HTML quý (`s.cafef.vn/{TICKER}/bao-cao-tai-chinh.chn`); HOSE/PDF năm → làm sau.
+- **Marketplace live (Shopee/TikTok):** tạm hoãn (anti-bot); pipeline + seed/fallback sẵn; discovery shop mới → sau.
+- Industry-ratio online khi không listing → sau (hiện để 0 + log, không bịa).
+
+**Git:** Phase 1 đã trên `origin/main`. Phase 2 trên branch `cursor/phase2-enterprise-digital`.
 
 ### Giai đoạn 1: Nền tảng & Macro data (Tuần 1–5) — DONE
 
@@ -337,7 +345,7 @@ Checklist nghiệm thu (đã kiểm chứng bằng code + live HTTP + pytest):
 
 - [x] Scaffold: Docker Compose (Postgres 16 + Redis), FastAPI, React/Vite shell
 - [x] VSIC/ISIC Section C: level-1 `C`, divisions **10–33**, class 4-digit cho 10 DN
-- [x] Seed 10 DN cố định: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE (idempotent; schema từ Alembic)
+- [x] Seed 10 DN cố định: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP (idempotent; schema từ Alembic)
 - [x] Alembic: `48406b8f82a5` initial schema + `b7c2e1a94d10` cột `oecd_indicators.source`
 - [x] GSO/NSO crawler:
   - IIP_C tháng từ SDMX `nsdp.nso.gov.vn`
@@ -347,14 +355,17 @@ Checklist nghiệm thu (đã kiểm chứng bằng code + live HTTP + pytest):
 - [x] Tests crawler: `tests/gso` + `tests/oecd` (33 passed tại thời điểm đóng Phase 1)
 - [x] Domain docs: `AGENTS.md`, `CONTEXT.md`, ADR-0001
 
-### Giai đoạn 2: Enterprise crawl & Digital detection (Tuần 6–10)
+### Giai đoạn 2: Enterprise crawl & Digital detection (Tuần 6–10) — DONE (demo)
 
-- Crawl danh sách 10 DN niêm yết + metadata
-- Website detector (có checkout/giỏ hàng?)
-- Shopee/TikTok shop finder + product scraper
-- BCTC PDF extractor (doanh thu, chi phí cấu trúc)
-- Shop-matcher ML model
-- Tính digital metrics per company
+Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
+
+- [x] Crawl/enrich 10 DN niêm yết + metadata + website `digital_presence`
+- [x] Website detector (checkout/giỏ hàng), fail HTTP không đoán
+- [x] Marketplace scaffold (Shopee/TikTok parse + rate-limit + fallback) — **live scrape tạm hoãn**
+- [x] BCTC có cấu trúc: **CafeF quý** (HTML adapter); PDF/HOSE năm → sau
+- [x] Shop-matcher fuzzy threshold 0.65 + QA; (TF-IDF/classifier đầy đủ → sau nếu cần)
+- [x] Digital metrics per company (Digital VA đúng CONTEXT; online từ listing hoặc 0)
+- [x] Ticker mẫu: … REE, **BMP**
 
 ### Giai đoạn 3: Clean, Features & ML (Tuần 11–14)
 

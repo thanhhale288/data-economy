@@ -5,7 +5,7 @@ Thực hiện theo thứ tự. Mỗi bước có lệnh kiểm chứng.
 ## Mục tiêu nghiệm thu
 
 - [ ] Mapping có Section C + đủ VSIC division **10–33** (level 2) + các class 4-digit của 10 DN
-- [ ] 10 DN seed khớp list: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE; metadata nhất quán
+- [ ] 10 DN seed khớp list: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP; metadata nhất quán
 - [ ] Có Alembic migration (không chỉ `create_all`)
 - [ ] `alembic upgrade head` rồi `PYTHONPATH=. python -m backend.app.seed` chạy được
 
@@ -60,15 +60,15 @@ print('OK mapping:', len(m), 'rows,', len(divs), 'divisions')
 
 ---
 
-## Bước 2 — Sửa seed 10 DN (nhất là BWE)
+## Bước 2 — Sửa seed 10 DN (nhất là BMP)
 
 **File:** `data/seeds/companies.json`
 
 **Việc làm:**
 
-1. Xác nhận đủ đúng 10 mã: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE.
+1. Xác nhận đủ đúng 10 mã: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
 2. Mỗi DN có: `stock_code`, `name`, `vsic_code` (có trong mapping), `exchange`, `website_url`, `financial`, `digital_presence`.
-3. **BWE**: theo plan = mẫu ngành nhựa VSIC `2220`. Ticker HOSE thật “BWE” là DN nước; trong seed dự án giữ mã **BWE** theo `AGENTS.md` / plan, gắn profile nhựa (website `bmp.com.vn`) và ghi rõ trong `description` đây là **sample seed theo plan**, không phải thay đổi danh sách ticker.
+3. **BMP**: theo plan = mẫu ngành nhựa VSIC `2220`. Ticker HOSE thật “BMP” là DN nước; trong seed dự án giữ mã **BMP** theo `AGENTS.md` / plan, gắn profile nhựa (website `bmp.com.vn`) và ghi rõ trong `description` đây là **sample seed theo plan**, không phải thay đổi danh sách ticker.
 4. Đảm bảo mọi `vsic_code` của DN tồn tại trong file mapping (level 4 hoặc level 2).
 
 **Kiểm chứng:**
@@ -78,7 +78,7 @@ python -c "
 import json
 from pathlib import Path
 codes = [c['stock_code'] for c in json.loads(Path('data/seeds/companies.json').read_text())]
-assert codes == ['RAL','HPG','VNM','FPT','GVR','DGC','MSN','PNJ','REE','BWE'], codes
+assert codes == ['RAL','HPG','VNM','FPT','GVR','DGC','MSN','PNJ','REE','BMP'], codes
 m = {x['vsic_code'] for x in json.loads(Path('data/mappings/vsic_isic_section_c.json').read_text())}
 for c in json.loads(Path('data/seeds/companies.json').read_text()):
     assert c['vsic_code'] in m, c['stock_code']
@@ -122,7 +122,7 @@ alembic history
 
 1. `run_seed()` **không** gọi `Base.metadata.create_all` làm bước chính — schema đến từ Alembic.
 2. `load_vsic_mappings`: insert mã mới; **update** `name_vi` / `name_en` / `parent_code` nếu đã có (để re-seed sau khi mở rộng mapping).
-3. `load_companies`: nếu company đã tồn tại, **update** metadata cơ bản (name, website, vsic, …) để sửa BWE khi re-seed.
+3. `load_companies`: nếu company đã tồn tại, **update** metadata cơ bản (name, website, vsic, …) để sửa BMP khi re-seed.
 4. Giữ seed GSO/OECD sample như cũ (demo fallback) — không đổi công thức Digital VA.
 
 **Chạy:**
@@ -141,8 +141,8 @@ from backend.app.models import VsicCode, Company
 db = SessionLocal()
 divs = db.query(VsicCode).filter(VsicCode.level==2).count()
 n = db.query(Company).count()
-bwe = db.query(Company).filter(Company.stock_code=='BWE').one()
-print(f'divisions={divs} companies={n} BWE={bwe.name} vsic={bwe.vsic_code}')
+bmp = db.query(Company).filter(Company.stock_code=='BMP').one()
+print(f'divisions={divs} companies={n} BMP={bmp.name} vsic={bmp.vsic_code}')
 assert divs >= 24
 assert n == 10
 db.close()

@@ -1,0 +1,22 @@
+{
+  "stock_code": "HPG",
+  "period": "2024-12-31",
+  "report_type": "annual",
+  "currency": "VND",
+  "fields": {
+    "revenue": 162000000000000,
+    "profit_before_tax": null,
+    "net_profit": 9800000000000,
+    "total_assets": 285000000000000,
+    "total_equity": 98000000000000,
+    "current_assets": null,
+    "current_liabilities": 58000000000000,
+    "operating_expenses": null,
+    "cost_of_goods": 125000000000000,
+    "rental_cost": null,
+    "remuneration": null,
+    "employees": 32000,
+    "gross_margin": 0.23
+  },
+  "source_url": "https://example.test/bctc/HPG/2024.json"
+}

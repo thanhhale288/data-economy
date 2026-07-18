@@ -1,10 +1,42 @@
-"""Digital economy metrics computation for manufacturing companies."""
+"""Digital economy metrics computation for manufacturing companies.
 
+Online revenue prefers Σ(price × units_sold) / revenue_est from marketplace
+listings (shopee / tiktok / lazada). Seed rows with platform=website are
+excluded from the sum (see MODULE NOTES). Digital VA formula matches CONTEXT.md
+and must not be changed without an ADR.
+"""
+
+from __future__ import annotations
+
+import logging
 from datetime import date
 
 from sqlalchemy.orm import Session, joinedload
 
-from backend.app.models import Company, DigitalMetric, DigitalPresence, MarketplaceListing
+from backend.app.models import Company, DigitalMetric, MarketplaceListing
+
+logger = logging.getLogger(__name__)
+
+# Marketplace platforms counted toward online_revenue_est.
+# platform=website seed rows (e.g. RAL downlight) are NOT included — website
+# sales are reflected via digital_presence / has_ecommerce_site adoption, not
+# as marketplace GMV. See wave2-task7-report §6 decision for Task 9.
+MARKETPLACE_PLATFORMS = frozenset({"shopee", "tiktok", "lazada"})
+
+# ---------------------------------------------------------------------------
+# Industry-ratio interpolation (CONTEXT: allowed when listings missing)
+# ---------------------------------------------------------------------------
+# REJECTED: prior silent fallback `revenue × adoption × 0.15` had no GSO /
+# VECOM / OECD source — that invents online revenue.
+# Until a sourced manufacturing e-commerce share is wired (proposed: GSO M3 /
+# VECOM industry ratio under data/mappings/), missing listings → 0.0 + log.
+# Callers may pass an explicit ratio via estimate_online_revenue(..., industry_ratio=).
+SOURCED_INDUSTRY_ECOMMERCE_RATIO: float | None = None
+
+# Digital VA component proxies (structure fixed; do not change without ADR)
+_DEFAULT_GROSS_MARGIN = 0.25
+_COST_SAVINGS_RATE = 0.05  # Cost_savings = Online_revenue × this rate
+_DIGITAL_INVESTMENT_RATE = 0.02  # Digital_investment = Online_revenue × this rate
 
 
 def _channel_weights() -> dict[str, float]:
@@ -12,8 +44,22 @@ def _channel_weights() -> dict[str, float]:
 
 
 def compute_adoption_score(company: Company) -> float:
+    """Weighted digital adoption from active, threshold-verified channels.
+
+    Marketplace channels count only when ``match_confidence`` is missing
+    (legacy) or ≥ 0.65 (CONTEXT shop-matcher threshold). Website uses
+    ``is_active`` only (corporate URL, not fuzzy shop match).
+    """
     weights = _channel_weights()
-    channels = {dp.channel_type for dp in company.digital_presence if dp.is_active}
+    channels: set[str] = set()
+    for dp in company.digital_presence:
+        if not dp.is_active:
+            continue
+        if dp.channel_type in MARKETPLACE_PLATFORMS:
+            conf = dp.match_confidence
+            if conf is not None and conf < 0.65:
+                continue
+        channels.add(dp.channel_type)
     score = sum(weights.get(ch, 0) for ch in channels)
     if company.has_ecommerce_site:
         score = min(1.0, score + 0.1)
@@ -21,24 +67,86 @@ def compute_adoption_score(company: Company) -> float:
 
 
 def compute_channel_diversity(company: Company) -> float:
-    active = [dp.channel_type for dp in company.digital_presence if dp.is_active]
-    return round(len(set(active)) / 4.0, 3)
+    """Share of the four tracked channels that are active and verified."""
+    active: set[str] = set()
+    for dp in company.digital_presence:
+        if not dp.is_active:
+            continue
+        if dp.channel_type in MARKETPLACE_PLATFORMS:
+            conf = dp.match_confidence
+            if conf is not None and conf < 0.65:
+                continue
+        active.add(dp.channel_type)
+    return round(len(active) / 4.0, 3)
 
 
-def estimate_online_revenue(company: Company) -> float:
-    marketplace_total = sum(
-        (ml.revenue_est or 0) for ml in company.marketplace_listings
-    )
-    if marketplace_total > 0:
-        return marketplace_total
+def listing_contribution(listing: MarketplaceListing) -> float | None:
+    """Revenue from one listing: price×units when both present, else revenue_est."""
+    if listing.price is not None and listing.units_sold_est is not None:
+        return float(listing.price) * int(listing.units_sold_est)
+    if listing.revenue_est is not None:
+        return float(listing.revenue_est)
+    return None
 
+
+def marketplace_listings_for_revenue(
+    company: Company,
+) -> list[MarketplaceListing]:
+    """Listings on shopee/tiktok/lazada only (excludes platform=website)."""
+    return [
+        ml
+        for ml in company.marketplace_listings
+        if (ml.platform or "").lower() in MARKETPLACE_PLATFORMS
+    ]
+
+
+def estimate_online_revenue(
+    company: Company,
+    *,
+    industry_ratio: float | None = None,
+) -> float:
+    """Estimate firm online revenue from marketplace listings.
+
+    Priority:
+    1. Σ listing contributions on marketplace platforms (price×units or revenue_est)
+    2. If no usable listings: industry_ratio × latest BCTC revenue when ratio is
+       explicitly provided (sourced), else SOURCED_INDUSTRY_ECOMMERCE_RATIO if set
+    3. Otherwise 0.0 with log — never invent a silent ratio
+    """
+    total = 0.0
+    usable = 0
+    for ml in marketplace_listings_for_revenue(company):
+        contrib = listing_contribution(ml)
+        if contrib is not None:
+            total += contrib
+            usable += 1
+
+    if usable > 0:
+        return total
+
+    ratio = industry_ratio if industry_ratio is not None else SOURCED_INDUSTRY_ECOMMERCE_RATIO
     fin = company.financial_reports
-    if not fin:
-        return 0.0
-    latest = max(fin, key=lambda r: r.period)
-    revenue = latest.revenue or 0
-    adoption = compute_adoption_score(company)
-    return revenue * adoption * 0.15
+    if ratio is not None and fin:
+        latest = max(fin, key=lambda r: r.period)
+        revenue = latest.revenue
+        if revenue is not None and revenue > 0:
+            interpolated = float(revenue) * float(ratio)
+            logger.info(
+                "online_revenue for %s: no marketplace listings; "
+                "industry-ratio interpolation ratio=%s → %.2f "
+                "(caller/module must document ratio source)",
+                getattr(company, "stock_code", company.id),
+                ratio,
+                interpolated,
+            )
+            return interpolated
+
+    logger.info(
+        "online_revenue for %s: no marketplace listing revenue and no sourced "
+        "industry_ratio — returning 0.0 (not inventing)",
+        getattr(company, "stock_code", company.id),
+    )
+    return 0.0
 
 
 def compute_digital_va(
@@ -46,10 +154,24 @@ def compute_digital_va(
     gross_margin: float | None,
     adoption_score: float,
 ) -> float:
-    margin = gross_margin or 0.25
-    cost_savings = online_revenue * 0.05 * adoption_score
-    digital_investment = online_revenue * 0.02
-    return online_revenue * margin + cost_savings - digital_investment
+    """Digital VA per CONTEXT.md — do not change structure/constants without ADR.
+
+    Digital_VA = (Online_revenue × Gross_margin)
+               + (Cost_savings × Adoption_score)
+               - Digital_investment
+
+    where Cost_savings = Online_revenue × 0.05,
+          Digital_investment = Online_revenue × 0.02,
+          Gross_margin defaults to 0.25 when BCTC margin is missing.
+    """
+    margin = gross_margin if gross_margin is not None else _DEFAULT_GROSS_MARGIN
+    cost_savings = online_revenue * _COST_SAVINGS_RATE
+    digital_investment = online_revenue * _DIGITAL_INVESTMENT_RATE
+    return (
+        online_revenue * margin
+        + cost_savings * adoption_score
+        - digital_investment
+    )
 
 
 def compute_industry_share(

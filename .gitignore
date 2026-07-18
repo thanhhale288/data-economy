@@ -12,10 +12,16 @@ data/raw/*
 !data/raw/.gitkeep
 !data/raw/*fallback*
 !data/raw/*.PROVENANCE.md
+!data/raw/companies/
+!data/raw/companies/**
 !data/raw/oecd_indigo_vnm.json
 data/models/*.pkl
 data/models/*.pt
 *.log
 *.db
+*.db.bak
 .DS_Store
 frontend/dist/
+
+# Nested clone — add as submodule later if needed
+diagram/drawio-ai-kit/
