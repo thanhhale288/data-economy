@@ -88,21 +88,22 @@ flowchart TB
 #### Luồng A — Macro ngành (GSO, tự động)
 
 
-| Dataset                           | Chỉ tiêu                           | Tần suất | Phương pháp                                      |
-| --------------------------------- | ---------------------------------- | -------- | ------------------------------------------------ |
-| IIP (Chỉ số sản xuất công nghiệp) | IIP Section C, theo Division 10–33 | Tháng    | SDMX XML từ `nsdp.nso.gov.vn` hoặc PX-Web scrape |
-| Chỉ số xuất hàng công nghiệp      | Shipment index manufacturing       | Tháng    | PX-Web                                           |
-| Chỉ số tồn kho công nghiệp        | Inventory index                    | Tháng    | PX-Web                                           |
-| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm  | PX-Web                                           |
-| Số DN, lao động, doanh thu ngành  | Thống kê doanh nghiệp công nghiệp  | Năm      | PX-Web / Niên giám                               |
+| Dataset                           | Chỉ tiêu                           | Tần suất (nguồn) | Phương pháp / trạng thái Phase 1 |
+| --------------------------------- | ---------------------------------- | ---------------- | -------------------------------- |
+| IIP (Chỉ số sản xuất công nghiệp) | IIP Section C (`AIP_ISIC4_C_IX`)   | Tháng            | **Đã làm** — SDMX `nsdp.nso.gov.vn/.../IIPVNM.xml` |
+| Chỉ số tiêu thụ CN CBCT           | Shipment / WHOLE MANUFACTURING     | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.03.px`; step-hold → tháng khi ingest |
+| Chỉ số tồn kho CN CBCT            | Inventory as of 31/12              | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.04.px`; step-hold → tháng khi ingest |
+| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm          | Chưa (Phase sau) |
+| Số DN, lao động, doanh thu ngành  | Thống kê doanh nghiệp công nghiệp  | Năm              | Chưa (Phase sau) |
 
 
-**GSO PX-Web tables cần khai thác** (xác nhận khi implement):
+**GSO/NSO PX-Web & SDMX đã xác nhận (2026-07-18):**
 
-- `IIP` — Index of Industrial Production by VSIC
-- `Tinh hinh san xuat cong nghiep` — Báo cáo SXCN hàng tháng
-- `Ket qua hoat dong kinh doanh` — KQKD doanh nghiệp theo ngành
-
+- SDMX IIP: `https://nsdp.nso.gov.vn/GSO-chung/SDMXFiles/GSO/IIPVNM.xml` (host cũ `nsdp.gso.gov.vn` chết)
+- PX-Web API: `https://pxweb.nso.gov.vn/api/v1/en/Industry/`
+  - `E07.03.px` — shipment / chỉ số tiêu thụ CBCT
+  - `E07.04.px` — inventory / chỉ số tồn kho 31/12
+- Host cũ `*.gso.gov.vn` (industry pages, px-web) → **404 / timeout**; dùng `*.nso.gov.vn`
 #### Luồng B — Micro doanh nghiệp niêm yết (~10 DN mẫu)
 
 **Danh sách DN mẫu đề xuất** (đại diện đa ngành con):
@@ -138,16 +139,15 @@ flowchart TB
 #### Luồng C — Quốc tế (OECD, tự động)
 
 
-| Dataset OECD                      | Vai trò                | Mapping        |
-| --------------------------------- | ---------------------- | -------------- |
-| MEI — Industrial Production Index | Leading indicator      | ISIC Section C |
-| INDIGO (Digital trade openness)   | Leading indicator      | Toàn ngành     |
-| ICT Investment by industry        | Digital adoption proxy | ISIC C         |
-| Business Confidence Index         | Leading indicator      | Manufacturing  |
+| Dataset OECD                      | Vai trò                | Mapping / trạng thái Phase 1 |
+| --------------------------------- | ---------------------- | ---------------------------- |
+| MEI — Industrial Production Index | Leading indicator      | **Không có cho VNM**; dùng peer **EA20** (`source=OECD_PEER`) cho forecast lags |
+| INDIGO (Digital trade openness)   | Leading indicator      | **Đã làm** — series năm VNM; step-hold → tháng |
+| ICT Investment by industry        | Digital adoption proxy | Unavailable cho VNM (không bịa) |
+| Business Confidence Index         | Leading indicator      | Unavailable cho VNM (không bịa) |
 
 
-**Đồng bộ tần suất**: OECD Quý → nội suy tháng (giữ từ proposal gốc).
-
+**Đồng bộ tần suất**: quý→tháng (linear); năm→tháng (**step-hold**, không nội suy tuyến tính). Chi tiết: `docs/adr/0001-oecd-vietnam-macro-policy.md`.
 ### 3.3. Bộ chỉ tiêu VDEI cho Manufacturing (tái cấu trúc từ CSV)
 
 Chuyển 10 pillar trong [File hướng dẫn crawl data - đề tài chỉ số kinh tế số - Trang tính1.csv](File hướng dẫn crawl data - đề tài chỉ số kinh tế số - Trang tính1.csv) sang ngữ cảnh chế biến chế tạo:
@@ -319,13 +319,33 @@ erDiagram
 
 ## 6. Lộ trình triển khai (~18 tuần / 1 học kỳ)
 
-### Giai đoạn 1: Nền tảng & Macro data (Tuần 1–5)
+### Tiến độ thực tế (cập nhật 2026-07-18)
 
-- Scaffold project: Docker Compose, PostgreSQL, FastAPI skeleton, React shell
-- Implement GSO crawler (IIP, shipment, inventory — Section C)
-- Implement OECD SDMX ingestion
-- VSIC/ISIC mapping table
-- DB migrations + seed data
+| Giai đoạn | Trạng thái | Ghi chú |
+| --------- | ---------- | ------- |
+| **1 — Nền tảng & Macro** | **Hoàn thành** | Branch `cursor/phase1-macro-crawlers`, commit `62a9054` (local; **chưa push**) |
+| 2 — Enterprise crawl & Digital | Chưa bắt đầu | Seed 10 DN có sẵn; crawler micro còn stub/scaffold |
+| 3 — Clean, Features & ML | Một phần scaffold | Feature eng đã join GSO IIP + INDIGO + MEI_IP@EA20; ML chưa train thật |
+| 4 — Web hoàn thiện | Scaffold | React shell / API skeleton có; dashboard chưa hoàn thiện |
+| 5 — Benchmark & Báo cáo | Chưa | |
+
+**Git:** đã tạo branch + commit Phase 1 trên máy local. **Chưa** `git push` lên remote (không có upstream).
+
+### Giai đoạn 1: Nền tảng & Macro data (Tuần 1–5) — DONE
+
+Checklist nghiệm thu (đã kiểm chứng bằng code + live HTTP + pytest):
+
+- [x] Scaffold: Docker Compose (Postgres 16 + Redis), FastAPI, React/Vite shell
+- [x] VSIC/ISIC Section C: level-1 `C`, divisions **10–33**, class 4-digit cho 10 DN
+- [x] Seed 10 DN cố định: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE (idempotent; schema từ Alembic)
+- [x] Alembic: `48406b8f82a5` initial schema + `b7c2e1a94d10` cột `oecd_indicators.source`
+- [x] GSO/NSO crawler:
+  - IIP_C tháng từ SDMX `nsdp.nso.gov.vn`
+  - SHIPMENT_C + INVENTORY_C từ PX-Web `E07.03` / `E07.04` (năm → step-hold tháng)
+  - Fallback sourced dưới `data/raw/` (không random)
+- [x] OECD SDMX (`sdmx.oecd.org`): INDIGO@VNM; MEI_IP@EA20 peer; MEI/BCI/ICT@VNM = unavailable rõ ràng
+- [x] Tests crawler: `tests/gso` + `tests/oecd` (33 passed tại thời điểm đóng Phase 1)
+- [x] Domain docs: `AGENTS.md`, `CONTEXT.md`, ADR-0001
 
 ### Giai đoạn 2: Enterprise crawl & Digital detection (Tuần 6–10)
 
@@ -402,7 +422,9 @@ ai-in-data-economy/
 
 | Rủi ro                                   | Giảm thiểu                                                |
 | ---------------------------------------- | --------------------------------------------------------- |
-| GSO PX-Web thay đổi UI                   | Dùng SDMX XML endpoint khi có; fallback Playwright        |
+| Host GSO đổi sang NSO / URL chết         | Ưu tiên `*.nso.gov.vn`; SDMX + PX-Web API; fallback sourced có provenance |
+| PX-Web shipment/inventory chỉ có **năm** | Step-hold năm→tháng khi ingest; ghi rõ trong ADR / CONTEXT |
+| OECD thiếu MEI/BCI/ICT cho VNM           | Không bịa; dùng INDIGO@VNM + MEI_IP@EA20 peer cho forecast |
 | Shopee/TikTok chặn scrape                | Rate limiting, rotate UA; dùng official search API nếu có |
 | Shop không match đúng DN                 | ML matcher + manual QA cho 10 DN mẫu                      |
 | BCTC PDF khó parse                       | Ưu tiên DN có BCTC HTML/XBRL; nội suy cho field thiếu     |
