@@ -1,0 +1,19 @@
+{
+  "seller": {"unique_id": "vinamilk", "nickname": "Vinamilk Official"},
+  "products": [
+    {
+      "product_id": "tk-9001",
+      "title": "Sữa tươi Vinamilk 1L (TikTok)",
+      "price": {"sale_price": "32000", "currency": "VND"},
+      "sold_count": 1200,
+      "rating": 4.9
+    },
+    {
+      "product_id": "tk-9002",
+      "title": "Sữa chua uống probiotic (TikTok)",
+      "price": {"sale_price": "28000", "currency": "VND"},
+      "sold_count": null,
+      "rating": 4.8
+    }
+  ]
+}

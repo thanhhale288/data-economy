@@ -1,0 +1,114 @@
+{
+  "description": "Sourced fallback marketplace listings for the fixed 10-ticker sample. Copied from data/seeds/companies.json — not live scrape. See marketplace_listings_fallback.PROVENANCE.md.",
+  "companies": [
+    {
+      "stock_code": "RAL",
+      "marketplace_listings": [
+        {
+          "platform": "shopee",
+          "product_name": "Bóng LED Rạng Đông 9W",
+          "price": 45000,
+          "units_sold_est": 12500,
+          "revenue_est": 562500000,
+          "rating": 4.8
+        },
+        {
+          "platform": "shopee",
+          "product_name": "Đèn LED Panel 600x600",
+          "price": 285000,
+          "units_sold_est": 3200,
+          "revenue_est": 912000000,
+          "rating": 4.7
+        },
+        {
+          "platform": "website",
+          "product_name": "Bộ đèn downlight âm trần",
+          "price": 195000,
+          "units_sold_est": 1800,
+          "revenue_est": 351000000,
+          "rating": 4.6
+        }
+      ]
+    },
+    {
+      "stock_code": "HPG",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "VNM",
+      "marketplace_listings": [
+        {
+          "platform": "shopee",
+          "product_name": "Sữa tươi Vinamilk 1L",
+          "price": 32000,
+          "units_sold_est": 85000,
+          "revenue_est": 2720000000,
+          "rating": 4.9
+        },
+        {
+          "platform": "shopee",
+          "product_name": "Sữa chua uống probiotic",
+          "price": 28000,
+          "units_sold_est": 62000,
+          "revenue_est": 1736000000,
+          "rating": 4.8
+        }
+      ]
+    },
+    {
+      "stock_code": "FPT",
+      "marketplace_listings": [
+        {
+          "platform": "shopee",
+          "product_name": "Laptop FPT",
+          "price": 15990000,
+          "units_sold_est": 450,
+          "revenue_est": 7195500000,
+          "rating": 4.7
+        }
+      ]
+    },
+    {
+      "stock_code": "GVR",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "DGC",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "MSN",
+      "marketplace_listings": [
+        {
+          "platform": "shopee",
+          "product_name": "Nước mắm Chin-su",
+          "price": 45000,
+          "units_sold_est": 28000,
+          "revenue_est": 1260000000,
+          "rating": 4.8
+        }
+      ]
+    },
+    {
+      "stock_code": "PNJ",
+      "marketplace_listings": [
+        {
+          "platform": "shopee",
+          "product_name": "Nhẫn vàng PNJ",
+          "price": 8500000,
+          "units_sold_est": 320,
+          "revenue_est": 2720000000,
+          "rating": 4.9
+        }
+      ]
+    },
+    {
+      "stock_code": "REE",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "BMP",
+      "marketplace_listings": []
+    }
+  ]
+}

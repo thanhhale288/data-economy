@@ -39,7 +39,7 @@ OECD digital trade openness index for VNM (annual). Harmonized to monthly via **
 ## Micro / companies
 
 **Listed sample company**:
-One of the ten seeded HOSE/HNX firms used for micro analysis: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE.
+One of the ten seeded HOSE/HNX firms used for micro analysis: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
 _Avoid_: random extra tickers unless the user expands the seed set
 
 **BCTC**:

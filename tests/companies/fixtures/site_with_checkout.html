@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8" />
+  <title>Cửa hàng trực tuyến — RAL Shop</title>
+</head>
+<body>
+  <header>
+    <nav>
+      <a href="/san-pham">Sản phẩm</a>
+      <a href="/gio-hang" class="cart-link">Giỏ hàng (2)</a>
+      <a href="/thanh-toan">Thanh toán</a>
+    </nav>
+  </header>
+  <main>
+    <h1>Đèn LED cao cấp</h1>
+    <p>Mua hàng online tại shop chính thức.</p>
+    <form action="/cart/add" method="post" id="add-to-cart">
+      <input type="hidden" name="product_id" value="42" />
+      <button type="submit">Thêm vào giỏ hàng</button>
+      <a href="/checkout">Checkout</a>
+    </form>
+  </main>
+</body>
+</html>

@@ -1,0 +1,21 @@
+{
+  "shop_username": "example_shop",
+  "items": [
+    {
+      "itemid": 2001,
+      "name": "Sản phẩm thiếu units",
+      "price": 10000000000,
+      "historical_sold": null,
+      "item_rating": {"rating_star": null},
+      "currency": "VND"
+    },
+    {
+      "itemid": 2002,
+      "name": "Sản phẩm thiếu giá",
+      "price": null,
+      "historical_sold": 50,
+      "item_rating": {"rating_star": 4.0},
+      "currency": "VND"
+    }
+  ]
+}

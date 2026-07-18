@@ -1,0 +1,22 @@
+{
+  "stock_code": "RAL",
+  "period": "2024-12-31",
+  "report_type": "annual",
+  "currency": "VND",
+  "fields": {
+    "revenue": 5200000000000,
+    "profit_before_tax": 420000000000,
+    "net_profit": 350000000000,
+    "total_assets": 6800000000000,
+    "total_equity": 3200000000000,
+    "current_assets": 3100000000000,
+    "current_liabilities": 2100000000000,
+    "operating_expenses": 4500000000000,
+    "cost_of_goods": 3200000000000,
+    "rental_cost": 85000000000,
+    "remuneration": 680000000000,
+    "employees": 3200,
+    "gross_margin": 0.38
+  },
+  "source_url": "https://example.test/bctc/RAL/2024.json"
+}
