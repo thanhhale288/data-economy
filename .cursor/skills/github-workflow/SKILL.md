@@ -75,15 +75,16 @@ Do not merge knowingly broken CI. If fixing CI, prefer a dedicated small PR.
 If labels, milestones, umbrella Phase 3 issue, phase releases, or branch protection are missing:
 
 ```bash
-bash scripts/github-bootstrap.sh
+bash scripts/github-bootstrap.sh                 # labels, milestones, umbrella issue, releases
+bash scripts/github-bootstrap.sh --with-protection  # also lock main (needs admin; ask user first)
 ```
 
-Requires working `gh auth`. If auth fails: tell the user to run `gh auth login` or `gh auth refresh -h github.com`, then re-run the script.
+Requires working `gh auth`. If auth fails: tell the user to run `gh auth login` or `gh auth refresh -h github.com`, then re-run the script. Never apply `--with-protection` unless the user explicitly asked.
 
 ## Branch protection (main)
 
-Require PR + status checks named exactly: `Backend tests`, `Frontend build`.  
-Script applies this; if API fails (no admin), guide the user to Settings → Branches.
+Status checks named exactly: `Backend tests`, `Frontend build`.  
+Prefer manual Settings → Branches, or `bash scripts/github-bootstrap.sh --with-protection` after user confirmation.
 
 ## Local tracker vs GitHub
 

@@ -19,48 +19,48 @@ need_gh() {
 ensure_label() {
   local name="$1" color="$2" desc="$3"
   if gh label list --repo "$REPO" --json name --jq '.[].name' | grep -Fxq "$name"; then
-    echo "label exists: $name"
+    echo "label exists: $name" >&2
   else
-    gh label create "$name" --repo "$REPO" --color "$color" --description "$desc"
-    echo "label created: $name"
+    gh label create "$name" --repo "$REPO" --color "$color" --description "$desc" >&2
+    echo "label created: $name" >&2
   fi
 }
 
 ensure_milestone() {
   local title="$1" desc="$2"
   local existing
-  existing="$(gh api "repos/$REPO/milestones" --jq ".[] | select(.title==\"$title\") | .number" | head -1 || true)"
+  existing="$(gh api "repos/$REPO/milestones?state=all" --jq ".[] | select(.title==\"$title\") | .number" | head -1 || true)"
   if [[ -n "$existing" ]]; then
-    echo "milestone exists: $title (#$existing)"
-    echo "$existing"
+    echo "milestone exists: $title (#$existing)" >&2
+    printf '%s\n' "$existing"
   else
     gh api "repos/$REPO/milestones" -f title="$title" -f description="$desc" --jq '.number'
   fi
 }
 
 ensure_umbrella_issue() {
-  local title="$1" milestone_number="$2" body="$3"
+  local title="$1" milestone_title="$2" body="$3"
   local existing
-  existing="$(gh issue list --repo "$REPO" --search "in:title $title" --json number,title --jq ".[] | select(.title==\"$title\") | .number" | head -1 || true)"
+  existing="$(gh issue list --repo "$REPO" --state all --json number,title --jq ".[] | select(.title==\"$title\") | .number" | head -1 || true)"
   if [[ -n "$existing" ]]; then
-    echo "issue exists: $title (#$existing)"
+    echo "issue exists: $title (#$existing)" >&2
   else
-    gh issue create --repo "$REPO" --title "$title" --milestone "$milestone_number" --label "ready-for-agent" --body "$body"
+    gh issue create --repo "$REPO" --title "$title" --milestone "$milestone_title" --label "ready-for-agent" --body "$body" >&2
   fi
 }
 
 ensure_release() {
   local tag="$1" target="$2" title="$3" notes="$4"
   if gh release view "$tag" --repo "$REPO" >/dev/null 2>&1; then
-    echo "release exists: $tag"
+    echo "release exists: $tag" >&2
   else
-    gh release create "$tag" --repo "$REPO" --target "$target" --title "$title" --notes "$notes"
-    echo "release created: $tag"
+    gh release create "$tag" --repo "$REPO" --target "$target" --title "$title" --notes "$notes" >&2
+    echo "release created: $tag" >&2
   fi
 }
 
 protect_main() {
-  # Requires admin. Context names must match jobs in .github/workflows/ci.yml
+  # Requires admin. Job names must match .github/workflows/ci.yml
   gh api -X PUT "repos/$REPO/branches/main/protection" \
     -H "Accept: application/vnd.github+json" \
     --input - <<'EOF'
@@ -70,19 +70,21 @@ protect_main() {
     "contexts": ["Backend tests", "Frontend build"]
   },
   "enforce_admins": false,
-  "required_pull_request_reviews": {
-    "required_approving_review_count": 0
-  },
+  "required_pull_request_reviews": null,
   "restrictions": null,
   "allow_force_pushes": false,
   "allow_deletions": false
 }
 EOF
-  echo "branch protection applied on main (require CI + PR)"
+  echo "branch protection applied on main (require CI)" >&2
 }
 
 main() {
   need_gh
+  local with_protection=0
+  if [[ "${1:-}" == "--with-protection" ]]; then
+    with_protection=1
+  fi
   echo "Bootstrapping GitHub for $REPO"
 
   ensure_label "ready-for-agent" "0E8A16" "Agent can implement without more human input"
@@ -97,17 +99,18 @@ main() {
   m1="$(ensure_milestone "Phase 1 — Macro crawlers" "GSO/NSO IIP + OECD INDIGO@VNM + EA20 peer. Done on main via PR #1.")"
   m2="$(ensure_milestone "Phase 2 — Enterprise digital" "Listed companies, CafeF BCTC, digital metrics, shop matcher. Done via PR #2.")"
   m3="$(ensure_milestone "Phase 3 — Clean, features & ML" "Cleaning pipeline, feature engineering, ARIMA/XGBoost/LSTM for IIP Section C.")"
+  echo "milestones: phase1=#$m1 phase2=#$m2 phase3=#$m3" >&2
 
   # Close completed milestones if open
   for num in "$m1" "$m2"; do
     state="$(gh api "repos/$REPO/milestones/$num" --jq '.state')"
     if [[ "$state" == "open" ]]; then
       gh api -X PATCH "repos/$REPO/milestones/$num" -f state=closed >/dev/null
-      echo "closed milestone #$num"
+      echo "closed milestone #$num" >&2
     fi
   done
 
-  ensure_umbrella_issue "Phase 3 umbrella — Clean, features & ML" "$m3" "$(cat <<'EOF'
+  ensure_umbrella_issue "Phase 3 umbrella — Clean, features & ML" "Phase 3 — Clean, features & ML" "$(cat <<'EOF'
 Tracking issue for Phase 3 (roadmap tasks 10–12).
 
 Detailed tickets stay in local markdown (do not duplicate):
@@ -133,12 +136,16 @@ EOF
     "v0.2.0 — Phase 2 enterprise digital" \
     "10 listed firms (BMP not BWE); CafeF quarterly BCTC; digital metrics; shop matcher. Marketplace live deferred. Merged via PR #2."
 
-  echo
-  echo "Applying branch protection (may fail without admin)..."
-  if protect_main; then
-    true
+  if [[ "$with_protection" -eq 1 ]]; then
+    echo
+    echo "Applying branch protection (may fail without admin)..." >&2
+    if ! protect_main; then
+      echo "WARN: branch protection failed. Enable manually: Settings → Branches → Require status checks: Backend tests, Frontend build" >&2
+    fi
   else
-    echo "WARN: branch protection failed. Enable manually: Settings → Branches → Require PR + status checks: Backend tests, Frontend build" >&2
+    echo
+    echo "Skipped branch protection (pass --with-protection to apply)." >&2
+    echo "Manual: Settings → Branches → Protect main → require checks: Backend tests, Frontend build" >&2
   fi
 
   echo
