@@ -346,6 +346,18 @@ Trong project hay gặp theo vài nghĩa gần nhau:
 
 Một câu nhớ: **trace = lần theo đường đi của dữ liệu hoặc của lời gọi hàm, không phải tự sinh số mới.**
 
+### Broadcast (feature engineering)
+
+**Broadcast** = lấy **một giá trị** (hoặc một kỳ) rồi **gắn lặp lại** lên nhiều hàng khác — thường là mọi tháng macro.
+
+Ví dụ: BCTC / digital metrics chỉ có **1 kỳ** (năm 2023), trong khi IIP có 60 tháng. Broadcast = copy điểm số đó vào cả 60 tháng để join được bảng feature.
+
+**Khác monthly series thật:** nếu mỗi tháng có quan sát riêng thì không cần broadcast. Prompt Task #11 bắt **ghi chú provenance**: broadcast ≠ đo được từng tháng; chỉ là cách join khi dữ liệu thưa.
+
+Gần với **step-hold** (giữ nguyên giá trị năm xuyên các tháng trong năm) — đều là “kéo giá trị cũ phủ lên khung thời gian dày hơn”, không phải nội suy bịa xu hướng.
+
+Một câu nhớ: **broadcast = một số, dán lên nhiều tháng để bảng khớp nhau.**
+
 ---
 
 ## 6. Cách dùng file này

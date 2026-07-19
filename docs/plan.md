@@ -337,7 +337,7 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 | --------- | ---------- | ------- |
 | **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
 | **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Branch `cursor/phase2-enterprise-digital`. Caveat bên dưới |
-| 3 — Clean, Features & ML | Đang làm (branch `cursor/phase3-clean-features-ml`) | Task #10 cleaning: parquet artifacts + job `data_cleaning`; #11–#12 chưa |
+| 3 — Clean, Features & ML | Đang làm (branch `cursor/phase3-clean-features-ml`) | #10 cleaning + #11 features DONE; **#12 ML** tiếp theo |
 | 4 — Web hoàn thiện | Scaffold | React shell / API skeleton có; dashboard chưa hoàn thiện; staging DB (nếu cần) gắn Module 3–4 |
 | 5 — Benchmark & Báo cáo | Chưa | |
 
@@ -382,9 +382,8 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 ### Giai đoạn 3: Clean, Features & ML (Tuần 11–14)
 
 - [x] **Task #10 — Cleaning pipeline** (parquet artifacts; không overwrite raw; job `data_cleaning`)
-- [ ] Feature engineering (lag/rolling/digital/financial; align CafeF quý→tháng; không MEI_BCI giả)
-- [ ] Train & evaluate ARIMA, XGBoost/LightGBM, LSTM
-- [ ] Model registry + API endpoints
+- [x] **Task #11 — Feature engineering** (lag/rolling/digital/financial/cross; broadcast/step-hold + provenance; không MEI_BCI giả; `features.parquet` + `features_manifest.json`; tests `tests/features`)
+- [ ] **Task #12 — ML models** — train & evaluate ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE; walk-forward; model registry + API
 
 ### Giai đoạn 4: Web hoàn thiện & Demo (Tuần 15–17)
 

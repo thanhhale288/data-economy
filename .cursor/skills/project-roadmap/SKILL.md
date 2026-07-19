@@ -68,7 +68,7 @@ Hỏi người dùng **một câu**: muốn skill chỉ **hướng dẫn** (đư
 **Lưu bản sạch:** Phase 3 dùng artifact **Parquet** (`data/processed/cleaned_*.parquet`, `cleaning_report.json`, `features.parquet`). **Không** overwrite raw DB. Bảng **staging** Postgres (nếu cần) trì hoãn đến Module 3–4. Chi tiết: `docs/plan.md` §4.1.
 
 10. **Cleaning pipeline** — missing values, outlier (IQR/Z-score), entity resolution hook, VSIC validation; job `data_cleaning` trước `feature_engineering`; ghi parquet + quality report (không overwrite raw). *Blocked by:* 9, 4. *(DONE trên branch Phase 3 — đối chiếu code/tests trước khi mở #11.)*
-11. **Feature engineering** — lag (INDIGO/IIP/MEI_IP@EA20 peer), rolling, digital features, cross, financial; align CafeF quý→tháng; không bịa MEI_BCI; đọc từ cleaned parquet khi có. *Blocked by:* 10.
+11. **Feature engineering** — lag (INDIGO/IIP/MEI_IP@EA20 peer), rolling, digital features, cross, financial; align CafeF quý→tháng; không bịa MEI_BCI; đọc từ cleaned parquet khi có. *Blocked by:* 10. *(DONE trên branch Phase 3 — đối chiếu `features.parquet` + `tests/features` trước khi mở #12.)*
 12. **ML models** — train & đánh giá ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE, walk-forward. Model registry + API endpoints. *Blocked by:* 11.
 
 ### Giai đoạn 4 — Web hoàn thiện & Demo (Tuần 15–17)

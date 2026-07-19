@@ -1,0 +1,57 @@
+{
+  "columns": [
+    "period",
+    "iip",
+    "indigo",
+    "indigo_lag1",
+    "indigo_lag2",
+    "indigo_lag3",
+    "indigo_roll3m",
+    "indigo_roll6m",
+    "iip_lag1",
+    "iip_lag2",
+    "iip_lag3",
+    "iip_roll3m",
+    "iip_roll6m",
+    "iip_growth",
+    "digital_adoption_score",
+    "channel_diversity",
+    "online_revenue_ratio",
+    "digital_alignment",
+    "roa",
+    "roe",
+    "current_ratio",
+    "financial_alignment",
+    "online_revenue_ratio_x_iip_growth"
+  ],
+  "row_count": 57,
+  "sources": {
+    "macro": "cleaned_macro.parquet preferred; else DB GSO IIP_C + INDIGO@VNM + MEI_IP@EA20",
+    "digital": "digital_metrics mean across firms; broadcast_latest or period_aggregate",
+    "financial": "financial_reports ratios mean; step-hold or broadcast_latest",
+    "cross": "online_revenue_ratio_x_iip_growth"
+  },
+  "feature_groups": {
+    "macro_present": [
+      "iip",
+      "indigo"
+    ],
+    "digital_present": true,
+    "financial_present": true,
+    "cross_present": true
+  },
+  "mei_ip_peer_country": "EA20",
+  "dropna_subset": [
+    "iip",
+    "iip_lag1",
+    "iip_lag2",
+    "iip_lag3"
+  ],
+  "notes": [
+    "dropna only on IIP lag subset; digital/financial NaNs preserved",
+    "MEI_BCI never fabricated; mei_ip is OECD peer EA20 when present",
+    "mei_ip_peer_country=EA20",
+    "digital_alignment=broadcast_latest",
+    "financial_alignment=step_hold_annual"
+  ]
+}
