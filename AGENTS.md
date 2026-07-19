@@ -68,3 +68,8 @@ Default roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human
 ### Domain docs
 
 Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+
+### GitHub workflow
+
+Commits, PRs, CI, milestones, and phase releases: `.cursor/skills/github-workflow/SKILL.md`.  
+One-shot labels/milestones/releases/protection: `bash scripts/github-bootstrap.sh`.
