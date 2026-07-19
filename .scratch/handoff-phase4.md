@@ -6,7 +6,7 @@
 **Repo:** `/Users/hale/Code/AI in Data Economy`  
 **Remote:** `https://github.com/thanhhale288/data-economy`  
 **Phase 3 PR:** https://github.com/thanhhale288/data-economy/pull/5 (`cursor/phase3-clean-features-ml`, tip `9aed9c0`) — still OPEN at Task #13 start  
-**Task #13 branch:** `cursor/phase4-task13-dashboard` (based on Phase 3 tip)
+**Task #13 branch:** `cursor/phase4-task13-dashboard` · PR https://github.com/thanhhale288/data-economy/pull/6 (base Phase 3)
 
 ---
 
