@@ -122,6 +122,28 @@ Chỉ số **tồn kho** công nghiệp. Plan: `INVENTORY_C`. Tương tự shipm
 **MEI** = Main Economic Indicators (OECD).  
 **MEI_IP** = Industrial Production Index của OECD (leading / so sánh quốc tế).
 
+### MEI_IP peer (EA20)
+
+**Peer** ở đây = **nền kinh tế “đối chiếu”**, không phải Việt Nam.
+
+OECD **không công bố** MEI Industrial Production cho `VNM`. Project không bịa số VN → lấy **MEI_IP của Euro area (`EA20`)** làm chỉ số dẫn (leading) phụ trợ dự báo IIP Việt Nam.
+
+Trong DB/feature:
+
+| | Giá trị |
+|--|---------|
+| `indicator_code` | `MEI_IP` |
+| `country` | `EA20` (không phải `VNM`) |
+| `source` | `OECD_PEER` |
+| Cột feature | thường tên `mei_ip` |
+
+**Được dùng:** lag/exog cho forecast IIP (kênh cầu xuất khẩu / chu kỳ quốc tế).  
+**Không được:** coi như số sản xuất của Việt Nam, hay so sánh DN VN với nhau bằng peer này.
+
+ADR-0001: GSO IIP là macro VN chính; INDIGO@VNM thật; MEI_IP@EA20 chỉ peer.
+
+Một câu nhớ: **mei_ip peer = IIP châu Âu dùng làm “chỉ báo phụ”, không phải IIP Việt Nam.**
+
 ### BCI
 
 **Business Confidence Index** — chỉ số tin tưởng kinh doanh (manufacturing).

@@ -383,7 +383,7 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 
 - [x] **Task #10 — Cleaning pipeline** (parquet artifacts; không overwrite raw; job `data_cleaning`)
 - [x] **Task #11 — Feature engineering** (lag/rolling/digital/financial/cross; broadcast/step-hold + provenance; không MEI_BCI giả; `features.parquet` + `features_manifest.json`; tests `tests/features`)
-- [ ] **Task #12 — ML models** — train & evaluate ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE; walk-forward; model registry + API
+- [x] **Task #12 — ML models** — train & evaluate ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE; walk-forward; model registry + API
 
 ### Giai đoạn 4: Web hoàn thiện & Demo (Tuần 15–17)
 

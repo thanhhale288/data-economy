@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
@@ -10,6 +10,7 @@ router = APIRouter()
 
 @router.get("/models")
 def list_models(db: Session = Depends(get_db)):
+    """Return registered models (ORM includes metrics JSON: mae/rmse/mape/status)."""
     return db.query(ModelRegistry).order_by(ModelRegistry.trained_at.desc()).all()
 
 
@@ -28,7 +29,12 @@ def list_predictions(
 def run_forecast(request: ForecastRequest, db: Session = Depends(get_db)):
     from ml.models.trainer import generate_forecast
 
-    return generate_forecast(db, request.model_name, request.horizon_months)
+    try:
+        return generate_forecast(db, request.model_name, request.horizon_months)
+    except FileNotFoundError as e:
+        raise HTTPException(status_code=404, detail=str(e)) from e
+    except ValueError as e:
+        raise HTTPException(status_code=400, detail=str(e)) from e
 
 
 @router.post("/train")
