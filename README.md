@@ -1,6 +1,10 @@
 # Manufacturing Data Economy Platform
 
+[![CI](https://github.com/thanhhale288/data-economy/actions/workflows/ci.yml/badge.svg)](https://github.com/thanhhale288/data-economy/actions/workflows/ci.yml)
+
 Hệ thống web phân tích kinh tế số ngành **Công nghiệp chế biến, chế tạo** (VSIC Section C).
+
+**Docs:** [CONTEXT.md](./CONTEXT.md) · [AGENTS.md](./AGENTS.md) · [Proposal v2](./docs/proposal-v2.md) · [ADR](./docs/adr/) · [Plan](./docs/plan.md)
 
 ## Tính năng
 

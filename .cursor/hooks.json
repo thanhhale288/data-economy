@@ -1,0 +1,11 @@
+{
+  "version": 1,
+  "hooks": {
+    "beforeShellExecution": [
+      {
+        "command": ".cursor/hooks/github-workflow-remind.sh",
+        "matcher": "git commit|git push|gh pr |gh release|gh issue|github-bootstrap"
+      }
+    ]
+  }
+}

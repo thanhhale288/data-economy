@@ -52,7 +52,7 @@ cd frontend && npm install && npm run dev
 
 - Do **not** invent OECD/GSO numbers when crawl fails — use explicit fallback and record it; prefer real SDMX over random series.
 - Do **not** change Digital VA / VDEI formulas without updating `CONTEXT.md` and preferably an ADR under `docs/adr/`.
-- Sample listed companies are fixed in seed data (RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BWE) unless the user expands the set.
+- Sample listed companies are fixed in seed data (RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP) unless the user expands the set.
 - Prefer Vietnamese domain terms from `CONTEXT.md` when talking about economics; keep code identifiers in English.
 
 ## Agent skills
@@ -68,3 +68,8 @@ Default roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human
 ### Domain docs
 
 Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+
+### GitHub workflow
+
+Commits, PRs, CI, milestones, and phase releases: `.cursor/skills/github-workflow/SKILL.md`.  
+One-shot labels/milestones/releases/protection: `bash scripts/github-bootstrap.sh`.
