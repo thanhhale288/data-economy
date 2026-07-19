@@ -65,16 +65,18 @@ Hỏi người dùng **một câu**: muốn skill chỉ **hướng dẫn** (đư
 
 ### Giai đoạn 3 — Clean, Features & ML (Tuần 11–14)
 
-10. **Cleaning pipeline** — missing values, outlier (IQR/Z-score), entity resolution, VSIC mapping; DAGs (Prefect/Airflow). *Blocked by:* 9, 4.
-11. **Feature engineering** — lag (CCI/INDIGO/IIP), rolling, digital features, cross, financial. *Blocked by:* 10.
+**Lưu bản sạch:** Phase 3 dùng artifact **Parquet** (`data/processed/cleaned_*.parquet`, `cleaning_report.json`, `features.parquet`). **Không** overwrite raw DB. Bảng **staging** Postgres (nếu cần) trì hoãn đến Module 3–4. Chi tiết: `docs/plan.md` §4.1.
+
+10. **Cleaning pipeline** — missing values, outlier (IQR/Z-score), entity resolution hook, VSIC validation; job `data_cleaning` trước `feature_engineering`; ghi parquet + quality report (không overwrite raw). *Blocked by:* 9, 4. *(DONE trên branch Phase 3 — đối chiếu code/tests trước khi mở #11.)*
+11. **Feature engineering** — lag (INDIGO/IIP/MEI_IP@EA20 peer), rolling, digital features, cross, financial; align CafeF quý→tháng; không bịa MEI_BCI; đọc từ cleaned parquet khi có. *Blocked by:* 10.
 12. **ML models** — train & đánh giá ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE, walk-forward. Model registry + API endpoints. *Blocked by:* 11.
 
 ### Giai đoạn 4 — Web hoàn thiện & Demo (Tuần 15–17)
 
 13. **Dashboard ngành (Module 1)** — IIP, giá trị gia tăng, forecast, heatmap VSIC, OECD vs GSO. *Blocked by:* 12.
 14. **Company detail (Module 2)** — profile DN, kênh bán số, ước lượng online; case study Rạng Đông. *Blocked by:* 9.
-15. **Pipeline monitor (Module 3)** — trạng thái job crawl, log lỗi, lần crawl cuối. *Blocked by:* 10.
-16. **ML Lab (Module 4)** — so sánh 3 model, forecast vs actual, feature importance. *Blocked by:* 12.
+15. **Pipeline monitor (Module 3)** — trạng thái job crawl + `data_cleaning`, log lỗi, lần crawl cuối, tóm tắt quality report; **tuỳ chọn** thêm staging Postgres cho bản sạch *song song* parquet nếu monitor/API cần SQL. *Blocked by:* 10.
+16. **ML Lab (Module 4)** — so sánh 3 model, forecast vs actual, feature importance; mặc định đọc artifact/registry Phase 3; staging chỉ nếu API Lab cần query DB. *Blocked by:* 12.
 17. **Integration testing end-to-end** — luồng crawl → clean → ML → API → FE chạy thông. *Blocked by:* 13, 14, 15, 16.
 
 ### Giai đoạn 5 — Benchmark & Báo cáo (Tuần 18)

@@ -23,5 +23,9 @@ data/models/*.pt
 .DS_Store
 frontend/dist/
 
+# Phase 3 cleaning/feature runtime artifacts (regen via pipeline; keep features.parquet if tracked)
+data/processed/cleaned_*.parquet
+data/processed/cleaning_report.json
+
 # Nested clone — add as submodule later if needed
 diagram/drawio-ai-kit/

@@ -4,7 +4,15 @@ Vietnam-first: GSO IIP_C is the target. OECD joins:
 - INDIGO @ VNM (annual→monthly step-hold already applied at ingest)
 - MEI_IP @ EA20 peer (source=OECD_PEER) as mei_ip — never treat as Vietnam data
 - MEI_BCI omitted when unavailable for VNM (no fabrication)
+
+Cleaning ownership: Task #10 ``data_cleaning`` owns the primary clean and writes
+``data/processed/cleaned_macro.parquet``. ``load_macro_dataframe`` prefers that
+artifact when present; the DB + ``clean_timeseries`` path is a fallback for
+ad-hoc runs that skip the cleaning job (avoids silent double-clean when the
+artifact exists).
 """
+
+from pathlib import Path
 
 import pandas as pd
 from sqlalchemy.orm import Session
@@ -14,8 +22,31 @@ from pipeline.cleaning.cleaner import clean_timeseries
 
 from crawlers.oecd.sdmx_client import PEER_MEI_IP_COUNTRY
 
+_CLEANED_MACRO_PATH = (
+    Path(__file__).resolve().parents[2] / "data" / "processed" / "cleaned_macro.parquet"
+)
+
+
+def _usable_cleaned_macro(path: Path) -> pd.DataFrame | None:
+    """Return cleaned macro artifact only if it has rows and an ``iip`` column."""
+    if not path.exists():
+        return None
+    try:
+        df = pd.read_parquet(path)
+    except Exception:
+        return None
+    if df.empty or "iip" not in df.columns:
+        return None
+    return df
+
 
 def load_macro_dataframe(db: Session) -> pd.DataFrame:
+    # Prefer Task #10 cleaned artifact; fallback cleans from DB for ad-hoc use.
+    # Ignore empty/partial artifacts so a failed clean smoke cannot poison features.
+    cleaned = _usable_cleaned_macro(_CLEANED_MACRO_PATH)
+    if cleaned is not None:
+        return cleaned
+
     gso = (
         db.query(GsoMacro)
         .filter(GsoMacro.indicator_code == "IIP_C", GsoMacro.vsic_code == "C")
@@ -96,8 +127,6 @@ def build_features(db: Session) -> pd.DataFrame:
 
 
 def run_feature_engineering(db: Session) -> int:
-    from pathlib import Path
-
     df = build_features(db)
     out_path = Path(__file__).resolve().parents[2] / "data" / "processed" / "features.parquet"
     out_path.parent.mkdir(parents=True, exist_ok=True)

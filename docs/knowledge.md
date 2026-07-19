@@ -8,6 +8,14 @@ Nguồn bổ sung khi cần chi tiết domain/công thức: `CONTEXT.md`, `docs/
 
 ## 1. Phân ngành & dữ liệu nền
 
+### Scaffold
+
+**Scaffold** = “dựng khung” ban đầu của project: tạo cấu trúc thư mục, Docker (db/redis), skeleton FastAPI + React, để sau đó gắn crawler/API/ML vào — chưa phải làm xong nghiệp vụ.
+
+Trong roadmap đây là **Task 1**: nền tảng chạy được trước khi làm mapping/seed và crawl.
+
+Một câu nhớ: **scaffold = khung nhà trống có sẵn chỗ gắn đồ, chưa phải ngôi nhà hoàn chỉnh.**
+
 ### ISIC Section C
 
 **ISIC** = hệ thống phân ngành kinh tế quốc tế (Liên Hợp Quốc).  
@@ -157,7 +165,22 @@ Thư viện HTTP Python dùng để GET URL.
 
 ### Provenance / source
 
-Ghi nguồn gốc số liệu (`GSO`, `GSO_FALLBACK`, `seed:…`, `fallback:…`, `live`…).
+**Provenance** = **nguồn gốc / lý lịch** của một con số: nó đến từ đâu, lấy lúc nào, bằng cách nào.
+
+Ví dụ đời thường: trên hóa đơn ghi “Nhà cung cấp X, lô Y” — đó là provenance của hàng. Với data cũng vậy: mỗi record nên biết mình từ GSO live, CSV fallback, seed 10 DN, hay scrape Shopee.
+
+Trong project thường gắn nhãn kiểu:
+
+| Nhãn | Ý nghĩa |
+|------|---------|
+| `GSO` / `live` | Lấy từ nguồn chính lúc chạy |
+| `GSO_FALLBACK` / `fallback:…` | File dự phòng khi live fail |
+| `seed:…` | Dữ liệu mẫu trong repo |
+| `\|FIXTURE_OECD_RAW` | Fixture OECD local |
+
+**Tại sao quan trọng:** project cấm bịa số OECD/GSO. Có provenance thì biết số nào “thật”, số nào “demo/dự phòng”, không nhầm khi demo hay train ML.
+
+Một câu nhớ: **provenance = tem nguồn trên từng con số.**
 
 ### Wire PX-Web (cho shipment / inventory)
 
