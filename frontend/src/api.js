@@ -34,6 +34,8 @@ export const api = {
   }),
   getModels: () => request('/ml/models'),
   getPredictions: (model) => request(`/ml/predictions${model ? `?model_name=${model}` : ''}`),
+  getFeatureImportance: (model = 'xgboost') =>
+    request(`/ml/feature-importance?model_name=${encodeURIComponent(model)}`),
   trainModels: () => request('/ml/train', { method: 'POST' }),
   forecast: (model, horizon) => request('/ml/forecast', {
     method: 'POST',
