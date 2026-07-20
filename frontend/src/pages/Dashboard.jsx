@@ -64,7 +64,7 @@ export default function Dashboard() {
             setForecast(null)
             setForecastError(
               err?.message?.includes('404')
-                ? `Chưa có artifact forecast cho model «${model}» — train ML trước (không bịa số).`
+                ? `Chưa có artifact forecast cho model «${model}» — chạy make bootstrap / train ML (không bịa số).`
                 : `Không tải được forecast (${model}): ${err.message}`
             )
           }
@@ -130,6 +130,18 @@ export default function Dashboard() {
           : ''}
       </p>
 
+      {summary?.iip_latest == null && (
+        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+          Chưa có IIP Section C trong DB — chạy <code>make bootstrap</code> (seed + crawl GSO).
+          Không hiển thị số bịa.
+        </div>
+      )}
+      {!summary?.preferred_forecast_model && summary?.iip_latest != null && (
+        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+          Chưa có model active trong registry — chạy bootstrap/train ML trước khi xem dự báo.
+        </div>
+      )}
+
       <div className="cards">
         <div className="card">
           <div className="label">IIP (SXCN)</div>
@@ -138,6 +150,9 @@ export default function Dashboard() {
             <div className={`sub ${summary.iip_growth_pct >= 0 ? 'up' : 'down'}`}>
               {summary.iip_growth_pct > 0 ? '+' : ''}{summary.iip_growth_pct}% so với kỳ trước
             </div>
+          )}
+          {summary?.iip_latest == null && (
+            <div className="sub muted">Thiếu chuỗi IIP — không bịa</div>
           )}
         </div>
         <div className="card">
@@ -177,47 +192,52 @@ export default function Dashboard() {
         <h3>Chỉ số SXCN (IIP) Section C + dự báo</h3>
         {iip.length === 0 ? (
           <div className="empty-state">
-            Chưa có chuỗi IIP_C trong DB. Chạy seed/crawl GSO — không bịa số.
+            Chưa có chuỗi IIP_C trong DB. Chạy <code>make bootstrap</code> (seed + crawl GSO) —
+            không bịa số trên biểu đồ.
           </div>
         ) : (
-          <>
-            <ResponsiveContainer width="100%" height={320}>
-              <LineChart data={iipChart}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line
-                  type="monotone"
-                  dataKey="actual"
-                  stroke="#e94560"
-                  strokeWidth={2}
-                  dot={false}
-                  name="IIP thực tế (GSO)"
-                  connectNulls={false}
-                />
-                <Line
-                  type="monotone"
-                  dataKey="forecast"
-                  stroke="#0f3460"
-                  strokeWidth={2}
-                  strokeDasharray="6 4"
-                  dot={false}
-                  name={forecast ? `Dự báo (${forecast.model})` : 'Dự báo'}
-                  connectNulls={false}
-                />
-              </LineChart>
-            </ResponsiveContainer>
-            {forecastError && (
-              <div className="banner banner-warn">{forecastError}</div>
-            )}
-            {forecast && !forecastError && (
-              <p className="chart-note">
-                Dự báo {forecast.horizon} tháng từ `/api/ml/forecast` · model {forecast.model}
-              </p>
-            )}
-          </>
+          <ResponsiveContainer width="100%" height={320}>
+            <LineChart data={iipChart}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="actual"
+                stroke="#e94560"
+                strokeWidth={2}
+                dot={false}
+                name="IIP thực tế (GSO)"
+                connectNulls={false}
+              />
+              <Line
+                type="monotone"
+                dataKey="forecast"
+                stroke="#0f3460"
+                strokeWidth={2}
+                strokeDasharray="6 4"
+                dot={false}
+                name={forecast ? `Dự báo (${forecast.model})` : 'Dự báo'}
+                connectNulls={false}
+              />
+            </LineChart>
+          </ResponsiveContainer>
+        )}
+        {forecastError && (
+          <div className="banner banner-warn">{forecastError}</div>
+        )}
+        {forecast && !forecastError && (
+          <p className="chart-note">
+            Dự báo {forecast.horizon} tháng từ `/api/ml/forecast` · model {forecast.model}
+            {iip[0]?.source ? ` · IIP source: ${iip[iip.length - 1]?.source || iip[0].source}` : ''}
+          </p>
+        )}
+        {!forecast && !forecastError && iip.length > 0 && (
+          <div className="empty-state" style={{ marginTop: 12 }}>
+            Chưa tải được đường dự báo — chạy bootstrap/train ML (không vẽ đường giả).
+          </div>
         )}
       </div>
 
@@ -227,6 +247,7 @@ export default function Dashboard() {
           <div className="empty-state">
             <p>
               <strong>Thiếu chuỗi OECD peer.</strong>{' '}
+              <span className="badge badge-warning">unavailable</span>{' '}
               {oecdGso?.oecd_note
                 || 'MEI_IP@EA20 chưa có — không hiển thị số bịa (ADR-0001).'}
             </p>
@@ -253,9 +274,18 @@ export default function Dashboard() {
           </div>
         ) : (
           <>
-            <p className="chart-note">
+            <p className="chart-note" style={{ marginTop: 0 }}>
+              <span className={`badge ${
+                String(oecdGso?.oecd_source || '').includes('FALLBACK')
+                  ? 'badge-warning'
+                  : 'badge-info'
+              }`}
+              >
+                {oecdGso?.oecd_source || 'OECD_PEER'}
+              </span>
+              {' '}
               {oecdGso?.oecd_note
-                || `Peer ${oecdGso?.oecd_country || 'EA20'} · ${oecdGso?.oecd_source || 'OECD_PEER'}`}
+                || `Peer ${oecdGso?.oecd_country || 'EA20'} · không phải MEI VNM`}
             </p>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={aligned}>

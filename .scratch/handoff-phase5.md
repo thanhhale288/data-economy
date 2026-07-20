@@ -1,44 +1,49 @@
-# Handoff — Phase 5 (Báo cáo & Demo)
+# Handoff — Manufacturing Data Economy (Phase 5) — IN PROGRESS
 
-**Next session focus:** Phase 5 first task — **Task #19 — Proposal Mục 4 + Demo docs** (or split if plan numbers differently). Do not reopen Phase 4 (#13–#18) unless fixing a proven bug.
-
+**Status:** Phase 5 started. **#19a Demo ops** DONE (uncommitted until user asks). Next = **#19b Proposal Mục 4**.  
 **Date:** 2026-07-20  
 **Repo:** `/Users/hale/Code/AI in Data Economy`  
-**Remote:** `https://github.com/thanhhale288/data-economy`  
-**Phase 4 tip:** Task #18 `cursor/phase4-task18-benchmark` @ `5c4ae94` · PR https://github.com/thanhhale288/data-economy/pull/11  
-**Phase 4 handoff:** `.scratch/handoff-phase4.md` (DONE)
+**Remote:** `https://github.com/thanhhale288/data-economy`
+
+**Phase 4 tip / base for demo:** `cursor/phase4-task18-benchmark` @ `771158c` (PR #11)  
+**Demo ops branch:** `cursor/phase5-task19-demo-ops` (from #18 tip)
 
 ---
 
 ## Where things stand
 
-### Done through Phase 4
-- Macro crawl, enterprise digital, clean/features/ML, Dashboard, Company, Pipeline, ML Lab, E2E, Benchmark Module 5 (honest percentiles).
+### Done this phase
+- **#19a Demo ops polish:** bootstrap order fixed, README/ops, FE empty-states, smoke script. Report: `.scratch/demo-ops-report.md`
 
-### Phase 5 remaining
-1. Update proposal Mục 4 with **real** results (cite tests/API/seed; no invented series).
-2. Demo presentation + operator docs (how to run stack, what is live vs fallback).
+### Remaining
+1. **#19b Proposal Mục 4** — cite seed/API/tests honestly (no invented numbers).
+2. Demo slides/presentation if still needed after docs.
 
-Suggested branch: `cursor/phase5-task19-proposal-demo` from Task #18 tip if stack not on `main`.
+### Do not rewrite
+- Cleaning / features / ML / Digital VA / benchmark math unless proven bug.
+- Ticker **BMP** not BWE.
+- Leave `.scratch/_local_backup/` untracked.
 
-### Do not
-- Invent GSO/OECD/CafeF/marketplace/forecast/peer numbers in the write-up.
-- Change Digital VA / VDEI without CONTEXT + ADR.
-- Reopen #13–#18 without proven bug.
+### Local caveats
+- Prefer **one** DB backend (Postgres via `.env` **or** SQLite). Docker/Colima may be down — SQLite path works for demo.
+- Bootstrap sets `OMP_NUM_THREADS=1` (XGBoost OpenMP segfault risk on macOS).
+- Stack PRs #5…#11 may still be open vs `main`.
 
 ---
 
-## Read first
+## Read first (#19b)
 
 | Doc | Why |
 |-----|-----|
-| `docs/proposal-v2.md` | Mục 4 target |
-| `docs/plan.md` Phase 5 | Checklist |
-| `.scratch/handoff-task18.md` | Phase 4 close evidence |
-| `CONTEXT.md` | Formulas / honesty language |
+| `docs/proposal-v2.md` | Mục 4 update target |
+| `docs/ops-demo.md` / README Ops | What is demo-ready |
+| `.scratch/handoff-task19-demo-ops.md` | What #19a closed |
+| `CONTEXT.md` | Formula locks |
 
 ---
 
-## Paste prompt
+## Constraints / do not
 
-See Task #18 chat closing block.
+- Do not invent numbers in the proposal — cite seed/API/tests/smoke honestly.
+- Do not reopen Phase 4 modules unless proven bug.
+- One chat = one task (#19b only).

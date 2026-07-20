@@ -199,10 +199,16 @@ export default function CompanyDetail() {
         </div>
       </div>
 
+      {!latestFin && (
+        <div className="banner banner-warn">
+          Chưa có BCTC (financial_reports) cho {company.stock_code}. Chạy crawl/seed tài chính —
+          không hiển thị doanh thu bịa.
+        </div>
+      )}
       {!latestMetric && (
         <div className="banner banner-warn">
-          Chưa có chỉ số digital_metrics cho DN này. Chạy job metrics / seed metrics trước —
-          không hiển thị số bịa.
+          Chưa có chỉ số digital_metrics cho DN này. Chạy job metrics /{' '}
+          <code>make bootstrap</code> trước — không hiển thị số bịa.
         </div>
       )}
 
@@ -264,8 +270,8 @@ export default function CompanyDetail() {
         <h3>Listing marketplace (ước lượng)</h3>
         {mktListings.length === 0 ? (
           <div className="empty-state">
-            Không có listing Shopee/TikTok/Lazada. Online revenue est. = 0 trừ khi có
-            industry ratio có nguồn — không bịa.
+            Không có listing Shopee/TikTok/Lazada cho {company.stock_code}.
+            Online revenue est. chỉ từ listing/ratio có nguồn — không bịa sản phẩm.
           </div>
         ) : (
           <>

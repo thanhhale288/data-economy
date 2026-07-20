@@ -135,6 +135,12 @@ export default function Pipeline() {
       <div className="chart-container" style={{ marginBottom: 24 }}>
         <h3>Lần chạy cuối (crawl + cleaning)</h3>
         {status?.note && <p className="chart-note">{status.note}</p>}
+        {status?.last_runs?.some((r) => r.family === 'data_cleaning' && !r.status) && (
+          <div className="banner banner-warn" style={{ marginBottom: 12 }}>
+            Job <code>data_cleaning</code> chưa từng chạy — bấm «Data Cleaning» hoặc{' '}
+            <code>make bootstrap</code>. Chưa có parquet sạch / cleaning_report.
+          </div>
+        )}
         {!status?.last_runs?.length ? (
           <div className="empty-state">Chưa có tóm tắt last run từ API.</div>
         ) : (
@@ -146,7 +152,7 @@ export default function Pipeline() {
                   {run.status ? (
                     <span className={`badge ${statusBadge(run.status)}`}>{run.status}</span>
                   ) : (
-                    '—'
+                    <span className="badge badge-warning">chưa chạy</span>
                   )}
                 </div>
                 <div className="sub muted">
@@ -160,6 +166,9 @@ export default function Pipeline() {
                     {run.error_message}
                   </div>
                 )}
+                {run.detail && !run.error_message && (
+                  <div className="sub muted" style={{ fontSize: 12 }}>{run.detail}</div>
+                )}
               </div>
             ))}
           </div>
@@ -169,13 +178,15 @@ export default function Pipeline() {
       <div className="chart-container" style={{ marginBottom: 24 }}>
         <h3>Tóm tắt quality report</h3>
         {!quality?.available ? (
-          <div className="banner banner-warn">
-            {quality?.message
-              || 'Chưa có cleaning_report.json — chạy Data Cleaning (không bịa số).'}
+          <div className="empty-state">
+            <p>
+              {quality?.message
+                || 'Chưa có cleaning_report.json — chạy Data Cleaning / make bootstrap (không bịa số quality).'}
+            </p>
             {quality?.report_path && (
-              <div className="chart-note" style={{ marginTop: 8 }}>
-                Đường dẫn kỳ vọng: {quality.report_path}
-              </div>
+              <p className="chart-note" style={{ marginTop: 8 }}>
+                Đường dẫn kỳ vọng: <code>{quality.report_path}</code>
+              </p>
             )}
           </div>
         ) : (

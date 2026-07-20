@@ -120,7 +120,7 @@ export default function MLLab() {
       setForecast(null)
       setForecastError(
         err?.message?.includes('404')
-          ? `Chưa có artifact forecast cho model «${selectedModel}» — train ML trước (không bịa số).`
+          ? `Chưa có artifact forecast cho model «${selectedModel}» — chạy make bootstrap / train ML (không bịa số).`
           : `Không tải được forecast (${selectedModel}): ${err.message}`
       )
     }
@@ -195,8 +195,8 @@ export default function MLLab() {
 
       {noRegistry && (
         <div className="empty-state" style={{ marginBottom: 16 }}>
-          Chưa có model trong <code>model_registry</code> — chạy train ML (Pipeline hoặc nút bên dưới).
-          Không hiển thị metric giả.
+          Chưa có model trong <code>model_registry</code> — chạy <code>make bootstrap</code> hoặc
+          nút train bên dưới. Không hiển thị metric giả.
         </div>
       )}
 
@@ -258,7 +258,7 @@ export default function MLLab() {
         <h3>So sánh metric (3 model)</h3>
         {metricsData.length === 0 ? (
           <div className="empty-state">
-            Chưa có MAE/RMSE/MAPE trong registry — train xong mới có số thật.
+            Chưa có MAE/RMSE/MAPE trong registry — chạy make bootstrap / train xong mới có số thật.
           </div>
         ) : (
           <>
@@ -283,8 +283,8 @@ export default function MLLab() {
         <h3>Holdout — actual vs predicted (cả 3 model)</h3>
         {noPredictions ? (
           <div className="empty-state">
-            Chưa có hàng trong <code>model_predictions</code> — cửa sổ test được ghi khi train.
-            Không vẽ đường giả.
+            Chưa có hàng trong <code>model_predictions</code> — cửa sổ holdout ghi khi train
+            (make bootstrap / nút huấn luyện). Không vẽ đường giả.
           </div>
         ) : (
           <>
@@ -378,7 +378,7 @@ export default function MLLab() {
         {!importance || !importance.available ? (
           <div className="empty-state">
             {importance?.message
-              || 'Chưa có xgboost_importance.json — train XGBoost (#12) để ghi artifact. Không bịa gain/weight.'}
+              || 'Chưa có xgboost_importance.json — chạy make bootstrap / train XGBoost (#12). Không bịa gain/weight.'}
           </div>
         ) : (
           <>

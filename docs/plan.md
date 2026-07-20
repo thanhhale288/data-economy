@@ -340,7 +340,7 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 | **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Đã merge `main` (PR #2). Caveat bên dưới |
 | **3 — Clean, Features & ML** | **Hoàn thành (chờ merge)** | Branch `cursor/phase3-clean-features-ml`; tip `#12` `9aed9c0`; **PR #5** → `main` |
 | **4 — Web hoàn thiện** | **Hoàn thành (chờ merge)** | Task #13–#18 DONE trên nhánh Phase 4; #18 Benchmark Module 5 |
-| 5 — Báo cáo & Demo | Chưa | Proposal Mục 4 + demo (benchmark đã ship trong Phase 4 #18) |
+| 5 — Báo cáo & Demo | Đang làm | Demo ops #19a DONE; còn proposal Mục 4 (#19b) |
 
 **Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
 
@@ -403,8 +403,11 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 
 ### Giai đoạn 5: Báo cáo & Demo (Tuần 18)
 
-- Cập nhật proposal Mục 4 với kết quả thực tế
-- Demo presentation + documentation
+- [x] **Task #19a — Demo ops polish** — `make bootstrap` (metrics→clean→features→train), README/ops, FE empty-state gaps, `scripts/smoke_demo.sh` (branch `cursor/phase5-task19-demo-ops`)
+- [ ] **Task #19b — Proposal Mục 4** — cập nhật kết quả thực tế (không invent số)
+- [ ] Demo presentation (slides) nếu còn thiếu sau docs
+
+**Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
 ---
 
