@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task15-pipeline-monitor`  
-**Commit:** (see git tip after ship)  
-**PR:** (see ship)  
+**Commit:** `4958cfb`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/8 (base: `cursor/phase4-task14-company-detail`)  
 **Base:** tip Task #14 `56f0b9a` (PR #5 / #6 / #7 still not on `main` at Task #15 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
@@ -34,7 +34,8 @@
 - [x] Log lỗi / lần chạy cuối / records — done
 - [x] Tóm tắt quality report từ nguồn thật — done (`cleaning_report.json`)
 - [x] Missing report → banner rõ, không bịa — done
-- Staging Postgres — skipped (optional; default parquet + pipeline_jobs)
+- Deliverable: Module 3 pipeline monitor API + UI
+- PR: https://github.com/thanhhale288/data-economy/pull/8 · Branch: `cursor/phase4-task15-pipeline-monitor` · Tip: `4958cfb`
 
 ### Làm thế nào
 - Waves: W1 explore FE/BE → W2 implement → W3 verify → W4 ship
