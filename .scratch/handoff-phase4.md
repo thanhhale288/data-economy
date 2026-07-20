@@ -7,7 +7,7 @@
 **Remote:** `https://github.com/thanhhale288/data-economy`  
 **Phase 3 PR:** https://github.com/thanhhale288/data-economy/pull/5 (`cursor/phase3-clean-features-ml`, tip `9aed9c0`) — still OPEN at Task #14 close (gh auth local may be stale)  
 **Task #13:** `cursor/phase4-task13-dashboard` · PR https://github.com/thanhhale288/data-economy/pull/6  
-**Task #14:** `cursor/phase4-task14-company-detail` (base tip Task #13 `0e211cc`)
+**Task #14:** `cursor/phase4-task14-company-detail` · PR https://github.com/thanhhale288/data-economy/pull/7 (base tip Task #13 `0e211cc`)
 
 ---
 

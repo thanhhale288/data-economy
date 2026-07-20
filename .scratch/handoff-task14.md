@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task14-company-detail`  
-**Commit:** `2543e78` (feature tip; impl `decc57b`)  
-**PR:** branch pushed — open via https://github.com/thanhhale288/data-economy/pull/new/cursor/phase4-task14-company-detail (base: `cursor/phase4-task13-dashboard`). `gh pr create` blocked: `gh auth refresh -h github.com`  
+**Commit:** `681e610` (feature tip; impl `decc57b`)  
+**PR:** https://github.com/thanhhale288/data-economy/pull/7 (base: `cursor/phase4-task13-dashboard`)  
 **Base:** tip Task #13 `0e211cc` (PR #5 / #6 still not on `main` at Task #14 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
@@ -36,7 +36,7 @@
 - [x] Case study Rạng Đông (RAL) — done
 - [x] Timeline crawl + data quality score — done (derived; not append-only pipeline log)
 - Deliverable: Module 2 company detail API + UI
-- PR/branch: `cursor/phase4-task14-company-detail`
+- PR: https://github.com/thanhhale288/data-economy/pull/7 · Branch: `cursor/phase4-task14-company-detail` · Tip: `681e610`
 
 ### Làm thế nào
 - Waves: W1 explore FE/BE → W2 implement → W3 verify → W4 ship
@@ -47,7 +47,7 @@
 
 ### Còn lại / rủi ro
 - Append-only company crawl events / pipeline monitor → Task #15
-- `gh` token invalid locally — push/PR may need `gh auth refresh`
+- Agent Cursor không đọc được macOS keyring của `gh` (terminal user OK) — tạo PR từ terminal
 - Phase 3 PR #5 + Task #13 PR #6 still not on `main` — stack PRs
 
 ## Do not reopen / do not
