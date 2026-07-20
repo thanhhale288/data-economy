@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task16-ml-lab`  
-**Commit:** (see tip after commit)  
-**PR:** (see after open)  
+**Commit:** `863e525`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/9 (base: `cursor/phase4-task15-pipeline-monitor`)  
 **Base:** tip Task #15 `ea740d7` (PR #5–#8 still not on `main` at Task #16 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
@@ -33,7 +33,7 @@
 - [x] Feature importance từ artifact #12 — done (API + UI)
 - [x] Missing artifact → empty/banner — done
 - Deliverable: Module 4 ML Lab API + UI
-- PR: (fill after open) · Branch: `cursor/phase4-task16-ml-lab`
+- PR: https://github.com/thanhhale288/data-economy/pull/9 · Branch: `cursor/phase4-task16-ml-lab` · Tip: `863e525`
 
 ### Làm thế nào
 - Waves: W1 explore FE/BE → W2 implement → W3 verify → W4 ship
