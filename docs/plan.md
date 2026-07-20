@@ -252,6 +252,16 @@ erDiagram
 3. **Entity resolution**: ML classifier (TF-IDF + cosine similarity) match tên shop Shopee ↔ tên DN niêm yết
 4. **VSIC mapping**: bảng ánh xạ 1:1 ISIC Section C ↔ VSIC 10–33
 
+**Lưu bản sạch (quyết định 2026-07-19):**
+
+| Giai đoạn | Cách lưu | Ghi chú |
+| --------- | -------- | ------- |
+| **Phase 3** (clean → features → ML) | Artifact **Parquet** dưới `data/processed/` (`cleaned_macro.parquet`, `cleaned_marketplace.parquet`, `cleaning_report.json`, `features.parquet`) | **Không** ghi đè cột raw `gso_macro` / `oecd_indicators` / listings — giữ provenance nguồn |
+| **Phase 4** Module 3–4 (Pipeline monitor, ML Lab / API) | Có thể thêm bảng **staging** trong PostgreSQL *song song* với parquet | Khi API/FE cần query series sạch ổn định; không bắt buộc nếu backend đọc parquet đủ dùng |
+| Không dùng | Overwrite một cột raw bằng giá trị đã clean | Mất số liệu nguồn / làm mờ `source` (trái AGENTS + ADR-0001) |
+
+Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_engineering`. Feature load ưu tiên artifact clean (non-empty + có `iip`); fallback DB + `clean_timeseries` khi chưa chạy clean.
+
 ### 4.2. Feature engineering
 
 
@@ -300,14 +310,16 @@ erDiagram
 
 ### Module 3: Pipeline monitor
 
-- Trạng thái job crawl (GSO, marketplace, OECD)
-- Log lỗi, lần crawl cuối, số record mới
+- Trạng thái job crawl (GSO, marketplace, OECD) + job `data_cleaning`
+- Log lỗi, lần crawl cuối, số record mới; tóm tắt quality report (NaN sửa, outlier, VSIC fail)
+- **Tuỳ chọn Phase 4:** đọc/ghi staging Postgres cho bản sạch nếu cần monitor SQL; mặc định Phase 3 dùng parquet + `pipeline_jobs.detail`
 
 ### Module 4: ML Lab
 
 - So sánh 3 model (ARIMA vs XGBoost vs LSTM)
 - Biểu đồ forecast vs actual
 - Feature importance
+- Input features/forecast từ artifact Phase 3; staging chỉ thêm nếu API Lab cần query DB thay vì file
 
 ### Module 5: Benchmark (Phase 2 — tham chiếu SingStat BITE)
 
@@ -325,8 +337,8 @@ erDiagram
 | --------- | ---------- | ------- |
 | **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
 | **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Branch `cursor/phase2-enterprise-digital`. Caveat bên dưới |
-| 3 — Clean, Features & ML | Một phần scaffold | Feature eng đã join GSO IIP + INDIGO + MEI_IP@EA20; ML chưa train thật |
-| 4 — Web hoàn thiện | Scaffold | React shell / API skeleton có; dashboard chưa hoàn thiện |
+| 3 — Clean, Features & ML | Đang làm (branch `cursor/phase3-clean-features-ml`) | #10 cleaning + #11 features DONE; **#12 ML** tiếp theo |
+| 4 — Web hoàn thiện | Scaffold | React shell / API skeleton có; dashboard chưa hoàn thiện; staging DB (nếu cần) gắn Module 3–4 |
 | 5 — Benchmark & Báo cáo | Chưa | |
 
 **Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
@@ -337,7 +349,7 @@ erDiagram
 - **Marketplace live (Shopee/TikTok):** tạm hoãn (anti-bot); pipeline + seed/fallback sẵn; discovery shop mới → sau.
 - Industry-ratio online khi không listing → sau (hiện để 0 + log, không bịa).
 
-**Git:** Phase 1 đã trên `origin/main`. Phase 2 trên branch `cursor/phase2-enterprise-digital`.
+**Git:** Phase 1 + Phase 2 đã trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml`.
 
 ### Giai đoạn 1: Nền tảng & Macro data (Tuần 1–5) — DONE
 
@@ -369,16 +381,15 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 
 ### Giai đoạn 3: Clean, Features & ML (Tuần 11–14)
 
-- Data cleaning pipeline (Prefect/Airflow DAGs)
-- Feature engineering
-- Train & evaluate ARIMA, XGBoost, LSTM
-- Model registry + API endpoints
+- [x] **Task #10 — Cleaning pipeline** (parquet artifacts; không overwrite raw; job `data_cleaning`)
+- [x] **Task #11 — Feature engineering** (lag/rolling/digital/financial/cross; broadcast/step-hold + provenance; không MEI_BCI giả; `features.parquet` + `features_manifest.json`; tests `tests/features`)
+- [x] **Task #12 — ML models** — train & evaluate ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE; walk-forward; model registry + API
 
 ### Giai đoạn 4: Web hoàn thiện & Demo (Tuần 15–17)
 
 - Dashboard modules 1–4
 - Company detail pages (Rạng Đông case study)
-- Pipeline monitor UI
+- Pipeline monitor UI (+ tuỳ chọn staging Postgres cho bản sạch — xem §4.1)
 - Integration testing end-to-end
 
 ### Giai đoạn 5: Benchmark & Báo cáo (Tuần 18)

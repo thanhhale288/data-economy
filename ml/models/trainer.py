@@ -1,6 +1,8 @@
-"""ARIMA, XGBoost, and LSTM model training."""
+"""Thin glue: wire DB + features into Wave 1 ARIMA / XGBoost / LSTM trainers."""
 
-from datetime import date, datetime, timedelta
+from __future__ import annotations
+
+from datetime import date
 from pathlib import Path
 
 import joblib
@@ -9,11 +11,26 @@ import pandas as pd
 from sqlalchemy.orm import Session
 
 from backend.app.models import GsoMacro, ModelPrediction, ModelRegistry
-from ml.evaluation.metrics import compute_all_metrics
+from ml.models.arima_model import (
+    EXOG_CANDIDATES,
+    InsufficientDataError as ArimaInsufficientDataError,
+    forecast_arima,
+    train_arima_model,
+)
+from ml.models.lstm_model import (
+    InsufficientDataError as LstmInsufficientDataError,
+    forecast_lstm,
+    train_lstm_model,
+)
+from ml.models.xgboost_model import forecast_xgboost, train_xgboost_model
 from pipeline.features.engineering import build_features
 
 MODELS_DIR = Path(__file__).resolve().parents[2] / "data" / "models"
 MODELS_DIR.mkdir(parents=True, exist_ok=True)
+
+ARIMA_ARTIFACT = MODELS_DIR / "arima_model.joblib"
+XGB_ARTIFACT = MODELS_DIR / "xgboost_model.joblib"
+LSTM_ARTIFACT = MODELS_DIR / "lstm_model.pt"
 
 
 def _get_iip_series(db: Session) -> pd.Series:
@@ -28,118 +45,143 @@ def _get_iip_series(db: Session) -> pd.Series:
     return df["value"]
 
 
+def _exog_from_features(db: Session, series: pd.Series) -> pd.DataFrame | None:
+    """Align optional ARIMA exog (indigo, indigo_lag1, mei_ip) to IIP periods."""
+    try:
+        features = build_features(db)
+    except Exception:
+        return None
+    if features is None or features.empty:
+        return None
+
+    cols = [c for c in EXOG_CANDIDATES if c in features.columns]
+    if not cols:
+        return None
+
+    frame = features[["period", *cols]].copy()
+    frame["period"] = pd.to_datetime(frame["period"])
+    frame = frame.set_index("period").sort_index()
+    aligned = frame.reindex(pd.to_datetime(pd.Index(series.index)))
+    if aligned.isna().all(axis=None):
+        return None
+    return aligned[cols]
+
+
+def _metrics_only(result: dict) -> dict:
+    return {
+        "mae": result.get("mae"),
+        "rmse": result.get("rmse"),
+        "mape": result.get("mape"),
+        "status": result.get("status", "ok"),
+    }
+
+
+def _align_preds_to_periods(
+    periods: list | None,
+    predictions: np.ndarray | list | None,
+    actuals: np.ndarray | list | None,
+) -> tuple[list, np.ndarray, np.ndarray]:
+    """Match lengths for registry rows.
+
+    LSTM may return flattened multi-step windows (n_windows * horizon). When
+    lengths differ, truncate all three to the shared min length so one value
+    is stored per period without inventing placeholders.
+    """
+    period_list = list(periods or [])
+    preds = np.asarray([] if predictions is None else predictions, dtype=float).ravel()
+    acts = np.asarray([] if actuals is None else actuals, dtype=float).ravel()
+    n = min(len(period_list), len(preds), len(acts))
+    if n == 0:
+        return [], np.array([]), np.array([])
+    return period_list[:n], preds[:n], acts[:n]
+
+
 def train_arima(db: Session) -> dict:
+    """Train ARIMA/SARIMAX via ``train_arima_model``; register real artifact path.
+
+    Eval uses exog from features when present. The saved full-history fit may
+    include those exog cols; ``generate_forecast`` then repeats the last known
+    exog row for ``exog_future`` (no growth placeholders).
+    """
     series = _get_iip_series(db)
-    train = series.iloc[:-6]
-    test = series.iloc[-6:]
+    if series.empty:
+        raise ArimaInsufficientDataError("no IIP_C series in database")
 
-    ema = train.ewm(span=6).mean()
-    last_ema = ema.iloc[-1]
-    growth = float(train.pct_change().mean())
-    forecast_vals = np.array([
-        last_ema * (1 + growth) ** (i + 1) for i in range(len(test))
-    ])
-    joblib.dump(
-        {"ema_span": 6, "last_value": float(train.iloc[-1]), "growth": growth},
-        MODELS_DIR / "arima_model.joblib",
+    exog = _exog_from_features(db, series)
+    result = train_arima_model(series, periods=series.index, exog=exog)
+
+    periods, preds, acts = _align_preds_to_periods(
+        result.get("test_periods", []),
+        result.get("predictions", []),
+        result.get("actuals", []),
     )
-
-    metrics = compute_all_metrics(test.values, forecast_vals)
-    _save_predictions(db, "arima", test.index, forecast_vals, test.values, metrics)
-    _register_model(db, "arima", "statistical", metrics)
+    metrics = _metrics_only(result)
+    if periods:
+        _save_predictions(db, "arima", periods, preds, acts, metrics)
+    _register_model(
+        db,
+        "arima",
+        "statistical",
+        metrics,
+        artifact_path=result["artifact_path"],
+    )
     return metrics
 
 
 def train_xgboost(db: Session) -> dict:
-    import xgboost as xgb
-
     df = build_features(db)
-    if len(df) < 12:
-        return {"mae": 0, "rmse": 0, "mape": 0}
+    result = train_xgboost_model(df)
 
-    feature_cols = [c for c in df.columns if c not in ("period", "iip")]
-    X = df[feature_cols].values
-    y = df["iip"].values
+    if result.get("status") == "insufficient_data":
+        return {
+            "mae": None,
+            "rmse": None,
+            "mape": None,
+            "status": "insufficient_data",
+            "n_train": result.get("n_train", 0),
+            "n_test": result.get("n_test", 0),
+        }
 
-    split = int(len(df) * 0.85)
-    X_train, X_test = X[:split], X[split:]
-    y_train, y_test = y[:split], y[split:]
-
-    model = xgb.XGBRegressor(
-        n_estimators=100, max_depth=4, learning_rate=0.1, random_state=42
+    periods, preds, acts = _align_preds_to_periods(
+        result.get("test_periods", []),
+        result.get("predictions", []),
+        result.get("actuals", []),
     )
-    model.fit(X_train, y_train)
-    preds = model.predict(X_test)
-    metrics = compute_all_metrics(y_test, preds)
-
-    joblib.dump(model, MODELS_DIR / "xgboost_model.joblib")
-    joblib.dump(feature_cols, MODELS_DIR / "xgboost_features.joblib")
-
-    periods = df["period"].iloc[split:].values
-    _save_predictions(db, "xgboost", periods, preds, y_test, metrics)
-    _register_model(db, "xgboost", "ml", metrics)
+    metrics = _metrics_only(result)
+    if periods:
+        _save_predictions(db, "xgboost", periods, preds, acts, metrics)
+    _register_model(
+        db,
+        "xgboost",
+        "ml",
+        metrics,
+        artifact_path=result["artifact_path"],
+    )
     return metrics
 
 
 def train_lstm(db: Session) -> dict:
-    import torch
-    import torch.nn as nn
+    series = _get_iip_series(db)
+    if series.empty:
+        raise LstmInsufficientDataError("no IIP_C series in database")
 
-    series = _get_iip_series(db).values
-    seq_len = 6
-    if len(series) < seq_len + 6:
-        return {"mae": 0, "rmse": 0, "mape": 0}
+    result = train_lstm_model(series, periods=series.index)
 
-    def create_sequences(data, sl):
-        X, y = [], []
-        for i in range(len(data) - sl):
-            X.append(data[i : i + sl])
-            y.append(data[i + sl])
-        return np.array(X), np.array(y)
-
-    X, y = create_sequences(series, seq_len)
-    split = int(len(X) * 0.85)
-    X_train, X_test = X[:split], X[split:]
-    y_train, y_test = y[:split], y[split:]
-
-    class LSTMModel(nn.Module):
-        def __init__(self):
-            super().__init__()
-            self.lstm = nn.LSTM(1, 32, batch_first=True)
-            self.fc = nn.Linear(32, 1)
-
-        def forward(self, x):
-            out, _ = self.lstm(x)
-            return self.fc(out[:, -1, :])
-
-    model = LSTMModel()
-    optimizer = torch.optim.Adam(model.parameters(), lr=0.01)
-    criterion = nn.MSELoss()
-
-    X_t = torch.FloatTensor(X_train).unsqueeze(-1)
-    y_t = torch.FloatTensor(y_train).unsqueeze(-1)
-
-    model.train()
-    for _ in range(20):
-        optimizer.zero_grad()
-        output = model(X_t)
-        loss = criterion(output, y_t)
-        loss.backward()
-        optimizer.step()
-
-    model.eval()
-    with torch.no_grad():
-        X_test_t = torch.FloatTensor(X_test).unsqueeze(-1)
-        preds = model(X_test_t).numpy().flatten()
-
-    metrics = compute_all_metrics(y_test, preds)
-    torch.save(model.state_dict(), MODELS_DIR / "lstm_model.pt")
-    joblib.dump(seq_len, MODELS_DIR / "lstm_seq_len.joblib")
-
-    iip_series = _get_iip_series(db)
-    periods = iip_series.index[seq_len + split : seq_len + split + len(y_test)]
-    _save_predictions(db, "lstm", periods, preds, y_test, metrics)
-    _register_model(db, "lstm", "dl", metrics)
+    periods, preds, acts = _align_preds_to_periods(
+        result.get("test_periods", []),
+        result.get("predictions", []),
+        result.get("actuals", []),
+    )
+    metrics = _metrics_only(result)
+    if periods:
+        _save_predictions(db, "lstm", periods, preds, acts, metrics)
+    _register_model(
+        db,
+        "lstm",
+        "dl",
+        metrics,
+        artifact_path=result["artifact_path"],
+    )
     return metrics
 
 
@@ -157,9 +199,9 @@ def _save_predictions(db, model_name, periods, preds, actuals, metrics):
         if existing:
             existing.predicted_value = float(preds[i])
             existing.actual_value = float(actuals[i])
-            existing.mae = metrics["mae"]
-            existing.rmse = metrics["rmse"]
-            existing.mape = metrics["mape"]
+            existing.mae = metrics.get("mae")
+            existing.rmse = metrics.get("rmse")
+            existing.mape = metrics.get("mape")
         else:
             db.add(
                 ModelPrediction(
@@ -168,15 +210,22 @@ def _save_predictions(db, model_name, periods, preds, actuals, metrics):
                     period=p,
                     predicted_value=float(preds[i]),
                     actual_value=float(actuals[i]),
-                    mae=metrics["mae"],
-                    rmse=metrics["rmse"],
-                    mape=metrics["mape"],
+                    mae=metrics.get("mae"),
+                    rmse=metrics.get("rmse"),
+                    mape=metrics.get("mape"),
                 )
             )
     db.commit()
 
 
-def _register_model(db, name, model_type, metrics):
+def _register_model(
+    db: Session,
+    name: str,
+    model_type: str,
+    metrics: dict,
+    *,
+    artifact_path: str | Path,
+) -> None:
     db.query(ModelRegistry).filter(ModelRegistry.model_name == name).update(
         {"is_active": False}
     )
@@ -186,7 +235,7 @@ def _register_model(db, name, model_type, metrics):
             model_type=model_type,
             version="1.0",
             metrics=metrics,
-            artifact_path=str(MODELS_DIR / f"{name}_model.joblib"),
+            artifact_path=str(artifact_path),
             is_active=True,
         )
     )
@@ -203,34 +252,105 @@ def train_all_models(db: Session) -> int:
         try:
             results[name] = func(db)
         except Exception as e:
-            results[name] = {"error": str(e)}
+            results[name] = {"error": str(e), "status": "error"}
     return len(results)
 
 
-def generate_forecast(db: Session, model_name: str, horizon: int = 6) -> dict:
-    series = _get_iip_series(db)
-    last_period = series.index[-1]
-
-    if model_name == "arima":
-        model_path = MODELS_DIR / "arima_model.joblib"
-        if model_path.exists():
-            fitted = joblib.load(model_path)
-            forecast = fitted.forecast(steps=horizon)
-            values = forecast.values if hasattr(forecast, "values") else forecast
-        else:
-            values = [series.iloc[-1] * (1 + 0.01 * i) for i in range(1, horizon + 1)]
-    else:
-        values = [series.iloc[-1] * (1 + 0.008 * i) for i in range(1, horizon + 1)]
-
-    forecasts = []
-    for i, val in enumerate(values):
+def _advance_periods(last_period, horizon: int) -> list[date]:
+    periods: list[date] = []
+    for i in range(horizon):
         if isinstance(last_period, date):
             month = last_period.month + i + 1
             year = last_period.year + (month - 1) // 12
             month = (month - 1) % 12 + 1
-            period = date(year, month, 1)
+            periods.append(date(year, month, 1))
         else:
-            period = last_period + timedelta(days=30 * (i + 1))
-        forecasts.append({"period": str(period), "predicted_value": round(float(val), 2)})
+            periods.append(
+                (pd.Timestamp(last_period) + pd.DateOffset(months=i + 1)).date()
+            )
+    return periods
 
-    return {"model": model_name, "horizon": horizon, "forecasts": forecasts}
+
+def _arima_exog_future(
+    artifact: dict,
+    db: Session,
+    series: pd.Series,
+    steps: int,
+) -> np.ndarray | None:
+    """Repeat last known exog row ``steps`` times when the artifact was fit with exog."""
+    exog_cols = artifact.get("exog_cols")
+    if not exog_cols:
+        return None
+
+    exog_hist = artifact.get("exog_history")
+    if exog_hist:
+        last_row = np.asarray(exog_hist[-1], dtype=float)
+        return np.tile(last_row, (steps, 1))
+
+    # Fallback: last non-null row from live features (same columns).
+    live = _exog_from_features(db, series)
+    if live is None:
+        raise ValueError(
+            "ARIMA artifact requires exog_future but no exog_history/features available"
+        )
+    cols = [c for c in exog_cols if c in live.columns]
+    if not cols:
+        raise ValueError(
+            f"ARIMA artifact exog_cols={exog_cols} not found in features"
+        )
+    last = live[cols].dropna(how="all").iloc[-1].astype(float).values
+    return np.tile(last, (steps, 1))
+
+
+def generate_forecast(db: Session, model_name: str, horizon: int = 6) -> dict:
+    """Forecast from real trained artifacts — never invent growth placeholder lines."""
+    if horizon < 1:
+        raise ValueError("horizon must be >= 1")
+
+    series = _get_iip_series(db)
+    if series.empty:
+        raise ValueError("no IIP_C series in database")
+    last_period = series.index[-1]
+
+    name = model_name.lower().strip()
+    if name == "arima":
+        path = ARIMA_ARTIFACT
+        if not path.exists():
+            raise FileNotFoundError(f"No trained artifact for arima: {path}")
+        artifact = joblib.load(path)
+        exog_future = _arima_exog_future(artifact, db, series, horizon)
+        values = forecast_arima(artifact, steps=horizon, exog_future=exog_future)
+    elif name == "xgboost":
+        path = XGB_ARTIFACT
+        if not path.exists():
+            raise FileNotFoundError(f"No trained artifact for xgboost: {path}")
+        history_df = build_features(db)
+        values = forecast_xgboost(path, history_df=history_df, steps=horizon)
+    elif name == "lstm":
+        path = LSTM_ARTIFACT
+        if not path.exists():
+            raise FileNotFoundError(f"No trained artifact for lstm: {path}")
+        if horizon > 6:
+            raise ValueError(
+                f"LSTM horizon={horizon} exceeds trained max of 6; require horizon <= 6"
+            )
+        values = forecast_lstm(
+            MODELS_DIR,
+            history=series.values,
+            steps=horizon,
+        )
+    else:
+        raise ValueError(f"Unknown model_name={model_name!r}; use arima|xgboost|lstm")
+
+    values = np.asarray(values, dtype=float).ravel()
+    if len(values) != horizon:
+        raise ValueError(
+            f"{name} forecast length {len(values)} != requested horizon {horizon}"
+        )
+
+    forecast_periods = _advance_periods(last_period, horizon)
+    forecasts = [
+        {"period": str(p), "predicted_value": round(float(val), 2)}
+        for p, val in zip(forecast_periods, values)
+    ]
+    return {"model": name, "horizon": horizon, "forecasts": forecasts}

@@ -8,6 +8,14 @@ Nguồn bổ sung khi cần chi tiết domain/công thức: `CONTEXT.md`, `docs/
 
 ## 1. Phân ngành & dữ liệu nền
 
+### Scaffold
+
+**Scaffold** = “dựng khung” ban đầu của project: tạo cấu trúc thư mục, Docker (db/redis), skeleton FastAPI + React, để sau đó gắn crawler/API/ML vào — chưa phải làm xong nghiệp vụ.
+
+Trong roadmap đây là **Task 1**: nền tảng chạy được trước khi làm mapping/seed và crawl.
+
+Một câu nhớ: **scaffold = khung nhà trống có sẵn chỗ gắn đồ, chưa phải ngôi nhà hoàn chỉnh.**
+
 ### ISIC Section C
 
 **ISIC** = hệ thống phân ngành kinh tế quốc tế (Liên Hợp Quốc).  
@@ -114,6 +122,28 @@ Chỉ số **tồn kho** công nghiệp. Plan: `INVENTORY_C`. Tương tự shipm
 **MEI** = Main Economic Indicators (OECD).  
 **MEI_IP** = Industrial Production Index của OECD (leading / so sánh quốc tế).
 
+### MEI_IP peer (EA20)
+
+**Peer** ở đây = **nền kinh tế “đối chiếu”**, không phải Việt Nam.
+
+OECD **không công bố** MEI Industrial Production cho `VNM`. Project không bịa số VN → lấy **MEI_IP của Euro area (`EA20`)** làm chỉ số dẫn (leading) phụ trợ dự báo IIP Việt Nam.
+
+Trong DB/feature:
+
+| | Giá trị |
+|--|---------|
+| `indicator_code` | `MEI_IP` |
+| `country` | `EA20` (không phải `VNM`) |
+| `source` | `OECD_PEER` |
+| Cột feature | thường tên `mei_ip` |
+
+**Được dùng:** lag/exog cho forecast IIP (kênh cầu xuất khẩu / chu kỳ quốc tế).  
+**Không được:** coi như số sản xuất của Việt Nam, hay so sánh DN VN với nhau bằng peer này.
+
+ADR-0001: GSO IIP là macro VN chính; INDIGO@VNM thật; MEI_IP@EA20 chỉ peer.
+
+Một câu nhớ: **mei_ip peer = IIP châu Âu dùng làm “chỉ báo phụ”, không phải IIP Việt Nam.**
+
 ### BCI
 
 **Business Confidence Index** — chỉ số tin tưởng kinh doanh (manufacturing).
@@ -157,7 +187,22 @@ Thư viện HTTP Python dùng để GET URL.
 
 ### Provenance / source
 
-Ghi nguồn gốc số liệu (`GSO`, `GSO_FALLBACK`, `seed:…`, `fallback:…`, `live`…).
+**Provenance** = **nguồn gốc / lý lịch** của một con số: nó đến từ đâu, lấy lúc nào, bằng cách nào.
+
+Ví dụ đời thường: trên hóa đơn ghi “Nhà cung cấp X, lô Y” — đó là provenance của hàng. Với data cũng vậy: mỗi record nên biết mình từ GSO live, CSV fallback, seed 10 DN, hay scrape Shopee.
+
+Trong project thường gắn nhãn kiểu:
+
+| Nhãn | Ý nghĩa |
+|------|---------|
+| `GSO` / `live` | Lấy từ nguồn chính lúc chạy |
+| `GSO_FALLBACK` / `fallback:…` | File dự phòng khi live fail |
+| `seed:…` | Dữ liệu mẫu trong repo |
+| `\|FIXTURE_OECD_RAW` | Fixture OECD local |
+
+**Tại sao quan trọng:** project cấm bịa số OECD/GSO. Có provenance thì biết số nào “thật”, số nào “demo/dự phòng”, không nhầm khi demo hay train ML.
+
+Một câu nhớ: **provenance = tem nguồn trên từng con số.**
 
 ### Wire PX-Web (cho shipment / inventory)
 
@@ -322,6 +367,18 @@ Trong project hay gặp theo vài nghĩa gần nhau:
 | **Replay a captured trace** | Giữ lại request/payload thật rồi chạy lại để tái hiện bug |
 
 Một câu nhớ: **trace = lần theo đường đi của dữ liệu hoặc của lời gọi hàm, không phải tự sinh số mới.**
+
+### Broadcast (feature engineering)
+
+**Broadcast** = lấy **một giá trị** (hoặc một kỳ) rồi **gắn lặp lại** lên nhiều hàng khác — thường là mọi tháng macro.
+
+Ví dụ: BCTC / digital metrics chỉ có **1 kỳ** (năm 2023), trong khi IIP có 60 tháng. Broadcast = copy điểm số đó vào cả 60 tháng để join được bảng feature.
+
+**Khác monthly series thật:** nếu mỗi tháng có quan sát riêng thì không cần broadcast. Prompt Task #11 bắt **ghi chú provenance**: broadcast ≠ đo được từng tháng; chỉ là cách join khi dữ liệu thưa.
+
+Gần với **step-hold** (giữ nguyên giá trị năm xuyên các tháng trong năm) — đều là “kéo giá trị cũ phủ lên khung thời gian dày hơn”, không phải nội suy bịa xu hướng.
+
+Một câu nhớ: **broadcast = một số, dán lên nhiều tháng để bảng khớp nhau.**
 
 ---
 

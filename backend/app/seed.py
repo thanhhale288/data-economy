@@ -59,10 +59,112 @@ def load_vsic_mappings(db) -> tuple[int, int]:
     return inserted, updated
 
 
+def _migrate_legacy_bwe_to_bmp(db) -> bool:
+    """Rename stale seed ticker BWE → BMP in place (keep company_id / FKs).
+
+    Older Phase 2 DBs used BWE for the plastics sample slot; the fixed seed list
+    is BMP (Nhựa Bình Minh). Returns True when a rename happened.
+    """
+    bmp = db.query(Company).filter(Company.stock_code == "BMP").first()
+    bwe = db.query(Company).filter(Company.stock_code == "BWE").first()
+    if bmp is not None or bwe is None:
+        return False
+    bwe.stock_code = "BMP"
+    db.flush()
+    return True
+
+
+def _upsert_financial(db, company_id: int, fin: dict) -> None:
+    if not fin:
+        return
+    period = date.fromisoformat(fin["period"])
+    # Seed annual is authoritative; drop other annual rows (e.g. stale BWE-era)
+    # but keep CafeF quarterly reports.
+    for row in (
+        db.query(FinancialReport)
+        .filter(
+            FinancialReport.company_id == company_id,
+            FinancialReport.report_type == "annual",
+            FinancialReport.period != period,
+        )
+        .all()
+    ):
+        db.delete(row)
+
+    existing = (
+        db.query(FinancialReport)
+        .filter(
+            FinancialReport.company_id == company_id,
+            FinancialReport.period == period,
+            FinancialReport.report_type == "annual",
+        )
+        .first()
+    )
+    fields = {
+        "revenue": fin.get("revenue"),
+        "profit_before_tax": fin.get("profit_before_tax"),
+        "net_profit": fin.get("net_profit"),
+        "total_assets": fin.get("total_assets"),
+        "total_equity": fin.get("total_equity"),
+        "current_assets": fin.get("current_assets"),
+        "current_liabilities": fin.get("current_liabilities"),
+        "operating_expenses": fin.get("operating_expenses"),
+        "cost_of_goods": fin.get("cost_of_goods"),
+        "rental_cost": fin.get("rental_cost"),
+        "remuneration": fin.get("remuneration"),
+        "employees": fin.get("employees"),
+        "gross_margin": fin.get("gross_margin"),
+    }
+    if existing:
+        for key, value in fields.items():
+            setattr(existing, key, value)
+        return
+    db.add(
+        FinancialReport(
+            company_id=company_id,
+            period=period,
+            report_type="annual",
+            **fields,
+        )
+    )
+
+
+def _upsert_website_presence(db, company_id: int, digital_presence: list) -> None:
+    for dp in digital_presence or []:
+        if dp.get("channel_type") != "website":
+            continue
+        existing = (
+            db.query(DigitalPresence)
+            .filter(
+                DigitalPresence.company_id == company_id,
+                DigitalPresence.channel_type == "website",
+            )
+            .first()
+        )
+        if existing:
+            existing.url = dp["url"]
+            existing.has_checkout = dp.get("has_checkout", False)
+            existing.match_confidence = dp.get("match_confidence")
+            continue
+        db.add(
+            DigitalPresence(
+                company_id=company_id,
+                channel_type="website",
+                url=dp["url"],
+                has_checkout=dp.get("has_checkout", False),
+                match_confidence=dp.get("match_confidence"),
+                crawled_at=datetime.now(timezone.utc),
+            )
+        )
+
+
 def load_companies(db) -> tuple[int, int]:
     path = DATA_DIR / "seeds" / "companies.json"
     with open(path) as f:
         companies = json.load(f)
+
+    if _migrate_legacy_bwe_to_bmp(db):
+        print("Migrated legacy stock_code BWE → BMP (kept company_id / related rows)")
 
     inserted = 0
     updated = 0
@@ -78,7 +180,13 @@ def load_companies(db) -> tuple[int, int]:
                 "digital_channels",
                 "description",
             ):
-                setattr(existing, field, c.get(field) if field != "has_ecommerce_site" else c.get(field, False))
+                setattr(
+                    existing,
+                    field,
+                    c.get(field) if field != "has_ecommerce_site" else c.get(field, False),
+                )
+            _upsert_financial(db, existing.id, c.get("financial", {}))
+            _upsert_website_presence(db, existing.id, c.get("digital_presence", []))
             updated += 1
             continue
 
@@ -95,28 +203,7 @@ def load_companies(db) -> tuple[int, int]:
         db.add(company)
         db.flush()
 
-        fin = c.get("financial", {})
-        if fin:
-            db.add(
-                FinancialReport(
-                    company_id=company.id,
-                    period=date.fromisoformat(fin["period"]),
-                    report_type="annual",
-                    revenue=fin.get("revenue"),
-                    profit_before_tax=fin.get("profit_before_tax"),
-                    net_profit=fin.get("net_profit"),
-                    total_assets=fin.get("total_assets"),
-                    total_equity=fin.get("total_equity"),
-                    current_assets=fin.get("current_assets"),
-                    current_liabilities=fin.get("current_liabilities"),
-                    operating_expenses=fin.get("operating_expenses"),
-                    cost_of_goods=fin.get("cost_of_goods"),
-                    rental_cost=fin.get("rental_cost"),
-                    remuneration=fin.get("remuneration"),
-                    employees=fin.get("employees"),
-                    gross_margin=fin.get("gross_margin"),
-                )
-            )
+        _upsert_financial(db, company.id, c.get("financial", {}))
 
         for dp in c.get("digital_presence", []):
             db.add(
