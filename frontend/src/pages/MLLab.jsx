@@ -6,9 +6,9 @@ import {
 import { api } from '../api'
 
 const MODEL_OPTIONS = [
-  { id: 'arima', label: 'ARIMA', color: '#0f3460' },
-  { id: 'xgboost', label: 'XGBoost', color: '#e94560' },
-  { id: 'lstm', label: 'LSTM', color: '#16a085' },
+  { id: 'arima', label: 'ARIMA', color: '#1e3a5f' },
+  { id: 'xgboost', label: 'XGBoost', color: '#0d9488' },
+  { id: 'lstm', label: 'LSTM', color: '#2563eb' },
 ]
 
 function periodLabel(p) {
@@ -269,9 +269,9 @@ export default function MLLab() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="mae" fill="#e94560" name="MAE" />
-                <Bar dataKey="rmse" fill="#0f3460" name="RMSE" />
-                <Bar dataKey="mape" fill="#16a085" name="MAPE %" />
+                <Bar dataKey="mae" fill="#0d9488" name="MAE" />
+                <Bar dataKey="rmse" fill="#1e3a5f" name="RMSE" />
+                <Bar dataKey="mape" fill="#2563eb" name="MAPE %" />
               </BarChart>
             </ResponsiveContainer>
             <p className="chart-note">Nguồn: GET /api/ml/models · metrics từ train #12 (null → không vẽ thành 0).</p>
@@ -330,8 +330,8 @@ export default function MLLab() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="actual" stroke="#0f3460" strokeWidth={2} name="Actual" connectNulls={false} />
-              <Line type="monotone" dataKey="predicted" stroke="#e94560" strokeWidth={2} strokeDasharray="5 5" name="Predicted" connectNulls={false} />
+              <Line type="monotone" dataKey="actual" stroke="#1e3a5f" strokeWidth={2} name="Actual" connectNulls={false} />
+              <Line type="monotone" dataKey="predicted" stroke="#0d9488" strokeWidth={2} strokeDasharray="5 5" name="Predicted" connectNulls={false} />
             </LineChart>
           </ResponsiveContainer>
         )}
@@ -356,8 +356,8 @@ export default function MLLab() {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Line type="monotone" dataKey="actual" stroke="#0f3460" strokeWidth={2} name="IIP actual" connectNulls={false} dot={false} />
-                <Line type="monotone" dataKey="forecast" stroke="#e94560" strokeWidth={2} strokeDasharray="5 5" name="Forecast" connectNulls={false} dot={false} />
+                <Line type="monotone" dataKey="actual" stroke="#1e3a5f" strokeWidth={2} name="IIP actual" connectNulls={false} dot={false} />
+                <Line type="monotone" dataKey="forecast" stroke="#0d9488" strokeWidth={2} strokeDasharray="5 5" name="Forecast" connectNulls={false} dot={false} />
               </LineChart>
             </ResponsiveContainer>
             <p className="chart-note">
@@ -388,7 +388,7 @@ export default function MLLab() {
                 <XAxis type="number" />
                 <YAxis type="category" dataKey="feature" width={110} tick={{ fontSize: 11 }} />
                 <Tooltip />
-                <Bar dataKey="gain" fill="#e94560" name="Gain" />
+                <Bar dataKey="gain" fill="#0d9488" name="Gain" />
               </BarChart>
             </ResponsiveContainer>
             <p className="chart-note">

@@ -1,13 +1,55 @@
-import { useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
+import { createPortal } from 'react-dom'
 import { api } from '../api'
+import { formatGrouped, parseGrouped } from '../format'
 
 const METRIC_LABELS = {
-  roa: 'Return on Assets (ROA)',
-  roe: 'Return on Equity (ROE)',
-  current_ratio: 'Current Ratio',
-  equity_ratio: 'Equity Ratio',
-  revenue_per_worker: 'Revenue per Worker',
-  profit_per_worker: 'Profit per Worker',
+  roa: 'Tỷ suất sinh lời trên tài sản (ROA)',
+  roe: 'Tỷ suất sinh lời trên vốn CSH (ROE)',
+  current_ratio: 'Hệ số thanh toán hiện hành',
+  equity_ratio: 'Tỷ trọng vốn chủ sở hữu',
+  revenue_per_worker: 'Doanh thu trên lao động',
+  profit_per_worker: 'Lợi nhuận trên lao động',
+}
+
+/** Công thức khớp `compute_benchmark_ratios` — đúng field form, không bịa “average”. */
+const METRIC_INFO = {
+  roa: {
+    title: 'Tỷ suất sinh lời trên tài sản (ROA)',
+    numerator: 'Lợi nhuận trước thuế',
+    denominator: 'Tổng tài sản',
+    blurb: 'Đo hiệu quả sử dụng tài sản để tạo lợi nhuận.',
+  },
+  roe: {
+    title: 'Tỷ suất sinh lời trên vốn CSH (ROE)',
+    numerator: 'Lợi nhuận trước thuế',
+    denominator: 'Vốn chủ sở hữu',
+    blurb: 'Đo mức sinh lời cho chủ sở hữu so với vốn CSH trên sổ sách.',
+  },
+  current_ratio: {
+    title: 'Hệ số thanh toán hiện hành',
+    numerator: 'Tài sản ngắn hạn',
+    denominator: 'Nợ ngắn hạn',
+    blurb: 'Khả năng thanh khoản: đáp ứng nghĩa vụ ngắn hạn bằng tài sản ngắn hạn.',
+  },
+  equity_ratio: {
+    title: 'Tỷ trọng vốn chủ sở hữu',
+    numerator: 'Vốn chủ sở hữu',
+    denominator: 'Tổng tài sản',
+    blurb: 'Tỷ lệ tài sản được tài trợ bằng vốn chủ sở hữu thay vì nợ.',
+  },
+  revenue_per_worker: {
+    title: 'Doanh thu trên lao động',
+    numerator: 'Doanh thu hoạt động',
+    denominator: 'Số lao động',
+    blurb: 'Chỉ số gần đúng năng suất lao động theo doanh thu hoạt động trên mỗi người.',
+  },
+  profit_per_worker: {
+    title: 'Lợi nhuận trên lao động',
+    numerator: 'Lợi nhuận trước thuế',
+    denominator: 'Số lao động',
+    blurb: 'Chỉ số gần đúng năng suất theo lợi nhuận trước thuế trên mỗi người.',
+  },
 }
 
 const COMPARISON_LABELS = {
@@ -19,15 +61,29 @@ const COMPARISON_LABELS = {
 }
 
 const WARNING_LABELS = {
-  insufficient_peers: 'Không đủ peer ngành để tính percentile — không bịa số.',
-  prototype_listed_sample: 'Prototype: peer = DN niêm yết seed cùng phân ngành VSIC 2 số, không phải chuẩn quốc gia.',
-  small_peer_sample: 'Mẫu peer nhỏ (< 3 DN) — percentile chỉ mang tính tham khảo.',
+  insufficient_peers: 'Không đủ peer ngành để tính phân vị — không bịa số.',
+  prototype_listed_sample:
+    'Bản demo: peer = DN niêm yết seed cùng phân ngành VSIC 2 số, không phải chuẩn quốc gia.',
+  small_peer_sample: 'Mẫu peer nhỏ (< 3 DN) — phân vị chỉ mang tính tham khảo.',
 }
 
 const KEY_EXPENDITURE_ROWS = [
-  { key: 'purchase_goods_share', label: 'Purchase of Goods & Materials' },
-  { key: 'rental_cost_share', label: 'Rental Cost of Premises' },
-  { key: 'remuneration_share', label: 'Remuneration' },
+  { key: 'purchase_goods_share', label: 'Chi phí hàng hóa & nguyên vật liệu' },
+  { key: 'rental_cost_share', label: 'Chi phí thuê mặt bằng' },
+  { key: 'remuneration_share', label: 'Chi phí nhân công (thù lao)' },
+]
+
+const MONEY_FIELDS = [
+  'operating_revenue',
+  'profit_before_tax',
+  'operating_expenses',
+  'cost_of_goods',
+  'rental_cost',
+  'remuneration',
+  'total_assets',
+  'total_equity',
+  'current_assets',
+  'current_liabilities',
 ]
 
 const EMPTY_FORM = {
@@ -48,11 +104,18 @@ const EMPTY_FORM = {
 /** VSIC division with no seed peers — demos honest insufficient_peers (user supplies own inputs). */
 const NO_PEER_VSIC = '1100'
 
+function displayNum(value) {
+  if (value == null || value === '') return ''
+  const n = typeof value === 'number' ? value : parseGrouped(value)
+  if (n == null) return String(value)
+  return formatGrouped(n, { maxFractionDigits: 0 })
+}
+
 function formatRatio(value) {
   if (value == null) return '—'
   if (typeof value !== 'number') return value
   if (value < 10) return `${(value * 100).toFixed(1)}%`
-  return value.toLocaleString()
+  return formatGrouped(value)
 }
 
 /** Share/ratio as percent string; null → null (caller renders N/A). */
@@ -69,22 +132,135 @@ function shareToPct(value) {
 function formFromPrefill(data) {
   return {
     vsic_code: data.vsic_code ?? '',
-    operating_revenue: data.operating_revenue ?? '',
-    profit_before_tax: data.profit_before_tax ?? '',
-    employees: data.employees ?? '',
-    operating_expenses: data.operating_expenses ?? '',
-    cost_of_goods: data.cost_of_goods ?? '',
-    rental_cost: data.rental_cost ?? '',
-    remuneration: data.remuneration ?? '',
-    total_assets: data.total_assets ?? '',
-    total_equity: data.total_equity ?? '',
-    current_assets: data.current_assets ?? '',
-    current_liabilities: data.current_liabilities ?? '',
+    operating_revenue: displayNum(data.operating_revenue),
+    profit_before_tax: displayNum(data.profit_before_tax),
+    employees: displayNum(data.employees),
+    operating_expenses: displayNum(data.operating_expenses),
+    cost_of_goods: displayNum(data.cost_of_goods),
+    rental_cost: displayNum(data.rental_cost),
+    remuneration: displayNum(data.remuneration),
+    total_assets: displayNum(data.total_assets),
+    total_equity: displayNum(data.total_equity),
+    current_assets: displayNum(data.current_assets),
+    current_liabilities: displayNum(data.current_liabilities),
   }
 }
 
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function MetricInfoTip({ metricKey }) {
+  const info = METRIC_INFO[metricKey]
+  const btnRef = useRef(null)
+  const [open, setOpen] = useState(false)
+  const [coords, setCoords] = useState(null)
+
+  const updatePlace = () => {
+    if (!btnRef.current) return
+    const rect = btnRef.current.getBoundingClientRect()
+    const width = Math.min(340, window.innerWidth - 24)
+    let left = rect.left + rect.width / 2 - width / 2
+    left = Math.max(12, Math.min(left, window.innerWidth - width - 12))
+    const gap = 10
+    const preferAbove = rect.top > 140
+    if (preferAbove) {
+      setCoords({
+        width,
+        left,
+        bottom: window.innerHeight - rect.top + gap,
+        top: undefined,
+        placeAbove: true,
+      })
+    } else {
+      setCoords({
+        width,
+        left,
+        top: rect.bottom + gap,
+        bottom: undefined,
+        placeAbove: false,
+      })
+    }
+  }
+
+  useLayoutEffect(() => {
+    if (!open) return undefined
+    updatePlace()
+    window.addEventListener('scroll', updatePlace, true)
+    window.addEventListener('resize', updatePlace)
+    return () => {
+      window.removeEventListener('scroll', updatePlace, true)
+      window.removeEventListener('resize', updatePlace)
+    }
+  }, [open])
+
+  if (!info) return null
+
+  const show = () => {
+    updatePlace()
+    setOpen(true)
+  }
+  const hide = () => {
+    setOpen(false)
+    setCoords(null)
+  }
+
+  const pop = open && coords
+    ? createPortal(
+        <div
+          className={`metric-info-pop is-open${coords.placeAbove ? ' is-above' : ' is-below'}`}
+          role="tooltip"
+          style={{
+            top: coords.top,
+            bottom: coords.bottom,
+            left: coords.left,
+            width: coords.width,
+          }}
+        >
+          <span className="metric-info-head">
+            <span className="metric-info-badge" aria-hidden="true">
+              <svg viewBox="0 0 32 32" width="22" height="22">
+                <rect x="6" y="8" width="14" height="16" rx="2" fill="#38bdf8" />
+                <rect x="9" y="11" width="8" height="2" rx="1" fill="#e0f2fe" />
+                <rect x="9" y="15" width="8" height="2" rx="1" fill="#e0f2fe" />
+                <rect x="9" y="19" width="5" height="2" rx="1" fill="#e0f2fe" />
+                <circle cx="22" cy="20" r="5" fill="#fbbf24" />
+                <circle cx="22" cy="20" r="3.2" fill="#f59e0b" />
+              </svg>
+            </span>
+            <span className="metric-info-title">{info.title}</span>
+            <span className="metric-info-eq" aria-hidden="true">=</span>
+            <span className="metric-info-frac">
+              <span className="metric-info-num">{info.numerator}</span>
+              <span className="metric-info-den">{info.denominator}</span>
+            </span>
+          </span>
+          <span className="metric-info-body">{info.blurb}</span>
+        </div>,
+        document.body,
+      )
+    : null
+
+  return (
+    <span
+      className="metric-info"
+      onMouseEnter={show}
+      onMouseLeave={hide}
+    >
+      <button
+        ref={btnRef}
+        type="button"
+        className="metric-info-btn"
+        aria-label={`Công thức ${info.title}`}
+        aria-expanded={open}
+        onFocus={show}
+        onBlur={hide}
+      >
+        i
+      </button>
+      {pop}
+    </span>
+  )
 }
 
 function ShareDonut({ label, value, tone }) {
@@ -97,7 +273,7 @@ function ShareDonut({ label, value, tone }) {
     return (
       <div className="singstat-donut">
         <div className="singstat-donut-ring singstat-donut-ring--empty" aria-hidden="true">
-          <span className="singstat-donut-na">N/A</span>
+          <span className="singstat-donut-na">Không có</span>
         </div>
         <div className="singstat-donut-caption">{label}</div>
       </div>
@@ -137,9 +313,9 @@ function KeyExpenditureRow({ label, industry, firm }) {
       <div className="singstat-key-row-label">{label}</div>
       <div className="singstat-key-bars">
         <div className="singstat-key-bar-line">
-          <span className="singstat-key-bar-tag singstat-key-bar-tag--industry">Industry</span>
+          <span className="singstat-key-bar-tag singstat-key-bar-tag--industry">Ngành</span>
           {indPct == null ? (
-            <span className="singstat-na">N/A</span>
+            <span className="singstat-na">Không có</span>
           ) : (
             <>
               <div className="singstat-key-bar-track">
@@ -153,9 +329,9 @@ function KeyExpenditureRow({ label, industry, firm }) {
           )}
         </div>
         <div className="singstat-key-bar-line">
-          <span className="singstat-key-bar-tag singstat-key-bar-tag--firm">Your firm</span>
+          <span className="singstat-key-bar-tag singstat-key-bar-tag--firm">DN của bạn</span>
           {firmPct == null ? (
-            <span className="singstat-na">N/A</span>
+            <span className="singstat-na">Không có</span>
           ) : (
             <>
               <div className="singstat-key-bar-track">
@@ -185,28 +361,27 @@ export default function Benchmark() {
     setPrefillSource(null)
   }
 
+  const handleMoneyBlur = (field) => {
+    setForm((prev) => {
+      const n = parseGrouped(prev[field])
+      if (n == null) return prev
+      return { ...prev, [field]: formatGrouped(n, { maxFractionDigits: 0 }) }
+    })
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
     setError(null)
     try {
       const payload = { ...form }
-      for (const key of [
-        'operating_expenses',
-        'cost_of_goods',
-        'rental_cost',
-        'remuneration',
-        'total_assets',
-        'total_equity',
-        'current_assets',
-        'current_liabilities',
-      ]) {
+      for (const key of MONEY_FIELDS) {
         if (payload[key] === '' || payload[key] == null) payload[key] = null
-        else payload[key] = Number(payload[key])
+        else payload[key] = parseGrouped(payload[key])
       }
-      payload.operating_revenue = Number(payload.operating_revenue)
-      payload.profit_before_tax = Number(payload.profit_before_tax)
-      payload.employees = Number(payload.employees)
+      payload.operating_revenue = parseGrouped(payload.operating_revenue)
+      payload.profit_before_tax = parseGrouped(payload.profit_before_tax)
+      payload.employees = parseGrouped(payload.employees)
       const res = await api.benchmark(payload)
       setResult(res)
     } catch (err) {
@@ -231,7 +406,7 @@ export default function Benchmark() {
       setPrefillSource(null)
       setError(
         err.message?.includes('404')
-          ? `Không có BCTC đủ field để prefill «${stockCode}» — không nạp số bịa.`
+          ? `Không có BCTC đủ trường để nạp «${stockCode}» — không nạp số bịa.`
           : (err.message || `Không nạp được ${stockCode}.`)
       )
     } finally {
@@ -260,10 +435,10 @@ export default function Benchmark() {
 
   return (
     <div>
-      <h2 className="page-title">Benchmark My Performance</h2>
+      <h2 className="page-title">So sánh hiệu quả doanh nghiệp</h2>
       <p style={{ color: '#888', marginBottom: 24 }}>
-        So sánh hiệu quả doanh nghiệp với peer cùng phân ngành VSIC (tham chiếu UX SingStat BITE).
-        Prefill lấy từ BCTC API — thiếu mẫu thì percentile null, không bịa 50th.
+        So sánh chỉ số DN với peer cùng phân ngành VSIC (tham chiếu UX SingStat BITE).
+        Nạp form từ BCTC qua API — thiếu mẫu thì phân vị để trống, không bịa mức 50.
       </p>
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
@@ -273,7 +448,7 @@ export default function Benchmark() {
           onClick={() => loadPrefill('RAL')}
           disabled={loading}
         >
-          Nạp RAL từ BCTC (prefill API)
+          Nạp RAL từ BCTC
         </button>
         <button type="button" className="btn" onClick={() => loadPrefill('REE')} disabled={loading}>
           Nạp REE (cùng ngành 27)
@@ -291,7 +466,7 @@ export default function Benchmark() {
 
       {prefillSource && (
         <p className="chart-note" style={{ marginBottom: 12 }}>
-          Form đã nạp từ <code>/api/benchmark/prefill/{prefillSource}</code> — số liệu BCTC đã lưu, không hard-code.
+          Form đã nạp từ <code>/api/benchmark/prefill/{prefillSource}</code> — số liệu BCTC đã lưu, không ghi cứng trên giao diện.
         </p>
       )}
 
@@ -304,69 +479,123 @@ export default function Benchmark() {
       <form onSubmit={handleSubmit} className="chart-container">
         <div className="form-grid">
           <div className="form-group">
-            <label>VSIC Code</label>
+            <label>Mã VSIC</label>
             <input value={form.vsic_code} onChange={(e) => handleChange('vsic_code', e.target.value)} required />
           </div>
           <div className="form-group">
-            <label>Operating revenue (VND)</label>
-            <input type="number" value={form.operating_revenue} onChange={(e) => handleChange('operating_revenue', e.target.value)} required />
+            <label>Doanh thu hoạt động (VND)</label>
+            <input
+              inputMode="numeric"
+              value={form.operating_revenue}
+              onChange={(e) => handleChange('operating_revenue', e.target.value)}
+              onBlur={() => handleMoneyBlur('operating_revenue')}
+              required
+            />
           </div>
           <div className="form-group">
-            <label>Profit before tax (VND)</label>
-            <input type="number" value={form.profit_before_tax} onChange={(e) => handleChange('profit_before_tax', e.target.value)} required />
+            <label>Lợi nhuận trước thuế (VND)</label>
+            <input
+              inputMode="numeric"
+              value={form.profit_before_tax}
+              onChange={(e) => handleChange('profit_before_tax', e.target.value)}
+              onBlur={() => handleMoneyBlur('profit_before_tax')}
+              required
+            />
           </div>
           <div className="form-group">
-            <label>Number of employees</label>
-            <input type="number" value={form.employees} onChange={(e) => handleChange('employees', e.target.value)} required />
+            <label>Số lao động</label>
+            <input
+              inputMode="numeric"
+              value={form.employees}
+              onChange={(e) => handleChange('employees', e.target.value)}
+              onBlur={() => handleMoneyBlur('employees')}
+              required
+            />
           </div>
         </div>
 
         <div className="singstat-form-block">
           <div className="form-group">
-            <label>Operating expenses (VND)</label>
+            <label>Chi phí hoạt động (VND)</label>
             <input
-              type="number"
+              inputMode="numeric"
               value={form.operating_expenses}
               onChange={(e) => handleChange('operating_expenses', e.target.value)}
+              onBlur={() => handleMoneyBlur('operating_expenses')}
             />
           </div>
-          <p className="singstat-of-which">Of which</p>
+          <p className="singstat-of-which">Trong đó</p>
           <div className="form-grid singstat-of-which-grid">
             <div className="form-group">
-              <label>Cost of goods &amp; materials (VND)</label>
-              <input type="number" value={form.cost_of_goods} onChange={(e) => handleChange('cost_of_goods', e.target.value)} />
+              <label>Giá vốn hàng bán &amp; NVL (VND)</label>
+              <input
+                inputMode="numeric"
+                value={form.cost_of_goods}
+                onChange={(e) => handleChange('cost_of_goods', e.target.value)}
+                onBlur={() => handleMoneyBlur('cost_of_goods')}
+              />
             </div>
             <div className="form-group">
-              <label>Rental cost of premises (VND)</label>
-              <input type="number" value={form.rental_cost} onChange={(e) => handleChange('rental_cost', e.target.value)} />
+              <label>Chi phí thuê mặt bằng (VND)</label>
+              <input
+                inputMode="numeric"
+                value={form.rental_cost}
+                onChange={(e) => handleChange('rental_cost', e.target.value)}
+                onBlur={() => handleMoneyBlur('rental_cost')}
+              />
             </div>
             <div className="form-group">
-              <label>Remuneration (VND)</label>
-              <input type="number" value={form.remuneration} onChange={(e) => handleChange('remuneration', e.target.value)} />
+              <label>Chi phí nhân công / thù lao (VND)</label>
+              <input
+                inputMode="numeric"
+                value={form.remuneration}
+                onChange={(e) => handleChange('remuneration', e.target.value)}
+                onBlur={() => handleMoneyBlur('remuneration')}
+              />
             </div>
           </div>
         </div>
 
         <div className="form-grid" style={{ marginTop: 8 }}>
           <div className="form-group">
-            <label>Total assets (VND)</label>
-            <input type="number" value={form.total_assets} onChange={(e) => handleChange('total_assets', e.target.value)} />
+            <label>Tổng tài sản (VND)</label>
+            <input
+              inputMode="numeric"
+              value={form.total_assets}
+              onChange={(e) => handleChange('total_assets', e.target.value)}
+              onBlur={() => handleMoneyBlur('total_assets')}
+            />
           </div>
           <div className="form-group">
-            <label>Total equity (VND)</label>
-            <input type="number" value={form.total_equity} onChange={(e) => handleChange('total_equity', e.target.value)} />
+            <label>Vốn chủ sở hữu (VND)</label>
+            <input
+              inputMode="numeric"
+              value={form.total_equity}
+              onChange={(e) => handleChange('total_equity', e.target.value)}
+              onBlur={() => handleMoneyBlur('total_equity')}
+            />
           </div>
           <div className="form-group">
-            <label>Current assets (VND)</label>
-            <input type="number" value={form.current_assets} onChange={(e) => handleChange('current_assets', e.target.value)} />
+            <label>Tài sản ngắn hạn (VND)</label>
+            <input
+              inputMode="numeric"
+              value={form.current_assets}
+              onChange={(e) => handleChange('current_assets', e.target.value)}
+              onBlur={() => handleMoneyBlur('current_assets')}
+            />
           </div>
           <div className="form-group">
-            <label>Current liabilities (VND)</label>
-            <input type="number" value={form.current_liabilities} onChange={(e) => handleChange('current_liabilities', e.target.value)} />
+            <label>Nợ ngắn hạn (VND)</label>
+            <input
+              inputMode="numeric"
+              value={form.current_liabilities}
+              onChange={(e) => handleChange('current_liabilities', e.target.value)}
+              onBlur={() => handleMoneyBlur('current_liabilities')}
+            />
           </div>
         </div>
         <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: 16 }}>
-          {loading ? 'Đang so sánh...' : 'Compare Benchmark'}
+          {loading ? 'Đang so sánh...' : 'So sánh benchmark'}
         </button>
       </form>
 
@@ -380,13 +609,13 @@ export default function Benchmark() {
         <div style={{ marginTop: 24 }}>
           <div className="chart-container" style={{ marginBottom: 16 }}>
             <div style={{ fontSize: 14 }}>
-              Peer scope: <strong>{result.peer_scope || '—'}</strong>
+              Phạm vi peer: <strong>{result.peer_scope || '—'}</strong>
               {' · '}
               Số peer BCTC: <strong>{result.peer_count ?? 0}</strong>
               {insufficientPeers && (
                 <>
                   {' '}
-                  <span className="badge badge-warning">insufficient_peers</span>
+                  <span className="badge badge-warning">thiếu peer</span>
                 </>
               )}
             </div>
@@ -399,7 +628,7 @@ export default function Benchmark() {
             )}
             {insufficientPeers && (
               <div className="empty-state" style={{ marginTop: 12 }}>
-                Thiếu peer cùng phân ngành — percentile = N/A (không bịa 50th).
+                Thiếu peer cùng phân ngành — phân vị = Không có (không bịa mức 50).
                 Chỉ số DN (nếu đủ input) vẫn tính từ form; TB ngành / xếp hạng để trống.
               </div>
             )}
@@ -409,14 +638,14 @@ export default function Benchmark() {
                 className="singstat-jump-btn"
                 onClick={() => scrollToId('singstat-expenditure')}
               >
-                Compare Expenditure Related Ratio
+                So sánh tỷ lệ liên quan chi phí
               </button>
               <button
                 type="button"
                 className="singstat-jump-btn"
                 onClick={() => scrollToId('singstat-kpi')}
               >
-                Compare Performance by Percentile
+                So sánh hiệu quả theo phân vị
               </button>
             </div>
           </div>
@@ -424,7 +653,7 @@ export default function Benchmark() {
           <div id="singstat-kpi">
             {metricEntries.length === 0 ? (
               <div className="empty-state">
-                Không có metric tính được từ input hiện tại — bổ sung BCTC (assets/equity/…) hoặc prefill RAL.
+                Không tính được chỉ số từ dữ liệu hiện tại — bổ sung BCTC (tài sản/vốn CSH/…) hoặc nạp RAL.
               </div>
             ) : (
               <div className="cards">
@@ -436,21 +665,22 @@ export default function Benchmark() {
                   return (
                     <div className="card" key={key}>
                       <div className="label">{label}</div>
-                      <div className="value" style={{ fontSize: 22 }}>
-                        {formatRatio(value)}
+                      <div className="value metric-value-row" style={{ fontSize: 22 }}>
+                        <span>{formatRatio(value)}</span>
+                        <MetricInfoTip metricKey={key} />
                       </div>
                       {pct != null ? (
                         <>
-                          <div className="sub">Percentile: {pct}%</div>
+                          <div className="sub">Phân vị: {pct}%</div>
                           <div className="percentile-bar">
                             <div className="percentile-fill" style={{ width: `${pct}%` }} />
                           </div>
                         </>
                       ) : (
-                        <div className="sub">Percentile: N/A (thiếu mẫu peer)</div>
+                        <div className="sub">Phân vị: Không có (thiếu mẫu peer)</div>
                       )}
                       <div style={{ fontSize: 12, color: '#888', marginTop: 8 }}>
-                        TB ngành: {indAvg != null ? formatRatio(indAvg) : 'N/A'}
+                        TB ngành: {indAvg != null ? formatRatio(indAvg) : 'Không có'}
                       </div>
                       <div style={{ fontSize: 12, marginTop: 4 }}>
                         <span
@@ -476,20 +706,20 @@ export default function Benchmark() {
 
           <section id="singstat-expenditure" className="singstat-section">
             <header className="singstat-section-head">
-              <h3 className="singstat-section-title">Expenditure-Related Ratio</h3>
+              <h3 className="singstat-section-title">Tỷ lệ liên quan chi phí</h3>
               <p className="singstat-section-note">
-                Operating expenses ÷ operating revenue. Industry from peer averages; N/A when missing — not shown as 0%.
+                Chi phí hoạt động ÷ doanh thu hoạt động. TB ngành lấy từ peer; thiếu dữ liệu thì «Không có» — không hiện 0%.
               </p>
             </header>
 
             <div className="singstat-donut-row">
               <ShareDonut
-                label="Industry"
+                label="Ngành"
                 value={avg.expenditure_related_ratio}
                 tone="industry"
               />
               <ShareDonut
-                label="Your firm"
+                label="DN của bạn"
                 value={result.expenditure_related_ratio}
                 tone="firm"
               />
@@ -497,17 +727,17 @@ export default function Benchmark() {
 
             <div className="singstat-legend">
               <span className="singstat-legend-item">
-                <i className="singstat-swatch singstat-swatch--industry" /> Industry
+                <i className="singstat-swatch singstat-swatch--industry" /> Ngành
               </span>
               <span className="singstat-legend-item">
-                <i className="singstat-swatch singstat-swatch--firm" /> Your firm
+                <i className="singstat-swatch singstat-swatch--firm" /> DN của bạn
               </span>
             </div>
 
             <header className="singstat-section-head" style={{ marginTop: 28 }}>
-              <h3 className="singstat-section-title">Key Expenditure Ratio</h3>
+              <h3 className="singstat-section-title">Cơ cấu chi phí chính</h3>
               <p className="singstat-section-note">
-                Share of operating expenses. Bars use API shares only; missing values stay N/A.
+                Tỷ trọng trong chi phí hoạt động. Thanh chỉ dùng share từ API; thiếu giá trị thì «Không có».
               </p>
             </header>
 
@@ -525,12 +755,12 @@ export default function Benchmark() {
             {(result.comparison?.expenditure_related_ratio
               || result.comparison?.purchase_goods_share) && (
               <p className="singstat-comp-note">
-                Expenditure comparison:{' '}
+                So sánh chi phí:{' '}
                 {COMPARISON_LABELS[result.comparison?.expenditure_related_ratio]
                   || result.comparison?.expenditure_related_ratio
                   || '—'}
                 {formatSharePct(result.expenditure_related_ratio) != null && (
-                  <> · Firm ERR {formatSharePct(result.expenditure_related_ratio)}</>
+                  <> · Tỷ lệ chi phí DN {formatSharePct(result.expenditure_related_ratio)}</>
                 )}
               </p>
             )}
