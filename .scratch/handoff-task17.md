@@ -29,7 +29,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: 100% (5/5)
 - Status: DONE
-- Phase: 4 · Branch: `cursor/phase4-task17-e2e` · Tip: `19c8e3e`
+- Phase: 4 · Branch: `cursor/phase4-task17-e2e` · Tip: `988c3d7`
 - PR: https://github.com/thanhhale288/data-economy/pull/10
 
 ### Đã làm được gì (đối chiếu AC)
