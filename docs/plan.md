@@ -321,25 +321,26 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - Feature importance
 - Input features/forecast từ artifact Phase 3; staging chỉ thêm nếu API Lab cần query DB thay vì file
 
-### Module 5: Benchmark (Phase 2 — tham chiếu SingStat BITE)
+### Module 5: Benchmark (Phase 4 Task #18 — tham chiếu SingStat BITE)
 
-- Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương)
-- Output: ROA, ROE, Current Ratio, Equity Ratio + **percentile so với ngành**
-- Nội suy từ BCTC công ty chưa đủ field → dùng tỷ lệ ngành từ GSO
+- Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương) + cân đối kế toán
+- Output: ROA, ROE, Current Ratio, Equity Ratio (+ revenue/profit per worker) + **percentile so với peer cùng VSIC 2-digit** từ BCTC seed
+- Thiếu peer / field → null percentile + `insufficient_peers` (không bịa 50th); prototype n≈10 DN niêm yết
+- Nội suy GSO khi thiếu BCTC → deferred (không invent industry ratio)
 
 ---
 
 ## 6. Lộ trình triển khai (~18 tuần / 1 học kỳ)
 
-### Tiến độ thực tế (cập nhật 2026-07-19)
+### Tiến độ thực tế (cập nhật 2026-07-20)
 
 | Giai đoạn | Trạng thái | Ghi chú |
 | --------- | ---------- | ------- |
 | **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
-| **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Branch `cursor/phase2-enterprise-digital`. Caveat bên dưới |
-| 3 — Clean, Features & ML | Đang làm (branch `cursor/phase3-clean-features-ml`) | #10 cleaning + #11 features DONE; **#12 ML** tiếp theo |
-| 4 — Web hoàn thiện | Scaffold | React shell / API skeleton có; dashboard chưa hoàn thiện; staging DB (nếu cần) gắn Module 3–4 |
-| 5 — Benchmark & Báo cáo | Chưa | |
+| **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Đã merge `main` (PR #2). Caveat bên dưới |
+| **3 — Clean, Features & ML** | **Hoàn thành (chờ merge)** | Branch `cursor/phase3-clean-features-ml`; tip `#12` `9aed9c0`; **PR #5** → `main` |
+| **4 — Web hoàn thiện** | **Hoàn thành (chờ merge)** | Task #13–#18 DONE trên nhánh Phase 4; #18 Benchmark Module 5 |
+| 5 — Báo cáo & Demo | Đang làm | Demo ops #19a DONE; còn proposal Mục 4 (#19b) |
 
 **Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
 
@@ -349,7 +350,13 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - **Marketplace live (Shopee/TikTok):** tạm hoãn (anti-bot); pipeline + seed/fallback sẵn; discovery shop mới → sau.
 - Industry-ratio online khi không listing → sau (hiện để 0 + log, không bịa).
 
-**Git:** Phase 1 + Phase 2 đã trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml`.
+**Git:** Phase 1 + Phase 2 trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml` → PR #5 (OPEN). Phase 4: Task #13–#17 PR #6–#10; Task #18 `cursor/phase4-task18-benchmark` (base tip Task #17).
+
+**Phase 3 — phạm vi chấp nhận (2026-07-20):**
+
+- Persistence = **parquet** dưới `data/processed/` (không overwrite raw); staging Postgres → Module 3–4 nếu cần.
+- #10–#12 DONE trên PR #5 (clean / features / ML thật + `/api/ml/*`).
+- Thin OK: `mei_ip` có thể `series_missing` — Dashboard hiện thiếu rõ, không bịa.
 
 ### Giai đoạn 1: Nền tảng & Macro data (Tuần 1–5) — DONE
 
@@ -379,24 +386,28 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 - [x] Digital metrics per company (Digital VA đúng CONTEXT; online từ listing hoặc 0)
 - [x] Ticker mẫu: … REE, **BMP**
 
-### Giai đoạn 3: Clean, Features & ML (Tuần 11–14)
+### Giai đoạn 3: Clean, Features & ML (Tuần 11–14) — DONE (PR #5)
 
 - [x] **Task #10 — Cleaning pipeline** (parquet artifacts; không overwrite raw; job `data_cleaning`)
 - [x] **Task #11 — Feature engineering** (lag/rolling/digital/financial/cross; broadcast/step-hold + provenance; không MEI_BCI giả; `features.parquet` + `features_manifest.json`; tests `tests/features`)
-- [x] **Task #12 — ML models** — train & evaluate ARIMA/SARIMAX, XGBoost/LightGBM, LSTM; MAE/RMSE/MAPE; walk-forward; model registry + API
+- [x] **Task #12 — ML models** — ARIMA/SARIMAX (statsmodels), XGBoost (+ importance), LSTM multi-step; MAE/RMSE/MAPE; time-based split; model registry + `/api/ml/*`; `tests/ml`
 
 ### Giai đoạn 4: Web hoàn thiện & Demo (Tuần 15–17)
 
-- Dashboard modules 1–4
-- Company detail pages (Rạng Đông case study)
-- Pipeline monitor UI (+ tuỳ chọn staging Postgres cho bản sạch — xem §4.1)
-- Integration testing end-to-end
+- [x] **Task #13 — Dashboard ngành (Module 1)** — IIP + forecast từ ML API, summary/Digital VA, heatmap VSIC, OECD peer vs GSO (thiếu → hiện rõ, không bịa); `tests/dashboard`
+- [x] **Task #14 — Company detail (Module 2)** — profile DN, kênh bán số, ước lượng online; case study Rạng Đông (RAL); crawl timeline + data-quality score; `tests/companies/test_company_detail.py`
+- [x] **Task #15 — Pipeline monitor (Module 3)** — trạng thái job crawl + `data_cleaning`, log lỗi, lần chạy cuối, tóm tắt quality report; staging Postgres optional (§4.1); `tests/pipeline/test_pipeline_monitor.py`
+- [x] **Task #16 — ML Lab (Module 4)** — so sánh 3 model, forecast vs actual, feature importance (artifact #12); không retrain UI bắt buộc; `tests/ml/test_ml_lab_service.py` + `test_ml_api.py`
+- [x] **Task #17 — Integration testing E2E** — crawl → clean → features → ML → API → FE (`tests/e2e/`; offline fixtures + sourced fallback; honest skip/404)
+- [x] **Task #18 — Benchmark Module 5** — form (DT/LN/NV/chi phí + BS) → ROA/ROE/Current/Equity (+ worker) + percentile VSIC division từ BCTC seed; thiếu peer → null + `insufficient_peers` (không bịa 50th); `tests/benchmark`
 
-### Giai đoạn 5: Benchmark & Báo cáo (Tuần 18)
+### Giai đoạn 5: Báo cáo & Demo (Tuần 18)
 
-- Benchmark module (SingStat BITE style)
-- Cập nhật proposal Mục 4 với kết quả thực tế
-- Demo presentation + documentation
+- [x] **Task #19a — Demo ops polish** — `make bootstrap` (metrics→clean→features→train), README/ops, FE empty-state gaps, `scripts/smoke_demo.sh` (branch `cursor/phase5-task19-demo-ops`)
+- [ ] **Task #19b — Proposal Mục 4** — cập nhật kết quả thực tế (không invent số)
+- [ ] Demo presentation (slides) nếu còn thiếu sau docs
+
+**Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
 ---
 

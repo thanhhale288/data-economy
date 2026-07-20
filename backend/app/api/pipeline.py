@@ -2,11 +2,52 @@ from fastapi import APIRouter, BackgroundTasks, Depends
 from sqlalchemy.orm import Session
 
 from backend.app.database import SessionLocal, get_db
-from backend.app.schemas import CrawlTriggerRequest, PipelineJobOut
+from backend.app.schemas import (
+    CleaningQualityReportOut,
+    CrawlTriggerRequest,
+    PipelineJobOut,
+    PipelineMonitorStatusOut,
+)
 from backend.app.models import PipelineJob
 from backend.app.services import pipeline_service
 
 router = APIRouter()
+
+# Trigger ids accepted by POST /trigger (includes Module 3 data_cleaning).
+TRIGGER_IDS = frozenset(
+    {
+        "gso",
+        "oecd",
+        "companies",
+        "marketplace",
+        "metrics",
+        "features",
+        "ml",
+        "cleaning",
+        "all",
+    }
+)
+
+
+def _job_out(job: PipelineJob) -> PipelineJobOut:
+    err, detail = pipeline_service.split_job_messages(job)
+    return PipelineJobOut(
+        id=job.id,
+        job_name=job.job_name,
+        status=job.status,
+        records_processed=job.records_processed,
+        error_message=err,
+        detail=detail,
+        started_at=job.started_at,
+        finished_at=job.finished_at,
+        created_at=job.created_at,
+    )
+
+
+def _trigger_job_name(crawler: str) -> str:
+    if crawler == "cleaning":
+        return "data_cleaning"
+    return f"crawl_{crawler}"
 
 
 def _run_crawler(crawler: str, job_id: int):
@@ -39,6 +80,13 @@ def _run_crawler(crawler: str, job_id: int):
             from pipeline.cleaning.digital_metrics import compute_all_digital_metrics
 
             records += compute_all_digital_metrics(db)
+        # Task #10 / Module 3: clean before features (parquet + cleaning_report.json).
+        if crawler in ("cleaning", "all"):
+            from pipeline.cleaning.run_cleaning import run_data_cleaning
+
+            n, detail = run_data_cleaning(db)
+            records += n
+            notes.append(f"data_cleaning:{detail}")
         if crawler in ("features", "all"):
             from pipeline.features.engineering import run_feature_engineering
 
@@ -48,9 +96,8 @@ def _run_crawler(crawler: str, job_id: int):
 
             records += train_all_models(db)
 
-        # Persist crawl notes on success (fallback / unavailable series visibility).
         message = " | ".join(notes) if notes else None
-        pipeline_service.finish_job(db, job, "success", records, error=message)
+        pipeline_service.finish_job(db, job, "success", records, detail=message)
     except Exception as e:
         pipeline_service.finish_job(db, job, "failed", error=str(e))
     finally:
@@ -59,7 +106,18 @@ def _run_crawler(crawler: str, job_id: int):
 
 @router.get("/jobs", response_model=list[PipelineJobOut])
 def list_jobs(db: Session = Depends(get_db)):
-    return pipeline_service.list_jobs(db)
+    return [_job_out(j) for j in pipeline_service.list_jobs(db)]
+
+
+@router.get("/status", response_model=PipelineMonitorStatusOut)
+def monitor_status(db: Session = Depends(get_db)):
+    return pipeline_service.get_monitor_status(db)
+
+
+@router.get("/quality", response_model=CleaningQualityReportOut)
+def cleaning_quality():
+    """Tóm tắt quality report từ parquet artifact — không bịa khi thiếu file."""
+    return pipeline_service.get_quality_report()
 
 
 @router.post("/trigger", response_model=PipelineJobOut)
@@ -68,6 +126,14 @@ def trigger_crawl(
     background_tasks: BackgroundTasks,
     db: Session = Depends(get_db),
 ):
-    job = pipeline_service.create_job(db, f"crawl_{request.crawler}")
-    background_tasks.add_task(_run_crawler, request.crawler, job.id)
-    return job
+    crawler = (request.crawler or "").strip().lower()
+    if crawler not in TRIGGER_IDS:
+        from fastapi import HTTPException
+
+        raise HTTPException(
+            status_code=400,
+            detail=f"crawler must be one of: {', '.join(sorted(TRIGGER_IDS))}",
+        )
+    job = pipeline_service.create_job(db, _trigger_job_name(crawler))
+    background_tasks.add_task(_run_crawler, crawler, job.id)
+    return _job_out(job)

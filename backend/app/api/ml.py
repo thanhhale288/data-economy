@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
 from backend.app.models import ModelPrediction, ModelRegistry
 from backend.app.schemas import ForecastRequest, ModelPredictionOut
+from backend.app.services import ml_lab_service
 
 router = APIRouter()
 
@@ -23,6 +24,14 @@ def list_predictions(
     if model_name:
         q = q.filter(ModelPrediction.model_name == model_name)
     return q.order_by(ModelPrediction.period).all()
+
+
+@router.get("/feature-importance")
+def feature_importance(
+    model_name: str = Query("xgboost", description="Model with importance artifact (xgboost)"),
+):
+    """Read Phase 3 feature-importance artifact. Missing → available=false (no invented scores)."""
+    return ml_lab_service.get_feature_importance(model_name)
 
 
 @router.post("/forecast")

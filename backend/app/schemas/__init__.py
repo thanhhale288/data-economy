@@ -29,12 +29,51 @@ class CompanyOut(BaseModel):
     description: str | None = None
 
 
+class CompanyCrawlEventOut(BaseModel):
+    """Derived crawl evidence from digital_presence / marketplace rows (not invent)."""
+
+    event_type: str  # digital_presence | marketplace_listing
+    source: str
+    label: str
+    url: str | None = None
+    status: str = "recorded"
+    crawled_at: datetime | None = None
+    detail: str | None = None
+
+
+class CompanyDataQualityOut(BaseModel):
+    """Completeness / verification score — not market-data accuracy."""
+
+    score: float
+    max_score: float = 100.0
+    components: dict[str, float] = {}
+    notes: list[str] = []
+    status: str = "ok"  # ok | partial | sparse
+
+
+class CompanyCaseStudyOut(BaseModel):
+    """Optional narrative block (e.g. Rạng Đông) built only from persisted fields."""
+
+    stock_code: str
+    title: str
+    vsic_code: str
+    vsic_name: str | None = None
+    website_url: str | None = None
+    shopee_url: str | None = None
+    tiktok_url: str | None = None
+    highlights: list[str] = []
+    notes: list[str] = []
+
+
 class CompanyDetail(CompanyOut):
     digital_presence: list["DigitalPresenceOut"] = []
     digital_metrics: list["DigitalMetricOut"] = []
     financial_reports: list["FinancialReportOut"] = []
     marketplace_listings: list["MarketplaceListingOut"] = []
     vsic: VsicCodeOut | None = None
+    crawl_timeline: list[CompanyCrawlEventOut] = []
+    data_quality: CompanyDataQualityOut | None = None
+    case_study: CompanyCaseStudyOut | None = None
 
 
 class DigitalPresenceOut(BaseModel):
@@ -60,6 +99,7 @@ class MarketplaceListingOut(BaseModel):
     revenue_est: float | None = None
     rating: float | None = None
     product_url: str | None = None
+    crawled_at: datetime | None = None
 
 
 class DigitalMetricOut(BaseModel):
@@ -143,9 +183,48 @@ class PipelineJobOut(BaseModel):
     status: str
     records_processed: int
     error_message: str | None = None
+    detail: str | None = None
     started_at: datetime | None = None
     finished_at: datetime | None = None
     created_at: datetime
+
+
+class PipelineLastRunOut(BaseModel):
+    family: str
+    job_name: str | None = None
+    status: str | None = None
+    records_processed: int | None = None
+    started_at: datetime | None = None
+    finished_at: datetime | None = None
+    error_message: str | None = None
+    detail: str | None = None
+
+
+class PipelineMonitorStatusOut(BaseModel):
+    last_runs: list[PipelineLastRunOut]
+    jobs_listed: int = 0
+    jobs_failed_in_list: int = 0
+    staging_postgres: bool = False
+    note: str | None = None
+
+
+class CleaningQualitySummaryOut(BaseModel):
+    nan_filled: int = 0
+    outliers_handled: int = 0
+    marketplace_outliers_flagged: int = 0
+    vsic_fails: int = 0
+    series_missing: list[str] = []
+    artifacts: list[str] = []
+    vsic_companies_fail: int = 0
+    vsic_gso_fail: int = 0
+
+
+class CleaningQualityReportOut(BaseModel):
+    available: bool
+    report_path: str
+    message: str | None = None
+    summary: CleaningQualitySummaryOut | None = None
+    report: dict[str, Any] | None = None
 
 
 class BenchmarkInput(BaseModel):
@@ -171,9 +250,12 @@ class BenchmarkResult(BaseModel):
     equity_ratio: float | None = None
     revenue_per_worker: float | None = None
     profit_per_worker: float | None = None
-    percentiles: dict[str, float] = {}
-    industry_averages: dict[str, float] = {}
+    percentiles: dict[str, float | None] = {}
+    industry_averages: dict[str, float | None] = {}
     comparison: dict[str, str] = {}
+    peer_count: int = 0
+    peer_scope: str | None = None
+    warnings: list[str] = []
 
 
 class DashboardSummary(BaseModel):
@@ -185,6 +267,7 @@ class DashboardSummary(BaseModel):
     total_digital_va: float | None = None
     latest_period: date | None = None
     model_metrics: dict[str, Any] = {}
+    preferred_forecast_model: str | None = None
 
 
 class ForecastRequest(BaseModel):
@@ -193,4 +276,4 @@ class ForecastRequest(BaseModel):
 
 
 class CrawlTriggerRequest(BaseModel):
-    crawler: str  # gso, oecd, companies, marketplace, all
+    crawler: str  # gso, oecd, companies, marketplace, metrics, features, ml, cleaning, all
