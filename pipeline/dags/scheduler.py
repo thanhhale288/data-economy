@@ -14,7 +14,7 @@ def _run_job(name: str, func, *, detail_from_result: bool = False):
     try:
         if detail_from_result:
             records, detail = func(db)
-            pipeline_service.finish_job(db, job, "success", records, error=detail)
+            pipeline_service.finish_job(db, job, "success", records, detail=detail)
             print(f"[{name}] completed: {records} records — {detail}")
         else:
             records = func(db)

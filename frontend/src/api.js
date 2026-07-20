@@ -26,6 +26,8 @@ export const api = {
   getCompanies: () => request('/companies/'),
   getCompany: (code) => request(`/companies/${code}`),
   getPipelineJobs: () => request('/pipeline/jobs'),
+  getPipelineStatus: () => request('/pipeline/status'),
+  getPipelineQuality: () => request('/pipeline/quality'),
   triggerCrawl: (crawler) => request('/pipeline/trigger', {
     method: 'POST',
     body: JSON.stringify({ crawler }),
