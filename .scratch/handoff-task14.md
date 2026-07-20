@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task14-company-detail`  
-**Commit:** `decc57b`  
-**PR:** *(pending push — run `gh auth refresh -h github.com` if push fails)*  
+**Commit:** `2543e78` (feature tip; impl `decc57b`)  
+**PR:** branch pushed — open via https://github.com/thanhhale288/data-economy/pull/new/cursor/phase4-task14-company-detail (base: `cursor/phase4-task13-dashboard`). `gh pr create` blocked: `gh auth refresh -h github.com`  
 **Base:** tip Task #13 `0e211cc` (PR #5 / #6 still not on `main` at Task #14 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
