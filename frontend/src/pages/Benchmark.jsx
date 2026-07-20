@@ -24,6 +24,12 @@ const WARNING_LABELS = {
   small_peer_sample: 'Mẫu peer nhỏ (< 3 DN) — percentile chỉ mang tính tham khảo.',
 }
 
+const KEY_EXPENDITURE_ROWS = [
+  { key: 'purchase_goods_share', label: 'Purchase of Goods & Materials' },
+  { key: 'rental_cost_share', label: 'Rental Cost of Premises' },
+  { key: 'remuneration_share', label: 'Remuneration' },
+]
+
 const EMPTY_FORM = {
   vsic_code: '',
   operating_revenue: '',
@@ -49,6 +55,17 @@ function formatRatio(value) {
   return value.toLocaleString()
 }
 
+/** Share/ratio as percent string; null → null (caller renders N/A). */
+function formatSharePct(value) {
+  if (value == null || typeof value !== 'number') return null
+  return `${(value * 100).toFixed(1)}%`
+}
+
+function shareToPct(value) {
+  if (value == null || typeof value !== 'number') return null
+  return Math.max(0, Math.min(100, value * 100))
+}
+
 function formFromPrefill(data) {
   return {
     vsic_code: data.vsic_code ?? '',
@@ -64,6 +81,96 @@ function formFromPrefill(data) {
     current_assets: data.current_assets ?? '',
     current_liabilities: data.current_liabilities ?? '',
   }
+}
+
+function scrollToId(id) {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
+}
+
+function ShareDonut({ label, value, tone }) {
+  const pct = shareToPct(value)
+  const r = 36
+  const c = 2 * Math.PI * r
+  const stroke = tone === 'firm' ? 'var(--singstat-firm)' : 'var(--singstat-industry)'
+
+  if (pct == null) {
+    return (
+      <div className="singstat-donut">
+        <div className="singstat-donut-ring singstat-donut-ring--empty" aria-hidden="true">
+          <span className="singstat-donut-na">N/A</span>
+        </div>
+        <div className="singstat-donut-caption">{label}</div>
+      </div>
+    )
+  }
+
+  const dash = (pct / 100) * c
+  return (
+    <div className="singstat-donut">
+      <svg className="singstat-donut-svg" viewBox="0 0 96 96" aria-hidden="true">
+        <circle className="singstat-donut-track" cx="48" cy="48" r={r} />
+        <circle
+          className="singstat-donut-arc"
+          cx="48"
+          cy="48"
+          r={r}
+          stroke={stroke}
+          strokeDasharray={`${dash} ${c - dash}`}
+          transform="rotate(-90 48 48)"
+        />
+      </svg>
+      <div className="singstat-donut-center">
+        <span className="singstat-donut-pct">{pct.toFixed(1)}%</span>
+      </div>
+      <div className="singstat-donut-caption">{label}</div>
+    </div>
+  )
+}
+
+function KeyExpenditureRow({ label, industry, firm }) {
+  const indPct = shareToPct(industry)
+  const firmPct = shareToPct(firm)
+  const maxPct = Math.max(indPct ?? 0, firmPct ?? 0, 1)
+
+  return (
+    <div className="singstat-key-row">
+      <div className="singstat-key-row-label">{label}</div>
+      <div className="singstat-key-bars">
+        <div className="singstat-key-bar-line">
+          <span className="singstat-key-bar-tag singstat-key-bar-tag--industry">Industry</span>
+          {indPct == null ? (
+            <span className="singstat-na">N/A</span>
+          ) : (
+            <>
+              <div className="singstat-key-bar-track">
+                <div
+                  className="singstat-key-bar-fill singstat-key-bar-fill--industry"
+                  style={{ width: `${(indPct / maxPct) * 100}%` }}
+                />
+              </div>
+              <span className="singstat-key-bar-pct">{indPct.toFixed(1)}%</span>
+            </>
+          )}
+        </div>
+        <div className="singstat-key-bar-line">
+          <span className="singstat-key-bar-tag singstat-key-bar-tag--firm">Your firm</span>
+          {firmPct == null ? (
+            <span className="singstat-na">N/A</span>
+          ) : (
+            <>
+              <div className="singstat-key-bar-track">
+                <div
+                  className="singstat-key-bar-fill singstat-key-bar-fill--firm"
+                  style={{ width: `${(firmPct / maxPct) * 100}%` }}
+                />
+              </div>
+              <span className="singstat-key-bar-pct">{firmPct.toFixed(1)}%</span>
+            </>
+          )}
+        </div>
+      </div>
+    </div>
+  )
 }
 
 export default function Benchmark() {
@@ -149,6 +256,8 @@ export default function Benchmark() {
     ? Object.entries(METRIC_LABELS).filter(([key]) => result[key] != null)
     : []
 
+  const avg = result?.industry_averages || {}
+
   return (
     <div>
       <h2 className="page-title">Benchmark My Performance</h2>
@@ -199,47 +308,60 @@ export default function Benchmark() {
             <input value={form.vsic_code} onChange={(e) => handleChange('vsic_code', e.target.value)} required />
           </div>
           <div className="form-group">
-            <label>Doanh thu (VND)</label>
+            <label>Operating revenue (VND)</label>
             <input type="number" value={form.operating_revenue} onChange={(e) => handleChange('operating_revenue', e.target.value)} required />
           </div>
           <div className="form-group">
-            <label>Lợi nhuận trước thuế (VND)</label>
+            <label>Profit before tax (VND)</label>
             <input type="number" value={form.profit_before_tax} onChange={(e) => handleChange('profit_before_tax', e.target.value)} required />
           </div>
           <div className="form-group">
-            <label>Số nhân viên</label>
+            <label>Number of employees</label>
             <input type="number" value={form.employees} onChange={(e) => handleChange('employees', e.target.value)} required />
           </div>
+        </div>
+
+        <div className="singstat-form-block">
           <div className="form-group">
-            <label>Giá vốn hàng bán (VND)</label>
-            <input type="number" value={form.cost_of_goods} onChange={(e) => handleChange('cost_of_goods', e.target.value)} />
+            <label>Operating expenses (VND)</label>
+            <input
+              type="number"
+              value={form.operating_expenses}
+              onChange={(e) => handleChange('operating_expenses', e.target.value)}
+            />
           </div>
-          <div className="form-group">
-            <label>Chi phí thuê (VND)</label>
-            <input type="number" value={form.rental_cost} onChange={(e) => handleChange('rental_cost', e.target.value)} />
+          <p className="singstat-of-which">Of which</p>
+          <div className="form-grid singstat-of-which-grid">
+            <div className="form-group">
+              <label>Cost of goods &amp; materials (VND)</label>
+              <input type="number" value={form.cost_of_goods} onChange={(e) => handleChange('cost_of_goods', e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Rental cost of premises (VND)</label>
+              <input type="number" value={form.rental_cost} onChange={(e) => handleChange('rental_cost', e.target.value)} />
+            </div>
+            <div className="form-group">
+              <label>Remuneration (VND)</label>
+              <input type="number" value={form.remuneration} onChange={(e) => handleChange('remuneration', e.target.value)} />
+            </div>
           </div>
+        </div>
+
+        <div className="form-grid" style={{ marginTop: 8 }}>
           <div className="form-group">
-            <label>Chi phí lương (VND)</label>
-            <input type="number" value={form.remuneration} onChange={(e) => handleChange('remuneration', e.target.value)} />
-          </div>
-          <div className="form-group">
-            <label>Chi phí hoạt động (VND)</label>
-            <input type="number" value={form.operating_expenses} onChange={(e) => handleChange('operating_expenses', e.target.value)} />
-          </div>
-          <div className="form-group">
-            <label>Tổng tài sản (VND)</label>
+            <label>Total assets (VND)</label>
             <input type="number" value={form.total_assets} onChange={(e) => handleChange('total_assets', e.target.value)} />
           </div>
           <div className="form-group">
-            <label>Vốn chủ sở hữu (VND)</label>
+            <label>Total equity (VND)</label>
             <input type="number" value={form.total_equity} onChange={(e) => handleChange('total_equity', e.target.value)} />
           </div>
           <div className="form-group">
-            <label>Tài sản ngắn hạn (VND)</label>
+            <label>Current assets (VND)</label>
             <input type="number" value={form.current_assets} onChange={(e) => handleChange('current_assets', e.target.value)} />
           </div>
           <div className="form-group">
-            <label>Nợ ngắn hạn (VND)</label>
+            <label>Current liabilities (VND)</label>
             <input type="number" value={form.current_liabilities} onChange={(e) => handleChange('current_liabilities', e.target.value)} />
           </div>
         </div>
@@ -281,58 +403,138 @@ export default function Benchmark() {
                 Chỉ số DN (nếu đủ input) vẫn tính từ form; TB ngành / xếp hạng để trống.
               </div>
             )}
+            <div className="singstat-jump">
+              <button
+                type="button"
+                className="singstat-jump-btn"
+                onClick={() => scrollToId('singstat-expenditure')}
+              >
+                Compare Expenditure Related Ratio
+              </button>
+              <button
+                type="button"
+                className="singstat-jump-btn"
+                onClick={() => scrollToId('singstat-kpi')}
+              >
+                Compare Performance by Percentile
+              </button>
+            </div>
           </div>
 
-          {metricEntries.length === 0 ? (
-            <div className="empty-state">
-              Không có metric tính được từ input hiện tại — bổ sung BCTC (assets/equity/…) hoặc prefill RAL.
+          <div id="singstat-kpi">
+            {metricEntries.length === 0 ? (
+              <div className="empty-state">
+                Không có metric tính được từ input hiện tại — bổ sung BCTC (assets/equity/…) hoặc prefill RAL.
+              </div>
+            ) : (
+              <div className="cards">
+                {metricEntries.map(([key, label]) => {
+                  const value = result[key]
+                  const pct = result.percentiles?.[key]
+                  const comp = result.comparison?.[key]
+                  const indAvg = result.industry_averages?.[key]
+                  return (
+                    <div className="card" key={key}>
+                      <div className="label">{label}</div>
+                      <div className="value" style={{ fontSize: 22 }}>
+                        {formatRatio(value)}
+                      </div>
+                      {pct != null ? (
+                        <>
+                          <div className="sub">Percentile: {pct}%</div>
+                          <div className="percentile-bar">
+                            <div className="percentile-fill" style={{ width: `${pct}%` }} />
+                          </div>
+                        </>
+                      ) : (
+                        <div className="sub">Percentile: N/A (thiếu mẫu peer)</div>
+                      )}
+                      <div style={{ fontSize: 12, color: '#888', marginTop: 8 }}>
+                        TB ngành: {indAvg != null ? formatRatio(indAvg) : 'N/A'}
+                      </div>
+                      <div style={{ fontSize: 12, marginTop: 4 }}>
+                        <span
+                          className={`badge ${
+                            comp === 'above_average'
+                              ? 'badge-success'
+                              : comp === 'below_average'
+                                ? 'badge-danger'
+                                : comp === 'insufficient_peers'
+                                  ? 'badge-warning'
+                                  : 'badge-warning'
+                          }`}
+                        >
+                          {COMPARISON_LABELS[comp] || comp}
+                        </span>
+                      </div>
+                    </div>
+                  )
+                })}
+              </div>
+            )}
+          </div>
+
+          <section id="singstat-expenditure" className="singstat-section">
+            <header className="singstat-section-head">
+              <h3 className="singstat-section-title">Expenditure-Related Ratio</h3>
+              <p className="singstat-section-note">
+                Operating expenses ÷ operating revenue. Industry from peer averages; N/A when missing — not shown as 0%.
+              </p>
+            </header>
+
+            <div className="singstat-donut-row">
+              <ShareDonut
+                label="Industry"
+                value={avg.expenditure_related_ratio}
+                tone="industry"
+              />
+              <ShareDonut
+                label="Your firm"
+                value={result.expenditure_related_ratio}
+                tone="firm"
+              />
             </div>
-          ) : (
-            <div className="cards">
-              {metricEntries.map(([key, label]) => {
-                const value = result[key]
-                const pct = result.percentiles?.[key]
-                const comp = result.comparison?.[key]
-                const avg = result.industry_averages?.[key]
-                return (
-                  <div className="card" key={key}>
-                    <div className="label">{label}</div>
-                    <div className="value" style={{ fontSize: 22 }}>
-                      {formatRatio(value)}
-                    </div>
-                    {pct != null ? (
-                      <>
-                        <div className="sub">Percentile: {pct}%</div>
-                        <div className="percentile-bar">
-                          <div className="percentile-fill" style={{ width: `${pct}%` }} />
-                        </div>
-                      </>
-                    ) : (
-                      <div className="sub">Percentile: N/A (thiếu mẫu peer)</div>
-                    )}
-                    <div style={{ fontSize: 12, color: '#888', marginTop: 8 }}>
-                      TB ngành: {avg != null ? formatRatio(avg) : 'N/A'}
-                    </div>
-                    <div style={{ fontSize: 12, marginTop: 4 }}>
-                      <span
-                        className={`badge ${
-                          comp === 'above_average'
-                            ? 'badge-success'
-                            : comp === 'below_average'
-                              ? 'badge-danger'
-                              : comp === 'insufficient_peers'
-                                ? 'badge-warning'
-                                : 'badge-warning'
-                        }`}
-                      >
-                        {COMPARISON_LABELS[comp] || comp}
-                      </span>
-                    </div>
-                  </div>
-                )
-              })}
+
+            <div className="singstat-legend">
+              <span className="singstat-legend-item">
+                <i className="singstat-swatch singstat-swatch--industry" /> Industry
+              </span>
+              <span className="singstat-legend-item">
+                <i className="singstat-swatch singstat-swatch--firm" /> Your firm
+              </span>
             </div>
-          )}
+
+            <header className="singstat-section-head" style={{ marginTop: 28 }}>
+              <h3 className="singstat-section-title">Key Expenditure Ratio</h3>
+              <p className="singstat-section-note">
+                Share of operating expenses. Bars use API shares only; missing values stay N/A.
+              </p>
+            </header>
+
+            <div className="singstat-key-list">
+              {KEY_EXPENDITURE_ROWS.map(({ key, label }) => (
+                <KeyExpenditureRow
+                  key={key}
+                  label={label}
+                  industry={avg[key]}
+                  firm={result[key]}
+                />
+              ))}
+            </div>
+
+            {(result.comparison?.expenditure_related_ratio
+              || result.comparison?.purchase_goods_share) && (
+              <p className="singstat-comp-note">
+                Expenditure comparison:{' '}
+                {COMPARISON_LABELS[result.comparison?.expenditure_related_ratio]
+                  || result.comparison?.expenditure_related_ratio
+                  || '—'}
+                {formatSharePct(result.expenditure_related_ratio) != null && (
+                  <> · Firm ERR {formatSharePct(result.expenditure_related_ratio)}</>
+                )}
+              </p>
+            )}
+          </section>
         </div>
       )}
     </div>

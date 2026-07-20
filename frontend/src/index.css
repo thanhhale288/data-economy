@@ -356,3 +356,299 @@ tr:hover {
   border-radius: 4px;
   transition: width 0.3s;
 }
+
+/* ── SingStat BITE benchmark (expenditure block) ── */
+:root {
+  --singstat-industry: #3b82f6;
+  --singstat-firm: #f97316;
+  --singstat-track: #e5e7eb;
+  --singstat-border: #d1d5db;
+  --singstat-muted: #6b7280;
+  --singstat-ink: #1f2937;
+  --singstat-surface: #ffffff;
+}
+
+.singstat-form-block {
+  margin-top: 8px;
+  padding: 16px;
+  border: 1px solid var(--singstat-border);
+  background: #fafafa;
+}
+
+.singstat-of-which {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--singstat-muted);
+  margin: 4px 0 12px 12px;
+}
+
+.singstat-of-which-grid {
+  margin-left: 12px;
+  padding-left: 12px;
+  border-left: 2px solid var(--singstat-border);
+}
+
+.singstat-jump {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 14px;
+}
+
+.singstat-jump-btn {
+  appearance: none;
+  background: var(--singstat-surface);
+  border: 1px solid var(--singstat-border);
+  color: var(--singstat-ink);
+  font-size: 12px;
+  font-weight: 500;
+  padding: 6px 10px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.singstat-jump-btn:hover {
+  border-color: var(--singstat-industry);
+  color: var(--singstat-industry);
+}
+
+.singstat-jump-btn:focus-visible {
+  outline: 2px solid var(--singstat-industry);
+  outline-offset: 2px;
+}
+
+.singstat-section {
+  margin-top: 8px;
+  padding: 20px 22px 24px;
+  background: var(--singstat-surface);
+  border: 1px solid var(--singstat-border);
+  border-radius: 4px;
+}
+
+.singstat-section-head {
+  margin-bottom: 16px;
+}
+
+.singstat-section-title {
+  font-size: 15px;
+  font-weight: 650;
+  color: var(--singstat-ink);
+  margin: 0 0 4px;
+  font-style: normal;
+}
+
+.singstat-section-note {
+  font-size: 12px;
+  color: var(--singstat-muted);
+  line-height: 1.45;
+  margin: 0;
+}
+
+.singstat-donut-row {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 24px;
+  max-width: 420px;
+  margin: 0 auto 12px;
+}
+
+.singstat-donut {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+  min-width: 0;
+}
+
+.singstat-donut-svg {
+  width: 112px;
+  height: 112px;
+}
+
+.singstat-donut-track {
+  fill: none;
+  stroke: var(--singstat-track);
+  stroke-width: 10;
+}
+
+.singstat-donut-arc {
+  fill: none;
+  stroke-width: 10;
+  stroke-linecap: butt;
+}
+
+.singstat-donut-center {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 112px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.singstat-donut-pct {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--singstat-ink);
+  font-variant-numeric: tabular-nums;
+}
+
+.singstat-donut-ring {
+  width: 112px;
+  height: 112px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.singstat-donut-ring--empty {
+  border: 10px solid var(--singstat-track);
+  box-sizing: border-box;
+}
+
+.singstat-donut-na,
+.singstat-na {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--singstat-muted);
+  letter-spacing: 0.02em;
+}
+
+.singstat-donut-caption {
+  font-size: 12px;
+  font-weight: 550;
+  color: var(--singstat-ink);
+}
+
+.singstat-legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 16px;
+  justify-content: center;
+  margin-bottom: 8px;
+  font-size: 12px;
+  color: var(--singstat-muted);
+}
+
+.singstat-legend-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.singstat-swatch {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+}
+
+.singstat-swatch--industry { background: var(--singstat-industry); }
+.singstat-swatch--firm { background: var(--singstat-firm); }
+
+.singstat-key-list {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.singstat-key-row {
+  display: grid;
+  grid-template-columns: minmax(0, 200px) minmax(0, 1fr);
+  gap: 12px 16px;
+  align-items: start;
+  padding-bottom: 14px;
+  border-bottom: 1px solid #eee;
+}
+
+.singstat-key-row:last-child {
+  border-bottom: none;
+  padding-bottom: 0;
+}
+
+.singstat-key-row-label {
+  font-size: 13px;
+  font-weight: 550;
+  color: var(--singstat-ink);
+  line-height: 1.35;
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.singstat-key-bars {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.singstat-key-bar-line {
+  display: grid;
+  grid-template-columns: 72px minmax(0, 1fr) 52px;
+  gap: 8px;
+  align-items: center;
+}
+
+.singstat-key-bar-tag {
+  font-size: 11px;
+  color: var(--singstat-muted);
+}
+
+.singstat-key-bar-tag--industry { color: var(--singstat-industry); }
+.singstat-key-bar-tag--firm { color: var(--singstat-firm); }
+
+.singstat-key-bar-track {
+  height: 10px;
+  background: var(--singstat-track);
+  border-radius: 2px;
+  overflow: hidden;
+  min-width: 0;
+}
+
+.singstat-key-bar-fill {
+  height: 100%;
+  border-radius: 2px;
+  min-width: 0;
+}
+
+.singstat-key-bar-fill--industry { background: var(--singstat-industry); }
+.singstat-key-bar-fill--firm { background: var(--singstat-firm); }
+
+.singstat-key-bar-pct {
+  font-size: 12px;
+  font-variant-numeric: tabular-nums;
+  text-align: right;
+  color: var(--singstat-ink);
+}
+
+.singstat-key-bar-line > .singstat-na {
+  grid-column: 2 / 4;
+}
+
+.singstat-comp-note {
+  margin-top: 16px;
+  font-size: 12px;
+  color: var(--singstat-muted);
+}
+
+@media (max-width: 640px) {
+  .singstat-donut-row {
+    max-width: none;
+    gap: 16px;
+  }
+
+  .singstat-key-row {
+    grid-template-columns: 1fr;
+  }
+
+  .singstat-key-bar-line {
+    grid-template-columns: 64px minmax(0, 1fr) 48px;
+  }
+}

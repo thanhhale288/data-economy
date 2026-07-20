@@ -98,6 +98,7 @@ def peers_division_27(db_session):
         current_assets=3_100_000_000_000,
         current_liabilities=2_100_000_000_000,
         employees=3200,
+        operating_expenses=4_000_000_000_000,
         cost_of_goods=3_200_000_000_000,
         rental_cost=85_000_000_000,
         remuneration=680_000_000_000,
@@ -114,6 +115,10 @@ def peers_division_27(db_session):
         current_assets=4_000_000_000_000,
         current_liabilities=2_000_000_000_000,
         employees=3200,
+        operating_expenses=6_000_000_000_000,
+        cost_of_goods=4_500_000_000_000,
+        rental_cost=120_000_000_000,
+        remuneration=900_000_000_000,
     )
     return db_session
 

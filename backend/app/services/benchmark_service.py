@@ -21,6 +21,11 @@ METRIC_KEYS = (
     "equity_ratio",
     "revenue_per_worker",
     "profit_per_worker",
+    # SingStat BITE expenditure block (form "Of which" → ratios)
+    "expenditure_related_ratio",  # operating_expenses / operating_revenue
+    "purchase_goods_share",  # cost_of_goods / operating_expenses
+    "rental_cost_share",  # rental_cost / operating_expenses
+    "remuneration_share",  # remuneration / operating_expenses
 )
 
 # Prototype honesty: listed seed sample is tiny; surface this in API/UI.
@@ -55,6 +60,10 @@ def compute_benchmark_ratios(data: BenchmarkInput) -> dict[str, float | None]:
         "equity_ratio": _safe_div(data.total_equity, data.total_assets),
         "revenue_per_worker": _safe_div(data.operating_revenue, float(data.employees)),
         "profit_per_worker": _safe_div(data.profit_before_tax, float(data.employees)),
+        "expenditure_related_ratio": _safe_div(data.operating_expenses, data.operating_revenue),
+        "purchase_goods_share": _safe_div(data.cost_of_goods, data.operating_expenses),
+        "rental_cost_share": _safe_div(data.rental_cost, data.operating_expenses),
+        "remuneration_share": _safe_div(data.remuneration, data.operating_expenses),
     }
 
 
@@ -67,6 +76,10 @@ def _ratios_from_report(report: FinancialReport) -> dict[str, float | None]:
         "equity_ratio": _safe_div(report.total_equity, report.total_assets),
         "revenue_per_worker": _safe_div(report.revenue, report.employees),
         "profit_per_worker": _safe_div(report.profit_before_tax, report.employees),
+        "expenditure_related_ratio": _safe_div(report.operating_expenses, report.revenue),
+        "purchase_goods_share": _safe_div(report.cost_of_goods, report.operating_expenses),
+        "rental_cost_share": _safe_div(report.rental_cost, report.operating_expenses),
+        "remuneration_share": _safe_div(report.remuneration, report.operating_expenses),
     }
 
 
@@ -158,6 +171,10 @@ def compare_to_industry(
         equity_ratio=user_ratios.get("equity_ratio"),
         revenue_per_worker=user_ratios.get("revenue_per_worker"),
         profit_per_worker=user_ratios.get("profit_per_worker"),
+        expenditure_related_ratio=user_ratios.get("expenditure_related_ratio"),
+        purchase_goods_share=user_ratios.get("purchase_goods_share"),
+        rental_cost_share=user_ratios.get("rental_cost_share"),
+        remuneration_share=user_ratios.get("remuneration_share"),
         percentiles=percentiles,
         industry_averages=industry_avgs,
         comparison=comparison,

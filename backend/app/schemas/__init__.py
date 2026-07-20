@@ -250,6 +250,11 @@ class BenchmarkResult(BaseModel):
     equity_ratio: float | None = None
     revenue_per_worker: float | None = None
     profit_per_worker: float | None = None
+    # SingStat BITE expenditure ratios (null when inputs missing — never invent)
+    expenditure_related_ratio: float | None = None
+    purchase_goods_share: float | None = None
+    rental_cost_share: float | None = None
+    remuneration_share: float | None = None
     percentiles: dict[str, float | None] = {}
     industry_averages: dict[str, float | None] = {}
     comparison: dict[str, str] = {}
