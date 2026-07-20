@@ -338,7 +338,7 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 | **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
 | **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Đã merge `main` (PR #2). Caveat bên dưới |
 | **3 — Clean, Features & ML** | **Hoàn thành (chờ merge)** | Branch `cursor/phase3-clean-features-ml`; tip `#12` `9aed9c0`; **PR #5** → `main` |
-| **4 — Web hoàn thiện** | **Đang làm** | Task #13 Dashboard ngành DONE trên `cursor/phase4-task13-dashboard`; còn #14–#17 |
+| **4 — Web hoàn thiện** | **Đang làm** | Task #13–#14 DONE trên nhánh Phase 4; còn #15–#17 |
 | 5 — Benchmark & Báo cáo | Chưa | |
 
 **Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
@@ -349,7 +349,7 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - **Marketplace live (Shopee/TikTok):** tạm hoãn (anti-bot); pipeline + seed/fallback sẵn; discovery shop mới → sau.
 - Industry-ratio online khi không listing → sau (hiện để 0 + log, không bịa).
 
-**Git:** Phase 1 + Phase 2 trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml` → PR #5 (OPEN). Phase 4 Task #13: `cursor/phase4-task13-dashboard` (base tip Phase 3).
+**Git:** Phase 1 + Phase 2 trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml` → PR #5 (OPEN tại Task #14). Phase 4: Task #13 `cursor/phase4-task13-dashboard` (PR #6); Task #14 `cursor/phase4-task14-company-detail` (base tip Task #13).
 
 **Phase 3 — phạm vi chấp nhận (2026-07-20):**
 
@@ -394,7 +394,7 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 ### Giai đoạn 4: Web hoàn thiện & Demo (Tuần 15–17)
 
 - [x] **Task #13 — Dashboard ngành (Module 1)** — IIP + forecast từ ML API, summary/Digital VA, heatmap VSIC, OECD peer vs GSO (thiếu → hiện rõ, không bịa); `tests/dashboard`
-- [ ] **Task #14 — Company detail (Module 2)** — profile DN, kênh bán số, ước lượng online; case study Rạng Đông (RAL)
+- [x] **Task #14 — Company detail (Module 2)** — profile DN, kênh bán số, ước lượng online; case study Rạng Đông (RAL); crawl timeline + data-quality score; `tests/companies/test_company_detail.py`
 - [ ] **Task #15 — Pipeline monitor (Module 3)** — trạng thái job crawl + `data_cleaning`, log lỗi, lần chạy cuối, tóm tắt quality report; staging Postgres optional (§4.1)
 - [ ] **Task #16 — ML Lab (Module 4)** — so sánh 3 model, forecast vs actual, feature importance (artifact #12); không retrain UI bắt buộc
 - [ ] **Task #17 — Integration testing E2E** — crawl → clean → features → ML → API → FE
