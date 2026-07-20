@@ -1,0 +1,13 @@
+---
+description: One Cursor chat implements exactly one roadmap task; then handoff and stop.
+alwaysApply: true
+---
+
+# One chat = one task
+
+- Mỗi cuộc chat chỉ làm **một** task (số trong `docs/plan.md` / project-roadmap).
+- Waves / subagents / nhiều tab chỉ chia việc **trong** task đó — không mở task kế.
+- Khi task xong: cập nhật `.scratch/handoff-task*.md`, viết **Task review** + **Testing results**, rồi đưa prompt (có Waves) cho chat mới, rồi **dừng**.
+- Thứ tự đọc cuối chat: handoff path → review → testing → paste prompt.
+- Chat mới + dán cả block prompt = task mới.
+- Nếu user yêu cầu nhiều task trong một chat: nhắc rule này và xin xác nhận trước khi phá lệ.

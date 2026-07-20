@@ -73,3 +73,13 @@ Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
 
 Commits, PRs, CI, milestones, and phase releases: `.cursor/skills/github-workflow/SKILL.md`.  
 One-shot labels/milestones/releases/protection: `bash scripts/github-bootstrap.sh`.
+
+### Lazy-to-complete (phase/task loop)
+
+One chat → one task → one branch → waves → PR; handoff + review + testing + next prompt then stop:  
+`.cursor/skills/lazy-to-complete-workflow/SKILL.md`. Trigger: paste handoff / next-task prompt.
+
+### Catch-up (“những gì tôi chưa biết”)
+
+Tour Task #13–#18 (what/how/gaps) + terms missing from `docs/knowledge.md`:  
+`.cursor/skills/what-i-dont-know/SKILL.md`.
