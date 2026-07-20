@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task14-company-detail`  
-**Commit:** *(fill after commit)*  
-**PR:** *(fill after push — gh auth may need refresh)*  
+**Commit:** `decc57b`  
+**PR:** *(pending push — run `gh auth refresh -h github.com` if push fails)*  
 **Base:** tip Task #13 `0e211cc` (PR #5 / #6 still not on `main` at Task #14 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
