@@ -321,11 +321,12 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - Feature importance
 - Input features/forecast từ artifact Phase 3; staging chỉ thêm nếu API Lab cần query DB thay vì file
 
-### Module 5: Benchmark (Phase 2 — tham chiếu SingStat BITE)
+### Module 5: Benchmark (Phase 4 Task #18 — tham chiếu SingStat BITE)
 
-- Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương)
-- Output: ROA, ROE, Current Ratio, Equity Ratio + **percentile so với ngành**
-- Nội suy từ BCTC công ty chưa đủ field → dùng tỷ lệ ngành từ GSO
+- Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương) + cân đối kế toán
+- Output: ROA, ROE, Current Ratio, Equity Ratio (+ revenue/profit per worker) + **percentile so với peer cùng VSIC 2-digit** từ BCTC seed
+- Thiếu peer / field → null percentile + `insufficient_peers` (không bịa 50th); prototype n≈10 DN niêm yết
+- Nội suy GSO khi thiếu BCTC → deferred (không invent industry ratio)
 
 ---
 
@@ -338,8 +339,8 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 | **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
 | **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Đã merge `main` (PR #2). Caveat bên dưới |
 | **3 — Clean, Features & ML** | **Hoàn thành (chờ merge)** | Branch `cursor/phase3-clean-features-ml`; tip `#12` `9aed9c0`; **PR #5** → `main` |
-| **4 — Web hoàn thiện** | **Đang làm** | Task #13–#17 DONE trên nhánh Phase 4; còn #18 Benchmark |
-| 5 — Benchmark & Báo cáo | Chưa | |
+| **4 — Web hoàn thiện** | **Hoàn thành (chờ merge)** | Task #13–#18 DONE trên nhánh Phase 4; #18 Benchmark Module 5 |
+| 5 — Báo cáo & Demo | Chưa | Proposal Mục 4 + demo (benchmark đã ship trong Phase 4 #18) |
 
 **Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
 
@@ -349,7 +350,7 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - **Marketplace live (Shopee/TikTok):** tạm hoãn (anti-bot); pipeline + seed/fallback sẵn; discovery shop mới → sau.
 - Industry-ratio online khi không listing → sau (hiện để 0 + log, không bịa).
 
-**Git:** Phase 1 + Phase 2 trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml` → PR #5 (OPEN). Phase 4: Task #13–#16 PR #6–#9; Task #17 `cursor/phase4-task17-e2e` (base tip Task #16).
+**Git:** Phase 1 + Phase 2 trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml` → PR #5 (OPEN). Phase 4: Task #13–#17 PR #6–#10; Task #18 `cursor/phase4-task18-benchmark` (base tip Task #17).
 
 **Phase 3 — phạm vi chấp nhận (2026-07-20):**
 
@@ -398,10 +399,10 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 - [x] **Task #15 — Pipeline monitor (Module 3)** — trạng thái job crawl + `data_cleaning`, log lỗi, lần chạy cuối, tóm tắt quality report; staging Postgres optional (§4.1); `tests/pipeline/test_pipeline_monitor.py`
 - [x] **Task #16 — ML Lab (Module 4)** — so sánh 3 model, forecast vs actual, feature importance (artifact #12); không retrain UI bắt buộc; `tests/ml/test_ml_lab_service.py` + `test_ml_api.py`
 - [x] **Task #17 — Integration testing E2E** — crawl → clean → features → ML → API → FE (`tests/e2e/`; offline fixtures + sourced fallback; honest skip/404)
+- [x] **Task #18 — Benchmark Module 5** — form (DT/LN/NV/chi phí + BS) → ROA/ROE/Current/Equity (+ worker) + percentile VSIC division từ BCTC seed; thiếu peer → null + `insufficient_peers` (không bịa 50th); `tests/benchmark`
 
-### Giai đoạn 5: Benchmark & Báo cáo (Tuần 18)
+### Giai đoạn 5: Báo cáo & Demo (Tuần 18)
 
-- Benchmark module (SingStat BITE style)
 - Cập nhật proposal Mục 4 với kết quả thực tế
 - Demo presentation + documentation
 

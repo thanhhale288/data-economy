@@ -83,10 +83,14 @@ Online revenue relative to total firm (or industry) revenue; used in cross featu
 ## Benchmark & finance ratios
 
 **Benchmark** (SingStat BITE style):
-Compare a firm’s efficiency ratios to industry peers/percentiles (ROA, ROE, current ratio, digital revenue per worker, etc.).
+Compare a firm’s efficiency ratios to industry peers/percentiles (ROA, ROE, current ratio, digital revenue per worker, etc.). Peer set = latest annual BCTC among seeded listed companies sharing the same VSIC **2-digit division**. Prototype only (n≈10 firms) — not a national industry standard. Missing peer sample → null percentile + `insufficient_peers` (never invent a 50th percentile). Cost form fields (COGS / rental / remuneration) are captured for BITE-style UX; they are not inputs to the four core ratios.
 
-**ROA / ROE / current ratio**:
-Standard financial ratios from BCTC used as benchmark inputs — do not invent definitions; compute from `financial_reports` fields.
+**ROA / ROE / current / equity ratio** (Module 5, period-end BCTC — no invented averages without two periods):
+- ROA = profit_before_tax / total_assets
+- ROE = profit_before_tax / total_equity
+- Current ratio = current_assets / current_liabilities
+- Equity ratio = total_equity / total_assets
+- Revenue / profit per worker = operating_revenue or profit_before_tax / employees
 
 ## ML Lab
 
