@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task17-e2e`  
-**Commit:** *(filled after commit)*  
-**PR:** *(filled after PR)*  
+**Commit:** `19c8e3e`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/10 (base: `cursor/phase4-task16-ml-lab`)  
 **Base:** tip Task #16 `2d31d24` (PR #5–#9 still not on `main` at Task #17 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
@@ -29,8 +29,8 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: 100% (5/5)
 - Status: DONE
-- Phase: 4 · Branch: `cursor/phase4-task17-e2e`
-- PR: *(see after ship)*
+- Phase: 4 · Branch: `cursor/phase4-task17-e2e` · Tip: `19c8e3e`
+- PR: https://github.com/thanhhale288/data-economy/pull/10
 
 ### Đã làm được gì (đối chiếu AC)
 | Acceptance criterion | Status | Ghi chú ngắn |
@@ -80,7 +80,7 @@ Deliverable chính:
 | Live GSO/OECD/marketplace crawl | ngoài AC honesty; offline fixtures | no |
 | XGB/LSTM train in E2E chain | XGB OpenMP segfault risk; covered in `tests/ml/` | no |
 | Playwright browser E2E | không có harness; contract+build đủ AC | optional later |
-| CI PR checks | pending until push | yes after PR |
+| CI PR checks | pending on PR #10 | yes |
 
 ## Do not reopen / do not
 

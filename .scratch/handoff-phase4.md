@@ -10,7 +10,7 @@
 **Task #14:** `cursor/phase4-task14-company-detail` · PR https://github.com/thanhhale288/data-economy/pull/7  
 **Task #15:** `cursor/phase4-task15-pipeline-monitor` · PR https://github.com/thanhhale288/data-economy/pull/8  
 **Task #16:** `cursor/phase4-task16-ml-lab` · PR https://github.com/thanhhale288/data-economy/pull/9  
-**Task #17:** `cursor/phase4-task17-e2e` · tip base Task #16 `2d31d24` (PR URL filled after ship)
+**Task #17:** `cursor/phase4-task17-e2e` · PR https://github.com/thanhhale288/data-economy/pull/10 (base tip Task #16)
 
 ---
 
