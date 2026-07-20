@@ -250,9 +250,12 @@ class BenchmarkResult(BaseModel):
     equity_ratio: float | None = None
     revenue_per_worker: float | None = None
     profit_per_worker: float | None = None
-    percentiles: dict[str, float] = {}
-    industry_averages: dict[str, float] = {}
+    percentiles: dict[str, float | None] = {}
+    industry_averages: dict[str, float | None] = {}
     comparison: dict[str, str] = {}
+    peer_count: int = 0
+    peer_scope: str | None = None
+    warnings: list[str] = []
 
 
 class DashboardSummary(BaseModel):

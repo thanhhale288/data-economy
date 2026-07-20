@@ -45,4 +45,5 @@ export const api = {
     method: 'POST',
     body: JSON.stringify(data),
   }),
+  benchmarkPrefill: (stockCode) => request(`/benchmark/prefill/${encodeURIComponent(stockCode)}`),
 }

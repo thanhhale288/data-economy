@@ -1,4 +1,4 @@
-"""Task #17 — FE contract smoke: api.js paths match Module 1–4 E2E surface."""
+"""FE contract smoke: api.js paths match Module 1–5 surface."""
 
 from __future__ import annotations
 
@@ -9,7 +9,7 @@ import pytest
 REPO_ROOT = Path(__file__).resolve().parents[2]
 API_JS = REPO_ROOT / "frontend" / "src" / "api.js"
 
-# Endpoints the offline E2E chain exercises (Dashboard / Company / Pipeline / ML).
+# Endpoints the offline E2E chain + Benchmark Module 5 exercise.
 REQUIRED_API_SNIPPETS = (
     "/dashboard/summary",
     "/dashboard/iip",
@@ -25,6 +25,8 @@ REQUIRED_API_SNIPPETS = (
     "/ml/predictions",
     "/ml/feature-importance",
     "/ml/forecast",
+    "/benchmark/compare",
+    "/benchmark/prefill/",
 )
 
 REQUIRED_EXPORTS = (
@@ -41,6 +43,8 @@ REQUIRED_EXPORTS = (
     "getPredictions",
     "getFeatureImportance",
     "forecast",
+    "benchmark",
+    "benchmarkPrefill",
 )
 
 
@@ -58,6 +62,12 @@ def test_frontend_api_js_covers_e2e_surface():
 def test_frontend_pages_exist_for_modules():
     """Module pages exist so npm run build can smoke-compile the E2E UI surface."""
     pages = REPO_ROOT / "frontend" / "src" / "pages"
-    for name in ("Dashboard.jsx", "CompanyDetail.jsx", "Pipeline.jsx", "MLLab.jsx"):
+    for name in (
+        "Dashboard.jsx",
+        "CompanyDetail.jsx",
+        "Pipeline.jsx",
+        "MLLab.jsx",
+        "Benchmark.jsx",
+    ):
         path = pages / name
         assert path.is_file(), f"missing FE page for E2E surface: {path}"

@@ -1,10 +1,33 @@
+"""SingStat BITE-style firm benchmark against seeded listed peers.
+
+Peers = latest annual BCTC among companies sharing the same VSIC 2-digit
+division. Percentiles are never invented: missing peer samples yield null
+plus an explicit warning (not a fake 50th percentile).
+"""
+
+from __future__ import annotations
+
 import statistics
-from typing import Any
 
 from sqlalchemy.orm import Session, joinedload
 
 from backend.app.models import Company, FinancialReport
 from backend.app.schemas import BenchmarkInput, BenchmarkResult
+
+METRIC_KEYS = (
+    "roa",
+    "roe",
+    "current_ratio",
+    "equity_ratio",
+    "revenue_per_worker",
+    "profit_per_worker",
+)
+
+# Prototype honesty: listed seed sample is tiny; surface this in API/UI.
+PROTOTYPE_WARNING = "prototype_listed_sample"
+INSUFFICIENT_PEERS_WARNING = "insufficient_peers"
+SMALL_SAMPLE_WARNING = "small_peer_sample"
+SMALL_SAMPLE_THRESHOLD = 3
 
 
 def _safe_div(a: float | None, b: float | None) -> float | None:
@@ -13,9 +36,13 @@ def _safe_div(a: float | None, b: float | None) -> float | None:
     return a / b
 
 
-def _percentile(value: float, population: list[float]) -> float:
+def _percentile(value: float, population: list[float]) -> float | None:
+    """Empirical percentile = share of peers with ratio ≤ value.
+
+    Returns None when there is no peer sample — never invents a midpoint.
+    """
     if not population:
-        return 50.0
+        return None
     below = sum(1 for p in population if p <= value)
     return round(below / len(population) * 100, 1)
 
@@ -26,13 +53,29 @@ def compute_benchmark_ratios(data: BenchmarkInput) -> dict[str, float | None]:
         "roe": _safe_div(data.profit_before_tax, data.total_equity),
         "current_ratio": _safe_div(data.current_assets, data.current_liabilities),
         "equity_ratio": _safe_div(data.total_equity, data.total_assets),
-        "revenue_per_worker": _safe_div(data.operating_revenue, data.employees),
-        "profit_per_worker": _safe_div(data.profit_before_tax, data.employees),
+        "revenue_per_worker": _safe_div(data.operating_revenue, float(data.employees)),
+        "profit_per_worker": _safe_div(data.profit_before_tax, float(data.employees)),
     }
 
 
+def _ratios_from_report(report: FinancialReport) -> dict[str, float | None]:
+    """Peer ratios from BCTC fields only — null fields stay null (no invent)."""
+    return {
+        "roa": _safe_div(report.profit_before_tax, report.total_assets),
+        "roe": _safe_div(report.profit_before_tax, report.total_equity),
+        "current_ratio": _safe_div(report.current_assets, report.current_liabilities),
+        "equity_ratio": _safe_div(report.total_equity, report.total_assets),
+        "revenue_per_worker": _safe_div(report.revenue, report.employees),
+        "profit_per_worker": _safe_div(report.profit_before_tax, report.employees),
+    }
+
+
+def vsic_division_prefix(vsic_code: str) -> str:
+    return vsic_code[:2] if len(vsic_code) >= 2 else vsic_code
+
+
 def get_industry_financials(db: Session, vsic_code: str) -> list[FinancialReport]:
-    prefix = vsic_code[:2] if len(vsic_code) >= 2 else vsic_code
+    prefix = vsic_division_prefix(vsic_code)
     companies = (
         db.query(Company)
         .filter(Company.vsic_code.startswith(prefix))
@@ -40,59 +83,67 @@ def get_industry_financials(db: Session, vsic_code: str) -> list[FinancialReport
         .all()
     )
     reports: list[FinancialReport] = []
-    for c in companies:
-        if c.financial_reports:
-            latest = max(c.financial_reports, key=lambda r: r.period)
+    for company in companies:
+        if company.financial_reports:
+            latest = max(company.financial_reports, key=lambda r: r.period)
             reports.append(latest)
     return reports
 
 
-def compute_industry_averages(reports: list[FinancialReport]) -> dict[str, float]:
-    ratios: dict[str, list[float]] = {
-        "roa": [],
-        "roe": [],
-        "current_ratio": [],
-        "equity_ratio": [],
-        "revenue_per_worker": [],
-        "profit_per_worker": [],
-    }
-    for r in reports:
-        inp = BenchmarkInput(
-            vsic_code="C",
-            operating_revenue=r.revenue or 0,
-            profit_before_tax=r.profit_before_tax or 0,
-            employees=r.employees or 1,
-            total_assets=r.total_assets,
-            total_equity=r.total_equity,
-            current_assets=r.current_assets,
-            current_liabilities=r.current_liabilities,
-        )
-        computed = compute_benchmark_ratios(inp)
-        for k, v in computed.items():
-            if v is not None:
-                ratios[k].append(v)
+def _empty_populations() -> dict[str, list[float]]:
+    return {key: [] for key in METRIC_KEYS}
 
-    return {k: round(statistics.mean(v), 4) if v else 0 for k, v in ratios.items()}
+
+def build_peer_populations(reports: list[FinancialReport]) -> dict[str, list[float]]:
+    populations = _empty_populations()
+    for report in reports:
+        computed = _ratios_from_report(report)
+        for key, value in computed.items():
+            if value is not None:
+                populations[key].append(value)
+    return populations
+
+
+def compute_industry_averages(populations: dict[str, list[float]]) -> dict[str, float | None]:
+    return {
+        key: round(statistics.mean(values), 4) if values else None
+        for key, values in populations.items()
+    }
+
+
+def _build_warnings(peer_count: int, populations: dict[str, list[float]]) -> list[str]:
+    warnings: list[str] = []
+    if peer_count == 0 or all(not pop for pop in populations.values()):
+        warnings.append(INSUFFICIENT_PEERS_WARNING)
+        return warnings
+
+    warnings.append(PROTOTYPE_WARNING)
+    if peer_count < SMALL_SAMPLE_THRESHOLD:
+        warnings.append(SMALL_SAMPLE_WARNING)
+    return warnings
 
 
 def compare_to_industry(
     user_ratios: dict[str, float | None],
-    industry_avgs: dict[str, float],
+    industry_avgs: dict[str, float | None],
     industry_populations: dict[str, list[float]],
+    *,
+    peer_count: int,
+    peer_scope: str,
 ) -> BenchmarkResult:
-    percentiles: dict[str, float] = {}
+    percentiles: dict[str, float | None] = {}
     comparison: dict[str, str] = {}
 
     for metric, value in user_ratios.items():
         if value is None:
             continue
         pop = industry_populations.get(metric, [])
-        pct = _percentile(value, pop) if pop else 50.0
+        pct = _percentile(value, pop)
         percentiles[metric] = pct
 
-        avg = industry_avgs.get(metric, 0)
-        if avg == 0:
-            comparison[metric] = "neutral"
+        avg = industry_avgs.get(metric)
+        if pct is None or avg is None:
+            comparison[metric] = "insufficient_peers"
         elif value > avg * 1.1:
             comparison[metric] = "above_average"
         elif value < avg * 0.9:
@@ -110,36 +161,52 @@ def compare_to_industry(
         percentiles=percentiles,
         industry_averages=industry_avgs,
         comparison=comparison,
+        peer_count=peer_count,
+        peer_scope=peer_scope,
+        warnings=_build_warnings(peer_count, industry_populations),
     )
 
 
 def run_benchmark(db: Session, data: BenchmarkInput) -> BenchmarkResult:
     user_ratios = compute_benchmark_ratios(data)
+    prefix = vsic_division_prefix(data.vsic_code)
     reports = get_industry_financials(db, data.vsic_code)
-    industry_avgs = compute_industry_averages(reports)
+    populations = build_peer_populations(reports)
+    industry_avgs = compute_industry_averages(populations)
+    return compare_to_industry(
+        user_ratios,
+        industry_avgs,
+        populations,
+        peer_count=len(reports),
+        peer_scope=f"vsic_division:{prefix}",
+    )
 
-    populations: dict[str, list[float]] = {
-        "roa": [],
-        "roe": [],
-        "current_ratio": [],
-        "equity_ratio": [],
-        "revenue_per_worker": [],
-        "profit_per_worker": [],
-    }
-    for r in reports:
-        inp = BenchmarkInput(
-            vsic_code=data.vsic_code,
-            operating_revenue=r.revenue or 0,
-            profit_before_tax=r.profit_before_tax or 0,
-            employees=r.employees or 1,
-            total_assets=r.total_assets,
-            total_equity=r.total_equity,
-            current_assets=r.current_assets,
-            current_liabilities=r.current_liabilities,
-        )
-        computed = compute_benchmark_ratios(inp)
-        for k, v in computed.items():
-            if v is not None:
-                populations[k].append(v)
 
-    return compare_to_industry(user_ratios, industry_avgs, populations)
+def load_input_from_company(db: Session, stock_code: str) -> BenchmarkInput | None:
+    """Optional helper: prefill form from a seeded listed company's latest BCTC."""
+    company = (
+        db.query(Company)
+        .filter(Company.stock_code == stock_code.upper())
+        .options(joinedload(Company.financial_reports))
+        .first()
+    )
+    if company is None or not company.financial_reports:
+        return None
+    latest = max(company.financial_reports, key=lambda r: r.period)
+    if latest.revenue is None or latest.profit_before_tax is None or latest.employees is None:
+        return None
+    return BenchmarkInput(
+        stock_code=company.stock_code,
+        vsic_code=company.vsic_code,
+        operating_revenue=latest.revenue,
+        profit_before_tax=latest.profit_before_tax,
+        employees=latest.employees,
+        operating_expenses=latest.operating_expenses,
+        cost_of_goods=latest.cost_of_goods,
+        rental_cost=latest.rental_cost,
+        remuneration=latest.remuneration,
+        total_assets=latest.total_assets,
+        total_equity=latest.total_equity,
+        current_assets=latest.current_assets,
+        current_liabilities=latest.current_liabilities,
+    )
