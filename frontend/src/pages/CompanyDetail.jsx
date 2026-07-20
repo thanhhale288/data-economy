@@ -11,117 +11,388 @@ function formatVND(n) {
   return n.toLocaleString()
 }
 
+function periodLabel(p) {
+  if (!p) return ''
+  return String(p).slice(0, 10)
+}
+
+function formatWhen(iso) {
+  if (!iso) return '—'
+  try {
+    return new Date(iso).toLocaleString('vi-VN')
+  } catch {
+    return String(iso)
+  }
+}
+
+function latestByPeriod(rows) {
+  if (!rows?.length) return null
+  return [...rows].sort((a, b) => new Date(b.period) - new Date(a.period))[0]
+}
+
+const CHANNEL_ORDER = ['website', 'shopee', 'tiktok', 'lazada']
+
 export default function CompanyDetail() {
   const { code } = useParams()
   const [company, setCompany] = useState(null)
+  const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
+    let cancelled = false
+    setLoading(true)
+    setError(null)
     api.getCompany(code)
-      .then(setCompany)
-      .catch(console.error)
-      .finally(() => setLoading(false))
+      .then((data) => {
+        if (!cancelled) setCompany(data)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setCompany(null)
+          setError(err.message || 'Không tải được doanh nghiệp')
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setLoading(false)
+      })
+    return () => { cancelled = true }
   }, [code])
 
   if (loading) return <div className="loading">Đang tải...</div>
-  if (!company) return <div className="loading">Không tìm thấy doanh nghiệp</div>
+  if (error || !company) {
+    return (
+      <div>
+        <Link to="/companies">← Quay lại</Link>
+        <div className="empty-state" style={{ marginTop: 16 }}>
+          {error || 'Không tìm thấy doanh nghiệp'}
+        </div>
+      </div>
+    )
+  }
 
-  const latestFin = company.financial_reports?.sort(
-    (a, b) => new Date(b.period) - new Date(a.period)
-  )[0]
-  const latestMetric = company.digital_metrics?.sort(
-    (a, b) => new Date(b.period) - new Date(a.period)
-  )[0]
+  const latestFin = latestByPeriod(company.financial_reports)
+  const latestMetric = latestByPeriod(company.digital_metrics)
+  const presence = company.digital_presence || []
+  const listings = company.marketplace_listings || []
+  const mktListings = listings.filter((ml) =>
+    ['shopee', 'tiktok', 'lazada'].includes(String(ml.platform || '').toLowerCase())
+  )
+  const quality = company.data_quality
+  const caseStudy = company.case_study
+  const timeline = company.crawl_timeline || []
 
-  const channelData = company.digital_presence?.map((dp) => ({
+  const channelFlags = company.digital_channels || {}
+  const expectedChannels = CHANNEL_ORDER.filter(
+    (ch) => channelFlags[ch] === true || presence.some((p) => p.channel_type === ch)
+  )
+  // Always show website / shopee / tiktok slots for Module 2 readability
+  const channelSlots = ['website', 'shopee', 'tiktok'].map((ch) => {
+    const dp = presence.find((p) => p.channel_type === ch)
+    const flagged = channelFlags[ch] === true
+    return { channel: ch, dp, flagged }
+  })
+
+  const channelData = presence.map((dp) => ({
     name: dp.channel_type,
     confidence: (dp.match_confidence || 0) * 100,
-  })) || []
+  }))
 
-  const productData = company.marketplace_listings?.map((ml) => ({
-    name: ml.product_name?.slice(0, 20),
+  const productData = mktListings.map((ml) => ({
+    name: (ml.product_name || ml.platform || '').slice(0, 22),
     revenue: ml.revenue_est || 0,
-  })) || []
+  }))
+
+  const qualityBadge =
+    quality?.status === 'ok'
+      ? 'badge-success'
+      : quality?.status === 'partial'
+        ? 'badge-warning'
+        : 'badge-warning'
 
   return (
     <div>
-      <Link to="/companies">← Quay lại</Link>
+      <Link to="/companies">← Quay lại danh sách</Link>
+
       <div className="company-header" style={{ marginTop: 16 }}>
         <div>
           <h2>{company.name} ({company.stock_code})</h2>
-          <p style={{ color: '#888', marginTop: 4 }}>{company.description}</p>
-          <div className="channel-tags">
-            {company.digital_presence?.map((dp) => (
-              <span key={dp.id} className="badge badge-info">{dp.channel_type}</span>
-            ))}
+          <p style={{ color: '#888', marginTop: 4 }}>{company.description || '—'}</p>
+          <div className="metric-strip" style={{ marginTop: 12, marginBottom: 0 }}>
+            <span className="metric-chip">
+              <strong>Sàn</strong> {company.exchange}
+            </span>
+            <span className="metric-chip">
+              <strong>VSIC</strong> {company.vsic_code}
+              {company.vsic?.name_vi ? ` — ${company.vsic.name_vi}` : ''}
+            </span>
+            <span className="metric-chip">
+              <strong>Website</strong>{' '}
+              {company.website_url ? (
+                <a href={company.website_url} target="_blank" rel="noreferrer">
+                  {company.website_url.replace(/^https?:\/\//, '')}
+                </a>
+              ) : (
+                '—'
+              )}
+            </span>
+            <span className="metric-chip">
+              <strong>TMĐT</strong>{' '}
+              <span className={`badge ${company.has_ecommerce_site ? 'badge-success' : 'badge-warning'}`}>
+                {company.has_ecommerce_site ? 'Có' : 'Không'}
+              </span>
+            </span>
           </div>
         </div>
       </div>
 
+      {caseStudy && (
+        <div className="chart-container" style={{ borderLeft: '4px solid #e94560' }}>
+          <h3>{caseStudy.title}</h3>
+          <p className="chart-note" style={{ marginTop: 0 }}>
+            Hồ sơ case study từ dữ liệu đã lưu — không hard-code doanh thu / online.
+          </p>
+          <ul style={{ margin: '8px 0 0', paddingLeft: 18, lineHeight: 1.6 }}>
+            {caseStudy.highlights?.map((h) => (
+              <li key={h}>{h}</li>
+            ))}
+          </ul>
+          {caseStudy.notes?.length > 0 && (
+            <div className="banner banner-warn" style={{ marginTop: 12 }}>
+              {caseStudy.notes.join(' ')}
+            </div>
+          )}
+        </div>
+      )}
+
       <div className="cards">
         <div className="card">
-          <div className="label">Doanh thu</div>
+          <div className="label">Doanh thu (BCTC)</div>
           <div className="value" style={{ fontSize: 20 }}>{formatVND(latestFin?.revenue)}</div>
+          <div className="sub muted">{latestFin ? periodLabel(latestFin.period) : 'Chưa có BCTC'}</div>
         </div>
         <div className="card">
           <div className="label">Doanh thu TMĐT (ước tính)</div>
-          <div className="value" style={{ fontSize: 20 }}>{formatVND(latestMetric?.online_revenue_est)}</div>
+          <div className="value" style={{ fontSize: 20 }}>
+            {formatVND(latestMetric?.online_revenue_est)}
+          </div>
+          <div className="sub muted">
+            {latestMetric
+              ? `Kỳ ${periodLabel(latestMetric.period)} · chỉ listing Shopee/TikTok/Lazada`
+              : 'Chưa có digital_metrics'}
+          </div>
         </div>
         <div className="card">
           <div className="label">Digital VA</div>
-          <div className="value" style={{ fontSize: 20 }}>{formatVND(latestMetric?.digital_va_contribution)}</div>
+          <div className="value" style={{ fontSize: 20 }}>
+            {formatVND(latestMetric?.digital_va_contribution)}
+          </div>
+          <div className="sub muted">Công thức CONTEXT — không đổi</div>
         </div>
         <div className="card">
-          <div className="label">Đóng góp ngành</div>
-          <div className="value" style={{ fontSize: 20 }}>{latestMetric?.industry_share_pct?.toFixed(1) ?? '—'}%</div>
+          <div className="label">Đóng góp ngành (Digital VA)</div>
+          <div className="value" style={{ fontSize: 20 }}>
+            {latestMetric?.industry_share_pct != null
+              ? `${latestMetric.industry_share_pct.toFixed(1)}%`
+              : '—'}
+          </div>
+          <div className="sub muted">Tỷ trọng trong nhóm VSIC cùng mẫu</div>
         </div>
       </div>
 
+      {!latestMetric && (
+        <div className="banner banner-warn">
+          Chưa có chỉ số digital_metrics cho DN này. Chạy job metrics / seed metrics trước —
+          không hiển thị số bịa.
+        </div>
+      )}
+
       <div className="chart-container">
-        <h3>Hiện diện số — Độ tin cậy match</h3>
-        <ResponsiveContainer width="100%" height={200}>
-          <BarChart data={channelData}>
-            <CartesianGrid strokeDasharray="3 3" />
-            <XAxis dataKey="name" />
-            <YAxis domain={[0, 100]} />
-            <Tooltip formatter={(v) => `${v.toFixed(0)}%`} />
-            <Bar dataKey="confidence" fill="#0f3460" name="Confidence %" />
-          </BarChart>
-        </ResponsiveContainer>
+        <h3>Kênh bán số</h3>
+        <p className="chart-note" style={{ marginTop: 0 }}>
+          Website / Shopee / TikTok — trạng thái từ digital_presence (vắng mặt = chưa có dữ liệu).
+        </p>
+        <div className="cards" style={{ marginBottom: 0 }}>
+          {channelSlots.map(({ channel, dp, flagged }) => (
+            <div className="card" key={channel}>
+              <div className="label" style={{ textTransform: 'capitalize' }}>{channel}</div>
+              {dp ? (
+                <>
+                  <div style={{ fontSize: 13, marginTop: 6, wordBreak: 'break-all' }}>
+                    <a href={dp.url} target="_blank" rel="noreferrer">{dp.url}</a>
+                  </div>
+                  <div className="sub muted" style={{ marginTop: 8 }}>
+                    Checkout: {dp.has_checkout ? 'Có' : 'Không'} · Confidence:{' '}
+                    {dp.match_confidence != null
+                      ? `${(dp.match_confidence * 100).toFixed(0)}%`
+                      : '—'}
+                  </div>
+                  <div className="sub muted">Crawl: {formatWhen(dp.crawled_at)}</div>
+                </>
+              ) : (
+                <div className="empty-state" style={{ marginTop: 8, padding: 12 }}>
+                  {flagged
+                    ? 'Flag kênh = true nhưng chưa có digital_presence.'
+                    : 'Chưa có trong dữ liệu (không bịa).'}
+                </div>
+              )}
+            </div>
+          ))}
+        </div>
+        {expectedChannels.length === 0 && presence.length === 0 && (
+          <div className="empty-state" style={{ marginTop: 12 }}>
+            Không có kênh bán số đã ghi nhận cho DN này.
+          </div>
+        )}
       </div>
 
-      {productData.length > 0 && (
+      {channelData.length > 0 && (
         <div className="chart-container">
-          <h3>Doanh thu sản phẩm TMĐT (ước tính)</h3>
-          <ResponsiveContainer width="100%" height={250}>
-            <BarChart data={productData}>
+          <h3>Độ tin cậy match kênh</h3>
+          <ResponsiveContainer width="100%" height={200}>
+            <BarChart data={channelData}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" tick={{ fontSize: 10 }} />
-              <YAxis />
-              <Tooltip formatter={(v) => formatVND(v)} />
-              <Bar dataKey="revenue" fill="#e94560" name="Revenue" />
+              <XAxis dataKey="name" />
+              <YAxis domain={[0, 100]} />
+              <Tooltip formatter={(v) => `${Number(v).toFixed(0)}%`} />
+              <Bar dataKey="confidence" fill="#0f3460" name="Confidence %" />
             </BarChart>
           </ResponsiveContainer>
         </div>
       )}
 
       <div className="chart-container">
-        <h3>Kênh bán số</h3>
-        <table>
-          <thead>
-            <tr><th>Kênh</th><th>URL</th><th>Checkout</th><th>Confidence</th></tr>
-          </thead>
-          <tbody>
-            {company.digital_presence?.map((dp) => (
-              <tr key={dp.id}>
-                <td>{dp.channel_type}</td>
-                <td><a href={dp.url} target="_blank" rel="noreferrer">{dp.url}</a></td>
-                <td>{dp.has_checkout ? '✓' : '—'}</td>
-                <td>{dp.match_confidence ? `${(dp.match_confidence * 100).toFixed(0)}%` : '—'}</td>
+        <h3>Listing marketplace (ước lượng)</h3>
+        {mktListings.length === 0 ? (
+          <div className="empty-state">
+            Không có listing Shopee/TikTok/Lazada. Online revenue est. = 0 trừ khi có
+            industry ratio có nguồn — không bịa.
+          </div>
+        ) : (
+          <>
+            <table>
+              <thead>
+                <tr>
+                  <th>Nền tảng</th>
+                  <th>Sản phẩm</th>
+                  <th>Giá</th>
+                  <th>Units est.</th>
+                  <th>Revenue est.</th>
+                  <th>Rating</th>
+                  <th>Crawl</th>
+                </tr>
+              </thead>
+              <tbody>
+                {mktListings.map((ml) => (
+                  <tr key={ml.id}>
+                    <td>{ml.platform}</td>
+                    <td>
+                      {ml.product_url ? (
+                        <a href={ml.product_url} target="_blank" rel="noreferrer">
+                          {ml.product_name}
+                        </a>
+                      ) : (
+                        ml.product_name
+                      )}
+                    </td>
+                    <td>{ml.price != null ? formatVND(ml.price) : '—'}</td>
+                    <td>{ml.units_sold_est != null ? ml.units_sold_est.toLocaleString() : '—'}</td>
+                    <td>{formatVND(ml.revenue_est)}</td>
+                    <td>{ml.rating != null ? ml.rating.toFixed(1) : '—'}</td>
+                    <td>{formatWhen(ml.crawled_at)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            <p className="chart-note">
+              Ước lượng từ snapshot listing (seed/fallback khi live scrape tạm hoãn) —
+              không phải doanh thu kiểm toán.
+            </p>
+            {productData.length > 0 && (
+              <ResponsiveContainer width="100%" height={220}>
+                <BarChart data={productData}>
+                  <CartesianGrid strokeDasharray="3 3" />
+                  <XAxis dataKey="name" tick={{ fontSize: 10 }} />
+                  <YAxis />
+                  <Tooltip formatter={(v) => formatVND(v)} />
+                  <Bar dataKey="revenue" fill="#e94560" name="Revenue est." />
+                </BarChart>
+              </ResponsiveContainer>
+            )}
+          </>
+        )}
+      </div>
+
+      <div className="chart-container">
+        <h3>
+          Điểm chất liệu dữ liệu{' '}
+          {quality && (
+            <span className={`badge ${qualityBadge}`}>
+              {quality.score}/{quality.max_score} · {quality.status}
+            </span>
+          )}
+        </h3>
+        {!quality ? (
+          <div className="empty-state">Chưa có data_quality từ API.</div>
+        ) : (
+          <>
+            <div className="metric-strip">
+              {Object.entries(quality.components || {}).map(([k, v]) => (
+                <span className="metric-chip" key={k}>
+                  <strong>{k}</strong> {Number(v).toFixed(1)}
+                </span>
+              ))}
+            </div>
+            <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55, fontSize: 13, color: '#555' }}>
+              {(quality.notes || []).map((n) => (
+                <li key={n}>{n}</li>
+              ))}
+            </ul>
+          </>
+        )}
+      </div>
+
+      <div className="chart-container">
+        <h3>Timeline crawl (bằng chứng đã lưu)</h3>
+        {timeline.length === 0 ? (
+          <div className="empty-state">
+            Chưa có mốc crawl từ digital_presence / marketplace_listings.
+          </div>
+        ) : (
+          <table>
+            <thead>
+              <tr>
+                <th>Thời điểm</th>
+                <th>Loại</th>
+                <th>Nguồn</th>
+                <th>Nhãn</th>
+                <th>Trạng thái</th>
+                <th>Chi tiết</th>
               </tr>
-            ))}
-          </tbody>
-        </table>
+            </thead>
+            <tbody>
+              {timeline.map((ev, idx) => (
+                <tr key={`${ev.event_type}-${ev.source}-${idx}`}>
+                  <td>{formatWhen(ev.crawled_at)}</td>
+                  <td>{ev.event_type}</td>
+                  <td>{ev.source}</td>
+                  <td>
+                    {ev.url ? (
+                      <a href={ev.url} target="_blank" rel="noreferrer">{ev.label}</a>
+                    ) : (
+                      ev.label
+                    )}
+                  </td>
+                  <td>{ev.status}</td>
+                  <td style={{ fontSize: 12, color: '#666' }}>{ev.detail || '—'}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        )}
+        <p className="chart-note">
+          Timeline suy ra từ timestamp từng dòng đã lưu (overwrite khi crawl lại) —
+          chưa phải nhật ký append-only toàn cục (Module 3 pipeline).
+        </p>
       </div>
     </div>
   )

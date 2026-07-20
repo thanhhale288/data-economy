@@ -29,12 +29,51 @@ class CompanyOut(BaseModel):
     description: str | None = None
 
 
+class CompanyCrawlEventOut(BaseModel):
+    """Derived crawl evidence from digital_presence / marketplace rows (not invent)."""
+
+    event_type: str  # digital_presence | marketplace_listing
+    source: str
+    label: str
+    url: str | None = None
+    status: str = "recorded"
+    crawled_at: datetime | None = None
+    detail: str | None = None
+
+
+class CompanyDataQualityOut(BaseModel):
+    """Completeness / verification score — not market-data accuracy."""
+
+    score: float
+    max_score: float = 100.0
+    components: dict[str, float] = {}
+    notes: list[str] = []
+    status: str = "ok"  # ok | partial | sparse
+
+
+class CompanyCaseStudyOut(BaseModel):
+    """Optional narrative block (e.g. Rạng Đông) built only from persisted fields."""
+
+    stock_code: str
+    title: str
+    vsic_code: str
+    vsic_name: str | None = None
+    website_url: str | None = None
+    shopee_url: str | None = None
+    tiktok_url: str | None = None
+    highlights: list[str] = []
+    notes: list[str] = []
+
+
 class CompanyDetail(CompanyOut):
     digital_presence: list["DigitalPresenceOut"] = []
     digital_metrics: list["DigitalMetricOut"] = []
     financial_reports: list["FinancialReportOut"] = []
     marketplace_listings: list["MarketplaceListingOut"] = []
     vsic: VsicCodeOut | None = None
+    crawl_timeline: list[CompanyCrawlEventOut] = []
+    data_quality: CompanyDataQualityOut | None = None
+    case_study: CompanyCaseStudyOut | None = None
 
 
 class DigitalPresenceOut(BaseModel):
@@ -60,6 +99,7 @@ class MarketplaceListingOut(BaseModel):
     revenue_est: float | None = None
     rating: float | None = None
     product_url: str | None = None
+    crawled_at: datetime | None = None
 
 
 class DigitalMetricOut(BaseModel):
