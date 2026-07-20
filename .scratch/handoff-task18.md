@@ -3,8 +3,8 @@
 **Status:** DONE  
 **Date:** 2026-07-20  
 **Branch:** `cursor/phase4-task18-benchmark`  
-**Commit:** `0b2fa5a`  
-**PR:** (see docs commit / chat — open against Task #17 tip)  
+**Commit:** `5c4ae94`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/11 (base: `cursor/phase4-task17-e2e`)  
 **Base:** tip Task #17 `c7a86bd` (PR #5–#10 still not on `main` at Task #18 start)  
 **Repo:** `/Users/hale/Code/AI in Data Economy`
 
@@ -32,8 +32,8 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: 100% (3/3)
 - Status: DONE
-- Phase: 4 · Branch: `cursor/phase4-task18-benchmark` · Tip: `0b2fa5a`
-- PR: see chat / follow-up docs commit
+- Phase: 4 · Branch: `cursor/phase4-task18-benchmark` · Tip: `5c4ae94`
+- PR: https://github.com/thanhhale288/data-economy/pull/11
 
 ### Đã làm được gì (đối chiếu AC)
 | Acceptance criterion | Status | Ghi chú ngắn |
