@@ -5,7 +5,16 @@ async function request(path, options = {}) {
     headers: { 'Content-Type': 'application/json', ...options.headers },
     ...options,
   })
-  if (!res.ok) throw new Error(`API error: ${res.status}`)
+  if (!res.ok) {
+    let detail = ''
+    try {
+      const body = await res.json()
+      detail = body?.detail ? `: ${body.detail}` : ''
+    } catch {
+      /* ignore non-JSON error bodies */
+    }
+    throw new Error(`API error: ${res.status}${detail}`)
+  }
   return res.json()
 }
 

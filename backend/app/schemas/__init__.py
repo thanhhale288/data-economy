@@ -185,6 +185,7 @@ class DashboardSummary(BaseModel):
     total_digital_va: float | None = None
     latest_period: date | None = None
     model_metrics: dict[str, Any] = {}
+    preferred_forecast_model: str | None = None
 
 
 class ForecastRequest(BaseModel):
