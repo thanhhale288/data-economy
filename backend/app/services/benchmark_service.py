@@ -87,6 +87,15 @@ def vsic_division_prefix(vsic_code: str) -> str:
     return vsic_code[:2] if len(vsic_code) >= 2 else vsic_code
 
 
+def _latest_annual_report(reports: list[FinancialReport]) -> FinancialReport | None:
+    """Prefer latest annual BCTC; CafeF quarterlies often lack employees/opex."""
+    annual = [r for r in reports if (r.report_type or "annual") == "annual"]
+    pool = annual or reports
+    if not pool:
+        return None
+    return max(pool, key=lambda r: r.period)
+
+
 def get_industry_financials(db: Session, vsic_code: str) -> list[FinancialReport]:
     prefix = vsic_division_prefix(vsic_code)
     companies = (
@@ -97,8 +106,8 @@ def get_industry_financials(db: Session, vsic_code: str) -> list[FinancialReport
     )
     reports: list[FinancialReport] = []
     for company in companies:
-        if company.financial_reports:
-            latest = max(company.financial_reports, key=lambda r: r.period)
+        latest = _latest_annual_report(company.financial_reports or [])
+        if latest is not None:
             reports.append(latest)
     return reports
 
@@ -200,7 +209,11 @@ def run_benchmark(db: Session, data: BenchmarkInput) -> BenchmarkResult:
 
 
 def load_input_from_company(db: Session, stock_code: str) -> BenchmarkInput | None:
-    """Optional helper: prefill form from a seeded listed company's latest BCTC."""
+    """Optional helper: prefill form from a listed company's latest annual BCTC.
+
+    Skips incomplete CafeF quarterlies (often missing employees) so a newer
+    partial row does not 404 over a complete seeded annual.
+    """
     company = (
         db.query(Company)
         .filter(Company.stock_code == stock_code.upper())
@@ -209,9 +222,23 @@ def load_input_from_company(db: Session, stock_code: str) -> BenchmarkInput | No
     )
     if company is None or not company.financial_reports:
         return None
-    latest = max(company.financial_reports, key=lambda r: r.period)
-    if latest.revenue is None or latest.profit_before_tax is None or latest.employees is None:
+
+    def _is_complete(report: FinancialReport) -> bool:
+        return (
+            report.revenue is not None
+            and report.profit_before_tax is not None
+            and report.employees is not None
+        )
+
+    annual = [
+        r
+        for r in company.financial_reports
+        if (r.report_type or "annual") == "annual" and _is_complete(r)
+    ]
+    complete = annual or [r for r in company.financial_reports if _is_complete(r)]
+    if not complete:
         return None
+    latest = max(complete, key=lambda r: r.period)
     return BenchmarkInput(
         stock_code=company.stock_code,
         vsic_code=company.vsic_code,

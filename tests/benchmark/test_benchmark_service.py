@@ -205,6 +205,33 @@ def test_prefill_requires_complete_bctc(peers_division_27):
     assert svc.load_input_from_company(peers_division_27, "NOPE") is None
 
 
+def test_prefill_skips_incomplete_newer_quarterly(peers_division_27, db_session):
+    """CafeF quarterlies can outrank annual by period but lack employees."""
+    company = db_session.query(Company).filter(Company.stock_code == "RAL").one()
+    db_session.add(
+        FinancialReport(
+            company_id=company.id,
+            period=date(2026, 3, 31),
+            report_type="quarterly",
+            revenue=1_800_000_000_000,
+            profit_before_tax=130_000_000_000,
+            employees=None,
+            cost_of_goods=1_300_000_000_000,
+        )
+    )
+    db_session.commit()
+
+    payload = svc.load_input_from_company(db_session, "RAL")
+    assert payload is not None
+    assert payload.employees == 3200
+    assert payload.operating_revenue == 5_200_000_000_000
+
+    reports = svc.get_industry_financials(db_session, "2740")
+    ral_peer = next(r for r in reports if r.company_id == company.id)
+    assert ral_peer.period == date(2025, 12, 31)
+    assert ral_peer.report_type == "annual"
+
+
 def test_singleton_peer_warns_small_sample(singleton_peer):
     result = svc.run_benchmark(
         singleton_peer,
