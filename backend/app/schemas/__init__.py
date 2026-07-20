@@ -183,9 +183,48 @@ class PipelineJobOut(BaseModel):
     status: str
     records_processed: int
     error_message: str | None = None
+    detail: str | None = None
     started_at: datetime | None = None
     finished_at: datetime | None = None
     created_at: datetime
+
+
+class PipelineLastRunOut(BaseModel):
+    family: str
+    job_name: str | None = None
+    status: str | None = None
+    records_processed: int | None = None
+    started_at: datetime | None = None
+    finished_at: datetime | None = None
+    error_message: str | None = None
+    detail: str | None = None
+
+
+class PipelineMonitorStatusOut(BaseModel):
+    last_runs: list[PipelineLastRunOut]
+    jobs_listed: int = 0
+    jobs_failed_in_list: int = 0
+    staging_postgres: bool = False
+    note: str | None = None
+
+
+class CleaningQualitySummaryOut(BaseModel):
+    nan_filled: int = 0
+    outliers_handled: int = 0
+    marketplace_outliers_flagged: int = 0
+    vsic_fails: int = 0
+    series_missing: list[str] = []
+    artifacts: list[str] = []
+    vsic_companies_fail: int = 0
+    vsic_gso_fail: int = 0
+
+
+class CleaningQualityReportOut(BaseModel):
+    available: bool
+    report_path: str
+    message: str | None = None
+    summary: CleaningQualitySummaryOut | None = None
+    report: dict[str, Any] | None = None
 
 
 class BenchmarkInput(BaseModel):
@@ -234,4 +273,4 @@ class ForecastRequest(BaseModel):
 
 
 class CrawlTriggerRequest(BaseModel):
-    crawler: str  # gso, oecd, companies, marketplace, all
+    crawler: str  # gso, oecd, companies, marketplace, metrics, features, ml, cleaning, all
