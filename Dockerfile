@@ -25,5 +25,7 @@ COPY --from=frontend-build /fe/dist ./frontend/dist
 
 ENV PYTHONPATH=/app
 
-# Railway injects $PORT; local/compose default remains 8000.
-CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+RUN chmod +x /app/scripts/railway_entrypoint.sh
+
+# Migrate + seed on boot, then serve API + built frontend.
+CMD ["/app/scripts/railway_entrypoint.sh"]

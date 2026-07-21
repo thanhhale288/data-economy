@@ -24,4 +24,6 @@ COPY --from=frontend-build /fe/dist ./frontend/dist
 
 ENV PYTHONPATH=/app
 
-CMD ["sh", "-c", "uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}"]
+RUN chmod +x /app/scripts/railway_entrypoint.sh
+
+CMD ["/app/scripts/railway_entrypoint.sh"]
