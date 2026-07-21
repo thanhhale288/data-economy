@@ -2,7 +2,7 @@
   "$schema": "https://schema.railpack.com",
   "provider": "python",
   "deploy": {
-    "startCommand": "uvicorn backend.app.main:app --host 0.0.0.0 --port $PORT",
+    "startCommand": "sh -c 'export PYTHONPATH=.; exec uvicorn backend.app.main:app --host 0.0.0.0 --port ${PORT:-8000}'",
     "variables": {
       "PYTHONPATH": "."
     },
