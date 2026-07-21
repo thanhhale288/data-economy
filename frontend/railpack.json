@@ -1,7 +1,12 @@
 {
   "$schema": "https://schema.railpack.com",
   "provider": "node",
+  "steps": {
+    "build": {
+      "commands": ["npm ci", "npm run build"]
+    }
+  },
   "deploy": {
-    "startCommand": "sh -c 'npx --yes serve@14.2.4 -s dist -l tcp://0.0.0.0:${PORT:-3000}'"
+    "startCommand": "npx --yes serve@14.2.4 -s dist -l 8080"
   }
 }
