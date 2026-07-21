@@ -1,0 +1,11 @@
+{
+  "$schema": "https://schema.railpack.com",
+  "provider": "python",
+  "deploy": {
+    "startCommand": "sh scripts/railway_entrypoint.sh",
+    "variables": {
+      "PYTHONPATH": "."
+    },
+    "aptPackages": ["libgomp1", "libpq5"]
+  }
+}

@@ -122,6 +122,21 @@ Chỉ số **tồn kho** công nghiệp. Plan: `INVENTORY_C`. Tương tự shipm
 **MEI** = Main Economic Indicators (OECD).  
 **MEI_IP** = Industrial Production Index của OECD (leading / so sánh quốc tế).
 
+### Peer
+
+**Peer** = **đối tượng cùng nhóm để so sánh** (“ngang hàng / cùng loại”), không phải chính mình.
+
+Trong project có **hai nghĩa** hay gặp:
+
+| Ngữ cảnh | Peer là gì | Ví dụ |
+|----------|------------|--------|
+| **OECD / MEI_IP peer** | Nền kinh tế khác dùng làm chỉ báo phụ (vì VN không có series) | Euro area `EA20`, `source=OECD_PEER` |
+| **Benchmark peer** | Các DN cùng nhóm ngành để tính percentile (SingStat BITE style) | DN cùng VSIC 2-digit (vd. division 27: RAL, REE…) |
+
+Benchmark: mẫu peer quá nhỏ → `null` percentile + `insufficient_peers`, **không** bịa percentile 50.
+
+Một câu nhớ: **peer = nhóm so sánh, không phải số của chính đối tượng đang xét.**
+
 ### MEI_IP peer (EA20)
 
 **Peer** ở đây = **nền kinh tế “đối chiếu”**, không phải Việt Nam.
@@ -172,6 +187,22 @@ Biến chuỗi quý thành tháng bằng nội suy tuyến tính giữa các đi
 ### Fallback / fixture
 
 File CSV/JSON đã commit sẵn, chỉ dùng khi live fail — **không bịa số ngẫu nhiên**. Có gắn nguồn (`GSO_FALLBACK`, fixture OECD…).
+
+### Invent (bịa số)
+
+**Invent** = **bịa / tự chế** số liệu khi không có nguồn thật.
+
+Ví dụ bị coi là invent trong project:
+
+- Random / hard-code `×0.15` khi thiếu listing
+- Forecast đường thẳng giả khi thiếu model artifact
+- Điền `mae:0` im lặng khi chưa train
+- Gắn percentile 50 khi không đủ peer
+- Coi MEI_IP@EA20 như số Việt Nam
+
+Đối lập với: crawl/API thật, seed/fallback **có provenance**, hoặc trả `null` / banner / lỗi rõ.
+
+Một câu nhớ: **invent = bịa số; project cấm — thiếu thì nói thiếu.**
 
 ### Upsert
 

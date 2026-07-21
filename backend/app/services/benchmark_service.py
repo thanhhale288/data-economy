@@ -21,6 +21,11 @@ METRIC_KEYS = (
     "equity_ratio",
     "revenue_per_worker",
     "profit_per_worker",
+    # SingStat BITE expenditure block (form "Of which" → ratios)
+    "expenditure_related_ratio",  # operating_expenses / operating_revenue
+    "purchase_goods_share",  # cost_of_goods / operating_expenses
+    "rental_cost_share",  # rental_cost / operating_expenses
+    "remuneration_share",  # remuneration / operating_expenses
 )
 
 # Prototype honesty: listed seed sample is tiny; surface this in API/UI.
@@ -55,6 +60,10 @@ def compute_benchmark_ratios(data: BenchmarkInput) -> dict[str, float | None]:
         "equity_ratio": _safe_div(data.total_equity, data.total_assets),
         "revenue_per_worker": _safe_div(data.operating_revenue, float(data.employees)),
         "profit_per_worker": _safe_div(data.profit_before_tax, float(data.employees)),
+        "expenditure_related_ratio": _safe_div(data.operating_expenses, data.operating_revenue),
+        "purchase_goods_share": _safe_div(data.cost_of_goods, data.operating_expenses),
+        "rental_cost_share": _safe_div(data.rental_cost, data.operating_expenses),
+        "remuneration_share": _safe_div(data.remuneration, data.operating_expenses),
     }
 
 
@@ -67,11 +76,24 @@ def _ratios_from_report(report: FinancialReport) -> dict[str, float | None]:
         "equity_ratio": _safe_div(report.total_equity, report.total_assets),
         "revenue_per_worker": _safe_div(report.revenue, report.employees),
         "profit_per_worker": _safe_div(report.profit_before_tax, report.employees),
+        "expenditure_related_ratio": _safe_div(report.operating_expenses, report.revenue),
+        "purchase_goods_share": _safe_div(report.cost_of_goods, report.operating_expenses),
+        "rental_cost_share": _safe_div(report.rental_cost, report.operating_expenses),
+        "remuneration_share": _safe_div(report.remuneration, report.operating_expenses),
     }
 
 
 def vsic_division_prefix(vsic_code: str) -> str:
     return vsic_code[:2] if len(vsic_code) >= 2 else vsic_code
+
+
+def _latest_annual_report(reports: list[FinancialReport]) -> FinancialReport | None:
+    """Prefer latest annual BCTC; CafeF quarterlies often lack employees/opex."""
+    annual = [r for r in reports if (r.report_type or "annual") == "annual"]
+    pool = annual or reports
+    if not pool:
+        return None
+    return max(pool, key=lambda r: r.period)
 
 
 def get_industry_financials(db: Session, vsic_code: str) -> list[FinancialReport]:
@@ -84,8 +106,8 @@ def get_industry_financials(db: Session, vsic_code: str) -> list[FinancialReport
     )
     reports: list[FinancialReport] = []
     for company in companies:
-        if company.financial_reports:
-            latest = max(company.financial_reports, key=lambda r: r.period)
+        latest = _latest_annual_report(company.financial_reports or [])
+        if latest is not None:
             reports.append(latest)
     return reports
 
@@ -158,6 +180,10 @@ def compare_to_industry(
         equity_ratio=user_ratios.get("equity_ratio"),
         revenue_per_worker=user_ratios.get("revenue_per_worker"),
         profit_per_worker=user_ratios.get("profit_per_worker"),
+        expenditure_related_ratio=user_ratios.get("expenditure_related_ratio"),
+        purchase_goods_share=user_ratios.get("purchase_goods_share"),
+        rental_cost_share=user_ratios.get("rental_cost_share"),
+        remuneration_share=user_ratios.get("remuneration_share"),
         percentiles=percentiles,
         industry_averages=industry_avgs,
         comparison=comparison,
@@ -183,7 +209,11 @@ def run_benchmark(db: Session, data: BenchmarkInput) -> BenchmarkResult:
 
 
 def load_input_from_company(db: Session, stock_code: str) -> BenchmarkInput | None:
-    """Optional helper: prefill form from a seeded listed company's latest BCTC."""
+    """Optional helper: prefill form from a listed company's latest annual BCTC.
+
+    Skips incomplete CafeF quarterlies (often missing employees) so a newer
+    partial row does not 404 over a complete seeded annual.
+    """
     company = (
         db.query(Company)
         .filter(Company.stock_code == stock_code.upper())
@@ -192,9 +222,23 @@ def load_input_from_company(db: Session, stock_code: str) -> BenchmarkInput | No
     )
     if company is None or not company.financial_reports:
         return None
-    latest = max(company.financial_reports, key=lambda r: r.period)
-    if latest.revenue is None or latest.profit_before_tax is None or latest.employees is None:
+
+    def _is_complete(report: FinancialReport) -> bool:
+        return (
+            report.revenue is not None
+            and report.profit_before_tax is not None
+            and report.employees is not None
+        )
+
+    annual = [
+        r
+        for r in company.financial_reports
+        if (r.report_type or "annual") == "annual" and _is_complete(r)
+    ]
+    complete = annual or [r for r in company.financial_reports if _is_complete(r)]
+    if not complete:
         return None
+    latest = max(complete, key=lambda r: r.period)
     return BenchmarkInput(
         stock_code=company.stock_code,
         vsic_code=company.vsic_code,

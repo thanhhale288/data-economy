@@ -162,7 +162,7 @@ export default function Pipeline() {
                   <div className="sub">{run.records_processed} records</div>
                 )}
                 {run.error_message && (
-                  <div className="sub" style={{ color: '#e94560', fontSize: 12 }}>
+                  <div className="sub" style={{ color: '#0d9488', fontSize: 12 }}>
                     {run.error_message}
                   </div>
                 )}
@@ -181,7 +181,7 @@ export default function Pipeline() {
           <div className="empty-state">
             <p>
               {quality?.message
-                || 'Chưa có cleaning_report.json — chạy Data Cleaning / make bootstrap (không bịa số quality).'}
+                || 'Chưa có cleaning_report.json — chạy Data Cleaning / make bootstrap.'}
             </p>
             {quality?.report_path && (
               <p className="chart-note" style={{ marginTop: 8 }}>
@@ -252,7 +252,7 @@ export default function Pipeline() {
                   <td>{formatTs(j.finished_at)}</td>
                   <td
                     style={{
-                      color: j.error_message ? '#e94560' : undefined,
+                      color: j.error_message ? 'var(--danger)' : undefined,
                       fontSize: 12,
                     }}
                   >

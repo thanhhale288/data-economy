@@ -1,0 +1,8 @@
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+# nginx listens on 8080 (matches Railway Generate Domain target port)
+restartPolicyType = "ON_FAILURE"
+restartPolicyMaxRetries = 5

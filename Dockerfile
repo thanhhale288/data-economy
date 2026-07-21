@@ -4,6 +4,7 @@ WORKDIR /fe
 COPY frontend/package.json frontend/package-lock.json ./
 RUN npm ci
 COPY frontend/ ./
+# Same-origin API when UI is served by FastAPI (empty = relative /api/...).
 ARG VITE_API_URL=
 ENV VITE_API_URL=$VITE_API_URL
 RUN npm run build
@@ -26,4 +27,5 @@ ENV PYTHONPATH=/app
 
 RUN chmod +x /app/scripts/railway_entrypoint.sh
 
+# Migrate + seed on boot, then serve API + built frontend.
 CMD ["/app/scripts/railway_entrypoint.sh"]

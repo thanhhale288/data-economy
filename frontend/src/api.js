@@ -1,4 +1,8 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+// Empty string = same-origin (/api/...). Do not use || — '' is falsy and would fall back to localhost.
+const raw = import.meta.env.VITE_API_URL
+const API_URL =
+  raw === undefined || raw === null ? 'http://localhost:8000' : String(raw).replace(/\/$/, '')
+
 
 function formatApiError(status, detail) {
   const d = typeof detail === 'string' ? detail : ''
@@ -12,7 +16,7 @@ function formatApiError(status, detail) {
     if (/cleaning_report|quality/i.test(d)) {
       return `API 404: ${d || 'Thiếu cleaning_report — chạy data_cleaning.'}`
     }
-    return d ? `API 404: ${d}` : 'API 404: tài nguyên không có (không bịa số).'
+    return d ? `API 404: ${d}` : 'API 404: không tìm thấy tài nguyên.'
   }
   if (status === 503 || status === 502) {
     return `API ${status}: dịch vụ tạm unavailable${d ? ` — ${d}` : ''}.`

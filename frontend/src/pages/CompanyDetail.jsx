@@ -2,13 +2,10 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '../api'
+import { formatCompactVnd, formatGrouped } from '../format'
 
 function formatVND(n) {
-  if (n == null) return '—'
-  if (n >= 1e12) return `${(n / 1e12).toFixed(2)} nghìn tỷ`
-  if (n >= 1e9) return `${(n / 1e9).toFixed(1)} tỷ`
-  if (n >= 1e6) return `${(n / 1e6).toFixed(1)} triệu`
-  return n.toLocaleString()
+  return formatCompactVnd(n)
 }
 
 function periodLabel(p) {
@@ -146,10 +143,10 @@ export default function CompanyDetail() {
       </div>
 
       {caseStudy && (
-        <div className="chart-container" style={{ borderLeft: '4px solid #e94560' }}>
+        <div className="chart-container" style={{ borderLeft: '4px solid #0d9488' }}>
           <h3>{caseStudy.title}</h3>
           <p className="chart-note" style={{ marginTop: 0 }}>
-            Hồ sơ case study từ dữ liệu đã lưu — không hard-code doanh thu / online.
+            Hồ sơ case study từ dữ liệu đã lưu trong hệ thống.
           </p>
           <ul style={{ margin: '8px 0 0', paddingLeft: 18, lineHeight: 1.6 }}>
             {caseStudy.highlights?.map((h) => (
@@ -201,14 +198,13 @@ export default function CompanyDetail() {
 
       {!latestFin && (
         <div className="banner banner-warn">
-          Chưa có BCTC (financial_reports) cho {company.stock_code}. Chạy crawl/seed tài chính —
-          không hiển thị doanh thu bịa.
+          Chưa có BCTC (financial_reports) cho {company.stock_code}. Chạy crawl/seed tài chính.
         </div>
       )}
       {!latestMetric && (
         <div className="banner banner-warn">
           Chưa có chỉ số digital_metrics cho DN này. Chạy job metrics /{' '}
-          <code>make bootstrap</code> trước — không hiển thị số bịa.
+          <code>make bootstrap</code>.
         </div>
       )}
 
@@ -238,7 +234,7 @@ export default function CompanyDetail() {
                 <div className="empty-state" style={{ marginTop: 8, padding: 12 }}>
                   {flagged
                     ? 'Flag kênh = true nhưng chưa có digital_presence.'
-                    : 'Chưa có trong dữ liệu (không bịa).'}
+                    : 'Chưa có trong dữ liệu.'}
                 </div>
               )}
             </div>
@@ -260,7 +256,7 @@ export default function CompanyDetail() {
               <XAxis dataKey="name" />
               <YAxis domain={[0, 100]} />
               <Tooltip formatter={(v) => `${Number(v).toFixed(0)}%`} />
-              <Bar dataKey="confidence" fill="#0f3460" name="Confidence %" />
+              <Bar dataKey="confidence" fill="#1e3a5f" name="Confidence %" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -271,7 +267,7 @@ export default function CompanyDetail() {
         {mktListings.length === 0 ? (
           <div className="empty-state">
             Không có listing Shopee/TikTok/Lazada cho {company.stock_code}.
-            Online revenue est. chỉ từ listing/ratio có nguồn — không bịa sản phẩm.
+            Doanh thu online ước tính dựa trên listing đã thu thập.
           </div>
         ) : (
           <>
@@ -301,7 +297,7 @@ export default function CompanyDetail() {
                       )}
                     </td>
                     <td>{ml.price != null ? formatVND(ml.price) : '—'}</td>
-                    <td>{ml.units_sold_est != null ? ml.units_sold_est.toLocaleString() : '—'}</td>
+                    <td>{ml.units_sold_est != null ? formatGrouped(ml.units_sold_est) : '—'}</td>
                     <td>{formatVND(ml.revenue_est)}</td>
                     <td>{ml.rating != null ? ml.rating.toFixed(1) : '—'}</td>
                     <td>{formatWhen(ml.crawled_at)}</td>
@@ -320,7 +316,7 @@ export default function CompanyDetail() {
                   <XAxis dataKey="name" tick={{ fontSize: 10 }} />
                   <YAxis />
                   <Tooltip formatter={(v) => formatVND(v)} />
-                  <Bar dataKey="revenue" fill="#e94560" name="Revenue est." />
+                  <Bar dataKey="revenue" fill="#0d9488" name="Revenue est." />
                 </BarChart>
               </ResponsiveContainer>
             )}

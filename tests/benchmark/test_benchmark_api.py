@@ -61,6 +61,7 @@ def test_compare_with_peers_api(peers_division_27):
                 "total_equity": 3.2e12,
                 "current_assets": 3.1e12,
                 "current_liabilities": 2.1e12,
+                "operating_expenses": 4e12,
                 "cost_of_goods": 3.2e12,
                 "rental_cost": 8.5e10,
                 "remuneration": 6.8e11,
@@ -72,6 +73,9 @@ def test_compare_with_peers_api(peers_division_27):
         assert body["peer_scope"] == "vsic_division:27"
         assert body["roa"] is not None
         assert body["percentiles"]["roa"] is not None
+        assert body["expenditure_related_ratio"] is not None
+        assert body["purchase_goods_share"] is not None
+        assert body["industry_averages"]["expenditure_related_ratio"] is not None
         assert "prototype_listed_sample" in body["warnings"]
     finally:
         app.dependency_overrides.clear()

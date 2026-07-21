@@ -3,13 +3,10 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { api } from '../api'
+import { formatCompact } from '../format'
 
 function formatNumber(n) {
-  if (n == null) return '—'
-  if (n >= 1e12) return `${(n / 1e12).toFixed(1)}T`
-  if (n >= 1e9) return `${(n / 1e9).toFixed(1)}B`
-  if (n >= 1e6) return `${(n / 1e6).toFixed(1)}M`
-  return n.toLocaleString()
+  return formatCompact(n)
 }
 
 function periodLabel(p) {
@@ -19,10 +16,10 @@ function periodLabel(p) {
 
 function heatColor(intensity) {
   const t = Math.max(0, Math.min(1, intensity ?? 0))
-  // coral scale on white — matches existing dashboard accent (#e94560)
-  const r = Math.round(255 - t * (255 - 233))
-  const g = Math.round(255 - t * (255 - 69))
-  const b = Math.round(255 - t * (255 - 96))
+  // teal scale — matches --accent
+  const r = Math.round(255 - t * (255 - 15))
+  const g = Math.round(255 - t * (255 - 118))
+  const b = Math.round(255 - t * (255 - 110))
   return `rgb(${r},${g},${b})`
 }
 
@@ -64,7 +61,7 @@ export default function Dashboard() {
             setForecast(null)
             setForecastError(
               err?.message?.includes('404')
-                ? `Chưa có artifact forecast cho model «${model}» — chạy make bootstrap / train ML (không bịa số).`
+                ? `Chưa có artifact forecast cho model «${model}» — chạy make bootstrap / train ML.`
                 : `Không tải được forecast (${model}): ${err.message}`
             )
           }
@@ -133,7 +130,6 @@ export default function Dashboard() {
       {summary?.iip_latest == null && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
           Chưa có IIP Section C trong DB — chạy <code>make bootstrap</code> (seed + crawl GSO).
-          Không hiển thị số bịa.
         </div>
       )}
       {!summary?.preferred_forecast_model && summary?.iip_latest != null && (
@@ -152,7 +148,7 @@ export default function Dashboard() {
             </div>
           )}
           {summary?.iip_latest == null && (
-            <div className="sub muted">Thiếu chuỗi IIP — không bịa</div>
+            <div className="sub muted">Chưa có chuỗi IIP</div>
           )}
         </div>
         <div className="card">
@@ -171,7 +167,7 @@ export default function Dashboard() {
         <div className="card">
           <div className="label">Tổng Digital VA</div>
           <div className="value">{formatNumber(summary?.total_digital_va)}</div>
-          <div className="sub muted">Công thức CONTEXT — không đổi</div>
+          <div className="sub muted">Theo công thức Digital VA</div>
         </div>
       </div>
 
@@ -192,8 +188,7 @@ export default function Dashboard() {
         <h3>Chỉ số SXCN (IIP) Section C + dự báo</h3>
         {iip.length === 0 ? (
           <div className="empty-state">
-            Chưa có chuỗi IIP_C trong DB. Chạy <code>make bootstrap</code> (seed + crawl GSO) —
-            không bịa số trên biểu đồ.
+            Chưa có chuỗi IIP_C trong DB. Chạy <code>make bootstrap</code> (seed + crawl GSO).
           </div>
         ) : (
           <ResponsiveContainer width="100%" height={320}>
@@ -206,7 +201,7 @@ export default function Dashboard() {
               <Line
                 type="monotone"
                 dataKey="actual"
-                stroke="#e94560"
+                stroke="#0d9488"
                 strokeWidth={2}
                 dot={false}
                 name="IIP thực tế (GSO)"
@@ -215,7 +210,7 @@ export default function Dashboard() {
               <Line
                 type="monotone"
                 dataKey="forecast"
-                stroke="#0f3460"
+                stroke="#1e3a5f"
                 strokeWidth={2}
                 strokeDasharray="6 4"
                 dot={false}
@@ -236,7 +231,7 @@ export default function Dashboard() {
         )}
         {!forecast && !forecastError && iip.length > 0 && (
           <div className="empty-state" style={{ marginTop: 12 }}>
-            Chưa tải được đường dự báo — chạy bootstrap/train ML (không vẽ đường giả).
+            Chưa tải được đường dự báo — chạy bootstrap/train ML.
           </div>
         )}
       </div>
@@ -249,7 +244,7 @@ export default function Dashboard() {
               <strong>Thiếu chuỗi OECD peer.</strong>{' '}
               <span className="badge badge-warning">unavailable</span>{' '}
               {oecdGso?.oecd_note
-                || 'MEI_IP@EA20 chưa có — không hiển thị số bịa (ADR-0001).'}
+                || 'MEI_IP@EA20 chưa có trong cơ sở dữ liệu.'}
             </p>
             {aligned.some((r) => r.gso != null) && (
               <ResponsiveContainer width="100%" height={260}>
@@ -262,7 +257,7 @@ export default function Dashboard() {
                   <Line
                     type="monotone"
                     dataKey="gso"
-                    stroke="#e94560"
+                    stroke="#0d9488"
                     strokeWidth={2}
                     dot={false}
                     name="GSO IIP (VNM)"
@@ -297,7 +292,7 @@ export default function Dashboard() {
                 <Line
                   type="monotone"
                   dataKey="gso"
-                  stroke="#e94560"
+                  stroke="#0d9488"
                   strokeWidth={2}
                   dot={false}
                   name="GSO IIP (VNM)"
@@ -306,7 +301,7 @@ export default function Dashboard() {
                 <Line
                   type="monotone"
                   dataKey="oecd"
-                  stroke="#0f3460"
+                  stroke="#1e3a5f"
                   strokeWidth={2}
                   dot={false}
                   name={`OECD MEI (${oecdGso?.oecd_country || 'EA20'})`}
@@ -322,7 +317,7 @@ export default function Dashboard() {
         <h3>Heatmap đóng góp Kinh tế số theo VSIC</h3>
         {heatmap.length === 0 ? (
           <div className="empty-state">
-            Chưa có Digital VA theo ngành. Chạy digital metrics / seed — không bịa.
+            Chưa có Digital VA theo ngành. Chạy digital metrics / seed.
           </div>
         ) : (
           <div className="heatmap-grid">
