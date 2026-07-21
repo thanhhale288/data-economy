@@ -9,7 +9,7 @@ Hệ thống web phân tích kinh tế số ngành **Công nghiệp chế biến
 ## Tính năng
 
 - **Dashboard**: IIP, heatmap đóng góp KTS, so sánh OECD vs GSO
-- **Doanh nghiệp**: 10 DN niêm yết mẫu (Rạng Đông, Hòa Phát, Vinamilk...)
+- **Doanh nghiệp**: mẫu niêm yết ~25–30 DN (seed + peer clustering VSIC; case Rạng Đông…)
 - **Pipeline**: Crawl GSO/OECD/companies/marketplace tự động
 - **ML Lab**: ARIMA, XGBoost, LSTM dự báo IIP
 - **Benchmark**: So sánh hiệu quả DN vs ngành (SingStat BITE style)

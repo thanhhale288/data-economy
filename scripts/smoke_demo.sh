@@ -247,7 +247,13 @@ if [[ "$code" != "200" ]]; then
   fail "GET /api/pipeline/status → HTTP ${code}"
 else
   listed="$(py "$BODY_FILE" 'data.get("jobs_listed")')"
-  ok "GET /api/pipeline/status → 200 (jobs_listed=${listed})"
+  sample="$(py "$BODY_FILE" 'data.get("sample_size")')"
+  health_n="$(py "$BODY_FILE" 'len(data.get("source_health") or [])')"
+  if [[ "$health_n" -lt 1 ]]; then
+    fail "pipeline/status missing source_health"
+  else
+    ok "GET /api/pipeline/status → 200 (jobs_listed=${listed}, sample_size=${sample}, source_health=${health_n})"
+  fi
 fi
 
 code="$(http_get "${API_BASE}/api/pipeline/jobs")"

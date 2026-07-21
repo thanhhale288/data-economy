@@ -7,7 +7,11 @@
     "website_url": "https://rangdong.com.vn",
     "has_ecommerce_site": true,
     "description": "Sản xuất thiết bị chiếu sáng, bán qua website và Shopee",
-    "digital_channels": {"website": true, "shopee": true, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": true,
+      "tiktok": false
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 5200000000000,
@@ -25,13 +29,44 @@
       "gross_margin": 0.38
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://rangdong.com.vn", "has_checkout": true, "match_confidence": 1.0},
-      {"channel_type": "shopee", "url": "https://shopee.vn/rangdong_official", "has_checkout": true, "match_confidence": 0.95}
+      {
+        "channel_type": "website",
+        "url": "https://rangdong.com.vn",
+        "has_checkout": true,
+        "match_confidence": 1.0
+      },
+      {
+        "channel_type": "shopee",
+        "url": "https://shopee.vn/rangdong_official",
+        "has_checkout": true,
+        "match_confidence": 0.95
+      }
     ],
     "marketplace_listings": [
-      {"platform": "shopee", "product_name": "Bóng LED Rạng Đông 9W", "price": 45000, "units_sold_est": 12500, "revenue_est": 562500000, "rating": 4.8},
-      {"platform": "shopee", "product_name": "Đèn LED Panel 600x600", "price": 285000, "units_sold_est": 3200, "revenue_est": 912000000, "rating": 4.7},
-      {"platform": "website", "product_name": "Bộ đèn downlight âm trần", "price": 195000, "units_sold_est": 1800, "revenue_est": 351000000, "rating": 4.6}
+      {
+        "platform": "shopee",
+        "product_name": "Bóng LED Rạng Đông 9W",
+        "price": 45000,
+        "units_sold_est": 12500,
+        "revenue_est": 562500000,
+        "rating": 4.8
+      },
+      {
+        "platform": "shopee",
+        "product_name": "Đèn LED Panel 600x600",
+        "price": 285000,
+        "units_sold_est": 3200,
+        "revenue_est": 912000000,
+        "rating": 4.7
+      },
+      {
+        "platform": "website",
+        "product_name": "Bộ đèn downlight âm trần",
+        "price": 195000,
+        "units_sold_est": 1800,
+        "revenue_est": 351000000,
+        "rating": 4.6
+      }
     ]
   },
   {
@@ -42,7 +77,11 @@
     "website_url": "https://www.hoaphat.com.vn",
     "has_ecommerce_site": false,
     "description": "Sản xuất thép, chủ yếu B2B",
-    "digital_channels": {"website": true, "shopee": false, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 162000000000000,
@@ -60,7 +99,12 @@
       "gross_margin": 0.23
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://www.hoaphat.com.vn", "has_checkout": false, "match_confidence": 1.0}
+      {
+        "channel_type": "website",
+        "url": "https://www.hoaphat.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
     ],
     "marketplace_listings": []
   },
@@ -72,7 +116,11 @@
     "website_url": "https://vinamilk.com.vn",
     "has_ecommerce_site": true,
     "description": "Sản xuất sữa, bán online mạnh",
-    "digital_channels": {"website": true, "shopee": true, "tiktok": true},
+    "digital_channels": {
+      "website": true,
+      "shopee": true,
+      "tiktok": true
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 68500000000000,
@@ -90,13 +138,42 @@
       "gross_margin": 0.49
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://vinamilk.com.vn", "has_checkout": true, "match_confidence": 1.0},
-      {"channel_type": "shopee", "url": "https://shopee.vn/vinamilk_official", "has_checkout": true, "match_confidence": 0.98},
-      {"channel_type": "tiktok", "url": "https://www.tiktok.com/@vinamilk", "has_checkout": true, "match_confidence": 0.85}
+      {
+        "channel_type": "website",
+        "url": "https://vinamilk.com.vn",
+        "has_checkout": true,
+        "match_confidence": 1.0
+      },
+      {
+        "channel_type": "shopee",
+        "url": "https://shopee.vn/vinamilk_official",
+        "has_checkout": true,
+        "match_confidence": 0.98
+      },
+      {
+        "channel_type": "tiktok",
+        "url": "https://www.tiktok.com/@vinamilk",
+        "has_checkout": true,
+        "match_confidence": 0.85
+      }
     ],
     "marketplace_listings": [
-      {"platform": "shopee", "product_name": "Sữa tươi Vinamilk 1L", "price": 32000, "units_sold_est": 85000, "revenue_est": 2720000000, "rating": 4.9},
-      {"platform": "shopee", "product_name": "Sữa chua uống probiotic", "price": 28000, "units_sold_est": 62000, "revenue_est": 1736000000, "rating": 4.8}
+      {
+        "platform": "shopee",
+        "product_name": "Sữa tươi Vinamilk 1L",
+        "price": 32000,
+        "units_sold_est": 85000,
+        "revenue_est": 2720000000,
+        "rating": 4.9
+      },
+      {
+        "platform": "shopee",
+        "product_name": "Sữa chua uống probiotic",
+        "price": 28000,
+        "units_sold_est": 62000,
+        "revenue_est": 1736000000,
+        "rating": 4.8
+      }
     ]
   },
   {
@@ -107,7 +184,11 @@
     "website_url": "https://fpt.com.vn",
     "has_ecommerce_site": true,
     "description": "Sản xuất thiết bị điện tử, chuyển đổi số cao",
-    "digital_channels": {"website": true, "shopee": true, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": true,
+      "tiktok": false
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 52800000000000,
@@ -125,11 +206,28 @@
       "gross_margin": 0.47
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://fptshop.com.vn", "has_checkout": true, "match_confidence": 0.92},
-      {"channel_type": "shopee", "url": "https://shopee.vn/fpt_official", "has_checkout": true, "match_confidence": 0.90}
+      {
+        "channel_type": "website",
+        "url": "https://fptshop.com.vn",
+        "has_checkout": true,
+        "match_confidence": 0.92
+      },
+      {
+        "channel_type": "shopee",
+        "url": "https://shopee.vn/fpt_official",
+        "has_checkout": true,
+        "match_confidence": 0.9
+      }
     ],
     "marketplace_listings": [
-      {"platform": "shopee", "product_name": "Laptop FPT", "price": 15990000, "units_sold_est": 450, "revenue_est": 7195500000, "rating": 4.7}
+      {
+        "platform": "shopee",
+        "product_name": "Laptop FPT",
+        "price": 15990000,
+        "units_sold_est": 450,
+        "revenue_est": 7195500000,
+        "rating": 4.7
+      }
     ]
   },
   {
@@ -140,7 +238,11 @@
     "website_url": "https://vrg.vn",
     "has_ecommerce_site": false,
     "description": "Sản xuất cao su, ngành truyền thống (website chính thức vrg.vn; gvr.com.vn đã ngừng)",
-    "digital_channels": {"website": true, "shopee": false, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 28500000000000,
@@ -158,7 +260,12 @@
       "gross_margin": 0.35
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://vrg.vn", "has_checkout": false, "match_confidence": 1.0}
+      {
+        "channel_type": "website",
+        "url": "https://vrg.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
     ],
     "marketplace_listings": []
   },
@@ -170,7 +277,11 @@
     "website_url": "https://ducgiangchem.vn",
     "has_ecommerce_site": false,
     "description": "Sản xuất hóa chất cơ bản",
-    "digital_channels": {"website": true, "shopee": false, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 12800000000000,
@@ -188,7 +299,12 @@
       "gross_margin": 0.44
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://ducgiangchem.vn", "has_checkout": false, "match_confidence": 1.0}
+      {
+        "channel_type": "website",
+        "url": "https://ducgiangchem.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
     ],
     "marketplace_listings": []
   },
@@ -200,7 +316,11 @@
     "website_url": "https://masangroup.com",
     "has_ecommerce_site": true,
     "description": "Thực phẩm, đa kênh bán",
-    "digital_channels": {"website": true, "shopee": true, "tiktok": true},
+    "digital_channels": {
+      "website": true,
+      "shopee": true,
+      "tiktok": true
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 82000000000000,
@@ -218,11 +338,28 @@
       "gross_margin": 0.37
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://winmart.vn", "has_checkout": true, "match_confidence": 0.88},
-      {"channel_type": "shopee", "url": "https://shopee.vn/masan_consumer", "has_checkout": true, "match_confidence": 0.82}
+      {
+        "channel_type": "website",
+        "url": "https://winmart.vn",
+        "has_checkout": true,
+        "match_confidence": 0.88
+      },
+      {
+        "channel_type": "shopee",
+        "url": "https://shopee.vn/masan_consumer",
+        "has_checkout": true,
+        "match_confidence": 0.82
+      }
     ],
     "marketplace_listings": [
-      {"platform": "shopee", "product_name": "Nước mắm Chin-su", "price": 45000, "units_sold_est": 28000, "revenue_est": 1260000000, "rating": 4.8}
+      {
+        "platform": "shopee",
+        "product_name": "Nước mắm Chin-su",
+        "price": 45000,
+        "units_sold_est": 28000,
+        "revenue_est": 1260000000,
+        "rating": 4.8
+      }
     ]
   },
   {
@@ -233,7 +370,11 @@
     "website_url": "https://pnj.com.vn",
     "has_ecommerce_site": true,
     "description": "Trang sức, bán lẻ + TMĐT",
-    "digital_channels": {"website": true, "shopee": true, "tiktok": true},
+    "digital_channels": {
+      "website": true,
+      "shopee": true,
+      "tiktok": true
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 28500000000000,
@@ -251,12 +392,34 @@
       "gross_margin": 0.23
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://pnj.com.vn", "has_checkout": true, "match_confidence": 1.0},
-      {"channel_type": "shopee", "url": "https://shopee.vn/pnj_official", "has_checkout": true, "match_confidence": 0.96},
-      {"channel_type": "tiktok", "url": "https://www.tiktok.com/@pnj", "has_checkout": true, "match_confidence": 0.80}
+      {
+        "channel_type": "website",
+        "url": "https://pnj.com.vn",
+        "has_checkout": true,
+        "match_confidence": 1.0
+      },
+      {
+        "channel_type": "shopee",
+        "url": "https://shopee.vn/pnj_official",
+        "has_checkout": true,
+        "match_confidence": 0.96
+      },
+      {
+        "channel_type": "tiktok",
+        "url": "https://www.tiktok.com/@pnj",
+        "has_checkout": true,
+        "match_confidence": 0.8
+      }
     ],
     "marketplace_listings": [
-      {"platform": "shopee", "product_name": "Nhẫn vàng PNJ", "price": 8500000, "units_sold_est": 320, "revenue_est": 2720000000, "rating": 4.9}
+      {
+        "platform": "shopee",
+        "product_name": "Nhẫn vàng PNJ",
+        "price": 8500000,
+        "units_sold_est": 320,
+        "revenue_est": 2720000000,
+        "rating": 4.9
+      }
     ]
   },
   {
@@ -267,7 +430,11 @@
     "website_url": "https://reecorp.com",
     "has_ecommerce_site": false,
     "description": "Thiết bị điện, M&E",
-    "digital_channels": {"website": true, "shopee": false, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
     "financial": {
       "period": "2024-12-31",
       "revenue": 15800000000000,
@@ -285,11 +452,16 @@
       "gross_margin": 0.38
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://reecorp.com", "has_checkout": false, "match_confidence": 1.0}
+      {
+        "channel_type": "website",
+        "url": "https://reecorp.com",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
     ],
     "marketplace_listings": []
   },
-    {
+  {
     "stock_code": "BMP",
     "name": "Công ty Cổ phần Nhựa Bình Minh",
     "vsic_code": "2220",
@@ -297,7 +469,11 @@
     "website_url": "https://binhminhplastic.com.vn",
     "has_ecommerce_site": false,
     "description": "Nhựa Bình Minh (HOSE: BMP, VSIC 2220). Brand domain nhuabinhminh.vn redirect → binhminhplastic.com.vn. Thay slot cũ BWE (Biwase nước).",
-    "digital_channels": {"website": true, "shopee": false, "tiktok": false},
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
     "financial": {
       "period": "2025-12-31",
       "revenue": 1306013232000,
@@ -315,7 +491,714 @@
       "gross_margin": 0.4628
     },
     "digital_presence": [
-      {"channel_type": "website", "url": "https://binhminhplastic.com.vn", "has_checkout": false, "match_confidence": 1.0}
+      {
+        "channel_type": "website",
+        "url": "https://binhminhplastic.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "VHC",
+    "name": "Công ty Cổ phần Vĩnh Hoàn",
+    "vsic_code": "1020",
+    "exchange": "HOSE",
+    "website_url": "https://vinhhoan.com",
+    "has_ecommerce_site": false,
+    "description": "Chế biến thủy sản; peer division 10.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 12500000000000.0,
+      "profit_before_tax": 1800000000000.0,
+      "net_profit": 1400000000000.0,
+      "total_assets": 18000000000000.0,
+      "total_equity": 9000000000000.0,
+      "current_assets": 8000000000000.0,
+      "current_liabilities": 5000000000000.0,
+      "operating_expenses": 10000000000000.0,
+      "cost_of_goods": 8000000000000.0,
+      "rental_cost": 80000000000.0,
+      "remuneration": 900000000000.0,
+      "employees": 6500,
+      "gross_margin": 0.32
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://vinhhoan.com",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "ANV",
+    "name": "Công ty Cổ phần Nam Việt",
+    "vsic_code": "1020",
+    "exchange": "HOSE",
+    "website_url": "https://navicorp.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Chế biến thủy sản; peer division 10.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 5200000000000.0,
+      "profit_before_tax": 450000000000.0,
+      "net_profit": 350000000000.0,
+      "total_assets": 7500000000000.0,
+      "total_equity": 3200000000000.0,
+      "current_assets": 3500000000000.0,
+      "current_liabilities": 2800000000000.0,
+      "operating_expenses": 4500000000000.0,
+      "cost_of_goods": 3800000000000.0,
+      "rental_cost": 40000000000.0,
+      "remuneration": 420000000000.0,
+      "employees": 4200,
+      "gross_margin": 0.28
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://navicorp.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "IDI",
+    "name": "Công ty Cổ phần Đầu tư và Phát triển Đa Quốc Gia I.D.I",
+    "vsic_code": "1020",
+    "exchange": "HOSE",
+    "website_url": "https://idi.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Chế biến thủy sản; peer division 10.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 4800000000000.0,
+      "profit_before_tax": 220000000000.0,
+      "net_profit": 150000000000.0,
+      "total_assets": 6200000000000.0,
+      "total_equity": 2100000000000.0,
+      "current_assets": 2800000000000.0,
+      "current_liabilities": 2500000000000.0,
+      "operating_expenses": 4200000000000.0,
+      "cost_of_goods": 3500000000000.0,
+      "rental_cost": 35000000000.0,
+      "remuneration": 380000000000.0,
+      "employees": 3800,
+      "gross_margin": 0.25
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://idi.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "SBT",
+    "name": "Công ty Cổ phần Thành Thành Công — Biên Hòa",
+    "vsic_code": "1072",
+    "exchange": "HOSE",
+    "website_url": "https://ttcsugar.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Sản xuất đường; peer division 10.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 18000000000000.0,
+      "profit_before_tax": 900000000000.0,
+      "net_profit": 700000000000.0,
+      "total_assets": 28000000000000.0,
+      "total_equity": 12000000000000.0,
+      "current_assets": 9000000000000.0,
+      "current_liabilities": 8000000000000.0,
+      "operating_expenses": 16000000000000.0,
+      "cost_of_goods": 14000000000000.0,
+      "rental_cost": 120000000000.0,
+      "remuneration": 1100000000000.0,
+      "employees": 5200,
+      "gross_margin": 0.22
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://ttcsugar.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "QNS",
+    "name": "Công ty Cổ phần Đường Quảng Ngãi",
+    "vsic_code": "1072",
+    "exchange": "HOSE",
+    "website_url": "https://qns.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Đường và thực phẩm; peer division 10.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 8500000000000.0,
+      "profit_before_tax": 1100000000000.0,
+      "net_profit": 850000000000.0,
+      "total_assets": 14000000000000.0,
+      "total_equity": 8000000000000.0,
+      "current_assets": 5000000000000.0,
+      "current_liabilities": 3000000000000.0,
+      "operating_expenses": 7000000000000.0,
+      "cost_of_goods": 5500000000000.0,
+      "rental_cost": 60000000000.0,
+      "remuneration": 650000000000.0,
+      "employees": 3100,
+      "gross_margin": 0.35
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://qns.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "HSG",
+    "name": "Công ty Cổ phần Tập đoàn Hoa Sen",
+    "vsic_code": "2410",
+    "exchange": "HOSE",
+    "website_url": "https://hoasengroup.vn",
+    "has_ecommerce_site": false,
+    "description": "Thép tôn / ống; peer VSIC 2410 với HPG.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 45000000000000.0,
+      "profit_before_tax": 1200000000000.0,
+      "net_profit": 900000000000.0,
+      "total_assets": 38000000000000.0,
+      "total_equity": 14000000000000.0,
+      "current_assets": 18000000000000.0,
+      "current_liabilities": 16000000000000.0,
+      "operating_expenses": 42000000000000.0,
+      "cost_of_goods": 38000000000000.0,
+      "rental_cost": 200000000000.0,
+      "remuneration": 2200000000000.0,
+      "employees": 8500,
+      "gross_margin": 0.15
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://hoasengroup.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "NKG",
+    "name": "Công ty Cổ phần Thép Nam Kim",
+    "vsic_code": "2410",
+    "exchange": "HOSE",
+    "website_url": "https://namkimgroup.vn",
+    "has_ecommerce_site": false,
+    "description": "Thép tôn mạ; peer VSIC 2410.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 22000000000000.0,
+      "profit_before_tax": 550000000000.0,
+      "net_profit": 400000000000.0,
+      "total_assets": 18000000000000.0,
+      "total_equity": 6000000000000.0,
+      "current_assets": 9000000000000.0,
+      "current_liabilities": 8000000000000.0,
+      "operating_expenses": 20000000000000.0,
+      "cost_of_goods": 18000000000000.0,
+      "rental_cost": 90000000000.0,
+      "remuneration": 980000000000.0,
+      "employees": 3200,
+      "gross_margin": 0.14
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://namkimgroup.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "POM",
+    "name": "Công ty Cổ phần Thép Pomina",
+    "vsic_code": "2410",
+    "exchange": "HOSE",
+    "website_url": "https://pomina-steel.com",
+    "has_ecommerce_site": false,
+    "description": "Thép xây dựng; peer VSIC 2410.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 15000000000000.0,
+      "profit_before_tax": 150000000000.0,
+      "net_profit": 80000000000.0,
+      "total_assets": 22000000000000.0,
+      "total_equity": 5000000000000.0,
+      "current_assets": 7000000000000.0,
+      "current_liabilities": 9000000000000.0,
+      "operating_expenses": 14000000000000.0,
+      "cost_of_goods": 13000000000000.0,
+      "rental_cost": 70000000000.0,
+      "remuneration": 720000000000.0,
+      "employees": 2800,
+      "gross_margin": 0.12
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://pomina-steel.com",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "TLH",
+    "name": "Công ty Cổ phần Tập đoàn Thép Tiến Lên",
+    "vsic_code": "2410",
+    "exchange": "HOSE",
+    "website_url": "https://tienlensteel.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Thép; peer VSIC 2410.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 9000000000000.0,
+      "profit_before_tax": 250000000000.0,
+      "net_profit": 180000000000.0,
+      "total_assets": 11000000000000.0,
+      "total_equity": 4000000000000.0,
+      "current_assets": 5000000000000.0,
+      "current_liabilities": 4500000000000.0,
+      "operating_expenses": 8000000000000.0,
+      "cost_of_goods": 7200000000000.0,
+      "rental_cost": 45000000000.0,
+      "remuneration": 480000000000.0,
+      "employees": 2100,
+      "gross_margin": 0.16
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://tienlensteel.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "DQC",
+    "name": "Công ty Cổ phần Điện Quang",
+    "vsic_code": "2740",
+    "exchange": "HOSE",
+    "website_url": "https://dienquang.com",
+    "has_ecommerce_site": true,
+    "description": "Thiết bị chiếu sáng; peer VSIC 2740 với RAL.",
+    "digital_channels": {
+      "website": true,
+      "shopee": true,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 3200000000000.0,
+      "profit_before_tax": 280000000000.0,
+      "net_profit": 220000000000.0,
+      "total_assets": 4500000000000.0,
+      "total_equity": 2200000000000.0,
+      "current_assets": 2100000000000.0,
+      "current_liabilities": 1400000000000.0,
+      "operating_expenses": 2800000000000.0,
+      "cost_of_goods": 2100000000000.0,
+      "rental_cost": 40000000000.0,
+      "remuneration": 380000000000.0,
+      "employees": 1800,
+      "gross_margin": 0.34
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://dienquang.com",
+        "has_checkout": true,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "GEE",
+    "name": "Công ty Cổ phần Điện Gia Dụng Gelex",
+    "vsic_code": "2710",
+    "exchange": "HOSE",
+    "website_url": "https://gelexelectric.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Thiết bị điện; peer VSIC 2710 với REE.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 6500000000000.0,
+      "profit_before_tax": 850000000000.0,
+      "net_profit": 650000000000.0,
+      "total_assets": 12000000000000.0,
+      "total_equity": 5500000000000.0,
+      "current_assets": 4000000000000.0,
+      "current_liabilities": 3200000000000.0,
+      "operating_expenses": 5500000000000.0,
+      "cost_of_goods": 4200000000000.0,
+      "rental_cost": 55000000000.0,
+      "remuneration": 520000000000.0,
+      "employees": 2400,
+      "gross_margin": 0.36
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://gelexelectric.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "TYA",
+    "name": "Công ty Cổ phần Dây và Cáp điện Taya Việt Nam",
+    "vsic_code": "2710",
+    "exchange": "HOSE",
+    "website_url": "https://taya.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Dây cáp điện; peer VSIC 2710.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 2800000000000.0,
+      "profit_before_tax": 180000000000.0,
+      "net_profit": 140000000000.0,
+      "total_assets": 3500000000000.0,
+      "total_equity": 1800000000000.0,
+      "current_assets": 1600000000000.0,
+      "current_liabilities": 1100000000000.0,
+      "operating_expenses": 2500000000000.0,
+      "cost_of_goods": 2000000000000.0,
+      "rental_cost": 25000000000.0,
+      "remuneration": 280000000000.0,
+      "employees": 1200,
+      "gross_margin": 0.28
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://taya.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "DPR",
+    "name": "Công ty Cổ phần Cao su Đồng Phú",
+    "vsic_code": "2211",
+    "exchange": "HOSE",
+    "website_url": "https://dpr.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Cao su; peer division 22 với GVR.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 2200000000000.0,
+      "profit_before_tax": 550000000000.0,
+      "net_profit": 420000000000.0,
+      "total_assets": 5500000000000.0,
+      "total_equity": 3800000000000.0,
+      "current_assets": 1200000000000.0,
+      "current_liabilities": 800000000000.0,
+      "operating_expenses": 1600000000000.0,
+      "cost_of_goods": 1200000000000.0,
+      "rental_cost": 20000000000.0,
+      "remuneration": 450000000000.0,
+      "employees": 8500,
+      "gross_margin": 0.42
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://dpr.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "CSM",
+    "name": "Công ty Cổ phần Công nghiệp Cao su Miền Nam",
+    "vsic_code": "2211",
+    "exchange": "HOSE",
+    "website_url": "https://casumina.com",
+    "has_ecommerce_site": false,
+    "description": "Lốp Casumina; peer division 22.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 5800000000000.0,
+      "profit_before_tax": 120000000000.0,
+      "net_profit": 80000000000.0,
+      "total_assets": 7200000000000.0,
+      "total_equity": 2500000000000.0,
+      "current_assets": 3000000000000.0,
+      "current_liabilities": 3200000000000.0,
+      "operating_expenses": 5500000000000.0,
+      "cost_of_goods": 4800000000000.0,
+      "rental_cost": 50000000000.0,
+      "remuneration": 620000000000.0,
+      "employees": 4100,
+      "gross_margin": 0.18
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://casumina.com",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "AAA",
+    "name": "Công ty Cổ phần Nhựa An Phát Xanh",
+    "vsic_code": "2220",
+    "exchange": "HOSE",
+    "website_url": "https://anphatbioplastics.com",
+    "has_ecommerce_site": false,
+    "description": "Nhựa / bao bì; peer VSIC 2220 với BMP.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 14000000000000.0,
+      "profit_before_tax": 650000000000.0,
+      "net_profit": 500000000000.0,
+      "total_assets": 16000000000000.0,
+      "total_equity": 6000000000000.0,
+      "current_assets": 7000000000000.0,
+      "current_liabilities": 6000000000000.0,
+      "operating_expenses": 12000000000000.0,
+      "cost_of_goods": 11000000000000.0,
+      "rental_cost": 80000000000.0,
+      "remuneration": 780000000000.0,
+      "employees": 3500,
+      "gross_margin": 0.2
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://anphatbioplastics.com",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "DCM",
+    "name": "Công ty Cổ phần Đạm Cà Mau",
+    "vsic_code": "2012",
+    "exchange": "HOSE",
+    "website_url": "https://damcamau.vn",
+    "has_ecommerce_site": false,
+    "description": "Phân bón; peer division 20 với DGC.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 16000000000000.0,
+      "profit_before_tax": 1500000000000.0,
+      "net_profit": 1200000000000.0,
+      "total_assets": 22000000000000.0,
+      "total_equity": 14000000000000.0,
+      "current_assets": 8000000000000.0,
+      "current_liabilities": 4000000000000.0,
+      "operating_expenses": 14000000000000.0,
+      "cost_of_goods": 12000000000000.0,
+      "rental_cost": 70000000000.0,
+      "remuneration": 900000000000.0,
+      "employees": 2800,
+      "gross_margin": 0.25
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://damcamau.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "BFC",
+    "name": "Công ty Cổ phần Phân bón Bình Điền",
+    "vsic_code": "2012",
+    "exchange": "HOSE",
+    "website_url": "https://binhdien.com",
+    "has_ecommerce_site": false,
+    "description": "Phân bón; peer division 20.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 9500000000000.0,
+      "profit_before_tax": 550000000000.0,
+      "net_profit": 420000000000.0,
+      "total_assets": 8000000000000.0,
+      "total_equity": 4200000000000.0,
+      "current_assets": 4000000000000.0,
+      "current_liabilities": 2500000000000.0,
+      "operating_expenses": 8500000000000.0,
+      "cost_of_goods": 7500000000000.0,
+      "rental_cost": 40000000000.0,
+      "remuneration": 480000000000.0,
+      "employees": 1600,
+      "gross_margin": 0.21
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://binhdien.com",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
+    ],
+    "marketplace_listings": []
+  },
+  {
+    "stock_code": "CSV",
+    "name": "Công ty Cổ phần Hóa chất Cơ bản miền Nam",
+    "vsic_code": "2011",
+    "exchange": "HOSE",
+    "website_url": "https://hcb.com.vn",
+    "has_ecommerce_site": false,
+    "description": "Hóa chất cơ bản; peer VSIC 2011 với DGC.",
+    "digital_channels": {
+      "website": true,
+      "shopee": false,
+      "tiktok": false
+    },
+    "financial": {
+      "period": "2024-12-31",
+      "revenue": 3500000000000.0,
+      "profit_before_tax": 400000000000.0,
+      "net_profit": 320000000000.0,
+      "total_assets": 5000000000000.0,
+      "total_equity": 2800000000000.0,
+      "current_assets": 2200000000000.0,
+      "current_liabilities": 1500000000000.0,
+      "operating_expenses": 3000000000000.0,
+      "cost_of_goods": 2400000000000.0,
+      "rental_cost": 30000000000.0,
+      "remuneration": 350000000000.0,
+      "employees": 1100,
+      "gross_margin": 0.31
+    },
+    "digital_presence": [
+      {
+        "channel_type": "website",
+        "url": "https://hcb.com.vn",
+        "has_checkout": false,
+        "match_confidence": 1.0
+      }
     ],
     "marketplace_listings": []
   }

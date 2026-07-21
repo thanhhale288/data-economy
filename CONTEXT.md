@@ -39,8 +39,8 @@ OECD digital trade openness index for VNM (annual). Harmonized to monthly via **
 ## Micro / companies
 
 **Listed sample company**:
-One of the ten seeded HOSE/HNX firms used for micro analysis: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
-_Avoid_: random extra tickers unless the user expands the seed set
+One of the seeded HOSE/HNX firms used for micro analysis. Epic 2 expands the sample to ~25–30 tickers with VSIC peer clustering (see `data/seeds/companies.json`). Core originals include RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
+_Avoid_: inventing tickers without updating seed + VSIC mapping; assuming percentiles represent the national industry
 
 **BCTC**:
 Structured financial report fields for a company-period (revenue, profit, assets, equity, employees, gross margin, etc.) in `financial_reports`.
@@ -83,7 +83,7 @@ Online revenue relative to total firm (or industry) revenue; used in cross featu
 ## Benchmark & finance ratios
 
 **Benchmark** (SingStat BITE style):
-Compare a firm’s efficiency ratios to industry peers/percentiles (ROA, ROE, current ratio, digital revenue per worker, etc.). Peer set = latest annual BCTC among seeded listed companies sharing the same VSIC **2-digit division**. Prototype only (n≈10 firms) — not a national industry standard. Missing peer sample → null percentile + `insufficient_peers` (never invent a 50th percentile). Cost form fields (COGS / rental / remuneration) are captured for BITE-style UX; they are not inputs to the four core ratios.
+Compare a firm’s efficiency ratios to industry peers/percentiles (ROA, ROE, current ratio, digital revenue per worker, etc.). Peer set = latest annual BCTC among seeded listed companies sharing the same VSIC **2-digit division**. Epic 2 targets denser peers (≥3 in several divisions); still a listed-sample prototype — not a national industry standard. Missing peer sample → null percentile + `insufficient_peers` (never invent a 50th percentile). Cost form fields (COGS / rental / remuneration) are captured for BITE-style UX; they are not inputs to the four core ratios.
 
 **ROA / ROE / current / equity ratio** (Module 5, period-end BCTC — no invented averages without two periods):
 - ROA = profit_before_tax / total_assets

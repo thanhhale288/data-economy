@@ -62,12 +62,17 @@ def _patch_crawl_network(monkeypatch) -> None:
     )
 
 
-def test_seed_contains_exactly_ten_allowed_tickers():
+def test_seed_contains_allowed_tickers():
     seeds = load_seed_companies()
     codes = [s["stock_code"] for s in seeds]
-    assert len(codes) == 10
+    assert len(codes) >= 25
     assert set(codes) == set(ALLOWED_TICKERS)
-    assert "BMP" in codes  # Nhựa Bình Minh (HOSE BMP) — not Biwase/BWE
+    assert "BMP" in codes
+    assert "RAL" in codes
+    from collections import Counter
+
+    div = Counter(s["vsic_code"][:2] for s in seeds)
+    assert sum(1 for n in div.values() if n >= 3) >= 2
 
 
 def test_run_company_crawl_enriches_metadata_and_website_presence(
@@ -76,10 +81,10 @@ def test_run_company_crawl_enriches_metadata_and_website_presence(
     _patch_crawl_network(monkeypatch)
 
     count = run_company_crawl(db_session)
-    assert count == 10
+    assert count == len(ALLOWED_TICKERS)
 
     companies = db_session.query(Company).all()
-    assert len(companies) == 10
+    assert len(companies) == len(ALLOWED_TICKERS)
     assert {c.stock_code for c in companies} == set(ALLOWED_TICKERS)
 
     ral = db_session.query(Company).filter_by(stock_code="RAL").one()
@@ -106,16 +111,16 @@ def test_run_company_crawl_enriches_metadata_and_website_presence(
 def test_run_company_crawl_idempotent(db_session, monkeypatch):
     _patch_crawl_network(monkeypatch)
 
-    assert run_company_crawl(db_session) == 10
-    assert run_company_crawl(db_session) == 10
+    n = len(ALLOWED_TICKERS)
+    assert run_company_crawl(db_session) == n
+    assert run_company_crawl(db_session) == n
 
-    assert db_session.query(Company).count() == 10
+    assert db_session.query(Company).count() == n
     assert (
         db_session.query(DigitalPresence).filter_by(channel_type="website").count()
-        == 10
+        == n
     )
-    # One annual report per company from seed fallback.
-    assert db_session.query(FinancialReport).count() == 10
+    assert db_session.query(FinancialReport).count() == n
 
 
 def test_detect_fail_keeps_previous_ecommerce_and_checkout(db_session, monkeypatch):

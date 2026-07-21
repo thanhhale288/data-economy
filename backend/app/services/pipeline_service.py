@@ -127,7 +127,110 @@ def get_monitor_status(db: Session, *, job_limit: int = 50) -> dict[str, Any]:
             "Bản sạch mặc định = parquet + pipeline_jobs; "
             "staging Postgres chưa bật (tuỳ chọn §4.1)."
         ),
+        "source_health": get_source_health(db),
+        "sample_size": _sample_size(db),
     }
+
+
+def _sample_size(db: Session) -> int:
+    from backend.app.models import Company
+
+    return db.query(Company).count()
+
+
+def get_source_health(db: Session) -> list[dict[str, Any]]:
+    """Derive GSO / OECD / CafeF / seed health from DB + last pipeline jobs."""
+    from sqlalchemy import func
+
+    from backend.app.models import Company, FinancialReport, GsoMacro, OecdIndicator
+
+    rows: list[dict[str, Any]] = []
+
+    gso_job = (
+        db.query(PipelineJob)
+        .filter(PipelineJob.job_name.in_(MONITOR_FAMILIES["gso"]))
+        .order_by(PipelineJob.created_at.desc())
+        .first()
+    )
+    gso_sources = [s for (s,) in db.query(GsoMacro.source).distinct().all() if s]
+    gso_count = db.query(func.count(GsoMacro.id)).scalar() or 0
+    if gso_count == 0:
+        gso_status, gso_detail = "unavailable", "Chưa có dòng gso_macro — chạy crawl GSO hoặc seed fallback."
+    elif any("FALLBACK" in str(s).upper() for s in gso_sources):
+        gso_status = "fallback"
+        gso_detail = f"Nguồn: {', '.join(sorted(set(map(str, gso_sources))))}"
+    else:
+        gso_status = "ok"
+        gso_detail = f"Nguồn: {', '.join(sorted(set(map(str, gso_sources)))) or 'GSO'}"
+    rows.append({
+        "source": "gso", "label": "GSO / NSO macro", "status": gso_status,
+        "last_success_at": gso_job.finished_at if gso_job and gso_job.status == "success" else None,
+        "detail": gso_detail, "records": int(gso_count),
+    })
+
+    oecd_job = (
+        db.query(PipelineJob)
+        .filter(PipelineJob.job_name.in_(MONITOR_FAMILIES["oecd"]))
+        .order_by(PipelineJob.created_at.desc())
+        .first()
+    )
+    oecd_sources = [s for (s,) in db.query(OecdIndicator.source).distinct().all() if s]
+    oecd_count = db.query(func.count(OecdIndicator.id)).scalar() or 0
+    if oecd_count == 0:
+        oecd_status, oecd_detail = "unavailable", "Chưa có oecd_indicators — không bịa MEI/BCI."
+    elif any("FALLBACK" in str(s).upper() for s in oecd_sources):
+        oecd_status = "fallback"
+        oecd_detail = f"Nguồn: {', '.join(sorted(set(map(str, oecd_sources))))}"
+    else:
+        oecd_status = "ok"
+        oecd_detail = f"Nguồn: {', '.join(sorted(set(map(str, oecd_sources))))}"
+    rows.append({
+        "source": "oecd", "label": "OECD SDMX", "status": oecd_status,
+        "last_success_at": oecd_job.finished_at if oecd_job and oecd_job.status == "success" else None,
+        "detail": oecd_detail, "records": int(oecd_count),
+    })
+
+    company_job = (
+        db.query(PipelineJob)
+        .filter(PipelineJob.job_name.in_(MONITOR_FAMILIES["companies"]))
+        .order_by(PipelineJob.created_at.desc())
+        .first()
+    )
+    fin_count = db.query(func.count(FinancialReport.id)).scalar() or 0
+    company_count = db.query(func.count(Company.id)).scalar() or 0
+    cafef_urls = (
+        db.query(func.count(FinancialReport.id))
+        .filter(FinancialReport.source_url.isnot(None))
+        .filter(FinancialReport.source_url.ilike("%cafef%"))
+        .scalar() or 0
+    )
+    seed_urls = (
+        db.query(func.count(FinancialReport.id))
+        .filter(FinancialReport.source_url.isnot(None))
+        .filter(FinancialReport.source_url.ilike("%seed%"))
+        .scalar() or 0
+    )
+    if fin_count == 0:
+        cafef_status, cafef_detail = "unavailable", "Chưa có financial_reports."
+    elif cafef_urls > 0:
+        cafef_status = "ok"
+        cafef_detail = f"CafeF/HTML: {cafef_urls} báo cáo; seed-like: {seed_urls}"
+    else:
+        cafef_status = "fallback"
+        cafef_detail = f"BCTC chủ yếu seed/fallback ({fin_count} reports / {company_count} DN)."
+    rows.append({
+        "source": "cafef", "label": "CafeF / BCTC", "status": cafef_status,
+        "last_success_at": company_job.finished_at if company_job and company_job.status == "success" else None,
+        "detail": cafef_detail, "records": int(fin_count),
+    })
+    rows.append({
+        "source": "seed", "label": "Listed sample (seed)",
+        "status": "ok" if company_count > 0 else "unavailable",
+        "last_success_at": None,
+        "detail": f"{company_count} DN trong DB (Epic 2 target ~25–30).",
+        "records": int(company_count),
+    })
+    return rows
 
 
 def _sum_macro_field(macro: dict[str, Any], field: str) -> int:
