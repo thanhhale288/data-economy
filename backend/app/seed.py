@@ -259,14 +259,19 @@ def seed_oecd_sample(db) -> int:
     return save_oecd_records(db, result.records)
 
 
-def run_seed():
+def run_seed(*, offline: bool = False):
     _ensure_schema_ready()
     db = SessionLocal()
     try:
         vsic_ins, vsic_upd = load_vsic_mappings(db)
         company_ins, company_upd = load_companies(db)
-        gso_count = seed_gso_sample(db)
-        oecd_count = seed_oecd_sample(db)
+        gso_count = 0
+        oecd_count = 0
+        if offline:
+            print("[seed] offline mode — skip live GSO/OECD crawl")
+        else:
+            gso_count = seed_gso_sample(db)
+            oecd_count = seed_oecd_sample(db)
         print(
             f"Seeded: VSIC +{vsic_ins}/~{vsic_upd}, companies +{company_ins}/~{company_upd}, "
             f"{gso_count} GSO records, {oecd_count} OECD records"
@@ -276,4 +281,6 @@ def run_seed():
 
 
 if __name__ == "__main__":
-    run_seed()
+    import os
+
+    run_seed(offline=os.environ.get("SEED_OFFLINE", "").lower() in {"1", "true", "yes"})
