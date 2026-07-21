@@ -181,7 +181,7 @@ export default function Pipeline() {
           <div className="empty-state">
             <p>
               {quality?.message
-                || 'Chưa có cleaning_report.json — chạy Data Cleaning / make bootstrap (không bịa số quality).'}
+                || 'Chưa có cleaning_report.json — chạy Data Cleaning / make bootstrap.'}
             </p>
             {quality?.report_path && (
               <p className="chart-note" style={{ marginTop: 8 }}>

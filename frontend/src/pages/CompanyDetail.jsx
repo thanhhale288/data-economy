@@ -146,7 +146,7 @@ export default function CompanyDetail() {
         <div className="chart-container" style={{ borderLeft: '4px solid #0d9488' }}>
           <h3>{caseStudy.title}</h3>
           <p className="chart-note" style={{ marginTop: 0 }}>
-            Hồ sơ case study từ dữ liệu đã lưu — không hard-code doanh thu / online.
+            Hồ sơ case study từ dữ liệu đã lưu trong hệ thống.
           </p>
           <ul style={{ margin: '8px 0 0', paddingLeft: 18, lineHeight: 1.6 }}>
             {caseStudy.highlights?.map((h) => (
@@ -198,14 +198,13 @@ export default function CompanyDetail() {
 
       {!latestFin && (
         <div className="banner banner-warn">
-          Chưa có BCTC (financial_reports) cho {company.stock_code}. Chạy crawl/seed tài chính —
-          không hiển thị doanh thu bịa.
+          Chưa có BCTC (financial_reports) cho {company.stock_code}. Chạy crawl/seed tài chính.
         </div>
       )}
       {!latestMetric && (
         <div className="banner banner-warn">
           Chưa có chỉ số digital_metrics cho DN này. Chạy job metrics /{' '}
-          <code>make bootstrap</code> trước — không hiển thị số bịa.
+          <code>make bootstrap</code>.
         </div>
       )}
 
@@ -235,7 +234,7 @@ export default function CompanyDetail() {
                 <div className="empty-state" style={{ marginTop: 8, padding: 12 }}>
                   {flagged
                     ? 'Flag kênh = true nhưng chưa có digital_presence.'
-                    : 'Chưa có trong dữ liệu (không bịa).'}
+                    : 'Chưa có trong dữ liệu.'}
                 </div>
               )}
             </div>
@@ -268,7 +267,7 @@ export default function CompanyDetail() {
         {mktListings.length === 0 ? (
           <div className="empty-state">
             Không có listing Shopee/TikTok/Lazada cho {company.stock_code}.
-            Online revenue est. chỉ từ listing/ratio có nguồn — không bịa sản phẩm.
+            Doanh thu online ước tính dựa trên listing đã thu thập.
           </div>
         ) : (
           <>

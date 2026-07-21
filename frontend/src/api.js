@@ -12,7 +12,7 @@ function formatApiError(status, detail) {
     if (/cleaning_report|quality/i.test(d)) {
       return `API 404: ${d || 'Thiếu cleaning_report — chạy data_cleaning.'}`
     }
-    return d ? `API 404: ${d}` : 'API 404: tài nguyên không có (không bịa số).'
+    return d ? `API 404: ${d}` : 'API 404: không tìm thấy tài nguyên.'
   }
   if (status === 503 || status === 502) {
     return `API ${status}: dịch vụ tạm unavailable${d ? ` — ${d}` : ''}.`

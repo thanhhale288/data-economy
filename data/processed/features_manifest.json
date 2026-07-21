@@ -3,6 +3,12 @@
     "period",
     "iip",
     "indigo",
+    "mei_ip",
+    "mei_ip_lag1",
+    "mei_ip_lag2",
+    "mei_ip_lag3",
+    "mei_ip_roll3m",
+    "mei_ip_roll6m",
     "indigo_lag1",
     "indigo_lag2",
     "indigo_lag3",
@@ -24,7 +30,7 @@
     "financial_alignment",
     "online_revenue_ratio_x_iip_growth"
   ],
-  "row_count": 57,
+  "row_count": 111,
   "sources": {
     "macro": "cleaned_macro.parquet preferred; else DB GSO IIP_C + INDIGO@VNM + MEI_IP@EA20",
     "digital": "digital_metrics mean across firms; broadcast_latest or period_aggregate",
@@ -34,7 +40,8 @@
   "feature_groups": {
     "macro_present": [
       "iip",
-      "indigo"
+      "indigo",
+      "mei_ip"
     ],
     "digital_present": true,
     "financial_present": true,
@@ -52,6 +59,6 @@
     "MEI_BCI never fabricated; mei_ip is OECD peer EA20 when present",
     "mei_ip_peer_country=EA20",
     "digital_alignment=broadcast_latest",
-    "financial_alignment=step_hold_annual"
+    "financial_alignment=step_hold_annual,step_hold_quarter"
   ]
 }

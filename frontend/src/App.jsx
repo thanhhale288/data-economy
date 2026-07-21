@@ -18,7 +18,7 @@ export default function App() {
             <NavLink to="/companies">Doanh nghiệp</NavLink>
             <NavLink to="/pipeline">Pipeline</NavLink>
             <NavLink to="/ml">ML Lab</NavLink>
-            <NavLink to="/benchmark">So sánh</NavLink>
+            <NavLink to="/benchmark">Benchmark</NavLink>
           </nav>
         </aside>
         <main className="main">

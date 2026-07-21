@@ -12,7 +12,7 @@ const METRIC_LABELS = {
   profit_per_worker: 'Lợi nhuận trên lao động',
 }
 
-/** Công thức khớp `compute_benchmark_ratios` — đúng field form, không bịa “average”. */
+/** Công thức khớp `compute_benchmark_ratios`. */
 const METRIC_INFO = {
   roa: {
     title: 'Tỷ suất sinh lời trên tài sản (ROA)',
@@ -61,10 +61,10 @@ const COMPARISON_LABELS = {
 }
 
 const WARNING_LABELS = {
-  insufficient_peers: 'Không đủ peer ngành để tính phân vị — không bịa số.',
+  insufficient_peers: 'Chưa đủ doanh nghiệp cùng ngành để tính phân vị.',
   prototype_listed_sample:
-    'Bản demo: peer = DN niêm yết seed cùng phân ngành VSIC 2 số, không phải chuẩn quốc gia.',
-  small_peer_sample: 'Mẫu peer nhỏ (< 3 DN) — phân vị chỉ mang tính tham khảo.',
+    'Peer hiện tại: mẫu DN niêm yết cùng phân ngành VSIC 2 số.',
+  small_peer_sample: 'Mẫu peer nhỏ (< 3 DN) — phân vị mang tính tham khảo.',
 }
 
 const KEY_EXPENDITURE_ROWS = [
@@ -406,7 +406,7 @@ export default function Benchmark() {
       setPrefillSource(null)
       setError(
         err.message?.includes('404')
-          ? `Không có BCTC đủ trường để nạp «${stockCode}» — không nạp số bịa.`
+          ? `Không tìm thấy BCTC đủ trường để nạp «${stockCode}».`
           : (err.message || `Không nạp được ${stockCode}.`)
       )
     } finally {
@@ -438,7 +438,7 @@ export default function Benchmark() {
       <h2 className="page-title">So sánh hiệu quả doanh nghiệp</h2>
       <p style={{ color: '#888', marginBottom: 24 }}>
         So sánh chỉ số DN với peer cùng phân ngành VSIC (tham chiếu UX SingStat BITE).
-        Nạp form từ BCTC qua API — thiếu mẫu thì phân vị để trống, không bịa mức 50.
+        Có thể nạp form từ BCTC hoặc nhập tay; phân vị chỉ hiện khi đủ mẫu peer.
       </p>
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
@@ -466,13 +466,13 @@ export default function Benchmark() {
 
       {prefillSource && (
         <p className="chart-note" style={{ marginBottom: 12 }}>
-          Form đã nạp từ <code>/api/benchmark/prefill/{prefillSource}</code> — số liệu BCTC đã lưu, không ghi cứng trên giao diện.
+          Form đã nạp từ <code>/api/benchmark/prefill/{prefillSource}</code> — số liệu BCTC trong hệ thống.
         </p>
       )}
 
       {!prefillSource && !form.operating_revenue && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
-          Form trống — bấm «Nạp RAL từ BCTC» (hoặc nhập tay). Không dùng số mẫu bịa sẵn.
+          Form trống — bấm «Nạp RAL từ BCTC» hoặc nhập tay các chỉ tiêu.
         </div>
       )}
 
@@ -628,8 +628,8 @@ export default function Benchmark() {
             )}
             {insufficientPeers && (
               <div className="empty-state" style={{ marginTop: 12 }}>
-                Thiếu peer cùng phân ngành — phân vị = Không có (không bịa mức 50).
-                Chỉ số DN (nếu đủ input) vẫn tính từ form; TB ngành / xếp hạng để trống.
+                Chưa có peer cùng phân ngành — phân vị tạm để trống.
+                Chỉ số DN (nếu đủ input) vẫn tính từ form; TB ngành / xếp hạng chờ thêm mẫu.
               </div>
             )}
             <div className="singstat-jump">
@@ -708,7 +708,7 @@ export default function Benchmark() {
             <header className="singstat-section-head">
               <h3 className="singstat-section-title">Tỷ lệ liên quan chi phí</h3>
               <p className="singstat-section-note">
-                Chi phí hoạt động ÷ doanh thu hoạt động. TB ngành lấy từ peer; thiếu dữ liệu thì «Không có» — không hiện 0%.
+                Chi phí hoạt động ÷ doanh thu hoạt động. TB ngành lấy từ peer; thiếu dữ liệu thì hiện «Không có».
               </p>
             </header>
 
