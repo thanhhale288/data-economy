@@ -1,4 +1,8 @@
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000'
+// Empty string = same-origin (/api/...). Do not use || — '' is falsy and would fall back to localhost.
+const raw = import.meta.env.VITE_API_URL
+const API_URL =
+  raw === undefined || raw === null ? 'http://localhost:8000' : String(raw).replace(/\/$/, '')
+
 
 function formatApiError(status, detail) {
   const d = typeof detail === 'string' ? detail : ''

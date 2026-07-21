@@ -1,10 +1,14 @@
 from contextlib import asynccontextmanager
+from pathlib import Path
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 
 from backend.app.api import router
 from backend.app.config import settings
+
+FRONTEND_DIST = Path(__file__).resolve().parents[2] / "frontend" / "dist"
 
 
 @asynccontextmanager
@@ -33,3 +37,12 @@ app.include_router(router, prefix="/api")
 @app.get("/health")
 def health():
     return {"status": "ok", "app": settings.app_name}
+
+
+# Mount SPA last so /api, /health, /docs keep FastAPI handlers.
+if FRONTEND_DIST.is_dir() and (FRONTEND_DIST / "index.html").is_file():
+    app.mount(
+        "/",
+        StaticFiles(directory=str(FRONTEND_DIST), html=True),
+        name="frontend",
+    )
