@@ -119,7 +119,7 @@ def test_e2e_api_dashboard_company_pipeline_ml(chained_db, api_client):
     summary = api_client.get("/api/dashboard/summary")
     assert summary.status_code == 200
     sbody = summary.json()
-    assert sbody["total_companies"] == 10
+    assert sbody["total_companies"] >= 25
     assert sbody["iip_latest"] is not None
 
     iip = api_client.get("/api/dashboard/iip")

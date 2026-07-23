@@ -74,6 +74,8 @@ class CompanyDetail(CompanyOut):
     crawl_timeline: list[CompanyCrawlEventOut] = []
     data_quality: CompanyDataQualityOut | None = None
     case_study: CompanyCaseStudyOut | None = None
+    peers: list[CompanyOut] = []
+    vsic_division: str | None = None
 
 
 class DigitalPresenceOut(BaseModel):
@@ -200,12 +202,25 @@ class PipelineLastRunOut(BaseModel):
     detail: str | None = None
 
 
+class SourceHealthOut(BaseModel):
+    """Honest source status — never invent success when data is missing."""
+
+    source: str
+    label: str
+    status: str  # ok | fallback | unavailable | unknown | stale
+    last_success_at: datetime | None = None
+    detail: str | None = None
+    records: int | None = None
+
+
 class PipelineMonitorStatusOut(BaseModel):
     last_runs: list[PipelineLastRunOut]
     jobs_listed: int = 0
     jobs_failed_in_list: int = 0
     staging_postgres: bool = False
     note: str | None = None
+    source_health: list[SourceHealthOut] = []
+    sample_size: int = 0
 
 
 class CleaningQualitySummaryOut(BaseModel):
@@ -282,3 +297,4 @@ class ForecastRequest(BaseModel):
 
 class CrawlTriggerRequest(BaseModel):
     crawler: str  # gso, oecd, companies, marketplace, metrics, features, ml, cleaning, all
+    tickers: list[str] | None = None  # optional batch for companies crawl

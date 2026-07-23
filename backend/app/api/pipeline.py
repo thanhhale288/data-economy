@@ -50,7 +50,7 @@ def _trigger_job_name(crawler: str) -> str:
     return f"crawl_{crawler}"
 
 
-def _run_crawler(crawler: str, job_id: int):
+def _run_crawler(crawler: str, job_id: int, tickers: list[str] | None = None):
     db = SessionLocal()
     job = db.query(PipelineJob).get(job_id)
     notes: list[str] = []
@@ -71,7 +71,13 @@ def _run_crawler(crawler: str, job_id: int):
         if crawler in ("companies", "all"):
             from crawlers.companies.listed_companies import run_company_crawl
 
-            records += run_company_crawl(db)
+            batch = tickers if crawler == "companies" else None
+            n = run_company_crawl(db, tickers=batch)
+            records += n
+            if batch:
+                notes.append(f"companies:batch={','.join(batch)}:{n}")
+            else:
+                notes.append(f"companies:full_sample:{n}")
         if crawler in ("marketplace", "all"):
             from crawlers.marketplace.shop_finder import run_marketplace_crawl
 
@@ -80,7 +86,6 @@ def _run_crawler(crawler: str, job_id: int):
             from pipeline.cleaning.digital_metrics import compute_all_digital_metrics
 
             records += compute_all_digital_metrics(db)
-        # Task #10 / Module 3: clean before features (parquet + cleaning_report.json).
         if crawler in ("cleaning", "all"):
             from pipeline.cleaning.run_cleaning import run_data_cleaning
 
@@ -134,6 +139,16 @@ def trigger_crawl(
             status_code=400,
             detail=f"crawler must be one of: {', '.join(sorted(TRIGGER_IDS))}",
         )
+    tickers = None
+    if request.tickers:
+        tickers = [t.strip().upper() for t in request.tickers if t and t.strip()]
+        if crawler not in ("companies",):
+            from fastapi import HTTPException
+
+            raise HTTPException(
+                status_code=400,
+                detail="tickers batch chỉ hỗ trợ crawler=companies",
+            )
     job = pipeline_service.create_job(db, _trigger_job_name(crawler))
-    background_tasks.add_task(_run_crawler, crawler, job.id)
+    background_tasks.add_task(_run_crawler, crawler, job.id, tickers)
     return _job_out(job)

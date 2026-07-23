@@ -1,8 +1,11 @@
 """Listed manufacturing company crawler.
 
-Enriches the fixed 10-ticker sample: metadata, official website digital presence,
-and structured BCTC via crawlers.financial. Ecommerce detection is delegated to
-crawlers.companies.website_detector (Task 6).
+Enriches the seeded listed-company sample: metadata, official website digital
+presence, and structured BCTC via crawlers.financial. Ecommerce detection is
+delegated to crawlers.companies.website_detector.
+
+Allowlist = stock codes present in ``data/seeds/companies.json`` (Epic 2 expands
+beyond the original 10-ticker prototype).
 """
 
 from __future__ import annotations
@@ -23,20 +26,34 @@ logger = logging.getLogger(__name__)
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 SEED_FILE = DATA_DIR / "seeds" / "companies.json"
 
-ALLOWED_TICKERS: tuple[str, ...] = (
-    "RAL",
-    "HPG",
-    "VNM",
-    "FPT",
-    "GVR",
-    "DGC",
-    "MSN",
-    "PNJ",
-    "REE",
-    "BMP",
-)
-ALLOWED_TICKER_SET = frozenset(ALLOWED_TICKERS)
 
+def _read_seed_file() -> list[dict]:
+    with open(SEED_FILE, encoding="utf-8") as f:
+        companies = json.load(f)
+    if not isinstance(companies, list):
+        raise ValueError(f"seed must be a JSON list: {SEED_FILE}")
+    return companies
+
+
+def refresh_allowed_tickers() -> tuple[str, ...]:
+    """Reload allowlist from seed file (call after onboarding appends a ticker)."""
+    global ALLOWED_TICKERS, ALLOWED_TICKER_SET
+    codes: list[str] = []
+    seen: set[str] = set()
+    for row in _read_seed_file():
+        code = (row.get("stock_code") or "").strip().upper()
+        if not code or code in seen:
+            continue
+        seen.add(code)
+        codes.append(code)
+    ALLOWED_TICKERS = tuple(codes)
+    ALLOWED_TICKER_SET = frozenset(codes)
+    return ALLOWED_TICKERS
+
+
+ALLOWED_TICKERS: tuple[str, ...] = ()
+ALLOWED_TICKER_SET: frozenset[str] = frozenset()
+refresh_allowed_tickers()
 
 def detect_ecommerce_site(url: str) -> tuple[bool, bool]:
     """Thin wrap of website_detector. Returns (has_ecommerce, has_checkout).
@@ -68,12 +85,22 @@ def crawl_company_website(company: Company) -> dict:
     }
 
 
-def load_seed_companies() -> list[dict]:
-    with open(SEED_FILE, encoding="utf-8") as f:
-        companies = json.load(f)
-    # Exactly the fixed sample — ignore any accidental extras in seed.
-    by_code = {c["stock_code"]: c for c in companies if c.get("stock_code") in ALLOWED_TICKER_SET}
-    return [by_code[code] for code in ALLOWED_TICKERS if code in by_code]
+def load_seed_companies(*, tickers: list[str] | None = None) -> list[dict]:
+    """Return seed rows in allowlist order; optional subset by ticker batch."""
+    refresh_allowed_tickers()
+    companies = _read_seed_file()
+    by_code = {
+        str(c["stock_code"]).upper(): c
+        for c in companies
+        if c.get("stock_code") and str(c["stock_code"]).upper() in ALLOWED_TICKER_SET
+    }
+    order = ALLOWED_TICKERS
+    if tickers is not None:
+        wanted = {t.strip().upper() for t in tickers if t and t.strip()}
+        order = tuple(c for c in ALLOWED_TICKERS if c in wanted)
+    return [by_code[code] for code in order if code in by_code]
+
+
 
 
 def _utcnow() -> datetime:
@@ -82,9 +109,10 @@ def _utcnow() -> datetime:
 
 def upsert_company_metadata(db: Session, seed: dict) -> Company:
     """Create or update company row from seed (+ published fields when present)."""
-    code = seed["stock_code"]
+    code = str(seed["stock_code"]).upper()
+    refresh_allowed_tickers()
     if code not in ALLOWED_TICKER_SET:
-        raise ValueError(f"ticker not in fixed sample: {code}")
+        raise ValueError(f"ticker not in seed allowlist: {code}")
 
     company = db.query(Company).filter(Company.stock_code == code).first()
     fields = {
@@ -244,14 +272,21 @@ def enrich_company(db: Session, seed: dict) -> bool:
 
 def update_company_from_seed(db: Session, seed: dict) -> bool:
     """Backward-compatible alias used by older call sites."""
-    if seed.get("stock_code") not in ALLOWED_TICKER_SET:
+    refresh_allowed_tickers()
+    code = str(seed.get("stock_code") or "").upper()
+    if code not in ALLOWED_TICKER_SET:
         return False
     return enrich_company(db, seed)
 
 
-def run_company_crawl(db: Session) -> int:
-    """Entry point for scheduler/pipeline — enrich exactly the 10 sample tickers."""
-    seeds = load_seed_companies()
+
+def run_company_crawl(
+    db: Session,
+    *,
+    tickers: list[str] | None = None,
+) -> int:
+    """Entry point for scheduler/pipeline — enrich seed sample (optional batch)."""
+    seeds = load_seed_companies(tickers=tickers)
     count = 0
     for seed in seeds:
         if enrich_company(db, seed):

@@ -2,6 +2,18 @@
 
 Short operator notes for local demo. Formulas and series honesty: `CONTEXT.md`. Full Quick Start: [README](../README.md).
 
+## Onboarding a new listed company (Epic 2)
+
+```bash
+PYTHONPATH=. python scripts/onboard_company.py \
+  --code XYZ --name "Công ty ..." --vsic 2410 \
+  --website https://example.com --enrich
+```
+
+**QA checklist:** `GET /api/companies/XYZ`; VSIC peers on detail; website detect không invent checkout; optional Pipeline companies batch + metrics.
+
+Allowlist = stock codes in `data/seeds/companies.json`.
+
 ## Bootstrap (recommended)
 
 ```bash

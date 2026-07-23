@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
 import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
@@ -155,6 +156,9 @@ export default function Dashboard() {
           <div className="label">Doanh nghiệp mẫu</div>
           <div className="value">{summary?.total_companies ?? 0}</div>
           <div className="sub">{summary?.companies_with_ecommerce ?? 0} có kênh TMĐT</div>
+          <div className="sub muted">
+            <Link to="/companies">Xem danh sách →</Link>
+          </div>
         </div>
         <div className="card">
           <div className="label">Digital Adoption</div>
@@ -315,25 +319,32 @@ export default function Dashboard() {
 
       <div className="chart-container">
         <h3>Heatmap đóng góp Kinh tế số theo VSIC</h3>
+        <p className="chart-note" style={{ marginTop: 0 }}>
+          Click ô → danh sách DN cùng phân ngành (division 2 số). Thiếu VA → empty, không bịa.
+        </p>
         {heatmap.length === 0 ? (
           <div className="empty-state">
             Chưa có Digital VA theo ngành. Chạy digital metrics / seed.
           </div>
         ) : (
           <div className="heatmap-grid">
-            {heatmap.map((cell) => (
-              <div
-                key={cell.vsic_code}
-                className="heatmap-cell"
-                style={{ background: heatColor(cell.intensity) }}
-                title={`${cell.vsic_name || cell.vsic_code}: ${formatNumber(cell.digital_va)}`}
-              >
-                <div className="heatmap-code">VSIC {cell.vsic_code}</div>
-                <div className="heatmap-name">{cell.vsic_name || '—'}</div>
-                <div className="heatmap-va">{formatNumber(cell.digital_va)}</div>
-                <div className="heatmap-meta">{cell.company_count} DN</div>
-              </div>
-            ))}
+            {heatmap.map((cell) => {
+              const division = cell.division || String(cell.vsic_code || '').slice(0, 2)
+              return (
+                <Link
+                  key={cell.vsic_code}
+                  to={`/companies?vsic=${encodeURIComponent(division)}`}
+                  className="heatmap-cell"
+                  style={{ background: heatColor(cell.intensity), textDecoration: 'none', color: 'inherit' }}
+                  title={`${cell.vsic_name || cell.vsic_code}: ${formatNumber(cell.digital_va)} — click xem DN`}
+                >
+                  <div className="heatmap-code">VSIC {cell.vsic_code}</div>
+                  <div className="heatmap-name">{cell.vsic_name || '—'}</div>
+                  <div className="heatmap-va">{formatNumber(cell.digital_va)}</div>
+                  <div className="heatmap-meta">{cell.company_count} DN · div {division}</div>
+                </Link>
+              )
+            })}
           </div>
         )}
         {/* keep a simple bar fallback via recharts Cell for accessibility of scale */}

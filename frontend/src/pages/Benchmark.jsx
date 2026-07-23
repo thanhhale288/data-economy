@@ -1,5 +1,6 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useEffect, useLayoutEffect, useRef, useState } from 'react'
 import { createPortal } from 'react-dom'
+import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api'
 import { formatGrouped, parseGrouped } from '../format'
 
@@ -350,11 +351,22 @@ function KeyExpenditureRow({ label, industry, firm }) {
 }
 
 export default function Benchmark() {
-  const [form, setForm] = useState({ ...EMPTY_FORM })
+  const [searchParams] = useSearchParams()
+  const vsicFromUrl = searchParams.get('vsic') || ''
+  const [form, setForm] = useState({
+    ...EMPTY_FORM,
+    vsic_code: vsicFromUrl || '',
+  })
   const [prefillSource, setPrefillSource] = useState(null)
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+
+  useEffect(() => {
+    if (vsicFromUrl) {
+      setForm((prev) => ({ ...prev, vsic_code: vsicFromUrl }))
+    }
+  }, [vsicFromUrl])
 
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }))
@@ -439,7 +451,20 @@ export default function Benchmark() {
       <p style={{ color: '#888', marginBottom: 24 }}>
         So sánh chỉ số DN với peer cùng phân ngành VSIC (tham chiếu UX SingStat BITE).
         Có thể nạp form từ BCTC hoặc nhập tay; phân vị chỉ hiện khi đủ mẫu peer.
+        {vsicFromUrl ? (
+          <>
+            {' '}Deep-link VSIC <code>{vsicFromUrl}</code> ·{' '}
+            <Link to={`/companies?vsic=${String(vsicFromUrl).slice(0, 2)}`}>Xem DN cùng ngành</Link>
+          </>
+        ) : null}
       </p>
+
+      {result && !insufficientPeers && result.peer_count >= 3 && (
+        <div className="banner" style={{ marginBottom: 16 }}>
+          Peer count: <strong>{result.peer_count}</strong>
+          {result.peer_scope ? ` · ${result.peer_scope}` : ''} — percentile có ý nghĩa hơn prototype n≈10.
+        </div>
+      )}
 
       <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
         <button

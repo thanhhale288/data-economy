@@ -109,6 +109,17 @@ export default function CompanyDetail() {
   return (
     <div>
       <Link to="/companies">← Quay lại danh sách</Link>
+      {company.vsic_division && (
+        <span style={{ marginLeft: 12 }}>
+          <Link to={`/companies?vsic=${company.vsic_division}`}>
+            Peer VSIC {company.vsic_division}
+          </Link>
+          {' · '}
+          <Link to={`/benchmark?vsic=${company.vsic_code || company.vsic_division}`}>
+            Benchmark ngành này
+          </Link>
+        </span>
+      )}
 
       <div className="company-header" style={{ marginTop: 16 }}>
         <div>
@@ -158,6 +169,57 @@ export default function CompanyDetail() {
               {caseStudy.notes.join(' ')}
             </div>
           )}
+        </div>
+      )}
+
+      <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #0f3460)' }}>
+        <h3>Câu chuyện số liệu</h3>
+        <ol style={{ margin: '8px 0 0', paddingLeft: 22, lineHeight: 1.65, fontSize: 14 }}>
+          <li>
+            <strong>Hiện diện số</strong> —{' '}
+            {presence.length
+              ? `${presence.filter((p) => p.is_active !== false).length} kênh đã ghi nhận.`
+              : 'Chưa có digital_presence (không bịa kênh).'}
+          </li>
+          <li>
+            <strong>Online estimate</strong> —{' '}
+            {latestMetric?.online_revenue_est != null
+              ? formatVND(latestMetric.online_revenue_est)
+              : mktListings.length
+                ? 'Có listing nhưng chưa có digital_metrics — chạy job metrics.'
+                : 'Không có listing Shopee/TikTok/Lazada → online có thể = 0.'}
+          </li>
+          <li>
+            <strong>Digital VA</strong> —{' '}
+            {latestMetric?.digital_va_contribution != null
+              ? formatVND(latestMetric.digital_va_contribution)
+              : 'Chưa tính (thiếu metrics / margin). Công thức khóa trong CONTEXT.'}
+          </li>
+          <li>
+            <strong>Chất lượng dữ liệu</strong> —{' '}
+            {quality
+              ? `${quality.score}/${quality.max_score} (${quality.status})`
+              : 'Chưa có score.'}
+          </li>
+        </ol>
+      </div>
+
+      {(company.peers || []).length > 0 && (
+        <div className="chart-container">
+          <h3>Peer cùng phân ngành (VSIC {company.vsic_division})</h3>
+          <p className="chart-note" style={{ marginTop: 0 }}>
+            Mẫu niêm yết trong DB — percentile Benchmark dùng cùng phạm vi này.
+          </p>
+          <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6 }}>
+            {company.peers.map((p) => (
+              <li key={p.stock_code}>
+                <Link to={`/companies/${p.stock_code}`}>{p.stock_code}</Link>
+                {' — '}
+                {p.name}
+                <span className="muted"> ({p.vsic_code})</span>
+              </li>
+            ))}
+          </ul>
         </div>
       )}
 

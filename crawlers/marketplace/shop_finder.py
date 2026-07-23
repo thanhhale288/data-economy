@@ -302,8 +302,10 @@ def run_marketplace_crawl(
     except Exception as exc:  # joblib / disk optional — do not fail crawl
         logger.warning("ShopMatcher.train skipped: %s", exc)
 
-    # Fixed 10-ticker sample only (AGENTS.md) — ignore accidental extras in DB.
-    from crawlers.companies.listed_companies import ALLOWED_TICKER_SET
+    # Fixed sample allowlist only — ignore accidental extras in DB.
+    from crawlers.companies.listed_companies import ALLOWED_TICKER_SET, refresh_allowed_tickers
+
+    refresh_allowed_tickers()
 
     count = 0
     companies = (

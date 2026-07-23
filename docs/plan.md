@@ -407,6 +407,16 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 - [ ] **Task #19b — Proposal Mục 4** — cập nhật kết quả thực tế (không invent số)
 - [ ] Demo presentation (slides) nếu còn thiếu sau docs
 
+### Epic 2 — Product-first (sau demo học kỳ)
+
+Ưu tiên UX + ops + mẫu vừa phải (~25–30 DN, peer clustering). Ngoài phạm vi: marketplace live, M7–M9, industry-ratio không nguồn. Rebase trên `main` sau merge Benchmark BITE FE.
+
+- [x] **Task #20 — Sample expand** — seed ~28 DN; VSIC peer ≥3 trên division 10/20/22/24/27; allowlist = seed JSON
+- [x] **Task #21 — Onboarding** — `scripts/onboard_company.py` + checklist trong `docs/ops-demo.md`
+- [x] **Task #22 — Source health** — `pipeline/status.source_health` + batch `tickers` cho companies crawl
+- [x] **Task #23 — Drill-down** — heatmap → `/companies?vsic=`; company peers + benchmark deep-link
+- [x] **Task #24 — Narrative + Benchmark UX** — CompanyDetail narrative; Benchmark `?vsic=` + peer-count (giữ BITE SingStat UI)
+
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
 ---

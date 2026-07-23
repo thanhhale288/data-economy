@@ -1,4 +1,4 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, HTTPException, Query
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
@@ -9,8 +9,14 @@ router = APIRouter()
 
 
 @router.get("/", response_model=list[CompanyOut])
-def list_companies(db: Session = Depends(get_db)):
-    return company_service.list_companies(db)
+def list_companies(
+    db: Session = Depends(get_db),
+    vsic: str | None = Query(
+        default=None,
+        description="Filter by VSIC code or 2-digit division (e.g. 27, 2740)",
+    ),
+):
+    return company_service.list_companies(db, vsic=vsic)
 
 
 @router.get("/{stock_code}", response_model=CompanyDetail)

@@ -1,15 +1,19 @@
-import { useEffect, useState } from 'react'
-import { Link } from 'react-router-dom'
+import { useEffect, useMemo, useState } from 'react'
+import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api'
 
 export default function Companies() {
+  const [searchParams] = useSearchParams()
+  const vsicFilter = searchParams.get('vsic') || ''
   const [companies, setCompanies] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
     let cancelled = false
-    api.getCompanies()
+    setLoading(true)
+    setError(null)
+    api.getCompanies(vsicFilter || undefined)
       .then((data) => {
         if (!cancelled) setCompanies(data)
       })
@@ -20,14 +24,19 @@ export default function Companies() {
         if (!cancelled) setLoading(false)
       })
     return () => { cancelled = true }
-  }, [])
+  }, [vsicFilter])
+
+  const title = useMemo(() => {
+    if (!vsicFilter) return `Doanh nghiệp niêm yết — Mẫu ${companies.length || '…'} DN`
+    return `Doanh nghiệp — VSIC ${vsicFilter} (${companies.length} DN)`
+  }, [vsicFilter, companies.length])
 
   if (loading) return <div className="loading">Đang tải...</div>
 
   if (error) {
     return (
       <div>
-        <h2 className="page-title">Doanh nghiệp niêm yết — Mẫu 10 DN</h2>
+        <h2 className="page-title">{title}</h2>
         <div className="empty-state">{error}</div>
       </div>
     )
@@ -35,14 +44,24 @@ export default function Companies() {
 
   return (
     <div>
-      <h2 className="page-title">Doanh nghiệp niêm yết — Mẫu 10 DN</h2>
+      <h2 className="page-title">{title}</h2>
       <p className="chart-note" style={{ marginTop: -8, marginBottom: 16 }}>
-        Hồ sơ số: website / Shopee / TikTok + ước lượng online. Case study nổi bật:{' '}
-        <Link to="/companies/RAL">Rạng Đông (RAL)</Link>.
+        Hồ sơ số: website / Shopee / TikTok + ước lượng online. Case study:{' '}
+        <Link to="/companies/RAL">Rạng Đông (RAL)</Link>
+        {vsicFilter ? (
+          <>
+            {' · '}
+            <Link to="/companies">Xóa lọc VSIC {vsicFilter}</Link>
+            {' · '}
+            <Link to={`/benchmark?vsic=${vsicFilter}`}>Benchmark division {vsicFilter}</Link>
+          </>
+        ) : null}
       </p>
       {companies.length === 0 ? (
         <div className="empty-state">
-          Chưa có DN trong DB — chạy seed (`PYTHONPATH=. python -m backend.app.seed`).
+          {vsicFilter
+            ? `Không có DN với VSIC/division «${vsicFilter}» trong mẫu — không bịa peer.`
+            : 'Chưa có DN trong DB — chạy seed (`PYTHONPATH=. python -m backend.app.seed`).'}
         </div>
       ) : (
         <table>
@@ -67,7 +86,7 @@ export default function Companies() {
                     .join(', ')
                 : ''
               return (
-                <tr key={c.stock_code} style={isRal ? { background: '#fff8f9' } : undefined}>
+                <tr key={c.stock_code} style={isRal ? { background: 'var(--surface-muted, #fff8f9)' } : undefined}>
                   <td>
                     <strong>{c.stock_code}</strong>
                     {isRal && (
@@ -77,7 +96,11 @@ export default function Companies() {
                     )}
                   </td>
                   <td>{c.name}</td>
-                  <td>{c.vsic_code}</td>
+                  <td>
+                    <Link to={`/companies?vsic=${String(c.vsic_code || '').slice(0, 2)}`}>
+                      {c.vsic_code}
+                    </Link>
+                  </td>
                   <td>
                     {c.website_url ? (
                       <a href={c.website_url} target="_blank" rel="noreferrer">Link</a>

@@ -49,15 +49,19 @@ export const api = {
   getIip: (vsic = 'C') => request(`/dashboard/iip?vsic_code=${vsic}`),
   getHeatmap: () => request('/dashboard/heatmap'),
   getOecdVsGso: () => request('/dashboard/oecd-vs-gso'),
-  getCompanies: () => request('/companies/'),
+  getCompanies: (vsic) =>
+    request(`/companies/${vsic ? `?vsic=${encodeURIComponent(vsic)}` : ''}`),
   getCompany: (code) => request(`/companies/${code}`),
   getPipelineJobs: () => request('/pipeline/jobs'),
   getPipelineStatus: () => request('/pipeline/status'),
   getPipelineQuality: () => request('/pipeline/quality'),
-  triggerCrawl: (crawler) => request('/pipeline/trigger', {
-    method: 'POST',
-    body: JSON.stringify({ crawler }),
-  }),
+  triggerCrawl: (crawler, tickers) =>
+    request('/pipeline/trigger', {
+      method: 'POST',
+      body: JSON.stringify(
+        tickers?.length ? { crawler, tickers } : { crawler },
+      ),
+    }),
   getModels: () => request('/ml/models'),
   getPredictions: (model) => request(`/ml/predictions${model ? `?model_name=${model}` : ''}`),
   getFeatureImportance: (model = 'xgboost') =>

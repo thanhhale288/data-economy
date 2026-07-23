@@ -22,14 +22,14 @@ from backend.app.seed import load_companies, load_vsic_mappings
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GSO_FIXTURE_XML = REPO_ROOT / "tests" / "gso" / "fixtures" / "iip_sample.xml"
 OECD_INDIGO_FIXTURE = REPO_ROOT / "tests" / "oecd" / "fixtures" / "sdmx_indigo_vnm.json"
-SEED_TICKERS = frozenset(
+SEED_CORE_TICKERS = frozenset(
     {"RAL", "HPG", "VNM", "FPT", "GVR", "DGC", "MSN", "PNJ", "REE", "BMP"}
 )
 
 
 @pytest.fixture()
 def e2e_db(tmp_path):
-    """Isolated SQLite with schema; VSIC + 10 seed companies (incl. BMP, not BWE)."""
+    """Isolated SQLite with schema; VSIC + expanded seed companies (incl. BMP, not BWE)."""
     engine = create_engine(
         f"sqlite:///{tmp_path / 'e2e.db'}",
         connect_args={"check_same_thread": False},
@@ -43,7 +43,8 @@ def e2e_db(tmp_path):
     codes = {c.stock_code for c in session.query(Company).all()}
     assert "BMP" in codes
     assert "BWE" not in codes
-    assert SEED_TICKERS.issubset(codes)
+    assert SEED_CORE_TICKERS.issubset(codes)
+    assert len(codes) >= 25
     try:
         yield session
     finally:

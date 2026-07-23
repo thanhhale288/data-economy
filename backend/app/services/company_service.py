@@ -22,8 +22,42 @@ _MARKETPLACE_PLATFORMS = frozenset({"shopee", "tiktok", "lazada"})
 _RAL_CODE = "RAL"
 
 
-def list_companies(db: Session) -> list[CompanyOut]:
-    return db.query(Company).order_by(Company.stock_code).all()
+def list_companies(
+    db: Session,
+    *,
+    vsic: str | None = None,
+) -> list[CompanyOut]:
+    """List companies; optional ``vsic`` filters by code or 2-digit division prefix."""
+    q = db.query(Company)
+    if vsic:
+        prefix = vsic.strip()
+        if len(prefix) == 2:
+            q = q.filter(Company.vsic_code.startswith(prefix))
+        else:
+            q = q.filter(Company.vsic_code == prefix)
+    return q.order_by(Company.stock_code).all()
+
+
+def peer_companies(db: Session, stock_code: str, *, limit: int = 12) -> list[Company]:
+    """Same VSIC 2-digit division peers (excludes self)."""
+    company = (
+        db.query(Company)
+        .filter(Company.stock_code == stock_code.upper())
+        .first()
+    )
+    if not company or not company.vsic_code:
+        return []
+    division = company.vsic_code[:2]
+    return (
+        db.query(Company)
+        .filter(
+            Company.vsic_code.startswith(division),
+            Company.stock_code != company.stock_code,
+        )
+        .order_by(Company.stock_code)
+        .limit(limit)
+        .all()
+    )
 
 
 def get_company(db: Session, stock_code: str) -> CompanyDetail | None:
@@ -41,14 +75,25 @@ def get_company(db: Session, stock_code: str) -> CompanyDetail | None:
     )
     if not company:
         return None
-    return build_company_detail(company)
+    peers = peer_companies(db, company.stock_code)
+    return build_company_detail(company, peers=peers)
 
 
-def build_company_detail(company: Company) -> CompanyDetail:
+def build_company_detail(
+    company: Company,
+    *,
+    peers: list[Company] | None = None,
+) -> CompanyDetail:
     presence = list(company.digital_presence or [])
     listings = list(company.marketplace_listings or [])
     metrics = list(company.digital_metrics or [])
     reports = list(company.financial_reports or [])
+    peer_rows = peers if peers is not None else []
+    division = (
+        company.vsic_code[:2]
+        if company.vsic_code and len(company.vsic_code) >= 2
+        else company.vsic_code
+    )
 
     return CompanyDetail(
         id=company.id,
@@ -68,6 +113,8 @@ def build_company_detail(company: Company) -> CompanyDetail:
         crawl_timeline=build_crawl_timeline(presence, listings),
         data_quality=compute_data_quality(company, presence, listings, metrics),
         case_study=build_case_study(company, presence),
+        peers=[CompanyOut.model_validate(p) for p in peer_rows],
+        vsic_division=division,
     )
 
 

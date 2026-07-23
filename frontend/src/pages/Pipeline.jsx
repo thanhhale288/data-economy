@@ -133,6 +133,49 @@ export default function Pipeline() {
       </div>
 
       <div className="chart-container" style={{ marginBottom: 24 }}>
+        <h3>Source health</h3>
+        <p className="chart-note" style={{ marginTop: 0 }}>
+          Trạng thái nguồn từ DB + job gần nhất — fallback/unavailable hiện rõ.
+          {status?.sample_size != null ? ` · Mẫu DB: ${status.sample_size} DN` : ''}
+        </p>
+        {!status?.source_health?.length ? (
+          <div className="empty-state">Chưa có source_health từ API.</div>
+        ) : (
+          <div className="cards">
+            {status.source_health.map((src) => {
+              const badge =
+                src.status === 'ok'
+                  ? 'badge-success'
+                  : src.status === 'fallback'
+                    ? 'badge-warning'
+                    : src.status === 'unavailable'
+                      ? 'badge-danger'
+                      : 'badge-warning'
+              return (
+                <div className="card" key={src.source}>
+                  <div className="label">{src.label}</div>
+                  <div style={{ marginTop: 8 }}>
+                    <span className={`badge ${badge}`}>{src.status}</span>
+                    {src.records != null && (
+                      <span className="sub muted" style={{ marginLeft: 8 }}>
+                        {src.records} records
+                      </span>
+                    )}
+                  </div>
+                  <div className="sub muted" style={{ marginTop: 8 }}>
+                    {src.detail || '—'}
+                  </div>
+                  <div className="sub muted">
+                    Last success: {formatTs(src.last_success_at)}
+                  </div>
+                </div>
+              )
+            })}
+          </div>
+        )}
+      </div>
+
+      <div className="chart-container" style={{ marginBottom: 24 }}>
         <h3>Lần chạy cuối (crawl + cleaning)</h3>
         {status?.note && <p className="chart-note">{status.note}</p>}
         {status?.last_runs?.some((r) => r.family === 'data_cleaning' && !r.status) && (

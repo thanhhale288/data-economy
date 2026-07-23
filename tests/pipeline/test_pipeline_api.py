@@ -156,10 +156,10 @@ def test_get_quality_available_and_missing(client, monkeypatch):
 def test_trigger_cleaning_creates_data_cleaning_job(client, api_db, monkeypatch):
     from backend.app.api import pipeline as pipeline_api
 
-    calls: list[tuple[str, int]] = []
+    calls: list[tuple[str, int, list[str] | None]] = []
 
-    def fake_run(crawler: str, job_id: int):
-        calls.append((crawler, job_id))
+    def fake_run(crawler: str, job_id: int, tickers: list[str] | None = None):
+        calls.append((crawler, job_id, tickers))
 
     monkeypatch.setattr(pipeline_api, "_run_crawler", fake_run)
 
@@ -168,7 +168,7 @@ def test_trigger_cleaning_creates_data_cleaning_job(client, api_db, monkeypatch)
     body = res.json()
     assert body["job_name"] == "data_cleaning"
     assert body["status"] == "running"
-    assert calls == [("cleaning", body["id"])]
+    assert calls == [("cleaning", body["id"], None)]
 
     # Job persisted via overridden session
     job = api_db.query(PipelineJob).filter_by(id=body["id"]).one()
