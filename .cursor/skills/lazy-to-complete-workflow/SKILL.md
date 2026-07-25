@@ -73,14 +73,20 @@ git status
 
 ### 3. Branch (1 branch / 1 task)
 
+Theo `.cursor/skills/epic-phase-task-git/SKILL.md`:
+
 ```text
-cursor/phase<N>-task<M>-<slug>
+cursor/epic<E>-phase<P>-task<T>-<slug>
 ```
+
+Legacy (ổn nếu đang dùng): `cursor/phase<N>-task<M>-<slug>`.
 
 ```bash
 git checkout main && git pull --ff-only
-git checkout -b cursor/phase<N>-task<M>-<slug>
+git checkout -b cursor/epic<E>-phase<P>-task<T>-<slug>
 ```
+
+Không nhét nhiều task vào một branch.
 
 ### 4. Waves / Subagents rồi implement
 

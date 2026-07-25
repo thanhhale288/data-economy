@@ -4,7 +4,7 @@
 
 | Unit | Git |
 |------|-----|
-| 1 task | 1 branch `cursor/phaseN-taskM-slug` |
+| 1 task | 1 branch `cursor/epicE-phaseP-taskT-slug` (legacy: `cursor/phaseN-taskM-slug`) |
 | 1 task done | 1 PR → `main` |
 | Phase done | Mọi task PR của phase đã merge + handoff phase |
 
@@ -25,7 +25,7 @@
 ```markdown
 ## Waves / Subagents
 - **W1 Explore (parallel, read-only):** (a) FE (b) BE — map + gaps.
-- **W2 Implement:** chỉ Task #<M> trên `cursor/phaseN-taskM-slug`.
+- **W2 Implement:** chỉ Task #<M> trên `cursor/epicE-phaseP-taskT-slug`.
 - **W3 Verify:** pytest / build; ghi Testing results (lệnh + số liệu).
 - **W4 Ship:** PR → handoff → task review → testing results → prompt → STOP.
 ```
@@ -126,7 +126,7 @@ Implement Task #<M> — <outcome>.
 - …
 
 ## Constraints
-- One task; branch `cursor/phaseN-taskM-slug`
+- One task; branch `cursor/epicE-phaseP-taskT-slug`
 - No invent numbers
 
 ## Non-goals
