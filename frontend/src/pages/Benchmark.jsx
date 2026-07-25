@@ -221,12 +221,12 @@ function MetricInfoTip({ metricKey }) {
           <span className="metric-info-head">
             <span className="metric-info-badge" aria-hidden="true">
               <svg viewBox="0 0 32 32" width="22" height="22">
-                <rect x="6" y="8" width="14" height="16" rx="2" fill="#38bdf8" />
-                <rect x="9" y="11" width="8" height="2" rx="1" fill="#e0f2fe" />
-                <rect x="9" y="15" width="8" height="2" rx="1" fill="#e0f2fe" />
-                <rect x="9" y="19" width="5" height="2" rx="1" fill="#e0f2fe" />
-                <circle cx="22" cy="20" r="5" fill="#fbbf24" />
-                <circle cx="22" cy="20" r="3.2" fill="#f59e0b" />
+                <rect x="6" y="8" width="14" height="16" rx="2" fill="#367ea2" />
+                <rect x="9" y="11" width="8" height="2" rx="1" fill="#c9dfea" />
+                <rect x="9" y="15" width="8" height="2" rx="1" fill="#c9dfea" />
+                <rect x="9" y="19" width="5" height="2" rx="1" fill="#c9dfea" />
+                <circle cx="22" cy="20" r="5" fill="#b1dff6" />
+                <circle cx="22" cy="20" r="3.2" fill="#164654" />
               </svg>
             </span>
             <span className="metric-info-title">{info.title}</span>
@@ -448,7 +448,7 @@ export default function Benchmark() {
   return (
     <div>
       <h2 className="page-title">So sánh hiệu quả doanh nghiệp</h2>
-      <p style={{ color: '#888', marginBottom: 24 }}>
+      <p style={{ color: 'var(--muted)', marginBottom: 24 }}>
         So sánh chỉ số DN với peer cùng phân ngành VSIC (tham chiếu UX SingStat BITE).
         Có thể nạp form từ BCTC hoặc nhập tay; phân vị chỉ hiện khi đủ mẫu peer.
         {vsicFromUrl ? (
@@ -645,7 +645,7 @@ export default function Benchmark() {
               )}
             </div>
             {(result.warnings || []).length > 0 && (
-              <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: '#888', fontSize: 13 }}>
+              <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: 'var(--muted)', fontSize: 13 }}>
                 {result.warnings.map((w) => (
                   <li key={w}>{WARNING_LABELS[w] || w}</li>
                 ))}
@@ -704,7 +704,7 @@ export default function Benchmark() {
                       ) : (
                         <div className="sub">Phân vị: Không có (thiếu mẫu peer)</div>
                       )}
-                      <div style={{ fontSize: 12, color: '#888', marginTop: 8 }}>
+                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
                         TB ngành: {indAvg != null ? formatRatio(indAvg) : 'Không có'}
                       </div>
                       <div style={{ fontSize: 12, marginTop: 4 }}>

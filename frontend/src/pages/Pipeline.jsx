@@ -205,7 +205,7 @@ export default function Pipeline() {
                   <div className="sub">{run.records_processed} records</div>
                 )}
                 {run.error_message && (
-                  <div className="sub" style={{ color: '#0d9488', fontSize: 12 }}>
+                  <div className="sub" style={{ color: 'var(--accent)', fontSize: 12 }}>
                     {run.error_message}
                   </div>
                 )}

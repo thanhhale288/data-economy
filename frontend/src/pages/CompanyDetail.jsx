@@ -134,7 +134,7 @@ export default function CompanyDetail() {
       <div className="company-header" style={{ marginTop: 16 }}>
         <div>
           <h2>{company.name} ({company.stock_code})</h2>
-          <p style={{ color: '#888', marginTop: 4 }}>{company.description || '—'}</p>
+          <p style={{ color: 'var(--muted)', marginTop: 4 }}>{company.description || '—'}</p>
           <div className="metric-strip" style={{ marginTop: 12, marginBottom: 0 }}>
             <span className="metric-chip">
               <strong>Sàn</strong> {company.exchange}
@@ -164,7 +164,7 @@ export default function CompanyDetail() {
       </div>
 
       {caseStudy && (
-        <div className="chart-container" style={{ borderLeft: '4px solid #0d9488' }}>
+        <div className="chart-container" style={{ borderLeft: '4px solid #367ea2' }}>
           <h3>{caseStudy.title}</h3>
           <p className="chart-note" style={{ marginTop: 0 }}>
             Hồ sơ case study từ dữ liệu đã lưu trong hệ thống.
@@ -182,7 +182,7 @@ export default function CompanyDetail() {
         </div>
       )}
 
-      <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #0f3460)' }}>
+      <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
         <h3>Câu chuyện số liệu</h3>
         <ol style={{ margin: '8px 0 0', paddingLeft: 22, lineHeight: 1.65, fontSize: 14 }}>
           <li>
@@ -334,7 +334,7 @@ export default function CompanyDetail() {
               <XAxis dataKey="name" />
               <YAxis domain={[0, 100]} />
               <Tooltip formatter={(v) => `${Number(v).toFixed(0)}%`} />
-              <Bar dataKey="confidence" fill="#1e3a5f" name="Confidence %" />
+              <Bar dataKey="confidence" fill="#164654" name="Confidence %" />
             </BarChart>
           </ResponsiveContainer>
         </div>
@@ -394,7 +394,7 @@ export default function CompanyDetail() {
                   <XAxis dataKey="name" tick={{ fontSize: 10 }} />
                   <YAxis />
                   <Tooltip formatter={(v) => formatVND(v)} />
-                  <Bar dataKey="revenue" fill="#0d9488" name="Revenue est." />
+                  <Bar dataKey="revenue" fill="#367ea2" name="Revenue est." />
                 </BarChart>
               </ResponsiveContainer>
             )}
@@ -422,7 +422,7 @@ export default function CompanyDetail() {
                 </span>
               ))}
             </div>
-            <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55, fontSize: 13, color: '#555' }}>
+            <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55, fontSize: 13, color: 'var(--ink-soft)' }}>
               {(quality.notes || []).map((n) => (
                 <li key={n}>{n}</li>
               ))}
@@ -463,7 +463,7 @@ export default function CompanyDetail() {
                     )}
                   </td>
                   <td>{ev.status}</td>
-                  <td style={{ fontSize: 12, color: '#666' }}>{ev.detail || '—'}</td>
+                  <td style={{ fontSize: 12, color: 'var(--muted)' }}>{ev.detail || '—'}</td>
                 </tr>
               ))}
             </tbody>

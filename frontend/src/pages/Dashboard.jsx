@@ -17,10 +17,10 @@ function periodLabel(p) {
 
 function heatColor(intensity) {
   const t = Math.max(0, Math.min(1, intensity ?? 0))
-  // teal scale — matches --accent
-  const r = Math.round(255 - t * (255 - 15))
-  const g = Math.round(255 - t * (255 - 118))
-  const b = Math.round(255 - t * (255 - 110))
+  // blue scale — matches --accent (#367ea2)
+  const r = Math.round(255 - t * (255 - 54))
+  const g = Math.round(255 - t * (255 - 126))
+  const b = Math.round(255 - t * (255 - 162))
   return `rgb(${r},${g},${b})`
 }
 
@@ -205,7 +205,7 @@ export default function Dashboard() {
               <Line
                 type="monotone"
                 dataKey="actual"
-                stroke="#0d9488"
+                stroke="#367ea2"
                 strokeWidth={2}
                 dot={false}
                 name="IIP thực tế (GSO)"
@@ -214,7 +214,7 @@ export default function Dashboard() {
               <Line
                 type="monotone"
                 dataKey="forecast"
-                stroke="#1e3a5f"
+                stroke="#164654"
                 strokeWidth={2}
                 strokeDasharray="6 4"
                 dot={false}
@@ -261,7 +261,7 @@ export default function Dashboard() {
                   <Line
                     type="monotone"
                     dataKey="gso"
-                    stroke="#0d9488"
+                    stroke="#367ea2"
                     strokeWidth={2}
                     dot={false}
                     name="GSO IIP (VNM)"
@@ -296,7 +296,7 @@ export default function Dashboard() {
                 <Line
                   type="monotone"
                   dataKey="gso"
-                  stroke="#0d9488"
+                  stroke="#367ea2"
                   strokeWidth={2}
                   dot={false}
                   name="GSO IIP (VNM)"
@@ -305,7 +305,7 @@ export default function Dashboard() {
                 <Line
                   type="monotone"
                   dataKey="oecd"
-                  stroke="#1e3a5f"
+                  stroke="#164654"
                   strokeWidth={2}
                   dot={false}
                   name={`OECD MEI (${oecdGso?.oecd_country || 'EA20'})`}

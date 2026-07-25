@@ -86,7 +86,7 @@ export default function Companies() {
                     .join(', ')
                 : ''
               return (
-                <tr key={c.stock_code} style={isRal ? { background: 'var(--surface-muted, #fff8f9)' } : undefined}>
+                <tr key={c.stock_code} style={isRal ? { background: 'var(--surface-muted, #eef7fd)' } : undefined}>
                   <td>
                     <strong>{c.stock_code}</strong>
                     {isRal && (
