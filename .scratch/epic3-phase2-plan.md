@@ -17,7 +17,8 @@ flowchart LR
   T37[T37_Ratio_If_Sourced]
   T38[T38_GRDP_If_NSO]
   T39[T39_Scale_Architecture]
-  P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39
+  T40[T40_Seed_Domain_Fix]
+  P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39 --> T40
 ```
 
 ---
@@ -42,6 +43,8 @@ flowchart LR
 
 ## Task #33 — Batch website detector + audit marketplace URL
 
+**Status:** DONE (2026-07-25) — batch audit script + report; seed flag→URL = 0 mismatch; DB DQC Shopee synced via `--fix-db`; seed re-seed upserts all DP channels.
+
 **Trả lời thắc mắc:** chỗ check URL; provenance sai; biết DN nào lỗi khi không HTTP.
 
 **Việc chính:**
@@ -51,6 +54,8 @@ flowchart LR
 - Doc: “chỗ xem URL” = seed + report artifact + Company detail.
 
 **AC:** chạy một lần trên 28 ra report; 0 flag marketplace=true thiếu URL; tests consistency giữ.
+
+**Artifact:** `.scratch/epic3-task33-website-url-audit.{md,csv}` · lệnh `PYTHONPATH=. python scripts/audit_website_marketplace.py`
 
 ---
 
@@ -128,6 +133,33 @@ flowchart LR
 
 ---
 
+## Task #40 — Sửa domain website seed (nợ kỹ thuật từ audit #33)
+
+**Nguồn:** audit Task #33 chạy live 2026-07-25 — `website_ok=19/28`. 9 ticker còn lại **chưa đo được** (không phải “không có TMĐT”). Bằng chứng: [`.scratch/epic3-task33-website-url-audit.md`](epic3-task33-website-url-audit.md).
+
+| Ticker | URL seed hiện tại | Lỗi |
+|--------|-------------------|-----|
+| IDI | `https://idi.com.vn` | DNS không phân giải |
+| SBT | `https://ttcsugar.com.vn` | DNS không phân giải |
+| NKG | `https://namkimgroup.vn` | ConnectTimeout |
+| POM | `https://pomina-steel.com` | SSL: EE certificate key too weak |
+| TLH | `https://tienlensteel.com.vn` | SSL: unable to get local issuer certificate |
+| GEE | `https://gelexelectric.com.vn` | SSL: self-signed certificate |
+| DPR | `https://dpr.com.vn` | SSL: self-signed certificate |
+| CSV | `https://hcb.com.vn` | SSL: hostname mismatch |
+| DCM | `https://damcamau.vn` | Connection reset by peer |
+
+**Việc chính:**
+- Xác minh tay domain/URL công bố (công bố thông tin HOSE/HNX, CafeF profile) → cập nhật `data/seeds/companies.json` (`website_url` + `digital_presence.website.url`).
+- Với site SSL yếu/self-signed: quyết định rõ ràng — đổi URL đúng, hoặc ghi nhận “không fetch được” như trạng thái hợp lệ. **Không** tắt verify SSL toàn cục để lấy số.
+- Chạy lại `PYTHONPATH=. python scripts/audit_website_marketplace.py` và so `website_ok` trước/sau trong report.
+
+**AC:** mỗi ticker trong bảng trên có kết luận: URL mới `website_ok=true`, **hoặc** ghi nhận lý do vẫn fail (giữ `has_checkout=unknown`). Không ticker nào bị suy checkout khi chưa fetch được.
+
+**Không làm:** đổi Digital VA; invent checkout/GMV; tắt SSL verify mặc định.
+
+---
+
 ## Definition of Done Phase 2
 
 - Cho phép demo/ops: BCTC trên mẫu 28 **ưu tiên số CafeF/live** khi mạng cho phép; seed chỉ fallback có nhãn.
@@ -137,4 +169,6 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39.
+**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40.
+
+**Nợ kỹ thuật đã ghi:** Task #40 (9 domain website fail từ audit #33) — làm sau, không chặn #34.

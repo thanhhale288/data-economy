@@ -32,3 +32,29 @@ def test_dqc_has_shopee_url():
 def test_msn_tiktok_flag_honest_without_url():
     msn = next(c for c in _companies() if c["stock_code"] == "MSN")
     assert msn["digital_channels"]["tiktok"] is False
+
+
+def test_zero_marketplace_flags_without_url_across_allowlist():
+    """Task #33 AC: 0 flag marketplace=true missing DP URL."""
+    bad: list[str] = []
+    for c in _companies():
+        channels = c.get("digital_channels") or {}
+        dps = c.get("digital_presence") or []
+        for platform in ("shopee", "tiktok", "lazada"):
+            if not channels.get(platform):
+                continue
+            if not any(
+                d.get("channel_type") == platform and d.get("url") for d in dps
+            ):
+                bad.append(f"{c['stock_code']}:{platform}")
+    assert bad == []
+
+
+def test_ecommerce_site_flag_has_website_or_marketplace_url():
+    for c in _companies():
+        if not c.get("has_ecommerce_site"):
+            continue
+        dps = c.get("digital_presence") or []
+        assert any(d.get("url") for d in dps), (
+            f"{c['stock_code']} has_ecommerce_site=true without any DP URL"
+        )

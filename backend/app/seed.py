@@ -131,28 +131,36 @@ def _upsert_financial(db, company_id: int, fin: dict) -> None:
     )
 
 
-def _upsert_website_presence(db, company_id: int, digital_presence: list) -> None:
+def _upsert_digital_presence(db, company_id: int, digital_presence: list) -> None:
+    """Upsert all seed digital_presence channels (website + marketplace).
+
+    Re-seed used to refresh only the website channel, which left marketplace
+    URLs missing after an earlier incomplete insert (e.g. DQC shopee).
+    """
     for dp in digital_presence or []:
-        if dp.get("channel_type") != "website":
+        channel = (dp.get("channel_type") or "").strip().lower()
+        url = (dp.get("url") or "").strip()
+        if not channel or not url:
             continue
         existing = (
             db.query(DigitalPresence)
             .filter(
                 DigitalPresence.company_id == company_id,
-                DigitalPresence.channel_type == "website",
+                DigitalPresence.channel_type == channel,
             )
             .first()
         )
         if existing:
-            existing.url = dp["url"]
+            existing.url = url
             existing.has_checkout = dp.get("has_checkout", False)
             existing.match_confidence = dp.get("match_confidence")
+            existing.is_active = True
             continue
         db.add(
             DigitalPresence(
                 company_id=company_id,
-                channel_type="website",
-                url=dp["url"],
+                channel_type=channel,
+                url=url,
                 has_checkout=dp.get("has_checkout", False),
                 match_confidence=dp.get("match_confidence"),
                 crawled_at=datetime.now(timezone.utc),
@@ -188,7 +196,7 @@ def load_companies(db) -> tuple[int, int]:
                     c.get(field) if field != "has_ecommerce_site" else c.get(field, False),
                 )
             _upsert_financial(db, existing.id, c.get("financial", {}))
-            _upsert_website_presence(db, existing.id, c.get("digital_presence", []))
+            _upsert_digital_presence(db, existing.id, c.get("digital_presence", []))
             updated += 1
             continue
 

@@ -34,6 +34,25 @@ PYTHONPATH=. python scripts/enrich_bctc_cafef.py --tickers RAL,BMP,HPG --dry-run
 
 Report columns: `ticker | status (cafef_ok|fallback|error) | detail | period | source_url`. Company detail API exposes `financial_reports[].source_url` (`cafef` URL vs `seed:companies.json`).
 
+## Website + marketplace URL audit (Epic 3 Task #33)
+
+Batch `detect_website` over the seed allowlist (~28) and list Shopee/TikTok/Lazada URLs from seed/`digital_presence`. HTTP 403/timeout → `website_ok=false`, `has_checkout=unknown` — never invent checkout.
+
+**Chỗ xem URL:** `data/seeds/companies.json` (`digital_presence[].url`) · report `.scratch/epic3-task33-website-url-audit.{md,csv}` · Company detail (chip Website + bảng Kênh bán số).
+
+```bash
+# Full allowlist + live detect (needs network). Writes .scratch/epic3-task33-website-url-audit.{md,csv}
+PYTHONPATH=. python scripts/audit_website_marketplace.py
+
+# Offline seed/DB consistency only
+PYTHONPATH=. python scripts/audit_website_marketplace.py --no-detect
+
+# Sync DB digital_presence URLs to seed when drifted (e.g. missing Shopee row)
+PYTHONPATH=. python scripts/audit_website_marketplace.py --fix-db --no-detect
+```
+
+Report columns: `stock_code | website_ok | has_checkout | shopee_url | tiktok_url | flag_vs_url_mismatch`. Exit code 3 if any marketplace flag lacks a URL.
+
 ## Bootstrap (recommended)
 
 ```bash
