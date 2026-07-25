@@ -4,12 +4,15 @@ description: >-
   Repo GitHub conventions for commits, PRs, CI, milestones, and phase releases
   using git + gh CLI. Use when the user asks to commit, push, open/merge a PR,
   create a release/tag, set up GitHub, or when running git commit / git push /
-  gh pr / gh release / gh issue commands for this project.
+  gh pr / gh release / gh issue commands for this project. Pair with
+  epic-phase-task-git for Epic→Phase→Task branch/PR scope.
 ---
 
 # GitHub workflow (this repo)
 
 Read this skill before any `git commit`, `git push`, `gh pr`, `gh release`, or `gh issue` work.
+
+Also read `.cursor/skills/epic-phase-task-git/SKILL.md` when choosing branch name, PR base, or whether this commit belongs on the current task branch vs a new task branch.
 
 ## Non-negotiables
 
@@ -38,13 +41,14 @@ Style in this repo: full sentences, Phase-aware when applicable
 
 ## Pull requests
 
-1. Branch: `cursor/phaseN-<slug>` or clear feature slug; base on up-to-date `main` when possible.
-2. Push: `git push -u origin HEAD` (request network/`all` permissions as needed).
-3. Create PR with `gh pr create` and the repo template (`.github/PULL_REQUEST_TEMPLATE.md`):
+1. **Branching strategy:** `.cursor/skills/epic-phase-task-git/SKILL.md` — mặc định **1 task = 1 branch = 1 PR** (`cursor/epicE-phaseP-taskT-slug`); phase = checklist/milestone; epic = milestone/release, không branch dài.
+2. Base on up-to-date `main` when possible (hoặc phase-integrate nếu user chọn mode 2).
+3. Push: `git push -u origin HEAD` (request network/`all` permissions as needed). Push sớm trên branch task — không đợi hết phase.
+4. Create PR with `gh pr create` and the repo template (`.github/PULL_REQUEST_TEMPLATE.md`):
    - Summary bullets
    - Link `.scratch/...` status/spec
    - Test plan checkboxes (`PYTHONPATH=. pytest -q`, frontend build if UI)
-4. One PR per phase (or coherent slice). Do not open empty PRs.
+5. One PR per **task** (or coherent hotfix). Do not open empty PRs. Do not bundle a whole phase/epic unless user explicitly chooses phase branch mode.
 
 ## After a phase merges to `main`
 
