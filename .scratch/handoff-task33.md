@@ -1,10 +1,10 @@
 # Handoff — Task #33 Batch website detector + audit marketplace URL
 
-**Status:** DONE (shipping PR)  
+**Status:** DONE (pushed; mở PR trên GitHub)  
 **Branch:** `cursor/epic3-phase2-task33-batch-website-qa` (base: `origin/main` @ `e215763`)  
 **Date:** 2026-07-25  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(điền sau push)_
+**Commit / PR:** `c33171e` · PR: https://github.com/thanhhale288/data-economy/pull/new/cursor/epic3-phase2-task33-batch-website-qa
 
 ---
 
