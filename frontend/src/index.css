@@ -186,13 +186,16 @@ td.num,
 
 .page-title {
   font-family: var(--font-display);
-  font-size: 26px;
+  font-size: clamp(18px, 2.4vw, 26px);
   font-weight: 700;
   letter-spacing: 0.04em;
   margin-bottom: 8px;
   color: var(--ink);
   text-transform: uppercase;
   font-style: normal;
+  line-height: 1.25;
+  text-wrap: balance;
+  overflow-wrap: anywhere;
 }
 
 .page-subtitle {
@@ -376,6 +379,12 @@ td.num,
   border: 1px solid var(--border);
   box-shadow: var(--shadow-lift);
   margin-bottom: 24px;
+  min-width: 0;
+  overflow: hidden;
+}
+
+.chart-container .recharts-responsive-container {
+  min-width: 0 !important;
 }
 
 .chart-container h3 {
@@ -385,6 +394,25 @@ td.num,
   letter-spacing: 0.04em;
   text-transform: uppercase;
   font-style: normal;
+}
+
+.table-scroll {
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border-radius: 14px;
+  border: 1px solid var(--border);
+  box-shadow: var(--shadow-lift);
+  background: var(--surface);
+}
+
+.table-scroll table {
+  border: none;
+  box-shadow: none;
+  border-radius: 0;
+  margin: 0;
+  min-width: 640px;
 }
 
 table {
@@ -402,6 +430,7 @@ th, td {
   text-align: left;
   border-bottom: 1px solid #e3eef5;
   font-size: 14px;
+  vertical-align: middle;
 }
 
 th {
@@ -499,9 +528,56 @@ tr:hover {
 
 .company-header {
   display: flex;
-  align-items: center;
+  flex-wrap: wrap;
+  align-items: flex-start;
   gap: 16px;
   margin-bottom: 24px;
+  min-width: 0;
+}
+
+.company-header > div {
+  min-width: 0;
+  flex: 1 1 240px;
+}
+
+.toolbar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.toolbar select,
+.toolbar .btn {
+  max-width: 100%;
+}
+
+.toolbar select {
+  padding: 9px 12px;
+  border-radius: 10px;
+  border: 1px solid var(--bg-accent);
+  font-size: 14px;
+  font-family: var(--font-sans);
+  background: var(--surface);
+  color: var(--ink);
+}
+
+.page-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px 16px;
+  align-items: center;
+  margin-bottom: 4px;
+  font-size: 14px;
+}
+
+.page-nav-extra {
+  color: var(--muted);
+}
+
+.chart-container .table-scroll {
+  box-shadow: none;
 }
 
 .company-header h2 {
@@ -865,6 +941,7 @@ tr:hover {
 .metric-info-pop {
   position: fixed;
   z-index: 10000;
+  width: min(320px, calc(100vw - 24px));
   border-radius: 12px;
   overflow: hidden;
   background: #fff;
@@ -958,35 +1035,166 @@ tr:hover {
   font-weight: 500;
 }
 
+@media (max-width: 1024px) {
+  :root {
+    --sidebar-w: 220px;
+  }
+
+  .main {
+    padding: 28px 20px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .form-grid {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+}
+
 @media (max-width: 768px) {
   .app {
     flex-direction: column;
   }
 
   .sidebar {
-    position: relative;
-    top: auto;
+    position: sticky;
+    top: 0;
     width: 100%;
     height: auto;
-    box-shadow: 0 8px 24px rgba(22, 70, 84, 0.15);
+    max-height: none;
+    padding: 14px 12px 12px;
+    box-shadow: 0 8px 24px rgba(22, 70, 84, 0.12);
+  }
+
+  .sidebar h1 {
+    font-size: 15px;
+    margin-bottom: 2px;
+  }
+
+  .sidebar h1::after {
+    display: none;
+  }
+
+  .sidebar p {
+    margin-bottom: 10px;
+    font-size: 11px;
   }
 
   .sidebar nav {
     display: flex;
-    flex-wrap: wrap;
-    gap: 4px;
+    flex-wrap: nowrap;
+    gap: 6px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    padding-bottom: 2px;
+    scrollbar-width: thin;
+    mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 28px), transparent);
+  }
+
+  .sidebar nav::after {
+    content: '';
+    flex: 0 0 20px;
   }
 
   .sidebar nav a {
+    flex: 0 0 auto;
+    white-space: nowrap;
     margin-bottom: 0;
+    padding: 8px 12px;
+    font-size: 13px;
+  }
+
+  .sidebar nav a:hover,
+  .sidebar nav a:active {
+    transform: none;
   }
 
   .main {
-    padding: 20px 16px;
+    padding: 16px 14px 28px;
+    width: 100%;
+  }
+
+  .page-title {
+    letter-spacing: 0.02em;
+  }
+
+  .page-subtitle {
+    margin-bottom: 16px;
+  }
+
+  .cards {
+    grid-template-columns: repeat(auto-fill, minmax(148px, 1fr));
+    gap: 12px;
+    margin-bottom: 20px;
+  }
+
+  .card {
+    padding: 16px;
+  }
+
+  .card .value {
+    font-size: 22px;
+  }
+
+  .chart-container {
+    padding: 16px;
+    margin-bottom: 16px;
+    border-radius: 12px;
+  }
+
+  .chart-container h3 {
+    font-size: 14px;
+    margin-bottom: 12px;
+  }
+
+  .form-grid {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .heatmap-grid {
+    grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+    gap: 10px;
+  }
+
+  .metric-strip {
+    gap: 8px;
+    margin-bottom: 16px;
+  }
+
+  .metric-chip {
+    width: 100%;
+  }
+
+  th, td {
+    padding: 10px 12px;
+    font-size: 13px;
+  }
+
+  .table-scroll table {
+    min-width: 560px;
+  }
+
+  .company-header h2 {
+    font-size: 18px;
+  }
+
+  .metric-info-head {
+    flex-wrap: wrap;
+  }
+
+  .metric-info-title {
+    white-space: normal;
   }
 }
 
 @media (max-width: 640px) {
+  .cards {
+    grid-template-columns: 1fr 1fr;
+  }
+
   .singstat-donut-row {
     max-width: none;
     gap: 16px;
@@ -998,5 +1206,37 @@ tr:hover {
 
   .singstat-key-bar-line {
     grid-template-columns: 64px minmax(0, 1fr) 48px;
+  }
+
+  .singstat-section {
+    padding: 16px;
+  }
+
+  .loading {
+    padding: 32px 16px;
+  }
+}
+
+@media (max-width: 420px) {
+  .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .heatmap-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .sidebar nav a {
+    padding: 8px 10px;
+    font-size: 12px;
+  }
+
+  .btn {
+    width: 100%;
+  }
+
+  .toolbar .btn,
+  .toolbar select {
+    width: 100%;
   }
 }

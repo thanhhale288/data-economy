@@ -118,18 +118,20 @@ export default function CompanyDetail() {
 
   return (
     <div>
-      <Link to="/companies">← Quay lại danh sách</Link>
-      {company.vsic_division && (
-        <span style={{ marginLeft: 12 }}>
-          <Link to={`/companies?vsic=${company.vsic_division}`}>
-            Peer VSIC {company.vsic_division}
-          </Link>
-          {' · '}
-          <Link to={`/benchmark?vsic=${company.vsic_code || company.vsic_division}`}>
-            Benchmark ngành này
-          </Link>
-        </span>
-      )}
+      <div className="page-nav">
+        <Link to="/companies">← Quay lại danh sách</Link>
+        {company.vsic_division && (
+          <span className="page-nav-extra">
+            <Link to={`/companies?vsic=${company.vsic_division}`}>
+              Peer VSIC {company.vsic_division}
+            </Link>
+            {' · '}
+            <Link to={`/benchmark?vsic=${company.vsic_code || company.vsic_division}`}>
+              Benchmark ngành này
+            </Link>
+          </span>
+        )}
+      </div>
 
       <div className="company-header" style={{ marginTop: 16 }}>
         <div>
@@ -349,6 +351,7 @@ export default function CompanyDetail() {
           </div>
         ) : (
           <>
+            <div className="table-scroll">
             <table>
               <thead>
                 <tr>
@@ -383,6 +386,7 @@ export default function CompanyDetail() {
                 ))}
               </tbody>
             </table>
+            </div>
             <p className="chart-note">
               Ước lượng từ snapshot listing (seed/fallback khi live scrape tạm hoãn) —
               không phải doanh thu kiểm toán.
@@ -438,6 +442,7 @@ export default function CompanyDetail() {
             Chưa có mốc crawl từ digital_presence / marketplace_listings.
           </div>
         ) : (
+          <div className="table-scroll">
           <table>
             <thead>
               <tr>
@@ -468,6 +473,7 @@ export default function CompanyDetail() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
         <p className="chart-note">
           Timeline suy ra từ timestamp từng dòng đã lưu (overwrite khi crawl lại) —

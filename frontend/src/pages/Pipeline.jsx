@@ -119,7 +119,7 @@ export default function Pipeline() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+      <div className="toolbar">
         {CRAWLERS.map((c) => (
           <button
             key={c.id}
@@ -272,6 +272,7 @@ export default function Pipeline() {
             Chưa có pipeline_jobs — bấm trigger hoặc chạy scheduler.
           </div>
         ) : (
+          <div className="table-scroll">
           <table>
             <thead>
               <tr>
@@ -305,6 +306,7 @@ export default function Pipeline() {
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>

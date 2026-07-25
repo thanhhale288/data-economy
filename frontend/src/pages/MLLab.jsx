@@ -200,7 +200,7 @@ export default function MLLab() {
         </div>
       )}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24, alignItems: 'center' }}>
+      <div className="toolbar">
         <select
           value={selectedModel}
           onChange={(e) => {
@@ -208,7 +208,6 @@ export default function MLLab() {
             setForecast(null)
             setForecastError(null)
           }}
-          style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #c9dfea' }}
         >
           {MODEL_OPTIONS.map((m) => (
             <option key={m.id} value={m.id}>{m.label}</option>

@@ -466,7 +466,7 @@ export default function Benchmark() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+      <div className="toolbar" style={{ marginBottom: 16 }}>
         <button
           type="button"
           className="btn btn-primary"

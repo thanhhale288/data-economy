@@ -64,6 +64,7 @@ export default function Companies() {
             : 'Chưa có DN trong DB — chạy seed (`PYTHONPATH=. python -m backend.app.seed`).'}
         </div>
       ) : (
+        <div className="table-scroll">
         <table>
           <thead>
             <tr>
@@ -122,6 +123,7 @@ export default function Companies() {
             })}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   )
