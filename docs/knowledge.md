@@ -234,6 +234,23 @@ Một câu nhớ: **twin fallback = bản dự phòng giống seed, có tem ngu�
 
 Có rồi thì update, chưa có thì insert. Crawl lại không nhân đôi bản ghi (idempotent theo khóa unique).
 
+### Persist (quarterly vào DB)
+
+**Persist** = **ghi bền** vào database — không chỉ giữ trong RAM/biến tạm, mà lưu thành hàng trong bảng để lần sau còn dùng được.
+
+**Persist quarterly vào DB** trong ngữ cảnh BCTC CafeF nghĩa là:
+
+1. Crawl trang CafeF (bảng có nhiều cột quý: Q1, Q2, Q3, Q4…)
+2. Parse chọn **một quý** (thường quý mới nhất có doanh thu) → thành dict: `period` = ngày cuối quý, `report_type` = `"quarterly"`, các field revenue/assets…
+3. Gọi `upsert_financial_report` → ghi/ cập nhật hàng trong bảng `financial_reports`
+4. Khóa unique: `(company_id, period, report_type)` — cùng DN + cùng kỳ + cùng loại báo cáo thì update, không nhân đôi
+
+Khác **seed annual**: seed thường là `report_type=annual` (cả năm). CafeF live thường ra **quarterly**. Hai loại có thể cùng tồn tại trong DB cho một DN (khác `period` / `report_type`).
+
+Batch Epic 3 (`batch_enrich.py`): chỉ persist khi `fetch_bctc` trả về report; thiếu field CafeF để `null` — không nhét số seed vào hàng CafeF.
+
+Một câu nhớ: **persist quarterly = lấy BCTC quý từ web → lưu thành hàng `financial_reports` trong Postgres.**
+
 ### httpx
 
 Thư viện HTTP Python dùng để GET URL.
@@ -446,6 +463,22 @@ Trong project hay gặp theo vài nghĩa gần nhau:
 | **Replay a captured trace** | Giữ lại request/payload thật rồi chạy lại để tái hiện bug |
 
 Một câu nhớ: **trace = lần theo đường đi của dữ liệu hoặc của lời gọi hàm, không phải tự sinh số mới.**
+
+### Smoke (smoke test)
+
+**Smoke** = **kiểm thử khói** — chạy nhanh vài bước “còn sống / chạy thông” sau khi làm xong một phần việc, không phải bộ test đầy đủ.
+
+Ví dụ trong prompt orchestration: sau Wave D/E, smoke = chạy `data_cleaning` → `feature_engineering` → train/forecast xem không crash, có parquet/artifact cơ bản.
+
+Khác nhanh:
+
+| Loại | Mục đích |
+|------|----------|
+| **Unit** | Một hàm/module đúng chi tiết |
+| **E2E** | Cả chuỗi có fixture/assert đầy đủ |
+| **Smoke** | Nhanh: “có chạy được không?” |
+
+Một câu nhớ: **smoke = thổi khói xem máy còn chạy — không kiểm tra hết mọi chi tiết.**
 
 ### Broadcast (feature engineering)
 

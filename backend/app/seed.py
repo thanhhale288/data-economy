@@ -114,6 +114,8 @@ def _upsert_financial(db, company_id: int, fin: dict) -> None:
         "remuneration": fin.get("remuneration"),
         "employees": fin.get("employees"),
         "gross_margin": fin.get("gross_margin"),
+        # Annual seed is demo/sourced seed — never pretend it is CafeF live.
+        "source_url": "seed:companies.json",
     }
     if existing:
         for key, value in fields.items():

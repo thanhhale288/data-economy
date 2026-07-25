@@ -13,6 +13,16 @@ function periodLabel(p) {
   return String(p).slice(0, 10)
 }
 
+function bctcSourceKind(url) {
+  if (!url) return null
+  const u = String(url).toLowerCase()
+  if (u.includes('cafef')) return 'cafef'
+  if (u.startsWith('seed:')) return 'seed'
+  if (u.startsWith('fallback:')) return 'fallback'
+  if (u.startsWith('http')) return 'live'
+  return 'other'
+}
+
 function formatWhen(iso) {
   if (!iso) return '—'
   try {
@@ -228,6 +238,12 @@ export default function CompanyDetail() {
           <div className="label">Doanh thu (BCTC)</div>
           <div className="value" style={{ fontSize: 20 }}>{formatVND(latestFin?.revenue)}</div>
           <div className="sub muted">{latestFin ? periodLabel(latestFin.period) : 'Chưa có BCTC'}</div>
+          {latestFin && (
+            <div className="sub muted">
+              Nguồn: {bctcSourceKind(latestFin.source_url) || 'unknown'}
+              {latestFin.report_type ? ` · ${latestFin.report_type}` : ''}
+            </div>
+          )}
         </div>
         <div className="card">
           <div className="label">Doanh thu TMĐT (ước tính)</div>

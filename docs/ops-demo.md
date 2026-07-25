@@ -20,6 +20,20 @@ Allowlist = stock codes in `data/seeds/companies.json`.
 - Marketplace crawl: live → seed → fallback; `marketplace_listings.source` ∈ `live|seed|fallback`.
 - Industry-ratio online revenue: **không** bật silent ratio — xem `.scratch/epic3-task30-industry-ratio-research.md`.
 
+## CafeF BCTC enrich (Epic 3 Task #32)
+
+Smoke + upsert `financial_reports` from CafeF quarterly HTML for the seed allowlist (~28). Missing fields (e.g. employees) stay `null` — not backfilled from seed demo.
+
+```bash
+# Full allowlist (needs DB seeded + network). Writes .scratch/epic3-task32-cafef-bctc-report.{md,csv}
+PYTHONPATH=. python scripts/enrich_bctc_cafef.py
+
+# Subset / dry-run (no DB write)
+PYTHONPATH=. python scripts/enrich_bctc_cafef.py --tickers RAL,BMP,HPG --dry-run
+```
+
+Report columns: `ticker | status (cafef_ok|fallback|error) | detail | period | source_url`. Company detail API exposes `financial_reports[].source_url` (`cafef` URL vs `seed:companies.json`).
+
 ## Bootstrap (recommended)
 
 ```bash

@@ -137,6 +137,7 @@ class FinancialReportOut(BaseModel):
     remuneration: float | None = None
     employees: int | None = None
     gross_margin: float | None = None
+    source_url: str | None = None
 
 
 class GsoMacroOut(BaseModel):
