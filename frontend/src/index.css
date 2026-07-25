@@ -143,6 +143,64 @@ body {
   transform: translateX(2px) scale(0.98);
 }
 
+.mobile-topbar,
+.sidebar-backdrop {
+  display: none;
+}
+
+.nav-toggle {
+  appearance: none;
+  width: 42px;
+  height: 42px;
+  border: 1px solid rgba(22, 70, 84, 0.12);
+  border-radius: 12px;
+  background: rgba(255, 255, 255, 0.72);
+  display: inline-flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  padding: 0;
+  cursor: pointer;
+  flex-shrink: 0;
+  box-shadow: var(--shadow-soft);
+  transition: background 0.15s ease, transform 0.15s ease;
+}
+
+.nav-toggle:hover {
+  background: #fff;
+}
+
+.nav-toggle:active {
+  transform: scale(0.96);
+}
+
+.nav-toggle:focus-visible {
+  outline: 2px solid rgba(54, 126, 162, 0.45);
+  outline-offset: 2px;
+}
+
+.nav-toggle-bar {
+  display: block;
+  width: 18px;
+  height: 2px;
+  border-radius: 999px;
+  background: var(--ink);
+  transition: transform 0.2s ease, opacity 0.2s ease;
+}
+
+.nav-toggle.is-open .nav-toggle-bar:nth-child(1) {
+  transform: translateY(7px) rotate(45deg);
+}
+
+.nav-toggle.is-open .nav-toggle-bar:nth-child(2) {
+  opacity: 0;
+}
+
+.nav-toggle.is-open .nav-toggle-bar:nth-child(3) {
+  transform: translateY(-7px) rotate(-45deg);
+}
+
 .main {
   flex: 1;
   min-width: 0;
@@ -1054,56 +1112,122 @@ tr:hover {
 }
 
 @media (max-width: 768px) {
+  body.nav-open {
+    overflow: hidden;
+  }
+
   .app {
     flex-direction: column;
   }
 
-  .sidebar {
+  .mobile-topbar {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     position: sticky;
     top: 0;
+    z-index: 30;
     width: 100%;
-    height: auto;
-    max-height: none;
-    padding: 14px 12px 12px;
-    box-shadow: 0 8px 24px rgba(22, 70, 84, 0.12);
+    padding: 10px 12px;
+    background:
+      radial-gradient(280px 120px at 100% -40px, rgba(255, 255, 255, 0.75), transparent 70%),
+      linear-gradient(180deg, var(--sidebar-top), var(--sidebar-mid));
+    border-bottom: 1px solid rgba(22, 70, 84, 0.08);
+    box-shadow: 0 8px 24px rgba(22, 70, 84, 0.1);
+  }
+
+  .mobile-topbar-brand {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    min-width: 0;
+  }
+
+  .mobile-topbar-brand strong {
+    font-size: 15px;
+    font-weight: 700;
+    color: var(--ink);
+    letter-spacing: -0.02em;
+  }
+
+  .mobile-topbar-brand span {
+    font-size: 11px;
+    color: var(--sidebar-text);
+  }
+
+  .sidebar-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    z-index: 40;
+    border: none;
+    padding: 0;
+    margin: 0;
+    background: rgba(22, 70, 84, 0.35);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 0.2s ease;
+    cursor: pointer;
+  }
+
+  .app.is-nav-open .sidebar-backdrop {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(280px, 86vw);
+    height: 100dvh;
+    z-index: 50;
+    padding: 24px 16px;
+    transform: translateX(-105%);
+    transition: transform 0.22s ease;
+    box-shadow: 8px 0 32px rgba(22, 70, 84, 0.18);
+    overflow-y: auto;
+  }
+
+  .sidebar.is-open {
+    transform: translateX(0);
   }
 
   .sidebar h1 {
-    font-size: 15px;
-    margin-bottom: 2px;
+    font-size: 16px;
+    margin-bottom: 4px;
   }
 
   .sidebar h1::after {
-    display: none;
+    display: block;
   }
 
   .sidebar p {
-    margin-bottom: 10px;
-    font-size: 11px;
+    margin-bottom: 24px;
+    font-size: 12px;
   }
 
   .sidebar nav {
     display: flex;
+    flex-direction: column;
     flex-wrap: nowrap;
-    gap: 6px;
-    overflow-x: auto;
-    -webkit-overflow-scrolling: touch;
-    padding-bottom: 2px;
-    scrollbar-width: thin;
-    mask-image: linear-gradient(90deg, #000 0%, #000 calc(100% - 28px), transparent);
+    gap: 4px;
+    overflow: visible;
+    mask-image: none;
+    padding-bottom: 0;
   }
 
   .sidebar nav::after {
-    content: '';
-    flex: 0 0 20px;
+    display: none;
   }
 
   .sidebar nav a {
-    flex: 0 0 auto;
-    white-space: nowrap;
+    flex: none;
+    white-space: normal;
     margin-bottom: 0;
-    padding: 8px 12px;
-    font-size: 13px;
+    padding: 11px 12px;
+    font-size: 14px;
   }
 
   .sidebar nav a:hover,
@@ -1224,15 +1348,6 @@ tr:hover {
 
   .heatmap-grid {
     grid-template-columns: 1fr;
-  }
-
-  .sidebar nav a {
-    padding: 8px 10px;
-    font-size: 12px;
-  }
-
-  .btn {
-    width: 100%;
   }
 
   .toolbar .btn,
