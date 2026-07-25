@@ -435,7 +435,7 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 
 #### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (TODO)
 
-- [ ] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
+- [x] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
 - [ ] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
 - [ ] **Task #34 — Listing depth** — chỉ thêm GMV khi live/curated có provenance (không bịa peer B2B)
 - [ ] **Task #35 — Marketplace live strategy** — allowlist+cache / session / API spike; ADR ngắn; không silent invent
