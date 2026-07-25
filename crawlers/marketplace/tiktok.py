@@ -78,6 +78,7 @@ def fetch_tiktok_listings(
     *,
     client: httpx.Client | None = None,
     rate_limiter: Callable[[], None] | None = None,
+    use_playwright: bool = True,
 ) -> FetchResult:
     """Best-effort live TikTok fetch. On anti-bot / HTTP fail → empty + blocked/error."""
     if rate_limiter:
@@ -126,6 +127,16 @@ def fetch_tiktok_listings(
             )
 
         logger.info("TikTok HTML without structured products for %s", shop_url)
+        if use_playwright:
+            from crawlers.marketplace.browser_fetch import fetch_listings_via_playwright
+
+            return fetch_listings_via_playwright(
+                shop_url,
+                parse_listings=parse_tiktok_listings,
+                detect_block=detect_tiktok_block,
+                platform="TikTok",
+            )
+
         return FetchResult(
             status="empty",
             detail="TikTok HTML without parseable listings",

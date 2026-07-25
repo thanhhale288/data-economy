@@ -1,5 +1,5 @@
 {
-  "description": "Sourced fallback marketplace listings for the fixed 10-ticker sample. Copied from data/seeds/companies.json — not live scrape. See marketplace_listings_fallback.PROVENANCE.md.",
+  "description": "Sourced fallback marketplace listings for the full seed allowlist. Copied from data/seeds/companies.json — not live scrape. See marketplace_listings_fallback.PROVENANCE.md.",
   "companies": [
     {
       "stock_code": "RAL",
@@ -108,6 +108,78 @@
     },
     {
       "stock_code": "BMP",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "VHC",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "ANV",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "IDI",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "SBT",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "QNS",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "HSG",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "NKG",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "POM",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "TLH",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "DQC",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "GEE",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "TYA",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "DPR",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "CSM",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "AAA",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "DCM",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "BFC",
+      "marketplace_listings": []
+    },
+    {
+      "stock_code": "CSV",
       "marketplace_listings": []
     }
   ]

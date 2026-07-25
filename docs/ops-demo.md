@@ -14,6 +14,12 @@ PYTHONPATH=. python scripts/onboard_company.py \
 
 Allowlist = stock codes in `data/seeds/companies.json`.
 
+## Digital presence honesty (Epic 3)
+
+- `digital_channels.shopee|tiktok|lazada=true` **chỉ** khi có URL trong `digital_presence`.
+- Marketplace crawl: live → seed → fallback; `marketplace_listings.source` ∈ `live|seed|fallback`.
+- Industry-ratio online revenue: **không** bật silent ratio — xem `.scratch/epic3-task30-industry-ratio-research.md`.
+
 ## Bootstrap (recommended)
 
 ```bash

@@ -111,6 +111,7 @@ def annotate_provenance(
     for item in listings:
         row = dict(item)
         row["provenance"] = provenance
+        row["source"] = normalize_listing_source(provenance)
         # Recompute revenue only from present fields — never invent units/price
         row["revenue_est"] = compute_revenue_est(
             row.get("price"), row.get("units_sold_est")
@@ -119,6 +120,35 @@ def annotate_provenance(
     return out
 
 
+def normalize_listing_source(provenance: str | None) -> str:
+    """Map scrape provenance tags to DB ``source`` ∈ live|seed|fallback."""
+    if not provenance:
+        return "seed"
+    p = str(provenance).strip().lower()
+    if p == "live" or p.startswith("live"):
+        return "live"
+    if "fallback" in p:
+        return "fallback"
+    if "seed" in p:
+        return "seed"
+    return p[:50]
+
+
 def default_rate_limiter() -> Callable[[], None]:
     limiter = RateLimiter()
     return limiter.wait
+
+
+def provenance_counts(listings: list[dict[str, Any]]) -> dict[str, int]:
+    """Count listings by normalized source for pipeline job detail."""
+    counts = {"live": 0, "seed": 0, "fallback": 0, "empty": 0, "other": 0}
+    if not listings:
+        counts["empty"] = 1
+        return counts
+    for item in listings:
+        src = normalize_listing_source(item.get("source") or item.get("provenance"))
+        if src in counts:
+            counts[src] += 1
+        else:
+            counts["other"] += 1
+    return counts

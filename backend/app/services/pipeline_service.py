@@ -227,8 +227,41 @@ def get_source_health(db: Session) -> list[dict[str, Any]]:
         "source": "seed", "label": "Listed sample (seed)",
         "status": "ok" if company_count > 0 else "unavailable",
         "last_success_at": None,
-        "detail": f"{company_count} DN trong DB (Epic 2 target ~25–30).",
+        "detail": f"{company_count} DN trong DB (Epic 2+ target ~25–30).",
         "records": int(company_count),
+    })
+
+    from backend.app.models import MarketplaceListing
+
+    mp_job = (
+        db.query(PipelineJob)
+        .filter(PipelineJob.job_name.in_(MONITOR_FAMILIES["marketplace"]))
+        .order_by(PipelineJob.created_at.desc())
+        .first()
+    )
+    mp_count = db.query(func.count(MarketplaceListing.id)).scalar() or 0
+    mp_sources = [s for (s,) in db.query(MarketplaceListing.source).distinct().all() if s]
+    if mp_count == 0:
+        mp_status, mp_detail = (
+            "unavailable",
+            "Chưa có marketplace_listings — chạy crawl marketplace hoặc seed.",
+        )
+    elif any(str(s).lower() == "live" for s in mp_sources):
+        mp_status = "ok"
+        mp_detail = f"Nguồn listing: {', '.join(sorted(set(map(str, mp_sources))))}"
+    elif any("fallback" in str(s).lower() or str(s).lower() == "seed" for s in mp_sources):
+        mp_status = "fallback"
+        mp_detail = f"Nguồn listing (seed/fallback): {', '.join(sorted(set(map(str, mp_sources))))}"
+    else:
+        mp_status = "fallback"
+        mp_detail = f"Nguồn listing: {', '.join(sorted(set(map(str, mp_sources)))) or 'unknown'}"
+    rows.append({
+        "source": "marketplace",
+        "label": "Marketplace listings",
+        "status": mp_status,
+        "last_success_at": mp_job.finished_at if mp_job and mp_job.status == "success" else None,
+        "detail": mp_detail,
+        "records": int(mp_count),
     })
     return rows
 

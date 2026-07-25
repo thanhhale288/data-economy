@@ -111,6 +111,7 @@ class MarketplaceListing(Base):
     revenue_est: Mapped[float | None] = mapped_column(Float, nullable=True)
     rating: Mapped[float | None] = mapped_column(Float, nullable=True)
     product_url: Mapped[str | None] = mapped_column(String(500), nullable=True)
+    source: Mapped[str] = mapped_column(String(50), default="seed")
     crawled_at: Mapped[datetime] = mapped_column(DateTime, default=datetime.utcnow)
 
     company: Mapped["Company"] = relationship(back_populates="marketplace_listings")

@@ -227,6 +227,7 @@ def load_companies(db) -> tuple[int, int]:
                     units_sold_est=ml.get("units_sold_est"),
                     revenue_est=ml.get("revenue_est"),
                     rating=ml.get("rating"),
+                    source=ml.get("source") or "seed",
                     crawled_at=datetime.now(timezone.utc),
                 )
             )

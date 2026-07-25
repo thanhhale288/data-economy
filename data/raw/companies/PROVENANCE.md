@@ -1,22 +1,17 @@
 # Provenance — `data/raw/companies/`
 
-Structured BCTC fallbacks for the fixed listed sample (Task 5).
+Structured BCTC fallbacks for the seeded listed-company allowlist (Epic 3 Task #25).
 
 Canonical allowlisted file (git): `../companies_bctc_fallback.json`  
 Provenance twin: `../companies_bctc_fallback.PROVENANCE.md`
 
-| Ticker | Profile note | BCTC source_url |
-|--------|--------------|-----------------|
-| RAL | Rạng Đông lighting | `seed:companies.json` |
-| HPG | Hòa Phát steel | `seed:companies.json` |
-| VNM | Vinamilk | `seed:companies.json` |
-| FPT | FPT | `seed:companies.json` |
-| GVR | Cao su VN | `seed:companies.json` |
-| DGC | Đức Giang chemicals | `seed:companies.json` |
-| MSN | Masan | `seed:companies.json` |
-| PNJ | PNJ jewelry | `seed:companies.json` |
-| REE | REE M&E | `seed:companies.json` |
-| BMP | **Intentional plastics sample** (VSIC 2220 / Bình Minh profile) — not water utility | `seed:companies.json` |
+Entries = one annual row per ticker in `data/seeds/companies.json` (28), fields
+copied verbatim including nulls. `source_url` = `seed:companies.json`.
+
+| Note | Detail |
+|------|--------|
+| BMP | Plastics sample (VSIC 2220); seed may leave `employees` null — keep null |
+| Sync | 2026-07-25 from seed; do not invent numbers |
 
 Optional per-ticker files may be added as `{ticker}_bctc_fallback.json` with an
 explicit `source_url`. Do not add unsourced invented numbers.

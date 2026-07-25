@@ -7,20 +7,6 @@ import pytest
 from ml.shop_matcher import DEFAULT_THRESHOLD, ShopMatcher
 from ml.shop_matcher.matcher import labeled_seed_pairs
 
-# Seed legal names (10 DN)
-COMPANIES = {
-    "RAL": "Công ty Cổ phần Bóng đèn Rạng Đông",
-    "HPG": "Tập đoàn Hòa Phát",
-    "VNM": "Công ty Cổ phần Sữa Việt Nam",
-    "FPT": "Tập đoàn FPT",
-    "GVR": "Tập đoàn Công nghiệp Cao su Việt Nam",
-    "DGC": "Công ty Cổ phần Hóa chất Đức Giang",
-    "MSN": "Tập đoàn Masan",
-    "PNJ": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
-    "REE": "Công ty Cổ phần Cơ điện lạnh",
-    "BMP": "Công ty Cổ phần Nhựa Bình Minh",
-}
-
 POSITIVE_PAIRS = [
     ("RAL", "rangdong_official"),
     ("VNM", "vinamilk_official"),
@@ -29,6 +15,7 @@ POSITIVE_PAIRS = [
     ("MSN", "masan_consumer"),
     ("PNJ", "pnj_official"),
     ("PNJ", "@pnj"),
+    ("DQC", "dienquang_officialstore"),
 ]
 
 # Wrong company ↔ shop (must stay below threshold)
@@ -49,9 +36,27 @@ NEGATIVE_PAIRS = [
     ("VNM", "masan_consumer"),
     ("FPT", "vinamilk_official"),
     ("PNJ", "rangdong_official"),
+    ("DQC", "rangdong_official"),
+    ("VHC", "dienquang_officialstore"),
 ]
 
-NO_MARKETPLACE_TICKERS = ("HPG", "GVR", "DGC", "REE", "BMP")
+NO_MARKETPLACE_TICKERS = ("HPG", "GVR", "DGC", "REE", "BMP", "VHC", "AAA")
+
+COMPANIES = {
+    "RAL": "Công ty Cổ phần Bóng đèn Rạng Đông",
+    "HPG": "Tập đoàn Hòa Phát",
+    "VNM": "Công ty Cổ phần Sữa Việt Nam",
+    "FPT": "Tập đoàn FPT",
+    "GVR": "Tập đoàn Công nghiệp Cao su Việt Nam",
+    "DGC": "Công ty Cổ phần Hóa chất Đức Giang",
+    "MSN": "Tập đoàn Masan",
+    "PNJ": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+    "REE": "Công ty Cổ phần Cơ điện lạnh",
+    "BMP": "Công ty Cổ phần Nhựa Bình Minh",
+    "DQC": "Công ty Cổ phần Điện Quang",
+    "VHC": "Công ty Cổ phần Vĩnh Hoàn",
+    "AAA": "Công ty Cổ phần Nhựa An Phát Xanh",
+}
 
 
 @pytest.fixture

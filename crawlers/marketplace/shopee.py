@@ -92,8 +92,13 @@ def fetch_shopee_listings(
     *,
     client: httpx.Client | None = None,
     rate_limiter: Callable[[], None] | None = None,
+    use_playwright: bool = True,
 ) -> FetchResult:
-    """Best-effort live Shopee fetch. On anti-bot / HTTP fail → empty + blocked/error."""
+    """Best-effort live Shopee fetch. On anti-bot / HTTP fail → empty + blocked/error.
+
+    When httpx returns HTML without items, optionally retry once via Playwright
+    (Epic 3 Task #28). Callers must still fall back with provenance on empty.
+    """
     if rate_limiter:
         rate_limiter()
 
@@ -147,12 +152,31 @@ def fetch_shopee_listings(
                 source="live",
             )
 
-        # HTML without block markers — no structured items we can trust
+        # HTML without block markers — try Playwright before giving up
         logger.info(
             "Shopee HTML response without structured items for %s (tried api hint %s)",
             shop_url,
             api_url,
         )
+        if use_playwright:
+            from crawlers.marketplace.browser_fetch import fetch_listings_via_playwright
+
+            pw = fetch_listings_via_playwright(
+                shop_url,
+                parse_listings=parse_shopee_listings,
+                detect_block=detect_shopee_block,
+                platform="Shopee",
+            )
+            if pw.status == "ok" and pw.listings:
+                return pw
+            logger.info(
+                "Shopee Playwright follow-up status=%s for %s: %s",
+                pw.status,
+                shop_url,
+                pw.detail,
+            )
+            return pw
+
         return FetchResult(
             status="empty",
             detail="Shopee HTML without parseable listings",

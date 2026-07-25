@@ -208,9 +208,14 @@ Business Confidence và ICT investment GFCF: **không có series VNM đáng tin 
 
 ## 6. Tầng micro — doanh nghiệp niêm yết mẫu
 
-### 6.1. Vì sao chỉ ~10 DN
+### 6.1. Vì sao chỉ ~25–30 DN (prototype)
 
-Mẫu cố định (HOSE/HNX): RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
+Mẫu niêm yết cố định trong seed (Epic 2 mở rộng từ 10 → ~28) để peer VSIC có
+nghĩa cho Benchmark — **không** suy ra toàn Section C. Epic 3 hoàn thiện lớp
+dữ liệu (BCTC/digital/marketplace provenance) trên mẫu đó.
+
+Mẫu cố định (HOSE/HNX, Epic 2+): RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP
+cộng peer clusters (VHC, ANV, … DQC, AAA, DCM, …) — xem `data/seeds/companies.json`.
 
 Ý nghĩa:
 

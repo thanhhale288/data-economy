@@ -417,6 +417,33 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 - [x] **Task #23 — Drill-down** — heatmap → `/companies?vsic=`; company peers + benchmark deep-link
 - [x] **Task #24 — Narrative + Benchmark UX** — CompanyDetail narrative; Benchmark `?vsic=` + peer-count (giữ BITE SingStat UI)
 
+### Epic 3 — Data-first (hoàn thiện data)
+
+Trên mẫu ~28 sau Epic 2. Ngoài phạm vi cả Epic 3: M7–M9, redesign FE lớn, Prefect full, invent GRDP/GMV. Chi tiết Phase 2: [`.scratch/epic3-phase2-plan.md`](../.scratch/epic3-phase2-plan.md). Handoff Phase 1: [`.scratch/handoff-epic3-phase1-data.md`](../.scratch/handoff-epic3-phase1-data.md).
+
+#### Phase 1 — Honesty & plumbing (DONE)
+
+Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **Seed annual vẫn có thể là demo** nếu CafeF live chưa chạy thành công.
+
+- [x] **Task #25 — BCTC parity** — fallback/seed cover full allowlist 28; BMP nulls giữ nguyên; docstring/PROVENANCE cập nhật
+- [x] **Task #26 — Digital presence honesty** — MSN tiktok flag cleared; DQC Shopee URL; channel flag ⇒ DP URL
+- [x] **Task #27 — Marketplace provenance + seed depth** — `marketplace_listings.source`; fallback 28 tickers; pipeline source_health marketplace
+- [x] **Task #28 — Marketplace live Playwright** — httpx rồi Playwright follow-up; block→seed contract; tests mock PW
+- [x] **Task #29 — Shop matcher expand** — brand aliases DQC (+ peers); precision tests
+- [x] **Task #30 — Industry-ratio gate** — research: no CBCT revenue share → keep `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (`.scratch/epic3-task30-industry-ratio-research.md`)
+- [x] **Task #31 — Macro + refresh docs** — GRDP deferred (spike note); plan/economy-knowledge/handoff Epic 3 Phase 1
+
+#### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (TODO)
+
+- [ ] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
+- [ ] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
+- [ ] **Task #34 — Listing depth** — chỉ thêm GMV khi live/curated có provenance (không bịa peer B2B)
+- [ ] **Task #35 — Marketplace live strategy** — allowlist+cache / session / API spike; ADR ngắn; không silent invent
+- [ ] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
+- [ ] **Task #37 — Industry-ratio re-gate** — wire chỉ khi có citation CBCT; không dùng % KT số/GDP
+- [ ] **Task #38 — GRDP/VA re-gate** — crawl chỉ khi NSO table ID xác nhận
+- [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)
+
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
 ---

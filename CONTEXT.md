@@ -57,7 +57,11 @@ Model/heuristic that links a marketplace shop name to a listed company (fuzzy + 
 _Avoid_: assuming 1.0 confidence without evidence
 
 **Online revenue**:
-Estimated digital sales = Σ(price × units_sold) from marketplace listings, or industry-ratio interpolation when listings are missing.
+Estimated digital sales = Σ(price × units_sold) from marketplace listings
+(`source` ∈ live|seed|fallback). Industry-ratio interpolation is allowed **only**
+when a sourced manufacturing e-commerce share is wired
+(`SOURCED_INDUSTRY_ECOMMERCE_RATIO`); Epic 3 research found no suitable CBCT
+revenue share — missing listings → 0 (see `.scratch/epic3-task30-industry-ratio-research.md`).
 
 ## Digital economy metrics
 
