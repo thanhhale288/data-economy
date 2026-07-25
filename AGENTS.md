@@ -74,6 +74,11 @@ Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
 Commits, PRs, CI, milestones, and phase releases: `.cursor/skills/github-workflow/SKILL.md`.  
 One-shot labels/milestones/releases/protection: `bash scripts/github-bootstrap.sh`.
 
+### Epic → Phase → Task (Git branching)
+
+1 task = 1 branch = 1 PR; phase = checklist/milestone; epic = milestone/release (no long-lived epic branch):  
+`.cursor/skills/epic-phase-task-git/SKILL.md`. Naming: `cursor/epicE-phaseP-taskT-slug`.
+
 ### Lazy-to-complete (phase/task loop)
 
 One chat → one task → one branch → waves → PR; handoff + review + testing + next prompt then stop:  
