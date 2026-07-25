@@ -204,6 +204,32 @@ Ví dụ bị coi là invent trong project:
 
 Một câu nhớ: **invent = bịa số; project cấm — thiếu thì nói thiếu.**
 
+### Ticker
+
+**Ticker** = **mã chứng khoán** ngắn dùng làm ID của DN niêm yết (HOSE/HNX).
+
+Ví dụ: `RAL` (Rạng Đông), `HPG` (Hòa Phát), `BMP` (Nhựa Bình Minh trong mẫu project).
+
+Trong code: allowlist lấy từ `data/seeds/companies.json`; crawl/enrich/benchmark đều khóa theo ticker. Không có trong allowlist → không invent DN mới.
+
+Một câu nhớ: **ticker = mã CK / ID ngắn của DN trong hệ thống.**
+
+### Seed annual
+
+**Seed annual** = số liệu **BCTC năm** (annual) nằm trong seed (`companies.json` → `financial.period` kiểu năm), dùng làm nguồn demo/micro khi chưa có BCTC live đầy đủ.
+
+Khác **quý (quarterly)** từ CafeF HTML: quý thường thiếu employees/opex → benchmark/prefill **ưu tiên** bản annual (seed hoặc báo cáo năm) khi cần đủ field.
+
+Một câu nhớ: **seed annual = BCTC theo năm trong file seed, không phải scrape quý live.**
+
+### Twin fallback
+
+**Twin fallback** = file fallback là **bản sao / “sinh đôi”** của seed (cùng ticker, cùng period, cùng null), dùng khi live fail — không phải nguồn thống kê khác.
+
+Ví dụ Epic 3: `data/raw/companies_bctc_fallback.json` twin với BCTC trong `companies.json`; BMP null vẫn giữ null trong twin. Có file `*.PROVENANCE.md` ghi rõ “twin”.
+
+Một câu nhớ: **twin fallback = bản dự phòng giống seed, có tem nguồn — không invent số mới.**
+
 ### Upsert
 
 Có rồi thì update, chưa có thì insert. Crawl lại không nhân đôi bản ghi (idempotent theo khóa unique).
@@ -285,6 +311,28 @@ Nếu live = không nhưng seed = có → DB vẫn ghi có. Có thể **làm mé
 ### Matcher (shop matcher)
 
 Bộ ghép shop trên sàn ↔ doanh nghiệp (fuzzy + alias; mặc định ngưỡng **0.65** theo `CONTEXT.md`).
+
+### Alias (brand alias)
+
+**Alias** = **tên gọi khác** của cùng một đối tượng — biệt danh mà hệ thống biết là “vẫn là nó”.
+
+Vấn đề: tên pháp lý của DN và tên shop trên sàn **khác nhau xa**. Ví dụ:
+
+| Tên pháp lý (seed) | Tên shop thực tế |
+|--------------------|------------------|
+| Công ty CP Sữa Việt Nam | `vinamilk_official` |
+| Công ty CP Nhựa Bình Minh | `bmp`, `nhuabinhminh` |
+
+Nếu chỉ so chữ trực tiếp, điểm giống sẽ thấp → match sai. Vì vậy matcher giữ **bảng brand alias**: “nhua binh minh” → (`bmp`, `binhminh`, `nhuabinhminh`)…
+
+Trong code (`ml/shop_matcher/matcher.py`):
+
+- `_BRAND_MARKERS` — alias viết sẵn cho các DN seed có tên pháp lý ≠ tên thương hiệu
+- `train()` học thêm alias từ URL shop trong seed + tên miền website (vd. `rangdong` từ `rangdong.com.vn`), lưu vào `shop_matcher.joblib`
+
+Alias chỉ giúp **tăng điểm giống khi đúng thương hiệu** — shop tìm mới vẫn phải vượt ngưỡng 0.65 mới được gắn DN.
+
+Một câu nhớ: **alias = biệt danh thương hiệu, giúp matcher nhận ra “tên khác nhưng vẫn là DN đó”.**
 
 ### Ngưỡng (threshold)
 

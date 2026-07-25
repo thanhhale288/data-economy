@@ -101,6 +101,7 @@ class MarketplaceListingOut(BaseModel):
     revenue_est: float | None = None
     rating: float | None = None
     product_url: str | None = None
+    source: str | None = None
     crawled_at: datetime | None = None
 
 

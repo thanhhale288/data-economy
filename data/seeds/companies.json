@@ -319,7 +319,7 @@
     "digital_channels": {
       "website": true,
       "shopee": true,
-      "tiktok": true
+      "tiktok": false
     },
     "financial": {
       "period": "2024-12-31",
@@ -886,6 +886,12 @@
         "url": "https://dienquang.com",
         "has_checkout": true,
         "match_confidence": 1.0
+      },
+      {
+        "channel_type": "shopee",
+        "url": "https://shopee.vn/dienquang_officialstore",
+        "has_checkout": true,
+        "match_confidence": 0.9
       }
     ],
     "marketplace_listings": []

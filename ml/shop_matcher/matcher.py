@@ -56,6 +56,8 @@ _COMPANY_NOISE = frozenset(
         "viet",
         "nam",
         "vietnam",
+        # Too generic — false-fires DQC shop vs REE ("dien" ⊂ dienquang…)
+        "dien",
     }
 )
 
@@ -77,7 +79,7 @@ _SHOP_NOISE = frozenset(
 )
 
 # Distinctive markers in normalized company names → marketplace brand tokens.
-# Covers seed 10-DN brands where legal name ≠ handle (e.g. Vinamilk, PNJ).
+# Covers seed allowlist brands where legal name ≠ handle (e.g. Vinamilk, PNJ, DQC).
 _BRAND_MARKERS: list[tuple[str, tuple[str, ...]]] = [
     ("rang dong", ("rangdong",)),
     ("bong den", ("rangdong",)),
@@ -91,6 +93,10 @@ _BRAND_MARKERS: list[tuple[str, tuple[str, ...]]] = [
     ("cao su", ("gvr", "caosuvietnam")),
     ("co dien lanh", ("ree", "reecorp")),
     ("nhua binh minh", ("bmp", "binhminh", "nhuabinhminh")),
+    ("dien quang", ("dienquang", "dienquangofficialstore")),
+    ("vinh hoan", ("vinhhoan",)),
+    ("nam viet", ("namviet", "navicorp")),
+    ("an phat", ("anphat", "anphatbioplastics")),
 ]
 
 

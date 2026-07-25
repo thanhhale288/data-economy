@@ -1,7 +1,8 @@
-"""Structured BCTC (financial report) crawler for the 10 listed sample companies.
+"""Structured BCTC (financial report) crawler for the seeded listed-company allowlist.
 
 Prefer live JSON/HTML when available; otherwise use sourced seed/fallback.
 Never invent numeric fields — missing stays null with explicit provenance.
+Allowlist size follows ``data/seeds/companies.json`` (Epic 2+: ~28 tickers).
 """
 
 from __future__ import annotations

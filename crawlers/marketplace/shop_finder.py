@@ -24,6 +24,8 @@ from crawlers.marketplace.common import (
     default_rate_limiter,
     load_fallback_listings,
     load_seed_for_ticker,
+    normalize_listing_source,
+    provenance_counts,
 )
 from crawlers.marketplace.shopee import fetch_shopee_listings
 from crawlers.marketplace.tiktok import fetch_tiktok_listings
@@ -261,11 +263,15 @@ def _upsert_listing(
     from crawlers.marketplace.common import compute_revenue_est
 
     revenue = compute_revenue_est(price, units)
+    source = normalize_listing_source(
+        product.get("source") or product.get("provenance")
+    )
     if existing:
         existing.price = price
         existing.units_sold_est = units
         existing.revenue_est = revenue
         existing.rating = product.get("rating")
+        existing.source = source
         if product.get("product_url"):
             existing.product_url = product["product_url"]
         existing.crawled_at = datetime.utcnow()
@@ -281,6 +287,7 @@ def _upsert_listing(
             revenue_est=revenue,
             rating=product.get("rating"),
             product_url=product.get("product_url"),
+            source=source,
         )
     )
     return True
@@ -314,6 +321,7 @@ def run_marketplace_crawl(
         .all()
     )
     rate_limiter = default_rate_limiter() if attempt_live else None
+    aggregate_counts = {"live": 0, "seed": 0, "fallback": 0, "empty": 0, "other": 0}
 
     for company in companies:
         shops = find_shops_for_company(company)
@@ -329,9 +337,20 @@ def run_marketplace_crawl(
             attempt_live=attempt_live,
             rate_limiter=rate_limiter,
         )
+        pc = provenance_counts(products)
+        for key, val in pc.items():
+            aggregate_counts[key] = aggregate_counts.get(key, 0) + val
         for product in products:
             if _upsert_listing(db, company, product):
                 count += 1
 
+    logger.info(
+        "Marketplace crawl provenance counts: live=%s seed=%s fallback=%s empty=%s other=%s",
+        aggregate_counts.get("live", 0),
+        aggregate_counts.get("seed", 0),
+        aggregate_counts.get("fallback", 0),
+        aggregate_counts.get("empty", 0),
+        aggregate_counts.get("other", 0),
+    )
     db.commit()
     return count

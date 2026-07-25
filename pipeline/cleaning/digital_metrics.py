@@ -28,8 +28,9 @@ MARKETPLACE_PLATFORMS = frozenset({"shopee", "tiktok", "lazada"})
 # ---------------------------------------------------------------------------
 # REJECTED: prior silent fallback `revenue × adoption × 0.15` had no GSO /
 # VECOM / OECD source — that invents online revenue.
-# Until a sourced manufacturing e-commerce share is wired (proposed: GSO M3 /
-# VECOM industry ratio under data/mappings/), missing listings → 0.0 + log.
+# Until a sourced manufacturing e-commerce share is wired (Epic 3 Task #30
+# research: none found — see `.scratch/epic3-task30-industry-ratio-research.md`),
+# missing listings → 0.0 + log.
 # Callers may pass an explicit ratio via estimate_online_revenue(..., industry_ratio=).
 SOURCED_INDUSTRY_ECOMMERCE_RATIO: float | None = None
 
