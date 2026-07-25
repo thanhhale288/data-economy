@@ -149,6 +149,32 @@ body {
   padding: 32px clamp(20px, 3vw, 40px);
 }
 
+/* Links in main content — accent color, underline only on hover */
+.main a {
+  color: var(--accent);
+  font-weight: 500;
+  text-decoration: none;
+  transition: color 0.15s ease, text-decoration-color 0.15s ease;
+}
+
+.main a:hover {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  text-decoration-color: rgba(54, 126, 162, 0.45);
+}
+
+.main a:focus-visible {
+  outline: 2px solid rgba(54, 126, 162, 0.45);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Short action links in table cells shouldn't wrap mid-word */
+td .link-action {
+  white-space: nowrap;
+}
+
 .card .value,
 .heatmap-va,
 td.num,

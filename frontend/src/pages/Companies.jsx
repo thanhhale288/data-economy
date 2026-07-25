@@ -115,7 +115,7 @@ export default function Companies() {
                   </td>
                   <td>{channels || '—'}</td>
                   <td>
-                    <Link to={`/companies/${c.stock_code}`}>Chi tiết →</Link>
+                    <Link to={`/companies/${c.stock_code}`} className="link-action">Chi tiết →</Link>
                   </td>
                 </tr>
               )
