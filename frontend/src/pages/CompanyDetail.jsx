@@ -99,11 +99,6 @@ export default function CompanyDetail() {
     return { channel: ch, dp, flagged }
   })
 
-  const channelData = presence.map((dp) => ({
-    name: dp.channel_type,
-    confidence: (dp.match_confidence || 0) * 100,
-  }))
-
   const productData = mktListings.map((ml) => ({
     name: (ml.product_name || ml.platform || '').slice(0, 22),
     revenue: ml.revenue_est || 0,
@@ -326,21 +321,6 @@ export default function CompanyDetail() {
           </div>
         )}
       </div>
-
-      {channelData.length > 0 && (
-        <div className="chart-container">
-          <h3>Độ tin cậy match kênh</h3>
-          <ResponsiveContainer width="100%" height={200}>
-            <BarChart data={channelData}>
-              <CartesianGrid strokeDasharray="3 3" />
-              <XAxis dataKey="name" />
-              <YAxis domain={[0, 100]} />
-              <Tooltip formatter={(v) => `${Number(v).toFixed(0)}%`} />
-              <Bar dataKey="confidence" fill="#164654" name="Confidence %" />
-            </BarChart>
-          </ResponsiveContainer>
-        </div>
-      )}
 
       <div className="chart-container">
         <h3>Listing marketplace (ước lượng)</h3>

@@ -25,6 +25,24 @@ function formatTs(value) {
   return value ? new Date(value).toLocaleString('vi-VN') : '—'
 }
 
+/** Compact crawl/job logs for cards — full text stays in title tooltip. */
+function shortenLog(text, maxLen = 88) {
+  if (text == null || text === '') return null
+  let s = String(text)
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/Parsed\s+(\d+)\s+records\s+from\s*/gi, '$1 rec ')
+    .replace(/\s+from\s*(?=[(;|]|$)/gi, ' ')
+    .replace(/\bn=(\d+)\b/g, 'n=$1')
+    .replace(/\s*[|;]\s*/g, ' · ')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/\s+([.,;:])/g, '$1')
+    .replace(/(\s·\s)+/g, ' · ')
+    .trim()
+  if (!s) return '—'
+  if (s.length <= maxLen) return s
+  return `${s.slice(0, maxLen - 1).trimEnd()}…`
+}
+
 export default function Pipeline() {
   const [jobs, setJobs] = useState([])
   const [status, setStatus] = useState(null)
@@ -162,8 +180,8 @@ export default function Pipeline() {
                       </span>
                     )}
                   </div>
-                  <div className="sub muted" style={{ marginTop: 8 }}>
-                    {src.detail || '—'}
+                  <div className="sub muted log-snip" style={{ marginTop: 8 }} title={src.detail || undefined}>
+                    {shortenLog(src.detail) || '—'}
                   </div>
                   <div className="sub muted">
                     Last success: {formatTs(src.last_success_at)}
@@ -205,12 +223,9 @@ export default function Pipeline() {
                   <div className="sub">{run.records_processed} records</div>
                 )}
                 {run.error_message && (
-                  <div className="sub" style={{ color: 'var(--accent)', fontSize: 12 }}>
-                    {run.error_message}
+                  <div className="sub log-snip" style={{ color: 'var(--danger)', fontSize: 12 }} title={run.error_message}>
+                    {shortenLog(run.error_message)}
                   </div>
-                )}
-                {run.detail && !run.error_message && (
-                  <div className="sub muted" style={{ fontSize: 12 }}>{run.detail}</div>
                 )}
               </div>
             ))}
@@ -295,12 +310,15 @@ export default function Pipeline() {
                   <td>{formatTs(j.started_at)}</td>
                   <td>{formatTs(j.finished_at)}</td>
                   <td
+                    className="log-snip"
+                    title={j.error_message || j.detail || undefined}
                     style={{
                       color: j.error_message ? 'var(--danger)' : undefined,
                       fontSize: 12,
+                      maxWidth: 280,
                     }}
                   >
-                    {j.error_message || j.detail || '—'}
+                    {shortenLog(j.error_message || j.detail, 72) || '—'}
                   </td>
                 </tr>
               ))}

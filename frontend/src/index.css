@@ -342,6 +342,17 @@ td.num,
   margin-top: 10px;
 }
 
+.log-snip {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  overflow-wrap: anywhere;
+  line-height: 1.4;
+  max-width: 100%;
+  cursor: help;
+}
+
 .empty-state {
   padding: 20px;
   background: var(--surface-2);
