@@ -1,10 +1,10 @@
 # Handoff — Task #32 CafeF live → BCTC thật
 
-**Status:** DONE (shipping PR)  
+**Status:** DONE (pushed; mở PR trên GitHub)  
 **Branch:** `cursor/epic3-phase2-task32-cafef-live-bctc` (base: `origin/main` @ `39b3ce9`)  
 **Date:** 2026-07-25  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(điền sau push)_
+**Commit / PR:** `6b481d9` · PR: https://github.com/thanhhale288/data-economy/pull/new/cursor/epic3-phase2-task32-cafef-live-bctc
 
 ---
 
