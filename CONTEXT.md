@@ -42,8 +42,12 @@ OECD digital trade openness index for VNM (annual). Harmonized to monthly via **
 
 ## Micro / companies
 
+**Company universe (shallow)**:
+Future/sourced register of Section C firms (identity, VSIC, optional website, provenance) separate from the deep listed sample. Stub path: `data/raw/company_universe/` + `backend.app.schemas.universe` (ADR-0003). Rows currently empty by design.
+_Avoid_: inventing hundreds of firms; copying seed demo to fake national coverage; auto-running BCTC/marketplace enrich on every universe row
+
 **Listed sample company**:
-One of the seeded HOSE/HNX firms used for micro analysis. Epic 2 expands the sample to ~25–30 tickers with VSIC peer clustering (see `data/seeds/companies.json`). Core originals include RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
+One of the seeded HOSE/HNX firms used for micro analysis (deep sample). Epic 2 expands the sample to ~25–30 tickers with VSIC peer clustering (see `data/seeds/companies.json`). Core originals include RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP. Promote from universe only via explicit onboard + seed.
 _Avoid_: inventing tickers without updating seed + VSIC mapping; assuming percentiles represent the national industry
 
 **BCTC**:

@@ -150,15 +150,22 @@ flowchart LR
 
 ## Task #39 — Scale architecture (toàn Section C)
 
+**Status:** DONE (2026-07-26) — docs + ADR-0003 + empty universe stub; no nationwide crawl.
+
 **Trả lời thắc mắc:** sau này tìm tất cả DN CBCT thì scale thế nào.
 
 **Việc chính (thiết kế + skeleton, không crawl cả nước):**
 - Tách: **vũ trụ DN** (đăng ký / thống kê / niêm yết) vs **mẫu sâu** (BCTC+digital) vs **macro ngành**.
 - Đặc tả ingest nông (VSIC, tên, website?) + queue lô + rate limit + provenance.
 - Percentile/Digital VA trên mẫu niêm yết = prototype — không tuyên bố chuẩn quốc gia.
-- Doc trong `docs/economy-knowledge.md` + ADR ngắn nếu cần.
+- Doc trong `docs/economy-knowledge.md` + ADR-0003.
+- Stub: `data/raw/company_universe/rows.json` = `[]` + `backend/app/schemas/universe.py` (không migration DB — identity key chưa chốt).
 
-**AC:** tài liệu + optional schema/stub “universe” (không invent hàng trăm BCTC); plan ghi rõ giới hạn.
+**Giới hạn (ghi rõ):** không invent hàng trăm BCTC/GMV; không scale bằng copy seed; không chọn registry provider khi chưa verify access; #40–#43 ngoài phạm vi.
+
+**AC:** tài liệu + optional schema/stub “universe” (không invent hàng trăm BCTC); plan ghi rõ giới hạn. ✅
+
+**Artifact:** `docs/adr/0003-scale-section-c-architecture.md` · `docs/economy-knowledge.md` §6.0 · `data/raw/company_universe/` · `tests/universe/test_universe_stub.py`
 
 ---
 
