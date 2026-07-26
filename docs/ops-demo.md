@@ -53,6 +53,34 @@ PYTHONPATH=. python scripts/audit_website_marketplace.py --fix-db --no-detect
 
 Report columns: `stock_code | website_ok | has_checkout | shopee_url | tiktok_url | flag_vs_url_mismatch`. Exit code 3 if any marketplace flag lacks a URL.
 
+## Listing depth (Epic 3 Task #34)
+
+**Mẫu niêm yết (~28)** ≠ **mẫu có shop TMĐT** ≠ **mẫu có listing GMV**.
+
+| Sample | Meaning |
+|--------|---------|
+| Niêm yết | Seed allowlist |
+| Có shop TMĐT | Shopee/TikTok/Lazada URL trong seed/`digital_presence` |
+| Có listing | ≥1 `marketplace_listings` (kể cả website catalog, units null) |
+| Có GMV | Listing có cả `price` và `units_sold_est` → đóng góp online revenue |
+
+Chỉ thêm listing khi live scrape `source=live` **hoặc** curation có PROVENANCE
+(`data/raw/marketplace_listings_fallback.PROVENANCE.md`). Peer B2B không shop → `[]`.
+
+```bash
+# Seed coverage + live smoke (needs network). Writes .scratch/epic3-task34-listing-depth.{md,csv}
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py
+
+# Offline seed coverage only
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --no-live
+
+# Persist via crawl upsert (live→seed→fallback); never invents units on block
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --persist-db
+```
+
+DQC (sau #34): curated **website** catalog rows từ `dienquang.com` — `units_sold_est=null`
+→ online revenue vẫn 0 cho đến khi live Shopee OK.
+
 ## Bootstrap (recommended)
 
 ```bash

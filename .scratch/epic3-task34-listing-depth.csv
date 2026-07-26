@@ -1,0 +1,29 @@
+stock_code,has_shop,n_seed_listings,n_gmv_listings,seed_sources,live_status,n_live_listings,live_detail,shop_urls
+RAL,True,3,3,seed,error,0,shopee:error:network error: 403 Forbidden,https://shopee.vn/rangdong_official
+HPG,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+VNM,True,2,2,seed,error,0,shopee:error:network error: 403 Forbidden; tiktok:error:network error: 403 Forbidden,https://shopee.vn/vinamilk_official https://www.tiktok.com/@vinamilk
+FPT,True,1,1,seed,error,0,shopee:error:network error: 403 Forbidden,https://shopee.vn/fpt_official
+GVR,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+DGC,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+MSN,True,1,1,seed,error,0,shopee:error:network error: 403 Forbidden,https://shopee.vn/masan_consumer
+PNJ,True,1,1,seed,error,0,shopee:error:network error: 403 Forbidden; tiktok:error:network error: 403 Forbidden,https://shopee.vn/pnj_official https://www.tiktok.com/@pnj
+REE,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+BMP,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+VHC,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+ANV,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+IDI,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+SBT,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+QNS,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+HSG,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+NKG,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+POM,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+TLH,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+DQC,True,2,0,seed,error,0,shopee:error:network error: 403 Forbidden,https://shopee.vn/dienquang_officialstore
+GEE,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+TYA,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+DPR,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+CSM,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+AAA,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+DCM,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+BFC,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,
+CSV,False,0,0,,no_shop,0,B2B / no marketplace shop — keep listings empty,

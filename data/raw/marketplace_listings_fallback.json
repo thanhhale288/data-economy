@@ -148,7 +148,28 @@
     },
     {
       "stock_code": "DQC",
-      "marketplace_listings": []
+      "marketplace_listings": [
+        {
+          "platform": "website",
+          "product_name": "Đèn LED Bulb Điện Quang ĐQ LEDBU11 (40W/30W, chụp cầu mờ)",
+          "price": 171900,
+          "units_sold_est": null,
+          "revenue_est": null,
+          "rating": null,
+          "product_url": "https://dienquang.com/collections/den-led-bulb",
+          "source": "seed"
+        },
+        {
+          "platform": "website",
+          "product_name": "Đèn LED bulb công suất lớn Điện Quang ĐQ LEDBU09 nguồn tích hợp",
+          "price": 98100,
+          "units_sold_est": null,
+          "revenue_est": null,
+          "rating": null,
+          "product_url": "https://dienquang.com/collections/den-led-bulb",
+          "source": "seed"
+        }
+      ]
     },
     {
       "stock_code": "GEE",

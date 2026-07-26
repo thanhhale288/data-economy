@@ -18,7 +18,9 @@ flowchart LR
   T38[T38_GRDP_If_NSO]
   T39[T39_Scale_Architecture]
   T40[T40_Seed_Domain_Fix]
+  T41[T41_GMV_Backfill]
   P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39 --> T40
+  T35 --> T41
 ```
 
 ---
@@ -61,6 +63,8 @@ flowchart LR
 
 ## Task #34 — Listing depth (không bịa GMV)
 
+**Status:** DONE (2026-07-25) — DQC curated website catalog (price, units null); live smoke script + report; docs mẫu niêm yết vs TMĐT; B2B giữ `[]`.
+
 **Trả lời thắc mắc:** vì sao ~5 brand; 10 DN ≠ 10 có listing.
 
 **Việc chính:**
@@ -70,11 +74,15 @@ flowchart LR
 
 **AC:** tăng số ticker có listing **chỉ** kèm provenance; digital_metrics không nhảy số không nguồn.
 
+**Artifact:** `.scratch/epic3-task34-listing-depth.{md,csv}` · lệnh `PYTHONPATH=. python scripts/enrich_marketplace_listings.py`
+
 ---
 
 ## Task #35 — Chiến lược marketplace live (sau Playwright mock)
 
 **Trả lời thắc mắc:** captcha/anti-bot; đề xuất xử lý.
+
+**Bằng chứng từ #34:** smoke `scripts/enrich_marketplace_listings.py` — Shopee/TikTok allowlist shops đều HTTP **403**; `live_ok=0`. DQC có catalog website (price) nhưng chưa có `units_sold_est` từ sàn.
 
 **Việc chính (chọn 1–2, ghi ADR ngắn nếu đụng ToS/chi phí):**
 1. Allowlist nhỏ + cache snapshot + badge live|seed|fallback (mặc định khuyến nghị).  
@@ -160,6 +168,24 @@ flowchart LR
 
 ---
 
+## Task #41 — GMV backfill sau live/cache (nợ từ #34)
+
+**Nguồn:** Task #34 đóng với listing tickers 5→6 nhưng **GMV tickers vẫn 5**. DQC có listing catalog (`platform=website`, price set, `units_sold_est=null`). Live Shopee/TikTok 403. VNM/PNJ có TikTok shop URL nhưng chưa có TikTok listing rows.
+
+**Phụ thuộc:** làm **sau Task #35** (đã có đường live hoặc cache snapshot ổn định). Không invent units.
+
+**Việc chính:**
+- Khi live/cache trả về items có `historical_sold` / sold: upsert DQC (và shop peers) với `source=live` (hoặc cache-tagged live), điền `units_sold_est` + `revenue_est = price × units`.
+- Optional: TikTok listing depth cho VNM/PNJ nếu scrape/cache được.
+- Re-run `scripts/enrich_marketplace_listings.py`; so `with_gmv_listing` trước/sau trong `.scratch/`.
+- Peer B2B không shop vẫn `[]`.
+
+**AC:** DQC (hoặc ticker mục tiêu) có ≥1 listing GMV có provenance; online_revenue chỉ tăng đúng Σ listing có nguồn; không pad B2B.
+
+**Không làm:** bịa units để “đủ 10 DN GMV”; đổi Digital VA; làm trước khi #35 có đường demo ổn định.
+
+---
+
 ## Definition of Done Phase 2
 
 - Cho phép demo/ops: BCTC trên mẫu 28 **ưu tiên số CafeF/live** khi mạng cho phép; seed chỉ fallback có nhãn.
@@ -169,6 +195,8 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40.
+**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35).
 
-**Nợ kỹ thuật đã ghi:** Task #40 (9 domain website fail từ audit #33) — làm sau, không chặn #34.
+**Nợ kỹ thuật đã ghi:**
+- Task #40 (9 domain website fail từ audit #33).
+- Task #41 (GMV backfill DQC / optional TikTok sau live strategy #35) — từ #34.

@@ -223,6 +223,19 @@ cộng peer clusters (VHC, ANV, … DQC, AAA, DCM, …) — xem `data/seeds/comp
 - Đủ sâu để crawl BCTC + kênh số + listing.
 - **Không** phải mẫu đại diện thống kê toàn quốc — mọi percentile benchmark phải ghi rõ là **prototype trên mẫu seed**.
 
+#### Mẫu niêm yết vs mẫu có TMĐT (không đồng nhất)
+
+| Mẫu | Định nghĩa | n (sau Task #34) |
+|-----|------------|------------------|
+| **Mẫu niêm yết** | Allowlist trong `companies.json` | ~28 |
+| **Mẫu có shop TMĐT** | Có URL Shopee/TikTok/Lazada trong `digital_presence` | 6 (RAL, VNM, FPT, MSN, PNJ, DQC) |
+| **Mẫu có listing** | ≥1 dòng `marketplace_listings` | 6 |
+| **Mẫu có GMV listing** | Listing đủ `price` × `units_sold_est` | 5 (DQC chỉ có giá catalog — units null) |
+
+**10 DN mẫu ≠ 10 DN có listing.** Peer B2B (thép, hóa chất, …) giữ
+`marketplace_listings: []` — không bịa GMV. Báo cáo ops:
+`.scratch/epic3-task34-listing-depth.md`.
+
 ### 6.2. BCTC (báo cáo tài chính có cấu trúc)
 
 Các trường kinh tế dùng trong project (ý nghĩa):
