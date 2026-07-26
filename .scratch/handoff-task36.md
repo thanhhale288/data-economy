@@ -66,6 +66,7 @@ Deliverable chính:
 - Website domain fix — **#40**
 - GMV backfill / live-cache refresh — **#41**
 - Cookie/partner spike — **#42**
+- **Discovery crawl thật + fuzzy hygiene (nợ #36) — Task #43** — cổng sẵn nhưng chưa search sàn; token ngắn (`dong`⊂`rangdong`) vẫn là quirk fuzzy
 
 ---
 

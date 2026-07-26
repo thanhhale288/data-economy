@@ -63,8 +63,10 @@ _Avoid_: assuming 1.0 confidence without evidence
 Estimated digital sales = Σ(price × units_sold) from marketplace listings
 (`source` ∈ live|seed|fallback). Industry-ratio interpolation is allowed **only**
 when a sourced manufacturing e-commerce share is wired
-(`SOURCED_INDUSTRY_ECOMMERCE_RATIO`); Epic 3 research found no suitable CBCT
-revenue share — missing listings → 0 (see `.scratch/epic3-task30-industry-ratio-research.md`).
+(`SOURCED_INDUSTRY_ECOMMERCE_RATIO`); Epic 3 Tasks #30 and #37 re-gate found no
+suitable CBCT revenue share — missing listings → 0 (see
+`.scratch/epic3-task30-industry-ratio-research.md`). Do not use digital VA % of
+GDP or VECOM all-sector bins as × firm revenue.
 
 ## Digital economy metrics
 

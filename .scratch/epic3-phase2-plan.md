@@ -20,9 +20,11 @@ flowchart LR
   T40[T40_Seed_Domain_Fix]
   T41[T41_GMV_Cache_Refresh]
   T42[T42_Cookie_Partner_Spike]
+  T43[T43_Discovery_Crawl_Hygiene]
   P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39 --> T40
   T35 --> T41
   T35 --> T42
+  T36 --> T43
 ```
 
 ---
@@ -119,11 +121,15 @@ flowchart LR
 
 ## Task #37 — Industry-ratio (re-gate)
 
+**Status:** DONE (2026-07-26) — **NO-GO**: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; research note re-gate; tests khóa None + no silent invent.
+
 **Trả lời thắc mắc:** phần chưa #30.
 
 **Việc chính:** chỉ wire nếu có tỷ trọng TMĐT/doanh thu (hoặc proxy được citation rõ) cho CBCT/manufacturing. File `data/mappings/` + PROVENANCE. Không dùng % kinh tế số/GDP làm × revenue DN.
 
 **AC:** constant set **có citation** hoặc task đóng lại với “vẫn None” + cập nhật research note.
+
+**Artifact:** `.scratch/epic3-task30-industry-ratio-research.md` § Task #37 re-gate
 
 ---
 
@@ -215,6 +221,29 @@ flowchart LR
 
 ---
 
+## Task #43 — Discovery crawl thật + fuzzy hygiene (nợ từ #36)
+
+**Nguồn:** Task #36 đóng cổng discovery (OFF mặc định + QA allowlist + 0.65) nhưng **chưa** có crawler tìm shop trên sàn; matcher vẫn có vài quirks fuzzy.
+
+**Trả lời thắc mắc:** “bật discovery thì tìm shop ở đâu?”; “vì sao DPR có thể gần `rangdong`?”
+
+**Việc chính:**
+1. **Discovery source thật (khi ToS/ops cho phép):** crawler/search Shopee/TikTok theo brand → candidate URL → chỉ feed vào `discover_shops_for_company` (vẫn cần flag + allowlist hoặc promote vào allowlist sau QA). Không invent URL.
+2. **Ops smoke cổng:** thêm ≥1 entry QA thật vào `discovery_allowlist.json` (ticker đã có shop đã biết, ví dụ RAL) → bật env → chứng minh `match_source=qa_discovery`; rồi có thể để lại empty nếu chỉ demo gate.
+3. **Fuzzy hygiene (optional nhưng nên làm):**
+   - Token ngắn generic (`dong`, …) dễ FP giữa DN cao su / đèn — siết rule token ≥N hoặc noise list có citation test.
+   - Cân nhắc: `_BRAND_MARKERS` no-shop peers chỉ dùng khi ticker nằm allowlist (score-only hôm nay vẫn OK vì gate chặn link).
+   - `resolve_shop_to_company` (pipeline clean) nếu nhận discovery rows → tôn trọng cùng gate/allowlist, không bypass.
+4. **ML nâng cấp (đã ghi plan cũ):** TF-IDF / classifier đầy đủ chỉ khi fuzzy + gate không đủ precision trên mẫu lớn hơn.
+
+**AC:** có đường candidate shop từ search **hoặc** biên bản “vẫn chưa crawl search (anti-bot/ToS)”; cổng #36 không bị phá; precision baseline không tụt; không invent shop/GMV.
+
+**Không làm trong #43:** đổi Digital VA; bật discovery mặc định; anti-bot SaaS; ép alias 22 ticker không shop.
+
+**Artifact gợi ý:** `.scratch/epic3-task43-discovery-crawl.{md,csv}` · cập nhật `docs/ops-demo.md`
+
+---
+
 ## Definition of Done Phase 2
 
 - Cho phép demo/ops: BCTC trên mẫu 28 **ưu tiên số CafeF/live** khi mạng cho phép; seed chỉ fallback có nhãn.
@@ -224,9 +253,10 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41).
+**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41) → **#43** (discovery crawl + fuzzy hygiene, sau #36; có thể sau #41/#42 nếu cần live/cookie).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 (9 domain website fail từ audit #33).
 - Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35.
 - Task #42 (session cookie ops smoke + partner API spike note) — từ #35 (wire sẵn, chưa chứng minh tay).
+- **Task #43 (discovery crawl thật + fuzzy hygiene)** — từ #36 (cổng sẵn, chưa search sàn; token FP quirk).

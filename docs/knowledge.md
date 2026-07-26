@@ -404,6 +404,7 @@ Ví dụ: DN doanh thu 100 tỷ, tỷ lệ ngành TMĐT = 5% → ước online �
 
 - Plan/CONTEXT **cho phép** dùng cách này khi thiếu listing
 - Nhưng hiện **chưa gắn** một tỷ lệ có nguồn thật vào code (`SOURCED_INDUSTRY_ECOMMERCE_RATIO = None`)
+- Task #37 re-gate (2026-07-26): vẫn **None** — không có citation CBCT TMĐT/doanh thu; không dùng % KT số/GDP hay bin VECOM all-sector
 - Không được bịa số kiểu ×0.15 im lặng
 - Vì vậy nếu không có listing → `online_revenue_est = 0` + log (không invent)
 

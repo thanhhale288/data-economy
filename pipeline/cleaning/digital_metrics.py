@@ -28,9 +28,10 @@ MARKETPLACE_PLATFORMS = frozenset({"shopee", "tiktok", "lazada"})
 # ---------------------------------------------------------------------------
 # REJECTED: prior silent fallback `revenue × adoption × 0.15` had no GSO /
 # VECOM / OECD source — that invents online revenue.
-# Until a sourced manufacturing e-commerce share is wired (Epic 3 Task #30
-# research: none found — see `.scratch/epic3-task30-industry-ratio-research.md`),
-# missing listings → 0.0 + log.
+# Tasks #30 and #37 re-gate: no sourced CBCT e-commerce share of firm revenue
+# (GSO digital VA % GDP, VECOM retail/all-sector bins, MoIT B2C/retail — all
+# wrong concept). See `.scratch/epic3-task30-industry-ratio-research.md`.
+# Missing listings → 0.0 + log. Do not wire GDP digital % as × BCTC revenue.
 # Callers may pass an explicit ratio via estimate_online_revenue(..., industry_ratio=).
 SOURCED_INDUSTRY_ECOMMERCE_RATIO: float | None = None
 

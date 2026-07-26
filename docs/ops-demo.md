@@ -18,7 +18,7 @@ Allowlist = stock codes in `data/seeds/companies.json`.
 
 - `digital_channels.shopee|tiktok|lazada=true` **chỉ** khi có URL trong `digital_presence`.
 - Marketplace crawl: live → seed → fallback; `marketplace_listings.source` ∈ `live|seed|fallback`.
-- Industry-ratio online revenue: **không** bật silent ratio — xem `.scratch/epic3-task30-industry-ratio-research.md`.
+- Industry-ratio online revenue: **không** bật silent ratio (Tasks #30/#37 still `None`) — xem `.scratch/epic3-task30-industry-ratio-research.md`.
 
 ## CafeF BCTC enrich (Epic 3 Task #32)
 
