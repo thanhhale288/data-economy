@@ -37,6 +37,49 @@ function latestByPeriod(rows) {
   return [...rows].sort((a, b) => new Date(b.period) - new Date(a.period))[0]
 }
 
+/** Map API data-quality notes to plain Vietnamese (no jargon, no "/"). */
+function humanizeQualityNote(note) {
+  const raw = String(note || '').replace(/\s+/g, ' ').trim()
+  if (!raw) return ''
+
+  if (raw.startsWith('Điểm chất lượng')) {
+    return 'Điểm này cho biết dữ liệu kênh bán và sản phẩm trên sàn đã được thu thập và xác minh đến đâu. Nó không đo mức độ chính xác của doanh thu thị trường.'
+  }
+  if (raw.includes('digital_presence') && (raw.includes('Shopee') || raw.includes('TikTok') || raw.includes('Lazada'))) {
+    return 'Chưa ghi nhận gian hàng trên Shopee, TikTok hay Lazada. Hệ thống chỉ hiển thị kênh khi đã có bằng chứng, không tự thêm.'
+  }
+  if (raw.includes('listing') && (raw.includes('Shopee') || raw.includes('online est'))) {
+    return 'Chưa có sản phẩm nào trên Shopee, TikTok hay Lazada. Ước tính doanh thu online có thể bằng 0.'
+  }
+  if (raw.includes('Website URL') || raw.includes('digital_presence.website')) {
+    return 'Hồ sơ có địa chỉ website, nhưng chưa xác minh được kênh website đang hoạt động.'
+  }
+  if (raw.includes('Thiếu kênh website')) {
+    return 'Chưa có kênh website đã được xác minh.'
+  }
+  if (raw.includes('match_confidence')) {
+    return 'Chưa có điểm tin cậy khớp tên cho các kênh đang hoạt động.'
+  }
+  if (raw.includes('Listing marketplace') || raw.includes('price×units') || raw.includes('revenue_est')) {
+    const m = raw.match(/\((\d+)\s*\/\s*(\d+)\s*đủ\)/)
+    if (m) {
+      return `Một số sản phẩm trên sàn còn thiếu giá hoặc số lượng bán (đã đủ ${m[1]} trên ${m[2]} sản phẩm).`
+    }
+    return 'Một số sản phẩm trên sàn còn thiếu giá hoặc số lượng bán.'
+  }
+  if (raw.includes('digital_metrics') || raw.includes('compute_all_digital_metrics')) {
+    return 'Chưa có chỉ số số hóa đã tính. Cần chạy bước tính chỉ số số hóa trong quy trình dữ liệu.'
+  }
+
+  // Fallback: strip slashes and soften obvious technical tokens
+  return raw
+    .replace(/\//g, ' · ')
+    .replace(/digital_presence/gi, 'dữ liệu kênh số')
+    .replace(/digital_metrics/gi, 'chỉ số số hóa')
+    .replace(/online est\.?/gi, 'ước tính doanh thu online')
+    .replace(/match_confidence/gi, 'điểm tin cậy khớp tên')
+}
+
 const CHANNEL_ORDER = ['website', 'shopee', 'tiktok', 'lazada']
 
 export default function CompanyDetail() {
@@ -85,7 +128,6 @@ export default function CompanyDetail() {
     ['shopee', 'tiktok', 'lazada'].includes(String(ml.platform || '').toLowerCase())
   )
   const quality = company.data_quality
-  const caseStudy = company.case_study
   const timeline = company.crawl_timeline || []
 
   const channelFlags = company.digital_channels || {}
@@ -114,17 +156,24 @@ export default function CompanyDetail() {
   return (
     <div>
       <div className="page-nav">
-        <Link to="/companies">← Quay lại danh sách</Link>
+        <Link to="/companies" className="page-nav-back">
+          ← Quay lại danh sách
+        </Link>
         {company.vsic_division && (
-          <span className="page-nav-extra">
-            <Link to={`/companies?vsic=${company.vsic_division}`}>
-              Peer VSIC {company.vsic_division}
+          <div className="page-nav-actions">
+            <Link
+              to={`/companies?vsic=${company.vsic_division}`}
+              className="page-nav-chip"
+            >
+              Peer cùng ngành (VSIC {company.vsic_division})
             </Link>
-            {' · '}
-            <Link to={`/benchmark?vsic=${company.vsic_code || company.vsic_division}`}>
-              Benchmark ngành này
+            <Link
+              to={`/benchmark?vsic=${company.vsic_code || company.vsic_division}`}
+              className="page-nav-chip page-nav-chip--accent"
+            >
+              So sánh benchmark ngành
             </Link>
-          </span>
+          </div>
         )}
       </div>
 
@@ -159,25 +208,6 @@ export default function CompanyDetail() {
           </div>
         </div>
       </div>
-
-      {caseStudy && (
-        <div className="chart-container" style={{ borderLeft: '4px solid #367ea2' }}>
-          <h3>{caseStudy.title}</h3>
-          <p className="chart-note" style={{ marginTop: 0 }}>
-            Hồ sơ case study từ dữ liệu đã lưu trong hệ thống.
-          </p>
-          <ul style={{ margin: '8px 0 0', paddingLeft: 18, lineHeight: 1.6 }}>
-            {caseStudy.highlights?.map((h) => (
-              <li key={h}>{h}</li>
-            ))}
-          </ul>
-          {caseStudy.notes?.length > 0 && (
-            <div className="banner banner-warn" style={{ marginTop: 12 }}>
-              {caseStudy.notes.join(' ')}
-            </div>
-          )}
-        </div>
-      )}
 
       <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
         <h3>Câu chuyện số liệu</h3>
@@ -214,19 +244,21 @@ export default function CompanyDetail() {
       {(company.peers || []).length > 0 && (
         <div className="chart-container">
           <h3>Peer cùng phân ngành (VSIC {company.vsic_division})</h3>
-          <p className="chart-note" style={{ marginTop: 0 }}>
-            Mẫu niêm yết trong DB — percentile Benchmark dùng cùng phạm vi này.
-          </p>
-          <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.6 }}>
+          <div className="peer-list" role="list">
             {company.peers.map((p) => (
-              <li key={p.stock_code}>
-                <Link to={`/companies/${p.stock_code}`}>{p.stock_code}</Link>
-                {' — '}
-                {p.name}
-                <span className="muted"> ({p.vsic_code})</span>
-              </li>
+              <div className="peer-row" role="listitem" key={p.stock_code}>
+                <Link className="peer-ticker" to={`/companies/${p.stock_code}`}>
+                  {p.stock_code}
+                </Link>
+                <div className="peer-meta">
+                  <span className="peer-name">{p.name}</span>
+                  {p.vsic_code && (
+                    <span className="peer-vsic">VSIC {p.vsic_code}</span>
+                  )}
+                </div>
+              </div>
             ))}
-          </ul>
+          </div>
         </div>
       )}
 
@@ -285,9 +317,6 @@ export default function CompanyDetail() {
 
       <div className="chart-container">
         <h3>Kênh bán số</h3>
-        <p className="chart-note" style={{ marginTop: 0 }}>
-          Website / Shopee / TikTok — trạng thái từ digital_presence (vắng mặt = chưa có dữ liệu).
-        </p>
         <div className="cards" style={{ marginBottom: 0 }}>
           {channelSlots.map(({ channel, dp, flagged }) => (
             <div className="card" key={channel}>
@@ -406,11 +435,19 @@ export default function CompanyDetail() {
                 </span>
               ))}
             </div>
-            <ul style={{ margin: 0, paddingLeft: 18, lineHeight: 1.55, fontSize: 13, color: 'var(--ink-soft)' }}>
-              {(quality.notes || []).map((n) => (
-                <li key={n}>{n}</li>
-              ))}
-            </ul>
+            {(quality.notes || []).length > 0 && (
+              <div className="note-stack" role="list">
+                {(quality.notes || []).map((n) => {
+                  const text = humanizeQualityNote(n)
+                  if (!text) return null
+                  return (
+                    <p className="info-note" role="listitem" key={n}>
+                      {text}
+                    </p>
+                  )
+                })}
+              </div>
+            )}
           </>
         )}
       </div>

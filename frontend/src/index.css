@@ -269,6 +269,11 @@ td.num,
   margin-bottom: 32px;
 }
 
+/* KPI row (Dashboard): always 4 → 2×2 → 1, never 3+1 */
+.cards.cards-kpi {
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+}
+
 .card {
   background: linear-gradient(160deg, #ffffff 0%, #f0f7fc 100%);
   border-radius: 14px;
@@ -282,6 +287,13 @@ td.num,
 .card:hover {
   transform: translateY(-2px);
   box-shadow: var(--shadow-lift), 0 16px 40px -24px rgba(22, 70, 84, 0.35);
+}
+
+.card-label-row {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  min-width: 0;
 }
 
 .card .label {
@@ -334,6 +346,82 @@ td.num,
   color: var(--ink);
   text-transform: uppercase;
   letter-spacing: 0.3px;
+}
+
+.note-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-top: 4px;
+}
+
+.info-note {
+  margin: 0;
+  padding: 12px 14px 12px 16px;
+  font-size: 13px;
+  line-height: 1.55;
+  color: var(--ink-soft);
+  background:
+    linear-gradient(90deg, rgba(177, 223, 246, 0.35), rgba(201, 223, 234, 0.2) 40%, var(--surface));
+  border: 1px solid var(--border);
+  border-left: 3px solid var(--accent);
+  border-radius: 0 10px 10px 0;
+  box-shadow: var(--shadow-soft);
+}
+
+.peer-list {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-top: 4px;
+}
+
+.peer-row {
+  display: flex;
+  align-items: baseline;
+  gap: 14px;
+  padding: 10px 14px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  box-shadow: var(--shadow-soft);
+}
+
+.peer-ticker {
+  flex-shrink: 0;
+  min-width: 3.2em;
+  font-family: var(--font-mono);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.peer-ticker:hover {
+  color: var(--accent-ink);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+.peer-meta {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 6px 12px;
+  min-width: 0;
+}
+
+.peer-name {
+  font-size: 13px;
+  line-height: 1.4;
+  color: var(--ink);
+}
+
+.peer-vsic {
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 0.02em;
 }
 
 .chart-note {
@@ -396,6 +484,13 @@ td.num,
   transform: translateZ(0);
 }
 
+/* Keep per-cell contrast color over .main a / a:hover accent */
+.main a.heatmap-cell,
+.main a.heatmap-cell:hover {
+  color: var(--heatmap-fg, var(--ink));
+  text-decoration: none;
+}
+
 .heatmap-code {
   font-size: 11px;
   font-weight: 600;
@@ -420,6 +515,15 @@ td.num,
 .heatmap-meta {
   font-size: 11px;
   opacity: 0.75;
+}
+
+/* Dark heat cells: keep muted labels readable on blue fills */
+.heatmap-cell[data-heat="dark"] .heatmap-code {
+  opacity: 0.9;
+}
+
+.heatmap-cell[data-heat="dark"] .heatmap-meta {
+  opacity: 0.88;
 }
 
 .heatmap-legend {
@@ -634,15 +738,110 @@ tr:hover {
 
 .page-nav {
   display: flex;
-  flex-wrap: wrap;
-  gap: 8px 16px;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 10px;
   margin-bottom: 4px;
   font-size: 14px;
 }
 
-.page-nav-extra {
-  color: var(--muted);
+.page-nav-back {
+  color: var(--ink-soft);
+  font-size: 13px;
+  text-decoration: none;
+  opacity: 0.85;
+  transition: color 0.15s ease, opacity 0.15s ease;
+}
+
+.page-nav-back:hover {
+  color: var(--accent);
+  opacity: 1;
+}
+
+.page-nav-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  width: 100%;
+}
+
+.page-nav-chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 16px;
+  border-radius: 999px;
+  font-size: 13px;
+  font-weight: 600;
+  font-family: var(--font-sans);
+  text-decoration: none;
+  color: var(--accent);
+  background: #fff;
+  border: 1px solid var(--bg-accent);
+  box-shadow: var(--shadow-soft);
+  transition: border-color 0.15s ease, background 0.15s ease, transform 0.15s ease,
+    box-shadow 0.15s ease, color 0.15s ease;
+}
+
+/* Beat .main a / a:hover accent + underline on chip links */
+.main a.page-nav-chip,
+.main a.page-nav-chip:visited {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.page-nav-chip:hover {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  transform: translateY(-1px);
+  box-shadow: 0 6px 14px -8px rgba(54, 126, 162, 0.55);
+}
+
+.main a.page-nav-chip:hover,
+.main a.page-nav-chip:focus-visible {
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.page-nav-chip:active {
+  transform: translateY(0);
+}
+
+.main a.page-nav-chip:active {
+  color: var(--accent-ink);
+  text-decoration: none;
+}
+
+.page-nav-chip--accent {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent), var(--accent-bright));
+  border-color: transparent;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.25) inset,
+    0 8px 18px -10px rgba(54, 126, 162, 0.85);
+}
+
+/* White label must win over .main a accent color on filled CTA chips */
+.main a.page-nav-chip--accent,
+.main a.page-nav-chip--accent:visited,
+.main a.page-nav-chip--accent:hover,
+.main a.page-nav-chip--accent:focus-visible,
+.main a.page-nav-chip--accent:active {
+  color: #fff;
+  text-decoration: none;
+}
+
+.page-nav-chip--accent:hover {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-bright), var(--accent));
+  border-color: transparent;
+  opacity: 0.96;
+}
+
+/* Filter CTA row (e.g. Companies VSIC filter) — reuses page-nav-chip */
+.filter-actions {
+  margin-top: -4px;
+  margin-bottom: 16px;
 }
 
 .chart-container .table-scroll {
@@ -1066,10 +1265,28 @@ tr:hover {
   white-space: nowrap;
 }
 
+.metric-info-title-solo {
+  white-space: normal;
+  flex: 1;
+  min-width: 0;
+  line-height: 1.35;
+}
+
 .metric-info-eq {
   font-size: 13px;
   font-weight: 600;
   opacity: 0.9;
+}
+
+.metric-info-formula {
+  display: block;
+  padding: 10px 14px 0;
+  font-size: 11px;
+  line-height: 1.45;
+  font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  color: var(--accent-ink);
+  text-align: center;
+  word-break: break-word;
 }
 
 .metric-info-frac {
@@ -1115,6 +1332,10 @@ tr:hover {
 
   .cards {
     grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+  }
+
+  .cards.cards-kpi {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
   }
 
   .form-grid {
@@ -1303,6 +1524,20 @@ tr:hover {
     width: 100%;
   }
 
+  .page-nav-actions {
+    gap: 8px;
+  }
+
+  .page-nav-chip {
+    max-width: 100%;
+  }
+
+  .filter-actions .page-nav-chip {
+    flex: 1 1 auto;
+    justify-content: center;
+    min-height: 44px;
+  }
+
   th, td {
     padding: 10px 12px;
     font-size: 13px;
@@ -1354,6 +1589,10 @@ tr:hover {
 
 @media (max-width: 420px) {
   .cards {
+    grid-template-columns: 1fr;
+  }
+
+  .cards.cards-kpi {
     grid-template-columns: 1fr;
   }
 

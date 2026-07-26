@@ -127,9 +127,6 @@ export default function Pipeline() {
   return (
     <div>
       <h2 className="page-title">Pipeline Monitor</h2>
-      <p className="page-subtitle">
-        Module 3 · job crawl + data_cleaning · quality từ parquet / cleaning_report
-      </p>
 
       {error && (
         <div className="empty-state" style={{ marginBottom: 16 }}>
@@ -267,15 +264,6 @@ export default function Pipeline() {
                 <span>{summary?.vsic_fails ?? '—'}</span>
               </span>
             </div>
-            <p className="chart-note">
-              Nguồn: {quality.report_path}
-              {summary?.series_missing?.length
-                ? ` · series_missing: ${summary.series_missing.join(', ')}`
-                : ' · series_missing: none'}
-              {summary?.artifacts?.length
-                ? ` · artifacts: ${summary.artifacts.join(', ')}`
-                : ''}
-            </p>
           </>
         )}
       </div>

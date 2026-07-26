@@ -5,6 +5,30 @@ import {
 } from 'recharts'
 import { api } from '../api'
 import { formatCompact } from '../format'
+import MetricInfoTip from '../MetricInfoTip'
+
+/** KPI help copy — formulas match CONTEXT.md / proposal-v2 (do not invent). */
+const KPI_TIPS = {
+  iip: {
+    title: 'Chỉ số sản xuất công nghiệp (IIP / SXCN)',
+    formula: 'Nguồn: GSO/NSO · chuỗi IIP_C (VSIC Section C)',
+    blurb:
+      'Đo mức sản xuất theo tháng của ngành chế biến, chế tạo. Đây là chỉ số công bố từ thống kê chính thức, không phải số do nền tảng tự tính.',
+  },
+  digitalVa: {
+    title: 'Tổng Digital VA',
+    formula:
+      'Digital_VA = (Online_revenue × Gross_margin) + (Cost_savings × Adoption_score) − Digital_investment',
+    blurb:
+      'Tổng ước lượng giá trị gia tăng kinh tế số của các doanh nghiệp trong mẫu (cộng Digital VA từng DN). Không đồng nghĩa với doanh thu hay với IIP.',
+  },
+  adoption: {
+    title: 'Digital Adoption',
+    formula: 'Điểm tổng hợp kênh / checkout / hoạt động (0–1)',
+    blurb:
+      'Mức độ số hóa kênh bán trung bình của DN mẫu (website, sàn TMĐT, tín hiệu giao dịch…). Dùng trong tính Digital VA và các feature dự báo.',
+  },
+}
 
 function formatNumber(n) {
   return formatCompact(n)
@@ -15,13 +39,35 @@ function periodLabel(p) {
   return String(p).slice(0, 7)
 }
 
-function heatColor(intensity) {
+function heatRgb(intensity) {
   const t = Math.max(0, Math.min(1, intensity ?? 0))
   // blue scale — matches --accent (#367ea2)
-  const r = Math.round(255 - t * (255 - 54))
-  const g = Math.round(255 - t * (255 - 126))
-  const b = Math.round(255 - t * (255 - 162))
+  return {
+    r: Math.round(255 - t * (255 - 54)),
+    g: Math.round(255 - t * (255 - 126)),
+    b: Math.round(255 - t * (255 - 162)),
+  }
+}
+
+function heatColor(intensity) {
+  const { r, g, b } = heatRgb(intensity)
   return `rgb(${r},${g},${b})`
+}
+
+/** WCAG relative luminance of sRGB channels (0–255). */
+function relativeLuminance(r, g, b) {
+  const channel = (c) => {
+    const s = c / 255
+    return s <= 0.03928 ? s / 12.92 : ((s + 0.055) / 1.055) ** 2.4
+  }
+  return 0.2126 * channel(r) + 0.7152 * channel(g) + 0.0722 * channel(b)
+}
+
+/** Readable foreground for a heat cell — white on dark blues, ink on pale cells. */
+function heatTextColor(intensity) {
+  const { r, g, b } = heatRgb(intensity)
+  // Threshold ~0.45 ≈ intensity ≳ 0.55 on this scale; keeps AA-ish contrast for muted meta.
+  return relativeLuminance(r, g, b) < 0.45 ? '#ffffff' : '#164654'
 }
 
 export default function Dashboard() {
@@ -139,9 +185,12 @@ export default function Dashboard() {
         </div>
       )}
 
-      <div className="cards">
+      <div className="cards cards-kpi">
         <div className="card">
-          <div className="label">IIP (SXCN)</div>
+          <div className="card-label-row">
+            <div className="label">IIP (SXCN)</div>
+            <MetricInfoTip {...KPI_TIPS.iip} />
+          </div>
           <div className="value">{summary?.iip_latest?.toFixed(1) ?? '—'}</div>
           {summary?.iip_growth_pct != null && (
             <div className={`sub ${summary.iip_growth_pct >= 0 ? 'up' : 'down'}`}>
@@ -161,7 +210,10 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="card">
-          <div className="label">Digital Adoption</div>
+          <div className="card-label-row">
+            <div className="label">Digital Adoption</div>
+            <MetricInfoTip {...KPI_TIPS.adoption} />
+          </div>
           <div className="value">
             {summary?.avg_digital_adoption != null
               ? `${(summary.avg_digital_adoption * 100).toFixed(0)}%`
@@ -169,7 +221,10 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="card">
-          <div className="label">Tổng Digital VA</div>
+          <div className="card-label-row">
+            <div className="label">Tổng Digital VA</div>
+            <MetricInfoTip {...KPI_TIPS.digitalVa} />
+          </div>
           <div className="value">{formatNumber(summary?.total_digital_va)}</div>
           <div className="sub muted">Theo công thức Digital VA</div>
         </div>
@@ -227,12 +282,6 @@ export default function Dashboard() {
         {forecastError && (
           <div className="banner banner-warn">{forecastError}</div>
         )}
-        {forecast && !forecastError && (
-          <p className="chart-note">
-            Dự báo {forecast.horizon} tháng từ `/api/ml/forecast` · model {forecast.model}
-            {iip[0]?.source ? ` · IIP source: ${iip[iip.length - 1]?.source || iip[0].source}` : ''}
-          </p>
-        )}
         {!forecast && !forecastError && iip.length > 0 && (
           <div className="empty-state" style={{ marginTop: 12 }}>
             Chưa tải được đường dự báo — chạy bootstrap/train ML.
@@ -248,7 +297,7 @@ export default function Dashboard() {
               <strong>Thiếu chuỗi OECD peer.</strong>{' '}
               <span className="badge badge-warning">unavailable</span>{' '}
               {oecdGso?.oecd_note
-                || 'MEI_IP@EA20 chưa có trong cơ sở dữ liệu.'}
+                || 'Chưa có dữ liệu OECD khu vực Euro (EA20) trong hệ thống.'}
             </p>
             {aligned.some((r) => r.gso != null) && (
               <ResponsiveContainer width="100%" height={260}>
@@ -274,6 +323,9 @@ export default function Dashboard() {
         ) : (
           <>
             <p className="chart-note" style={{ marginTop: 0 }}>
+              {oecdGso?.oecd_note
+                || 'OECD không có dữ liệu sản xuất công nghiệp của Việt Nam, nên biểu đồ dùng chỉ số khu vực Euro (EA20) làm đối sánh với IIP của GSO.'}
+              {' '}
               <span className={`badge ${
                 String(oecdGso?.oecd_source || '').includes('FALLBACK')
                   ? 'badge-warning'
@@ -282,9 +334,6 @@ export default function Dashboard() {
               >
                 {oecdGso?.oecd_source || 'OECD_PEER'}
               </span>
-              {' '}
-              {oecdGso?.oecd_note
-                || `Peer ${oecdGso?.oecd_country || 'EA20'} · không phải MEI VNM`}
             </p>
             <ResponsiveContainer width="100%" height={300}>
               <LineChart data={aligned}>
@@ -319,9 +368,6 @@ export default function Dashboard() {
 
       <div className="chart-container">
         <h3>Heatmap đóng góp Kinh tế số theo VSIC</h3>
-        <p className="chart-note" style={{ marginTop: 0 }}>
-          Click ô → danh sách DN cùng phân ngành (division 2 số). Thiếu VA → empty, không bịa.
-        </p>
         {heatmap.length === 0 ? (
           <div className="empty-state">
             Chưa có Digital VA theo ngành. Chạy digital metrics / seed.
@@ -330,12 +376,20 @@ export default function Dashboard() {
           <div className="heatmap-grid">
             {heatmap.map((cell) => {
               const division = cell.division || String(cell.vsic_code || '').slice(0, 2)
+              const fg = heatTextColor(cell.intensity)
+              const isDark = fg === '#ffffff'
               return (
                 <Link
                   key={cell.vsic_code}
                   to={`/companies?vsic=${encodeURIComponent(division)}`}
                   className="heatmap-cell"
-                  style={{ background: heatColor(cell.intensity), textDecoration: 'none', color: 'inherit' }}
+                  data-heat={isDark ? 'dark' : 'light'}
+                  style={{
+                    background: heatColor(cell.intensity),
+                    '--heatmap-fg': fg,
+                    color: 'var(--heatmap-fg)',
+                    textDecoration: 'none',
+                  }}
                   title={`${cell.vsic_name || cell.vsic_code}: ${formatNumber(cell.digital_va)} — click xem DN`}
                 >
                   <div className="heatmap-code">VSIC {cell.vsic_code}</div>
