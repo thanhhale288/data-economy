@@ -443,12 +443,15 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
 - [x] **Task #37 — Industry-ratio re-gate** — NO-GO: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; không wire % KT số/GDP (biên bản cập nhật `.scratch/epic3-task30-industry-ratio-research.md`)
 - [x] **Task #38 — GRDP/VA re-gate** — national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred
-- [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)
+- [x] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; ADR-0003 + stub `company_universe` (rows=`[]`); **không** crawl toàn quốc / invent BCTC
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
 - [ ] **Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)** — điền `units_sold_est` DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; refresh snapshot `marketplace_live_cache/` bằng capture thật + PROVENANCE; không invent; GMV tickers có thể tăng >5
 - [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay `SHOPEE_SESSION_COOKIE`/`TIKTOK_SESSION_COOKIE` (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
 - [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — search sàn thật → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 - [ ] **Task #44 — Industry-ratio wire (nợ từ #37)** — chỉ khi có citation CBCT TMĐT÷doanh thu; `data/mappings/` + PROVENANCE; không GDP digital % / bin VECOM all-sector (xem `.scratch/epic3-task30-industry-ratio-research.md`)
+- [ ] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
+- [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — đưa `VA_C` vào cleaned/features **hoặc** biên bản giữ IIP-only; không thay target forecast im lặng
+- [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — crawl chỉ khi có table ID NSO; không invent / không copy `VA_C` quốc gia xuống tỉnh
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 

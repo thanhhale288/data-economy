@@ -218,6 +218,14 @@ Trong code: allowlist lấy từ `data/seeds/companies.json`; crawl/enrich/bench
 
 Một câu nhớ: **ticker = mã CK / ID ngắn của DN trong hệ thống.**
 
+### Company universe (shallow)
+
+**Company universe** = tập DN Section C ở mức **nông** (tên, VSIC, website?, provenance) — tách khỏi **mẫu sâu** niêm yết (~28 seed có BCTC + digital).
+
+Task #39 / ADR-0003: stub `data/raw/company_universe/rows.json` hiện **`[]`** (cố ý). Digital VA / percentile trên seed = `prototype_listed_sample`, không phải chuẩn quốc gia. Promote vào mẫu sâu chỉ qua onboard — không auto-crawl BCTC/sàn cho cả vũ trụ.
+
+Một câu nhớ: **universe = danh sách nông; deep sample = cho phép đo sâu; macro = ngành (IIP/VA).**
+
 ### Seed annual
 
 **Seed annual** = số liệu **BCTC năm** (annual) nằm trong seed (`companies.json` → `financial.period` kiểu năm), dùng làm nguồn demo/micro khi chưa có BCTC live đầy đủ.
