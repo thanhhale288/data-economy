@@ -93,6 +93,13 @@ def test_online_revenue_uses_revenue_est_when_price_units_missing(db_session, co
     assert estimate_online_revenue(company_ral) == RAL_MARKETPLACE_ONLINE + 100_000.0
 
 
+def test_sourced_industry_ecommerce_ratio_still_none():
+    """Task #37 re-gate: no CBCT citation → module constant stays None (no silent wire)."""
+    from pipeline.cleaning.digital_metrics import SOURCED_INDUSTRY_ECOMMERCE_RATIO
+
+    assert SOURCED_INDUSTRY_ECOMMERCE_RATIO is None
+
+
 def test_online_revenue_zero_when_no_listings_no_silent_ratio(company_hpg):
     """HPG has BCTC revenue but no marketplace listings — must not invent 0.15×revenue."""
     rev = estimate_online_revenue(company_hpg)

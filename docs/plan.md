@@ -440,12 +440,13 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #34 — Listing depth** — curated DQC (price, units null) + live smoke report; không bịa GMV peer B2B; docs mẫu niêm yết vs TMĐT
 - [x] **Task #35 — Marketplace live strategy** — ADR-0002 allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; demo path `data/raw/marketplace_live_cache/` (RAL/VNM)
 - [x] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
-- [ ] **Task #37 — Industry-ratio re-gate** — wire chỉ khi có citation CBCT; không dùng % KT số/GDP
+- [x] **Task #37 — Industry-ratio re-gate** — NO-GO: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; không wire % KT số/GDP (biên bản cập nhật `.scratch/epic3-task30-industry-ratio-research.md`)
 - [ ] **Task #38 — GRDP/VA re-gate** — crawl chỉ khi NSO table ID xác nhận
 - [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
 - [ ] **Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)** — điền `units_sold_est` DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; refresh snapshot `marketplace_live_cache/` bằng capture thật + PROVENANCE; không invent; GMV tickers có thể tăng >5
 - [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay `SHOPEE_SESSION_COOKIE`/`TIKTOK_SESSION_COOKIE` (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
+- [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — search sàn thật → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 

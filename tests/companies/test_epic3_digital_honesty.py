@@ -67,3 +67,10 @@ def test_ecommerce_site_flag_has_website_or_marketplace_url():
         assert any(d.get("url") for d in dps), (
             f"{c['stock_code']} has_ecommerce_site=true without any DP URL"
         )
+
+
+def test_industry_ratio_constant_not_silently_wired():
+    """Task #37: do not invent CBCT ratio from GDP digital % or similar."""
+    from pipeline.cleaning.digital_metrics import SOURCED_INDUSTRY_ECOMMERCE_RATIO
+
+    assert SOURCED_INDUSTRY_ECOMMERCE_RATIO is None
