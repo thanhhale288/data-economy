@@ -93,7 +93,7 @@ flowchart TB
 | IIP (Chỉ số sản xuất công nghiệp) | IIP Section C (`AIP_ISIC4_C_IX`)   | Tháng            | **Đã làm** — SDMX `nsdp.nso.gov.vn/.../IIPVNM.xml` |
 | Chỉ số tiêu thụ CN CBCT           | Shipment / WHOLE MANUFACTURING     | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.03.px`; step-hold → tháng khi ingest |
 | Chỉ số tồn kho CN CBCT            | Inventory as of 31/12              | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.04.px`; step-hold → tháng khi ingest |
-| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm          | Chưa (Phase sau) |
+| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm → step-hold tháng | **Đã làm (VA quốc gia)** — SDMX `GDPVNM.xml` `NGDPVA_R_ISIC4_C_XDC` → `VA_C`; nominal → `VA_C_NOMINAL`. **GRDP tỉnh×ngành** vẫn deferred |
 | Số DN, lao động, doanh thu ngành  | Thống kê doanh nghiệp công nghiệp  | Năm              | Chưa (Phase sau) |
 
 
@@ -368,6 +368,7 @@ Checklist nghiệm thu (đã kiểm chứng bằng code + live HTTP + pytest):
 - [x] Alembic: `48406b8f82a5` initial schema + `b7c2e1a94d10` cột `oecd_indicators.source`
 - [x] GSO/NSO crawler:
   - IIP_C tháng từ SDMX `nsdp.nso.gov.vn`
+  - VA_C + VA_C_NOMINAL từ SDMX `GDPVNM.xml` (quý ưu tiên → step-hold tháng); GRDP tỉnh×ngành vẫn deferred
   - SHIPMENT_C + INVENTORY_C từ PX-Web `E07.03` / `E07.04` (năm → step-hold tháng)
   - Fallback sourced dưới `data/raw/` (không random)
 - [x] OECD SDMX (`sdmx.oecd.org`): INDIGO@VNM; MEI_IP@EA20 peer; MEI/BCI/ICT@VNM = unavailable rõ ràng
@@ -441,12 +442,13 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #35 — Marketplace live strategy** — ADR-0002 allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; demo path `data/raw/marketplace_live_cache/` (RAL/VNM)
 - [x] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
 - [x] **Task #37 — Industry-ratio re-gate** — NO-GO: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; không wire % KT số/GDP (biên bản cập nhật `.scratch/epic3-task30-industry-ratio-research.md`)
-- [ ] **Task #38 — GRDP/VA re-gate** — crawl chỉ khi NSO table ID xác nhận
+- [x] **Task #38 — GRDP/VA re-gate** — national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred
 - [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
 - [ ] **Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)** — điền `units_sold_est` DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; refresh snapshot `marketplace_live_cache/` bằng capture thật + PROVENANCE; không invent; GMV tickers có thể tăng >5
 - [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay `SHOPEE_SESSION_COOKIE`/`TIKTOK_SESSION_COOKIE` (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
 - [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — search sàn thật → candidates vào cổng QA; siết token FP; không bật discovery mặc định
+- [ ] **Task #44 — Industry-ratio wire (nợ từ #37)** — chỉ khi có citation CBCT TMĐT÷doanh thu; `data/mappings/` + PROVENANCE; không GDP digital % / bin VECOM all-sector (xem `.scratch/epic3-task30-industry-ratio-research.md`)
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 

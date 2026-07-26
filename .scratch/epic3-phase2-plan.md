@@ -21,10 +21,12 @@ flowchart LR
   T41[T41_GMV_Cache_Refresh]
   T42[T42_Cookie_Partner_Spike]
   T43[T43_Discovery_Crawl_Hygiene]
+  T44[T44_Ratio_Wire_When_Sourced]
   P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39 --> T40
   T35 --> T41
   T35 --> T42
   T36 --> T43
+  T37 --> T44
 ```
 
 ---
@@ -135,12 +137,15 @@ flowchart LR
 
 ## Task #38 — GRDP/VA (re-gate NSO)
 
+**Status:** DONE (2026-07-26) — **GO** national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred.
+
 **Trả lời thắc mắc:** phần chưa #31.
 
 **Việc chính:** xác nhận table PX-Web/SDMX; implement crawl chỉ khi có ID+series; không thì giữ deferred + IIP stack.
 
 **AC:** series thật trong `gso_macro` có `source=GSO|GSO_FALLBACK` hoặc biên bản “chưa có bảng”.
 
+**Artifact:** `.scratch/epic3-task31-grdp-spike.md` § Task #38 · `crawlers/gso/iip_crawler.py` (`fetch_gso_va`) · `data/raw/gso_va_fallback.csv`
 ---
 
 ## Task #39 — Scale architecture (toàn Section C)
@@ -244,6 +249,32 @@ flowchart LR
 
 ---
 
+## Task #44 — Industry-ratio wire (khi có citation CBCT) — nợ từ #37
+
+**Nguồn:** Task #37 đóng **NO-GO** — không có tỷ trọng TMĐT/doanh thu chế biến chế tạo (VSIC C) có citation đủ. Code giữ `SOURCED_INDUSTRY_ECOMMERCE_RATIO = None`; thiếu listing → `online_revenue = 0` + log.
+
+**Trả lời thắc mắc:** “bao giờ DN không có listing mới có online_revenue ước từ ngành?”
+
+**Điều kiện mở task (bắt buộc có ≥1):**
+- GSO/NSO: module DN ICT/TMĐT theo VSIC, hoặc
+- MoIT white paper: breakout online/total revenue cho CBCT, hoặc
+- VECOM: bảng **chỉ manufacturing** mean/median online÷doanh thu (không dùng Fig. 20 all-sector bins), hoặc
+- UNCTAD/NSO: VN có business e-commerce sales by industry
+
+**Việc chính (khi GO):**
+1. File `data/mappings/` (vd. `manufacturing_ecommerce_ratio.json`) + `*.PROVENANCE.md` (năm, table/figure ID, URL).
+2. Set `SOURCED_INDUSTRY_ECOMMERCE_RATIO` (load từ mapping, không hard-code im lặng).
+3. Cập nhật tests: HPG/no-listing có thể nhận `ratio × BCTC` **chỉ** khi constant wired; giữ guard chống GDP digital % / bin VECOM.
+4. Docs: `CONTEXT.md`, `docs/knowledge.md`, `docs/ops-demo.md`; ADR ngắn nếu đụng Digital VA path.
+
+**AC:** constant >0 có citation trong mappings + PROVENANCE; missing listings dùng ratio có nguồn; không dùng % KT số/GDP hay invent 0.15.
+
+**Không làm:** bịa số trước khi có bảng; dùng digital VA % GDP; dùng VECOM all-sector bins.
+
+**Artifact:** cập nhật `.scratch/epic3-task30-industry-ratio-research.md` § GO + mapping file.
+
+---
+
 ## Definition of Done Phase 2
 
 - Cho phép demo/ops: BCTC trên mẫu 28 **ưu tiên số CafeF/live** khi mạng cho phép; seed chỉ fallback có nhãn.
@@ -253,10 +284,11 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41) → **#43** (discovery crawl + fuzzy hygiene, sau #36; có thể sau #41/#42 nếu cần live/cookie).
+**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41) → **#43** (discovery crawl + fuzzy hygiene, sau #36) → **#44** (wire industry-ratio **chỉ khi** có citation CBCT — nợ #37; có thể sau Phase 2 nếu nguồn chưa ra).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 (9 domain website fail từ audit #33).
 - Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35.
 - Task #42 (session cookie ops smoke + partner API spike note) — từ #35 (wire sẵn, chưa chứng minh tay).
 - **Task #43 (discovery crawl thật + fuzzy hygiene)** — từ #36 (cổng sẵn, chưa search sàn; token FP quirk).
+- **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; trigger xem research note § “Next re-gate triggers”.

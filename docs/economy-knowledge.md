@@ -139,7 +139,7 @@ Chế tạo là nơi:
 
 Không nhầm IIP với:
 
-- GDP / GRDP (giá trị gia tăng tiền tệ — pillar M1 hướng tới nhưng chưa đủ nguồn đầy đủ trong phase hiện tại).
+- GDP / GRDP (giá trị gia tăng tiền tệ — VA quốc gia Section C đã có `VA_C` / `VA_C_NOMINAL`; GRDP tỉnh×ngành vẫn deferred).
 - PMI (chưa nằm trong phạm vi project).
 - Doanh thu TMĐT DN (micro).
 
@@ -158,9 +158,18 @@ Series kiểu **E07.04** — tồn kho cuối kỳ (thường 31/12), cũng step
 
 ### 4.4. Giá trị gia tăng công nghiệp / GRDP ngành
 
-Trong bộ VDEI (M1) là chỉ tiêu **cốt lõi về hiệu quả kinh tế thực** (tiền tệ), khác IIP (chỉ số sản lượng).  
-Trong roadmap: còn phụ thuộc nguồn GSO quý/năm — **không invent**. Khi chưa có, dashboard vẫn lấy IIP làm proxy “quy mô & nhịp SXCN”.
+Trong bộ VDEI (M1) là chỉ tiêu **cốt lõi về hiệu quả kinh tế thực** (tiền tệ), khác IIP (chỉ số sản lượng).
 
+**Đã wire (Task #38):** VA quốc gia Section C từ SDMX `GDPVNM.xml`:
+
+| Code | SDMX INDICATOR | Ý nghĩa |
+|------|----------------|---------|
+| `VA_C` | `NGDPVA_R_ISIC4_C_XDC` | VA CBCT giá so sánh 2010 (tỷ VND, `UNIT_MULT=9`) |
+| `VA_C_NOMINAL` | `NGDPVA_ISIC4_C_XDC` | VA CBCT giá hiện hành |
+
+Tần suất quý được ưu tiên; đưa vào chuỗi tháng bằng **step-hold**. Nguồn `GSO` / `GSO_FALLBACK` — không bịa số. Dashboard M1 vẫn lấy IIP làm nhịp sản xuất; VA đọc qua `gso_macro` / API macro.
+
+**Vẫn deferred:** GRDP theo tỉnh × ngành — chưa có table ID PX-Web/SDMX xác nhận. Không gán IIP thành GRDP.
 ### 4.5. Quy tắc nguồn macro Việt Nam
 
 **GSO-first**: số Việt Nam về sản xuất lấy từ NSO/GSO.  
@@ -501,7 +510,7 @@ Những nguyên tắc này bảo vệ **ý nghĩa kinh tế** của mọi biểu
 | Mẫu 10 DN | Prototype | Không suy ra toàn Section C |
 | M7–M9 (logistics, thanh toán, XK số) | Thường thiếu nguồn crawl ổn định | Pillar khung còn trống hoặc proxy yếu |
 | Cost_savings, Digital_investment trong Digital VA | Khó quan sát trực tiếp | Cần giả định tường minh hoặc tạm thời phần = 0 / thiếu |
-| GRDP / VA ngành chính thức | Chưa đủ chuỗi trong phase sớm | M1 nghiêng về IIP |
+| GRDP / VA ngành chính thức | VA quốc gia `VA_C` / `VA_C_NOMINAL` đã wire; GRDP tỉnh×ngành deferred | M1: IIP = nhịp SX; VA = quy mô tiền tệ quốc gia |
 | Industry-ratio TMĐT ngành | Có thể chưa gắn nguồn | Online revenue phụ thuộc listing |
 | Causal claim “số hóa → tăng IIP” | Feature tương tác ≠ chứng minh nhân quả | Chỉ là tín hiệu thống kê cần kiểm định thêm |
 
