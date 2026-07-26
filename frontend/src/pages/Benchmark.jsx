@@ -1,8 +1,8 @@
-import { useEffect, useLayoutEffect, useRef, useState } from 'react'
-import { createPortal } from 'react-dom'
-import { Link, useSearchParams } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import { useSearchParams } from 'react-router-dom'
 import { api } from '../api'
 import { formatGrouped, parseGrouped } from '../format'
+import MetricInfoTip from '../MetricInfoTip'
 
 const METRIC_LABELS = {
   roa: 'Tỷ suất sinh lời trên tài sản (ROA)',
@@ -61,13 +61,6 @@ const COMPARISON_LABELS = {
   neutral: '—',
 }
 
-const WARNING_LABELS = {
-  insufficient_peers: 'Chưa đủ doanh nghiệp cùng ngành để tính phân vị.',
-  prototype_listed_sample:
-    'Peer hiện tại: mẫu DN niêm yết cùng phân ngành VSIC 2 số.',
-  small_peer_sample: 'Mẫu peer nhỏ (< 3 DN) — phân vị mang tính tham khảo.',
-}
-
 const KEY_EXPENDITURE_ROWS = [
   { key: 'purchase_goods_share', label: 'Chi phí hàng hóa & nguyên vật liệu' },
   { key: 'rental_cost_share', label: 'Chi phí thuê mặt bằng' },
@@ -119,6 +112,28 @@ function formatRatio(value) {
   return formatGrouped(value)
 }
 
+/** Human-readable peer scope from API (`vsic_division:27` → plain Vietnamese). */
+function describePeerScope(result) {
+  if (!result) return null
+  const scope = result.peer_scope || ''
+  const count = result.peer_count ?? 0
+  const divisionMatch = /^vsic_division:(\d+)$/i.exec(scope)
+  const division = divisionMatch?.[1]
+  const vsicHint = division
+    ? `phân ngành VSIC ${division}`
+    : scope
+      ? scope
+      : 'cùng phân ngành VSIC'
+
+  if (count === 0) {
+    return `Chưa có doanh nghiệp niêm yết cùng ${vsicHint} có BCTC trong mẫu để làm đối chiếu.`
+  }
+  if (count === 1) {
+    return `Đang so sánh với 1 doanh nghiệp niêm yết cùng ${vsicHint} (có BCTC trong mẫu).`
+  }
+  return `Đang so sánh với ${count} doanh nghiệp niêm yết cùng ${vsicHint} (có BCTC trong mẫu).`
+}
+
 /** Share/ratio as percent string; null → null (caller renders N/A). */
 function formatSharePct(value) {
   if (value == null || typeof value !== 'number') return null
@@ -151,116 +166,17 @@ function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
 
-function MetricInfoTip({ metricKey }) {
+function BenchmarkMetricTip({ metricKey }) {
   const info = METRIC_INFO[metricKey]
-  const btnRef = useRef(null)
-  const [open, setOpen] = useState(false)
-  const [coords, setCoords] = useState(null)
-
-  const updatePlace = () => {
-    if (!btnRef.current) return
-    const rect = btnRef.current.getBoundingClientRect()
-    const width = Math.min(340, window.innerWidth - 24)
-    let left = rect.left + rect.width / 2 - width / 2
-    left = Math.max(12, Math.min(left, window.innerWidth - width - 12))
-    const gap = 10
-    const preferAbove = rect.top > 140
-    if (preferAbove) {
-      setCoords({
-        width,
-        left,
-        bottom: window.innerHeight - rect.top + gap,
-        top: undefined,
-        placeAbove: true,
-      })
-    } else {
-      setCoords({
-        width,
-        left,
-        top: rect.bottom + gap,
-        bottom: undefined,
-        placeAbove: false,
-      })
-    }
-  }
-
-  useLayoutEffect(() => {
-    if (!open) return undefined
-    updatePlace()
-    window.addEventListener('scroll', updatePlace, true)
-    window.addEventListener('resize', updatePlace)
-    return () => {
-      window.removeEventListener('scroll', updatePlace, true)
-      window.removeEventListener('resize', updatePlace)
-    }
-  }, [open])
-
   if (!info) return null
-
-  const show = () => {
-    updatePlace()
-    setOpen(true)
-  }
-  const hide = () => {
-    setOpen(false)
-    setCoords(null)
-  }
-
-  const pop = open && coords
-    ? createPortal(
-        <div
-          className={`metric-info-pop is-open${coords.placeAbove ? ' is-above' : ' is-below'}`}
-          role="tooltip"
-          style={{
-            top: coords.top,
-            bottom: coords.bottom,
-            left: coords.left,
-            width: coords.width,
-          }}
-        >
-          <span className="metric-info-head">
-            <span className="metric-info-badge" aria-hidden="true">
-              <svg viewBox="0 0 32 32" width="22" height="22">
-                <rect x="6" y="8" width="14" height="16" rx="2" fill="#38bdf8" />
-                <rect x="9" y="11" width="8" height="2" rx="1" fill="#e0f2fe" />
-                <rect x="9" y="15" width="8" height="2" rx="1" fill="#e0f2fe" />
-                <rect x="9" y="19" width="5" height="2" rx="1" fill="#e0f2fe" />
-                <circle cx="22" cy="20" r="5" fill="#fbbf24" />
-                <circle cx="22" cy="20" r="3.2" fill="#f59e0b" />
-              </svg>
-            </span>
-            <span className="metric-info-title">{info.title}</span>
-            <span className="metric-info-eq" aria-hidden="true">=</span>
-            <span className="metric-info-frac">
-              <span className="metric-info-num">{info.numerator}</span>
-              <span className="metric-info-den">{info.denominator}</span>
-            </span>
-          </span>
-          <span className="metric-info-body">{info.blurb}</span>
-        </div>,
-        document.body,
-      )
-    : null
-
   return (
-    <span
-      className="metric-info"
-      onMouseEnter={show}
-      onMouseLeave={hide}
-    >
-      <button
-        ref={btnRef}
-        type="button"
-        className="metric-info-btn"
-        aria-label={`Công thức ${info.title}`}
-        aria-expanded={open}
-        onFocus={show}
-        onBlur={hide}
-      >
-        i
-      </button>
-      {pop}
-    </span>
+    <MetricInfoTip
+      title={info.title}
+      blurb={info.blurb}
+      numerator={info.numerator}
+      denominator={info.denominator}
+      ariaLabel={`Công thức ${info.title}`}
+    />
   )
 }
 
@@ -448,25 +364,8 @@ export default function Benchmark() {
   return (
     <div>
       <h2 className="page-title">So sánh hiệu quả doanh nghiệp</h2>
-      <p style={{ color: '#888', marginBottom: 24 }}>
-        So sánh chỉ số DN với peer cùng phân ngành VSIC (tham chiếu UX SingStat BITE).
-        Có thể nạp form từ BCTC hoặc nhập tay; phân vị chỉ hiện khi đủ mẫu peer.
-        {vsicFromUrl ? (
-          <>
-            {' '}Deep-link VSIC <code>{vsicFromUrl}</code> ·{' '}
-            <Link to={`/companies?vsic=${String(vsicFromUrl).slice(0, 2)}`}>Xem DN cùng ngành</Link>
-          </>
-        ) : null}
-      </p>
 
-      {result && !insufficientPeers && result.peer_count >= 3 && (
-        <div className="banner" style={{ marginBottom: 16 }}>
-          Peer count: <strong>{result.peer_count}</strong>
-          {result.peer_scope ? ` · ${result.peer_scope}` : ''} — percentile có ý nghĩa hơn prototype n≈10.
-        </div>
-      )}
-
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 16 }}>
+      <div className="toolbar" style={{ marginBottom: 16 }}>
         <button
           type="button"
           className="btn btn-primary"
@@ -488,12 +387,6 @@ export default function Benchmark() {
           Demo thiếu peer (VSIC {NO_PEER_VSIC})
         </button>
       </div>
-
-      {prefillSource && (
-        <p className="chart-note" style={{ marginBottom: 12 }}>
-          Form đã nạp từ <code>/api/benchmark/prefill/{prefillSource}</code> — số liệu BCTC trong hệ thống.
-        </p>
-      )}
 
       {!prefillSource && !form.operating_revenue && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
@@ -633,30 +526,15 @@ export default function Benchmark() {
       {result && (
         <div style={{ marginTop: 24 }}>
           <div className="chart-container" style={{ marginBottom: 16 }}>
-            <div style={{ fontSize: 14 }}>
-              Phạm vi peer: <strong>{result.peer_scope || '—'}</strong>
-              {' · '}
-              Số peer BCTC: <strong>{result.peer_count ?? 0}</strong>
+            <p style={{ fontSize: 14, margin: 0, lineHeight: 1.5 }}>
+              {describePeerScope(result)}
               {insufficientPeers && (
                 <>
                   {' '}
                   <span className="badge badge-warning">thiếu peer</span>
                 </>
               )}
-            </div>
-            {(result.warnings || []).length > 0 && (
-              <ul style={{ margin: '8px 0 0', paddingLeft: 18, color: '#888', fontSize: 13 }}>
-                {result.warnings.map((w) => (
-                  <li key={w}>{WARNING_LABELS[w] || w}</li>
-                ))}
-              </ul>
-            )}
-            {insufficientPeers && (
-              <div className="empty-state" style={{ marginTop: 12 }}>
-                Chưa có peer cùng phân ngành — phân vị tạm để trống.
-                Chỉ số DN (nếu đủ input) vẫn tính từ form; TB ngành / xếp hạng chờ thêm mẫu.
-              </div>
-            )}
+            </p>
             <div className="singstat-jump">
               <button
                 type="button"
@@ -692,7 +570,7 @@ export default function Benchmark() {
                       <div className="label">{label}</div>
                       <div className="value metric-value-row" style={{ fontSize: 22 }}>
                         <span>{formatRatio(value)}</span>
-                        <MetricInfoTip metricKey={key} />
+                        <BenchmarkMetricTip metricKey={key} />
                       </div>
                       {pct != null ? (
                         <>
@@ -704,7 +582,7 @@ export default function Benchmark() {
                       ) : (
                         <div className="sub">Phân vị: Không có (thiếu mẫu peer)</div>
                       )}
-                      <div style={{ fontSize: 12, color: '#888', marginTop: 8 }}>
+                      <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
                         TB ngành: {indAvg != null ? formatRatio(indAvg) : 'Không có'}
                       </div>
                       <div style={{ fontSize: 12, marginTop: 4 }}>
@@ -732,9 +610,6 @@ export default function Benchmark() {
           <section id="singstat-expenditure" className="singstat-section">
             <header className="singstat-section-head">
               <h3 className="singstat-section-title">Tỷ lệ liên quan chi phí</h3>
-              <p className="singstat-section-note">
-                Chi phí hoạt động ÷ doanh thu hoạt động. TB ngành lấy từ peer; thiếu dữ liệu thì hiện «Không có».
-              </p>
             </header>
 
             <div className="singstat-donut-row">
@@ -761,9 +636,6 @@ export default function Benchmark() {
 
             <header className="singstat-section-head" style={{ marginTop: 28 }}>
               <h3 className="singstat-section-title">Cơ cấu chi phí chính</h3>
-              <p className="singstat-section-note">
-                Tỷ trọng trong chi phí hoạt động. Thanh chỉ dùng share từ API; thiếu giá trị thì «Không có».
-              </p>
             </header>
 
             <div className="singstat-key-list">
