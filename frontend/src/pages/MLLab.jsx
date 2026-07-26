@@ -4,12 +4,35 @@ import {
   BarChart, Bar,
 } from 'recharts'
 import { api } from '../api'
+import MetricInfoTip from '../MetricInfoTip'
 
 const MODEL_OPTIONS = [
-  { id: 'arima', label: 'ARIMA', color: '#1e3a5f' },
-  { id: 'xgboost', label: 'XGBoost', color: '#0d9488' },
-  { id: 'lstm', label: 'LSTM', color: '#2563eb' },
+  { id: 'arima', label: 'ARIMA', color: '#164654' },
+  { id: 'xgboost', label: 'XGBoost', color: '#367ea2' },
+  { id: 'lstm', label: 'LSTM', color: '#7fbde0' },
 ]
+
+/** Plain-language help for each IIP forecast model (hover / focus tip). */
+const MODEL_TIPS = {
+  arima: {
+    title: 'ARIMA',
+    formula: 'Nhóm STATISTICAL — mô hình thống kê',
+    blurb:
+      'Dự báo IIP theo chuỗi thời gian: nhìn xu hướng và chu kỳ trong quá khứ của chính chỉ số đó. Không dựa vào nhiều biến ngoài (doanh thu số, adoption…). Phù hợp khi muốn baseline “chỉ từ lịch sử IIP”.',
+  },
+  xgboost: {
+    title: 'XGBoost',
+    formula: 'Nhóm ML — học máy (cây quyết định tăng cường)',
+    blurb:
+      'Học quan hệ từ nhiều đặc trưng (feature) — ví dụ tín hiệu số hóa, biến kinh tế — rồi dự báo IIP. Thường giải thích được feature nào quan trọng (xem biểu đồ Feature importance).',
+  },
+  lstm: {
+    title: 'LSTM',
+    formula: 'Nhóm DL — học sâu (mạng nơ-ron)',
+    blurb:
+      'Mạng nơ-ron chuyên chuỗi thời gian: nhớ pattern dài hạn trong dữ liệu lịch sử để dự báo IIP. Mạnh khi chuỗi phức tạp, nhưng khó giải thích từng bước hơn ARIMA/XGBoost.',
+  },
+}
 
 function periodLabel(p) {
   if (!p) return ''
@@ -172,7 +195,7 @@ export default function MLLab() {
   }
 
   const importanceBars = (importance?.available && importance.features?.length)
-    ? importance.features.slice(0, 15).map((f) => ({
+    ? importance.features.slice(0, 10).map((f) => ({
         feature: f.feature,
         gain: f.gain,
       }))
@@ -184,10 +207,6 @@ export default function MLLab() {
   return (
     <div>
       <h2 className="page-title">ML Lab — So sánh model IIP</h2>
-      <p className="page-subtitle">
-        So sánh ARIMA / XGBoost / LSTM từ registry, holdout actual vs predicted,
-        forecast so với IIP, và feature importance.
-      </p>
 
       {loadError && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>{loadError}</div>
@@ -200,7 +219,7 @@ export default function MLLab() {
         </div>
       )}
 
-      <div style={{ display: 'flex', flexWrap: 'wrap', gap: 8, marginBottom: 24, alignItems: 'center' }}>
+      <div className="toolbar">
         <select
           value={selectedModel}
           onChange={(e) => {
@@ -208,7 +227,6 @@ export default function MLLab() {
             setForecast(null)
             setForecastError(null)
           }}
-          style={{ padding: '8px 12px', borderRadius: 8, border: '1px solid #ddd' }}
         >
           {MODEL_OPTIONS.map((m) => (
             <option key={m.id} value={m.id}>{m.label}</option>
@@ -234,7 +252,12 @@ export default function MLLab() {
           const status = m?.metrics?.status
           return (
             <div className="card" key={opt.id}>
-              <div className="label">{opt.label}{m?.model_type ? ` (${m.model_type})` : ''}</div>
+              <div className="card-label-row">
+                <div className="label">{opt.label}{m?.model_type ? ` (${m.model_type})` : ''}</div>
+                {MODEL_TIPS[opt.id] ? (
+                  <MetricInfoTip {...MODEL_TIPS[opt.id]} placement="below" />
+                ) : null}
+              </div>
               {m ? (
                 <>
                   <div className="value" style={{ fontSize: 16 }}>
@@ -261,21 +284,18 @@ export default function MLLab() {
             Chưa có MAE/RMSE/MAPE trong registry — chạy make bootstrap / train để cập nhật.
           </div>
         ) : (
-          <>
-            <ResponsiveContainer width="100%" height={250}>
-              <BarChart data={metricsData}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="name" />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Bar dataKey="mae" fill="#0d9488" name="MAE" />
-                <Bar dataKey="rmse" fill="#1e3a5f" name="RMSE" />
-                <Bar dataKey="mape" fill="#2563eb" name="MAPE %" />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="chart-note">Nguồn: GET /api/ml/models · metrics từ lần train gần nhất.</p>
-          </>
+          <ResponsiveContainer width="100%" height={250}>
+            <BarChart data={metricsData}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="name" />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Bar dataKey="mae" fill="#367ea2" name="MAE" />
+              <Bar dataKey="rmse" fill="#164654" name="RMSE" />
+              <Bar dataKey="mape" fill="#7fbde0" name="MAPE %" />
+            </BarChart>
+          </ResponsiveContainer>
         )}
       </div>
 
@@ -287,32 +307,29 @@ export default function MLLab() {
             (make bootstrap / nút huấn luyện).
           </div>
         ) : (
-          <>
-            <ResponsiveContainer width="100%" height={320}>
-              <LineChart data={holdoutCompare}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="actual" stroke="#333" strokeWidth={2} name="Actual IIP" dot={false} connectNulls={false} />
-                {MODEL_OPTIONS.map((opt) => (
-                  <Line
-                    key={opt.id}
-                    type="monotone"
-                    dataKey={opt.id}
-                    stroke={opt.color}
-                    strokeWidth={2}
-                    strokeDasharray="5 5"
-                    name={`${opt.label} pred`}
-                    dot={false}
-                    connectNulls={false}
-                  />
-                ))}
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="chart-note">Nguồn: GET /api/ml/predictions · cửa sổ holdout</p>
-          </>
+          <ResponsiveContainer width="100%" height={320}>
+            <LineChart data={holdoutCompare}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="period" tick={{ fontSize: 11 }} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="Actual IIP" dot={false} connectNulls={false} />
+              {MODEL_OPTIONS.map((opt) => (
+                <Line
+                  key={opt.id}
+                  type="monotone"
+                  dataKey={opt.id}
+                  stroke={opt.color}
+                  strokeWidth={2}
+                  strokeDasharray="5 5"
+                  name={`${opt.label} pred`}
+                  dot={false}
+                  connectNulls={false}
+                />
+              ))}
+            </LineChart>
+          </ResponsiveContainer>
         )}
       </div>
 
@@ -330,8 +347,8 @@ export default function MLLab() {
               <YAxis />
               <Tooltip />
               <Legend />
-              <Line type="monotone" dataKey="actual" stroke="#1e3a5f" strokeWidth={2} name="Actual" connectNulls={false} />
-              <Line type="monotone" dataKey="predicted" stroke="#0d9488" strokeWidth={2} strokeDasharray="5 5" name="Predicted" connectNulls={false} />
+              <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="Actual" connectNulls={false} />
+              <Line type="monotone" dataKey="predicted" stroke="#367ea2" strokeWidth={2} strokeDasharray="5 5" name="Predicted" connectNulls={false} />
             </LineChart>
           </ResponsiveContainer>
         )}
@@ -344,26 +361,21 @@ export default function MLLab() {
         )}
         {!forecast && !forecastError && (
           <div className="empty-state">
-            Bấm «Dự báo 6 tháng» để overlay forecast lên chuỗi IIP thật (Dashboard pattern).
+            Chưa có đường dự báo trên biểu đồ. Bấm «Dự báo 6 tháng» phía trên để xem dự báo so với IIP thực tế.
           </div>
         )}
         {forecast && (
-          <>
-            <ResponsiveContainer width="100%" height={300}>
-              <LineChart data={forecastVsActual}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-                <YAxis />
-                <Tooltip />
-                <Legend />
-                <Line type="monotone" dataKey="actual" stroke="#1e3a5f" strokeWidth={2} name="IIP actual" connectNulls={false} dot={false} />
-                <Line type="monotone" dataKey="forecast" stroke="#0d9488" strokeWidth={2} strokeDasharray="5 5" name="Forecast" connectNulls={false} dot={false} />
-              </LineChart>
-            </ResponsiveContainer>
-            <p className="chart-note">
-              Actual: GET /api/dashboard/iip · Forecast: POST /api/ml/forecast ({forecast.horizon} tháng).
-            </p>
-          </>
+          <ResponsiveContainer width="100%" height={300}>
+            <LineChart data={forecastVsActual}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="period" tick={{ fontSize: 11 }} />
+              <YAxis />
+              <Tooltip />
+              <Legend />
+              <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="IIP actual" connectNulls={false} dot={false} />
+              <Line type="monotone" dataKey="forecast" stroke="#367ea2" strokeWidth={2} strokeDasharray="5 5" name="Forecast" connectNulls={false} dot={false} />
+            </LineChart>
+          </ResponsiveContainer>
         )}
         {!iip.length && (
           <div className="banner banner-warn" style={{ marginTop: 12 }}>
@@ -380,20 +392,15 @@ export default function MLLab() {
               || 'Chưa có xgboost_importance.json — chạy make bootstrap / train XGBoost.'}
           </div>
         ) : (
-          <>
-            <ResponsiveContainer width="100%" height={Math.max(280, importanceBars.length * 22)}>
-              <BarChart data={importanceBars} layout="vertical" margin={{ left: 120 }}>
-                <CartesianGrid strokeDasharray="3 3" />
-                <XAxis type="number" />
-                <YAxis type="category" dataKey="feature" width={110} tick={{ fontSize: 11 }} />
-                <Tooltip />
-                <Bar dataKey="gain" fill="#0d9488" name="Gain" />
-              </BarChart>
-            </ResponsiveContainer>
-            <p className="chart-note">
-              Nguồn: GET /api/ml/feature-importance · {importance.source || 'artifact'} · top {importanceBars.length} theo gain
-            </p>
-          </>
+          <ResponsiveContainer width="100%" height={Math.max(280, importanceBars.length * 22)}>
+            <BarChart data={importanceBars} layout="vertical" margin={{ left: 120 }}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis type="number" />
+              <YAxis type="category" dataKey="feature" width={110} tick={{ fontSize: 11 }} />
+              <Tooltip />
+              <Bar dataKey="gain" fill="#367ea2" name="Gain" />
+            </BarChart>
+          </ResponsiveContainer>
         )}
         {selectedModel !== 'xgboost' && (
           <div className="banner banner-warn" style={{ marginTop: 12 }}>

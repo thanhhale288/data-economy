@@ -187,16 +187,16 @@ def get_oecd_vs_gso(db: Session) -> dict:
     if oecd:
         oecd_status = "available"
         oecd_note = (
-            "OECD MEI Industrial Production for peer EA20 (Euro area), "
-            "source OECD_PEER — not Vietnam MEI (unavailable; ADR-0001)."
+            "OECD không có dữ liệu sản xuất công nghiệp của Việt Nam, "
+            "nên biểu đồ dùng chỉ số khu vực Euro (EA20) làm đối sánh với IIP của GSO."
         )
         oecd_country = _OECD_PEER_COUNTRY
         oecd_source = oecd_rows[0].source if oecd_rows else "OECD_PEER"
     else:
         oecd_status = "missing"
         oecd_note = (
-            "OECD MEI_IP peer (EA20) chưa có trong DB — không hiển thị số bịa. "
-            "Chạy crawl OECD với include_peers, hoặc chấp nhận series_missing."
+            "Chưa có dữ liệu OECD khu vực Euro (EA20) trong hệ thống — "
+            "không hiển thị số ước lượng. Chạy crawl OECD (kèm peer) để bổ sung."
         )
         oecd_country = None
         oecd_source = None
