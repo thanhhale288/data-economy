@@ -102,6 +102,8 @@ flowchart LR
 
 ## Task #36 — Matcher: chỉ DN có shop; discovery có cổng
 
+**Status:** DONE (2026-07-26) — discovery OFF by default; enable via `MARKETPLACE_DISCOVERY_ENABLED` + QA allowlist + threshold 0.65; train() không ép website alias cho no-shop tickers.
+
 **Trả lời thắc mắc:** phần “chưa” #29.
 
 **Việc chính:**
@@ -110,6 +112,8 @@ flowchart LR
 - Không alias ép 28 ticker không shop.
 
 **AC:** precision không tụt; ticker không shop vẫn unlinked.
+
+**Artifact:** `data/mappings/discovery_allowlist.json` · gate trong `crawlers/marketplace/shop_finder.py`
 
 ---
 

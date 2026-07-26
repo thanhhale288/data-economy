@@ -345,7 +345,7 @@ Nếu chỉ so chữ trực tiếp, điểm giống sẽ thấp → match sai. V
 Trong code (`ml/shop_matcher/matcher.py`):
 
 - `_BRAND_MARKERS` — alias viết sẵn cho các DN seed có tên pháp lý ≠ tên thương hiệu
-- `train()` học thêm alias từ URL shop trong seed + tên miền website (vd. `rangdong` từ `rangdong.com.vn`), lưu vào `shop_matcher.joblib`
+- `train()` học thêm alias từ URL shop trong seed (và hostname website **chỉ khi DN đã có shop**), lưu vào `shop_matcher.joblib`. Không ép alias website cho ~22 ticker không shop.
 
 Alias chỉ giúp **tăng điểm giống khi đúng thương hiệu** — shop tìm mới vẫn phải vượt ngưỡng 0.65 mới được gắn DN.
 
@@ -355,9 +355,9 @@ Một câu nhớ: **alias = biệt danh thương hiệu, giúp matcher nhận ra
 
 Điểm giống nhau tối thiểu để được coi là match. Dưới ngưỡng → **không gắn** DN với shop.
 
-### Seed bypass ngưỡng
+### Seed vs discovery (Task #36)
 
-Shop/URL đã có trong seed được gắn DN luôn (`is_match=True`, `match_source=seed_known_url`), **không bắt buộc** vượt 0.65. Shop tìm mới phải qua `evaluate_discovered_shop` và ngưỡng.
+Shop/URL đã có trong seed vẫn phải vượt ngưỡng **0.65** trước khi gắn DN (`match_source=seed_known_url`). Shop tìm mới (discovery) **tắt mặc định**; chỉ bật với `MARKETPLACE_DISCOVERY_ENABLED=1` + entry trong `data/mappings/discovery_allowlist.json` + threshold 0.65 (`match_source=qa_discovery`). Không alias ép ticker không có shop.
 
 ### Listing marketplace (marketplace listing)
 

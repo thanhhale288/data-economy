@@ -169,3 +169,34 @@ def test_find_shops_empty_for_company_without_marketplace(db_session):
 
     shops = shop_finder.find_shops_for_company(company)
     assert shops == []
+
+
+def test_discovery_default_off_even_with_brand_perfect_candidate(monkeypatch):
+    """Task #36: no-shop ticker stays unlinked; discovery off by default."""
+    monkeypatch.delenv(shop_finder.DISCOVERY_ENABLED_ENV, raising=False)
+    company = Company(
+        stock_code="HPG",
+        name="Tập đoàn Hòa Phát",
+        vsic_code="2410",
+        exchange="HOSE",
+    )
+    assert shop_finder.is_marketplace_discovery_enabled() is False
+    assert shop_finder.find_shops_for_company(company) == []
+    assert (
+        shop_finder.discover_shops_for_company(
+            company,
+            allowlist=[
+                {
+                    "ticker": "HPG",
+                    "channel_type": "shopee",
+                    "url": "https://shopee.vn/hoaphat_official",
+                }
+            ],
+        )
+        == []
+    )
+
+
+def test_load_discovery_allowlist_empty_by_default():
+    entries = shop_finder.load_discovery_allowlist()
+    assert entries == []

@@ -79,7 +79,9 @@ _SHOP_NOISE = frozenset(
 )
 
 # Distinctive markers in normalized company names → marketplace brand tokens.
-# Covers seed allowlist brands where legal name ≠ handle (e.g. Vinamilk, PNJ, DQC).
+# Prefer markers for brands that already have seed shop URLs (RAL/VNM/FPT/MSN/PNJ/DQC).
+# Extra markers for no-shop peers help score QA-vetted discovery later — they must NOT
+# invent seed links; linking discovery shops requires Task #36 gate (flag + allowlist).
 _BRAND_MARKERS: list[tuple[str, tuple[str, ...]]] = [
     ("rang dong", ("rangdong",)),
     ("bong den", ("rangdong",)),
@@ -88,12 +90,14 @@ _BRAND_MARKERS: list[tuple[str, tuple[str, ...]]] = [
     ("masan", ("masan",)),
     ("phu nhuan", ("pnj",)),
     ("vang bac", ("pnj",)),
+    ("dien quang", ("dienquang", "dienquangofficialstore")),
+    # No-shop peers (seed has no Shopee/TikTok) — score only; discovery gate blocks link
     ("hoa phat", ("hoaphat",)),
     ("duc giang", ("ducgiang", "ducgiangchem")),
-    ("cao su", ("gvr", "caosuvietnam")),
+    # Specific to GVR legal name — avoid DPR/CSM ("cao su …") inheriting gvr aliases
+    ("cong nghiep cao su", ("gvr", "caosuvietnam")),
     ("co dien lanh", ("ree", "reecorp")),
     ("nhua binh minh", ("bmp", "binhminh", "nhuabinhminh")),
-    ("dien quang", ("dienquang", "dienquangofficialstore")),
     ("vinh hoan", ("vinhhoan",)),
     ("nam viet", ("namviet", "navicorp")),
     ("an phat", ("anphat", "anphatbioplastics")),
@@ -286,7 +290,10 @@ class ShopMatcher:
                         "score": self.match_score(company, shop_name),
                     }
                 )
-            # Also alias website hostname brand when present
+            # Website hostname alias only for DN that already have a marketplace shop.
+            # Do not force aliases for the ~22 no-shop tickers (Task #36).
+            if not shop_handles:
+                continue
             website = s.get("website_url") or ""
             host = re.sub(r"^https?://(www\.)?", "", website).split("/")[0]
             host_brand = host.split(".")[0] if host else ""

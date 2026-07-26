@@ -105,6 +105,22 @@ PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM,FPT
 
 Company detail listing table shows badge **Nguồn** = `live` | `seed` | `fallback`.
 
+## Matcher discovery gate (Epic 3 Task #36)
+
+Marketplace **shop discovery** (non-seed search) is **OFF by default**. Crawl only links seed known URLs that pass ShopMatcher ≥ **0.65**.
+
+To enable controlled discovery (ops/QA only):
+
+```bash
+export MARKETPLACE_DISCOVERY_ENABLED=1
+# optional override; default 0.65
+export MARKETPLACE_DISCOVERY_THRESHOLD=0.65
+# Edit data/mappings/discovery_allowlist.json — add {ticker, channel_type, url}
+# Empty entries[] ⇒ no discovered shops even when enabled
+```
+
+Ticker không có shop trong seed vẫn **unlinked** trừ khi có entry QA allowlist + score ≥ 0.65. Không invent shop/GMV.
+
 ## Bootstrap (recommended)
 
 ```bash

@@ -10,9 +10,9 @@
 | Source | Linking rule |
 |--------|----------------|
 | Seed / known URL (`find_shops_for_company`) | Candidate from seed; **must** pass fuzzy `is_match` at ≥ **0.65**. Tag `match_source=seed_known_url` when linked. Below threshold → do not assign company. |
-| Discovered non-seed shop (`evaluate_discovered_shop`) | Link **only** when `is_match` at ≥ 0.65; below threshold → do not assign company. |
+| Discovered non-seed shop | **OFF by default** (Task #36). Enable only with `MARKETPLACE_DISCOVERY_ENABLED=1` + QA entry in `data/mappings/discovery_allowlist.json` + score ≥ 0.65 → `match_source=qa_discovery`. Pure score helper: `evaluate_discovered_shop`. |
 
-HPG / GVR / DGC / REE / BWE have **no** marketplace seed shops — matcher must not invent links (discovery empty; wrong-pair scores stay below threshold).
+HPG / GVR / DGC / REE / BMP / VHC / AAA (and other no-shop peers) have **no** marketplace seed shops — matcher must not invent links (discovery empty by default; wrong-pair scores stay below threshold).
 
 ## Per-DN summary
 

@@ -1,0 +1,5 @@
+{
+  "description": "QA-vetted marketplace discovery candidates (Task #36). Discovery search stays OFF unless MARKETPLACE_DISCOVERY_ENABLED=1 and the ticker (optional channel/url) appears here. Empty entries = no discovered shops even when enabled.",
+  "threshold": 0.65,
+  "entries": []
+}
