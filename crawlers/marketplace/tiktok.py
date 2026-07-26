@@ -87,7 +87,10 @@ def fetch_tiktok_listings(
     own_client = client is None
     http = client or httpx.Client(timeout=HTTP_TIMEOUT, follow_redirects=True)
     try:
-        response = http.get(shop_url, headers={"User-Agent": "mfg-data-economy/1.0"})
+        # Optional ops Cookie via TIKTOK_SESSION_COOKIE (ADR-0002) — never invent on fail.
+        from crawlers.marketplace.live_cache import marketplace_request_headers
+
+        response = http.get(shop_url, headers=marketplace_request_headers("tiktok"))
         if response.status_code in {403, 429, 503}:
             detail = f"HTTP {response.status_code} for {shop_url}"
             logger.warning("TikTok fetch blocked/error: %s", detail)

@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Listing depth smoke + report for the seed allowlist (Epic 3 Task #34).
+"""Listing depth smoke + report for the seed allowlist (Epic 3 Task #34/#35).
 
 Usage:
   PYTHONPATH=. python scripts/enrich_marketplace_listings.py
   PYTHONPATH=. python scripts/enrich_marketplace_listings.py --no-live
+  PYTHONPATH=. python scripts/enrich_marketplace_listings.py --prefer-cache
   PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers DQC,RAL,HPG
   PYTHONPATH=. python scripts/enrich_marketplace_listings.py --playwright
 
@@ -13,7 +14,8 @@ Writes:
 
 Honesty:
   - Live ok → listings tagged source=live (report only unless --persist-db).
-  - Live blocked/error → keep curated seed / empty; never invent units/GMV.
+  - Live blocked/error → allowlisted live cache (Task #35) then seed/fallback;
+    never invent units/GMV.
   - B2B peers without shop stay empty.
 """
 
@@ -39,7 +41,17 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--no-live",
         action="store_true",
-        help="Skip live scrape; report seed coverage only",
+        help="Skip live scrape and cache; report seed coverage only",
+    )
+    parser.add_argument(
+        "--prefer-cache",
+        action="store_true",
+        help="Task #35: try allowlisted live-cache before HTTP (demo-stable)",
+    )
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Disable allowlisted live-cache fallback after HTTP fail",
     )
     parser.add_argument(
         "--playwright",
@@ -49,7 +61,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument(
         "--persist-db",
         action="store_true",
-        help="Upsert listings via run_marketplace_crawl (live→seed→fallback)",
+        help="Upsert listings via run_marketplace_crawl (live→cache→seed→fallback)",
     )
     parser.add_argument(
         "--report-dir",
@@ -81,6 +93,8 @@ def main(argv: list[str] | None = None) -> int:
         tickers=tickers,
         use_playwright=args.playwright,
         attempt_live=not args.no_live,
+        prefer_cache=args.prefer_cache,
+        use_cache_on_fail=not args.no_cache,
     )
     md_path, csv_path = write_listing_depth_report(
         rows,

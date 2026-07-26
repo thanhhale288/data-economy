@@ -112,8 +112,11 @@ def fetch_shopee_listings(
             f"https://shopee.vn/api/v4/shop/search_items"
             f"?keyword=&limit=30&offset=0&shopid=&username={username}"
         )
-        # Try shop page first (tests inject JSON via mock on get)
-        response = http.get(shop_url, headers={"User-Agent": "mfg-data-economy/1.0"})
+        # Try shop page first (tests inject JSON via mock on get).
+        # Optional ops Cookie via SHOPEE_SESSION_COOKIE (ADR-0002) — never invent on fail.
+        from crawlers.marketplace.live_cache import marketplace_request_headers
+
+        response = http.get(shop_url, headers=marketplace_request_headers("shopee"))
         if response.status_code in {403, 429, 503}:
             detail = f"HTTP {response.status_code} for {shop_url}"
             logger.warning("Shopee fetch blocked/error: %s", detail)

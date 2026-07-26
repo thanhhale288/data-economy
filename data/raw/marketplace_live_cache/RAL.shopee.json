@@ -1,0 +1,31 @@
+{
+  "shop_username": "rangdong_official",
+  "items": [
+    {
+      "itemid": 1001,
+      "name": "Bóng LED Rạng Đông 9W",
+      "price": 4500000000,
+      "price_min": 4500000000,
+      "price_max": 4500000000,
+      "historical_sold": 12500,
+      "item_rating": {"rating_star": 4.8},
+      "currency": "VND"
+    },
+    {
+      "itemid": 1002,
+      "name": "Đèn LED Panel 600x600",
+      "price": 28500000000,
+      "historical_sold": 3200,
+      "item_rating": {"rating_star": 4.7},
+      "currency": "VND"
+    },
+    {
+      "itemid": 1003,
+      "name": "Đèn bàn học LED (price only)",
+      "price": 15900000000,
+      "historical_sold": null,
+      "item_rating": {"rating_star": 4.5},
+      "currency": "VND"
+    }
+  ]
+}

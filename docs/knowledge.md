@@ -373,6 +373,11 @@ Trong project, mỗi listing lưu vào bảng `marketplace_listings`, gắn vớ
 - nền tảng / shop liên quan
 - provenance (`live` / `seed` / `fallback`)
 
+**Live strategy (Task #35 / ADR-0002):** khi HTTP Shopee/TikTok bị 403, crawler
+có thể dùng **allowlist nhỏ + snapshot cache** (`data/raw/marketplace_live_cache/`)
+với provenance `live:cache:…` → `source=live`. Không dùng anti-bot SaaS làm mặc định;
+session cookie chỉ ops (env). Không silent invent GMV.
+
 Phân biệt nhanh:
 
 | Khái niệm | Là gì |

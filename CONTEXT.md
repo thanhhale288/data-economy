@@ -51,6 +51,9 @@ A verified digital sales channel for a company (website, Shopee, TikTok, Lazada,
 
 **Marketplace listing**:
 A scraped product row (price, units sold estimate, revenue estimate) linked to a company in `marketplace_listings`.
+`source` ∈ `{live, seed, fallback}`. When live HTTP is blocked, allowlisted
+versioned snapshots under `data/raw/marketplace_live_cache/` may supply
+`source=live` with provenance `live:cache:…` (ADR-0002). Never invent units/GMV.
 
 **Shop matcher**:
 Model/heuristic that links a marketplace shop name to a listed company (fuzzy + optional TF-IDF/embeddings; match threshold **0.65**).

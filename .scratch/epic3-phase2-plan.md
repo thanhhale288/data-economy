@@ -18,9 +18,11 @@ flowchart LR
   T38[T38_GRDP_If_NSO]
   T39[T39_Scale_Architecture]
   T40[T40_Seed_Domain_Fix]
-  T41[T41_GMV_Backfill]
+  T41[T41_GMV_Cache_Refresh]
+  T42[T42_Cookie_Partner_Spike]
   P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39 --> T40
   T35 --> T41
+  T35 --> T42
 ```
 
 ---
@@ -80,6 +82,8 @@ flowchart LR
 
 ## Task #35 — Chiến lược marketplace live (sau Playwright mock)
 
+**Status:** DONE (2026-07-26) — ADR-0002: default allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; partner API spike-only.
+
 **Trả lời thắc mắc:** captcha/anti-bot; đề xuất xử lý.
 
 **Bằng chứng từ #34:** smoke `scripts/enrich_marketplace_listings.py` — Shopee/TikTok allowlist shops đều HTTP **403**; `live_ok=0`. DQC có catalog website (price) nhưng chưa có `units_sold_est` từ sàn.
@@ -91,6 +95,8 @@ flowchart LR
 4. Không dùng anti-bot SaaS lách ToS làm mặc định đồ án.
 
 **AC:** document quyết định trong `.scratch/` hoặc `docs/adr/`; crawl contract không silent invent; ít nhất một đường demo ổn định (cache hoặc live thật).
+
+**Artifact:** `docs/adr/0002-marketplace-live-strategy.md` · `data/raw/marketplace_live_cache/` · `.scratch/epic3-task35-marketplace-live-strategy.md`
 
 ---
 
@@ -168,21 +174,40 @@ flowchart LR
 
 ---
 
-## Task #41 — GMV backfill sau live/cache (nợ từ #34)
+## Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)
 
 **Nguồn:** Task #34 đóng với listing tickers 5→6 nhưng **GMV tickers vẫn 5**. DQC có listing catalog (`platform=website`, price set, `units_sold_est=null`). Live Shopee/TikTok 403. VNM/PNJ có TikTok shop URL nhưng chưa có TikTok listing rows.
 
-**Phụ thuộc:** làm **sau Task #35** (đã có đường live hoặc cache snapshot ổn định). Không invent units.
+**Nợ thêm từ #35:** snapshot `data/raw/marketplace_live_cache/` hiện là **demo-shaped** (cùng parse shape fixture) — chưa phải bản ghi “scrape thật ngày X”. HTTP live vẫn 403; badge `live` từ cache chưa = “fetch mạng thành công lần này”.
+
+**Phụ thuộc:** sau Task #35 (đã có đường allowlist+cache ổn định). Không invent units.
 
 **Việc chính:**
 - Khi live/cache trả về items có `historical_sold` / sold: upsert DQC (và shop peers) với `source=live` (hoặc cache-tagged live), điền `units_sold_est` + `revenue_est = price × units`.
+- **Refresh cache:** nếu có parse live thật (hoặc session cookie ops #42) → ghi đè `RAL.shopee.json` / `VNM.tiktok.json` (và peers allowlist) + cập nhật `PROVENANCE.md` (ngày capture, URL).
 - Optional: TikTok listing depth cho VNM/PNJ nếu scrape/cache được.
 - Re-run `scripts/enrich_marketplace_listings.py`; so `with_gmv_listing` trước/sau trong `.scratch/`.
 - Peer B2B không shop vẫn `[]`.
 
-**AC:** DQC (hoặc ticker mục tiêu) có ≥1 listing GMV có provenance; online_revenue chỉ tăng đúng Σ listing có nguồn; không pad B2B.
+**AC:** DQC (hoặc ticker mục tiêu) có ≥1 listing GMV có provenance; online_revenue chỉ tăng đúng Σ listing có nguồn; không pad B2B; cache PROVENANCE phản ánh capture thật nếu đã refresh.
 
-**Không làm:** bịa units để “đủ 10 DN GMV”; đổi Digital VA; làm trước khi #35 có đường demo ổn định.
+**Không làm:** bịa units để “đủ 10 DN GMV”; đổi Digital VA; anti-bot SaaS.
+
+---
+
+## Task #42 — Session cookie ops smoke + partner API spike note (nợ từ #35)
+
+**Nguồn:** ADR-0002 Decision §2–§3 — cookie env đã wire (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) nhưng **chưa smoke tay**; partner API chỉ “spike only”, chưa có biên bản nghiên cứu.
+
+**Việc chính:**
+- Ops: login tay → set cookie env → chạy smoke 1–2 shop allowlist; ghi kết quả 403 vs ok vào `.scratch/` (không commit secret).
+- Nếu cookie hết hạn / vẫn 403 → ghi nhận; giữ cache/seed path.
+- Spike note ngắn: có API/đối tác dữ liệu TMĐT VN phù hợp đồ án không (chi phí/ToS) — **không implement full** nếu không có hợp đồng.
+- Không dùng anti-bot SaaS làm mặc định.
+
+**AC:** artifact smoke cookie (pass/fail + detail) + optional partner spike note trong `.scratch/`; secrets không vào git.
+
+**Không làm:** commit cookie; đổi Digital VA; implement ingest partner full.
 
 ---
 
@@ -195,8 +220,9 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35).
+**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 (9 domain website fail từ audit #33).
-- Task #41 (GMV backfill DQC / optional TikTok sau live strategy #35) — từ #34.
+- Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35.
+- Task #42 (session cookie ops smoke + partner API spike note) — từ #35 (wire sẵn, chưa chứng minh tay).
