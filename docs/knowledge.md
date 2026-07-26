@@ -410,6 +410,8 @@ Thứ tự thực tế gần như:
 2. Không scrape được → dùng **listing trong seed/fallback** (số mẫu đã chuẩn bị)  
 3. DN không có listing nào dùng được → **không** tự nhân tỷ lệ ngành (vì ratio chưa gắn nguồn) → online rev = 0  
 
+**Mẫu niêm yết (~28) ≠ mẫu có TMĐT.** Chỉ ~6 ticker có shop sàn; ~5 có listing đủ `price×units` (GMV). Có shop nhưng thiếu units (ví dụ DQC catalog) → online rev vẫn 0. Peer B2B giữ listing rỗng — không pad cho “đủ 10 DN”.
+
 Vì Phase 2 scrape live thường fail/block, **số online revenue bạn thấy phần lớn đến từ listing seed**, không phải doanh thu TMĐT đã kiểm toán từ sàn thật.
 
 Một câu nhớ: **muốn có online rev thì cần listing; listing thật khó lấy thì dùng seed; tỷ lệ ngành chỉ là cửa dự phòng chưa mở vì chưa có nguồn gắn.**
