@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api } from '../api'
-import { formatGrouped, parseGrouped } from '../format'
+import { formatGrouped, formatMoney, parseGrouped } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 
 const METRIC_LABELS = {
@@ -98,16 +98,25 @@ const EMPTY_FORM = {
 /** VSIC division with no seed peers — demos honest insufficient_peers (user supplies own inputs). */
 const NO_PEER_VSIC = '1100'
 
-function displayNum(value) {
+function displayNum(value, { money = false } = {}) {
   if (value == null || value === '') return ''
   const n = typeof value === 'number' ? value : parseGrouped(value)
   if (n == null) return String(value)
+  if (money) {
+    // Form inputs: show rounded grouped digits without suffix (label already has VND).
+    const rounded = Math.round(n / 1000) * 1000
+    return formatGrouped(rounded, { maxFractionDigits: 0 })
+  }
   return formatGrouped(n, { maxFractionDigits: 0 })
 }
 
-function formatRatio(value) {
+function formatRatio(value, metricKey) {
   if (value == null) return '—'
   if (typeof value !== 'number') return value
+  // Per-worker metrics are VND amounts; the rest are unitless ratios.
+  if (metricKey === 'revenue_per_worker' || metricKey === 'profit_per_worker') {
+    return formatMoney(value, 'VND')
+  }
   if (value < 10) return `${(value * 100).toFixed(1)}%`
   return formatGrouped(value)
 }
@@ -146,19 +155,20 @@ function shareToPct(value) {
 }
 
 function formFromPrefill(data) {
+  const money = (v) => displayNum(v, { money: true })
   return {
     vsic_code: data.vsic_code ?? '',
-    operating_revenue: displayNum(data.operating_revenue),
-    profit_before_tax: displayNum(data.profit_before_tax),
+    operating_revenue: money(data.operating_revenue),
+    profit_before_tax: money(data.profit_before_tax),
     employees: displayNum(data.employees),
-    operating_expenses: displayNum(data.operating_expenses),
-    cost_of_goods: displayNum(data.cost_of_goods),
-    rental_cost: displayNum(data.rental_cost),
-    remuneration: displayNum(data.remuneration),
-    total_assets: displayNum(data.total_assets),
-    total_equity: displayNum(data.total_equity),
-    current_assets: displayNum(data.current_assets),
-    current_liabilities: displayNum(data.current_liabilities),
+    operating_expenses: money(data.operating_expenses),
+    cost_of_goods: money(data.cost_of_goods),
+    rental_cost: money(data.rental_cost),
+    remuneration: money(data.remuneration),
+    total_assets: money(data.total_assets),
+    total_equity: money(data.total_equity),
+    current_assets: money(data.current_assets),
+    current_liabilities: money(data.current_liabilities),
   }
 }
 
@@ -293,7 +303,8 @@ export default function Benchmark() {
     setForm((prev) => {
       const n = parseGrouped(prev[field])
       if (n == null) return prev
-      return { ...prev, [field]: formatGrouped(n, { maxFractionDigits: 0 }) }
+      const rounded = Math.round(n / 1000) * 1000
+      return { ...prev, [field]: formatGrouped(rounded, { maxFractionDigits: 0 }) }
     })
   }
 
@@ -569,7 +580,7 @@ export default function Benchmark() {
                     <div className="card" key={key}>
                       <div className="label">{label}</div>
                       <div className="value metric-value-row" style={{ fontSize: 22 }}>
-                        <span>{formatRatio(value)}</span>
+                        <span>{formatRatio(value, key)}</span>
                         <BenchmarkMetricTip metricKey={key} />
                       </div>
                       {pct != null ? (
@@ -583,7 +594,7 @@ export default function Benchmark() {
                         <div className="sub">Phân vị: Không có (thiếu mẫu peer)</div>
                       )}
                       <div style={{ fontSize: 12, color: 'var(--muted)', marginTop: 8 }}>
-                        TB ngành: {indAvg != null ? formatRatio(indAvg) : 'Không có'}
+                        TB ngành: {indAvg != null ? formatRatio(indAvg, key) : 'Không có'}
                       </div>
                       <div style={{ fontSize: 12, marginTop: 4 }}>
                         <span

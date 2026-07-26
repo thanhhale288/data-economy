@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { api } from '../api'
-import { formatCompact } from '../format'
+import { formatMoney } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 
 /** KPI help copy — formulas match CONTEXT.md / proposal-v2 (do not invent). */
@@ -99,7 +99,7 @@ function pctText(v) {
 }
 
 function formatNumber(n) {
-  return formatCompact(n)
+  return formatMoney(n, 'VND')
 }
 
 function periodLabel(p) {

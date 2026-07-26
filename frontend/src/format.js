@@ -1,6 +1,10 @@
 /**
- * Display helpers — space-grouped digits when the absolute integer has ≥5 digits.
- * Example: 1234 → "1234", 12345 → "12 345", 5.2e12 → "5 200 000 000 000".
+ * Display helpers — space-grouped digits + money formatters.
+ *
+ * Money rules (product):
+ * - Always show currency: `$100` or `1 000 000 VND`
+ * - USD: round to whole units; VND: round to nearest thousand
+ * - Large magnitudes use M / B (million / billion)
  */
 
 function splitSignAndAbs(n) {
@@ -54,24 +58,81 @@ export function parseGrouped(value) {
   return Number.isFinite(n) ? n : null
 }
 
-/** Compact VND-scale labels; coefficients still use space grouping when ≥5 digits. */
-export function formatCompactVnd(n) {
+/**
+ * Round money for display: USD → units; VND → nearest thousand.
+ * Returns { sign, abs } after rounding, or null if non-finite.
+ */
+function roundMoneyParts(n, currency) {
   const parts = splitSignAndAbs(n)
-  if (!parts) return '—'
+  if (!parts) return null
   const { sign, abs } = parts
-  if (abs >= 1e12) return `${sign}${formatGrouped(abs / 1e12, { maxFractionDigits: 2 })} nghìn tỷ`
-  if (abs >= 1e9) return `${sign}${formatGrouped(abs / 1e9, { maxFractionDigits: 1 })} tỷ`
-  if (abs >= 1e6) return `${sign}${formatGrouped(abs / 1e6, { maxFractionDigits: 1 })} triệu`
-  return formatGrouped(abs)
+  if (currency === 'USD') {
+    return { sign, abs: Math.round(abs) }
+  }
+  // VND: nearest thousand
+  const rounded = Math.round(abs / 1000) * 1000
+  return { sign, abs: rounded }
 }
 
-/** Dashboard-style compact (T/B/M); full space group below 1e6. */
-export function formatCompact(n) {
-  const parts = splitSignAndAbs(n)
+/**
+ * Format money with currency mark always present.
+ * @param {number} n
+ * @param {'VND'|'USD'} [currency='VND']
+ * @param {{ compact?: boolean }} [opts] — compact defaults true (M/B when ≥1e6)
+ */
+export function formatMoney(n, currency = 'VND', { compact = true } = {}) {
+  if (n == null || n === '') return '—'
+  const cur = currency === 'USD' ? 'USD' : 'VND'
+  const parts = roundMoneyParts(n, cur)
   if (!parts) return '—'
+
   const { sign, abs } = parts
-  if (abs >= 1e12) return `${sign}${formatGrouped(abs / 1e12, { maxFractionDigits: 1 })}T`
-  if (abs >= 1e9) return `${sign}${formatGrouped(abs / 1e9, { maxFractionDigits: 1 })}B`
-  if (abs >= 1e6) return `${sign}${formatGrouped(abs / 1e6, { maxFractionDigits: 1 })}M`
-  return `${sign}${formatGrouped(abs)}`
+
+  if (abs === 0) {
+    return cur === 'USD' ? `${sign}$0` : `${sign}0 VND`
+  }
+
+  // USD: M from 1e6, B from 1e9.
+  // VND: keep full space-grouped form through millions (e.g. "1 000 000 VND");
+  // compact with M from 1e9 and B from 1e12 so everyday triệu amounts stay readable.
+  if (compact) {
+    if (cur === 'USD') {
+      if (abs >= 1e9) {
+        const coef = formatGrouped(abs / 1e9, { maxFractionDigits: 1 })
+        return `${sign}$${coef}B`
+      }
+      if (abs >= 1e6) {
+        const coef = formatGrouped(abs / 1e6, { maxFractionDigits: 1 })
+        return `${sign}$${coef}M`
+      }
+    } else {
+      if (abs >= 1e12) {
+        const coef = formatGrouped(abs / 1e12, { maxFractionDigits: 1 })
+        return `${sign}${coef}T VND`
+      }
+      if (abs >= 1e9) {
+        const coef = formatGrouped(abs / 1e9, { maxFractionDigits: 1 })
+        return `${sign}${coef}B VND`
+      }
+    }
+  }
+
+  const grouped = groupDigits(String(Math.trunc(abs)))
+  return cur === 'USD' ? `${sign}$${grouped}` : `${sign}${grouped} VND`
+}
+
+/**
+ * Compact money for charts/KPIs — always VND with M/B (legacy name).
+ * Prefer `formatMoney(n, 'VND')` in new code.
+ */
+export function formatCompactVnd(n) {
+  return formatMoney(n, 'VND')
+}
+
+/**
+ * Compact money — VND with M/B (Dashboard Digital VA & heatmap).
+ * Prefer `formatMoney(n, 'VND')` in new code.
+ */
+export function formatCompact(n) {
+  return formatMoney(n, 'VND')
 }
