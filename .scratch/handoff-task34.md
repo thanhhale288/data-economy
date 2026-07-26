@@ -1,10 +1,10 @@
 # Handoff — Task #34 Listing depth (không bịa GMV)
 
-**Status:** DONE (chưa commit/push — chờ user)  
+**Status:** DONE (pushed; PR mở)  
 **Branch:** `cursor/epic3-phase2-task34-listing-depth` (base: tip Task #33 `e7c1583`)  
 **Date:** 2026-07-25  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** *(chưa — chỉ khi user Explicit yêu cầu)*
+**Commit / PR:** `e423f27` · PR: https://github.com/thanhhale288/data-economy/pull/19 (base: `cursor/epic3-phase2-task33-batch-website-qa`)
 
 ---
 
