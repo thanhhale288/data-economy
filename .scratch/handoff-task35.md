@@ -1,10 +1,10 @@
 # Handoff — Task #35 Chiến lược marketplace live
 
-**Status:** DONE (uncommitted — chờ user commit/PR)  
+**Status:** DONE (pushed; PR mở)  
 **Branch:** `cursor/epic3-phase2-task35-marketplace-live-strategy` (base: tip Task #34 `6a79ee9`)  
 **Date:** 2026-07-26  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** chưa — user chưa yêu cầu ship
+**Commit / PR:** `18830d9` · PR: https://github.com/thanhhale288/data-economy/pull/21 (base: `cursor/epic3-phase2-task34-listing-depth`)
 
 ---
 
@@ -32,7 +32,7 @@ PYTHONPATH=. python scripts/enrich_marketplace_listings.py --prefer-cache --tick
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task35-marketplace-live-strategy` · uncommitted · PR chưa mở
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task35-marketplace-live-strategy` · `18830d9` · https://github.com/thanhhale288/data-economy/pull/21
 
 ### Đã làm được gì (đối chiếu AC)
 
