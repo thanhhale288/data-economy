@@ -1,11 +1,11 @@
 # Handoff — Task #37 Industry-ratio (re-gate)
 
-**Status:** DONE (no commit yet — wait for user)  
+**Status:** DONE (PR open)  
 **Branch:** `cursor/epic3-phase2-task37-industry-ratio-regate`  
 **Date:** 2026-07-26  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(none — user chưa yêu cầu commit/push)_  
-**Base:** tip `cursor/epic3-phase2-task36-matcher-gate` @ `3a336fd` (PR #36 chưa merge `main`)
+**Commit / PR:** `96eeff4` · PR https://github.com/thanhhale288/data-economy/pull/24  
+**Base:** `main` @ `1d37508` (Task #36 PR #23 merged; branch rebased on main)
 
 ---
 
@@ -31,7 +31,7 @@ no marketplace listings + SOURCED_INDUSTRY_ECOMMERCE_RATIO is None
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task37-industry-ratio-regate` · _(uncommitted)_ · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task37-industry-ratio-regate` · `96eeff4` · https://github.com/thanhhale288/data-economy/pull/24
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -80,7 +80,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa yêu cầu | Khi user bảo ship |
+| Commit/PR | Shipped PR #24 (full suite 301 passed trước push) | Merge khi CI green |
 | Wire mapping constant | NO-GO — no citation | Khi GSO/VECOM có CBCT revenue share |
 
 ---
