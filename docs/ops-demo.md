@@ -81,6 +81,30 @@ PYTHONPATH=. python scripts/enrich_marketplace_listings.py --persist-db
 DQC (sau #34): curated **website** catalog rows từ `dienquang.com` — `units_sold_est=null`
 → online revenue vẫn 0 cho đến khi live Shopee OK.
 
+## Marketplace live strategy (Epic 3 Task #35)
+
+**ADR:** [`docs/adr/0002-marketplace-live-strategy.md`](adr/0002-marketplace-live-strategy.md)
+
+| Option | Role |
+|--------|------|
+| Allowlist + cache + badge `live\|seed\|fallback` | **Default** — `data/raw/marketplace_live_cache/` (RAL×shopee, VNM×tiktok) |
+| Session cookie (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) | **Optional ops** — manual login; never commit secrets |
+| Partner API | Spike only — no full implement without contract |
+| Anti-bot SaaS | **Rejected** as đồ án default |
+
+Crawl when live attempted: HTTP → on 403/block, allowlisted cache (`source=live`,
+provenance `live:cache:…`) → seed → fallback. Never invent units/GMV.
+
+```bash
+# Demo-stable: prefer cache before HTTP (no invent)
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --prefer-cache --tickers RAL,VNM
+
+# Live HTTP then cache-on-fail (default when not --no-cache)
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM,FPT
+```
+
+Company detail listing table shows badge **Nguồn** = `live` | `seed` | `fallback`.
+
 ## Bootstrap (recommended)
 
 ```bash

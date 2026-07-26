@@ -1,0 +1,7 @@
+{
+  "description": "Small live-cache allowlist for Epic 3 Task #35 demo path. Only these ticker×platform pairs may load versioned snapshots as source=live (provenance live:cache:…).",
+  "tickers": {
+    "RAL": ["shopee"],
+    "VNM": ["tiktok"]
+  }
+}

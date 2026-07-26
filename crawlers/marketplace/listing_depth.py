@@ -21,6 +21,7 @@ from crawlers.marketplace.common import (
     load_seed_companies,
     normalize_listing_source,
 )
+from crawlers.marketplace.live_cache import load_cached_listings
 from crawlers.marketplace.shopee import fetch_shopee_listings
 from crawlers.marketplace.tiktok import fetch_tiktok_listings
 
@@ -93,29 +94,61 @@ def seed_listing_coverage(
 def attempt_live_for_shops(
     shops: list[tuple[str, str]],
     *,
+    stock_code: str | None = None,
     use_playwright: bool = False,
+    prefer_cache: bool = False,
+    use_cache_on_fail: bool = True,
 ) -> tuple[str, str, list[dict[str, Any]]]:
-    """Try live scrape for shop URLs. Returns (status, detail, listings)."""
+    """Try live scrape for shop URLs; optional allowlisted cache (Task #35).
+
+    Returns (status, detail, listings). Status ``ok`` when live HTTP or cache
+    yields listings.
+    """
     if not shops:
         return "no_shop", "no marketplace shop URL", []
 
     collected: list[dict[str, Any]] = []
     details: list[str] = []
     worst = "empty"
+    code = (stock_code or "").strip().upper() or None
 
     for channel, url in shops:
+        if prefer_cache and code:
+            cached = load_cached_listings(code, channel)
+            if cached:
+                details.append(f"{channel}:cache:hit")
+                collected.extend(cached)
+                worst = "ok"
+                continue
+
         if channel == "shopee":
             result = fetch_shopee_listings(url, use_playwright=use_playwright)
         elif channel == "tiktok":
             result = fetch_tiktok_listings(url)
         else:
             details.append(f"{channel}:not_implemented")
+            if use_cache_on_fail and code:
+                cached = load_cached_listings(code, channel)
+                if cached:
+                    details.append(f"{channel}:cache:hit")
+                    collected.extend(cached)
+                    worst = "ok"
             continue
 
         details.append(f"{channel}:{result.status}:{result.detail}")
         if result.status == "ok" and result.listings:
             collected.extend(annotate_provenance(result.listings, "live"))
             worst = "ok"
+        elif use_cache_on_fail and code:
+            cached = load_cached_listings(code, channel)
+            if cached:
+                details.append(f"{channel}:cache:hit")
+                collected.extend(cached)
+                worst = "ok"
+            elif result.status in {"blocked", "error"} and worst != "ok":
+                worst = result.status
+            elif worst not in {"ok", "blocked", "error"}:
+                worst = result.status or "empty"
         elif result.status in {"blocked", "error"} and worst != "ok":
             worst = result.status
         elif worst not in {"ok", "blocked", "error"}:
@@ -130,8 +163,10 @@ def smoke_live_listing_depth(
     tickers: list[str] | None = None,
     use_playwright: bool = False,
     attempt_live: bool = True,
+    prefer_cache: bool = False,
+    use_cache_on_fail: bool = True,
 ) -> list[TickerListingRow]:
-    """Seed coverage + optional live smoke for tickers that have shop URLs."""
+    """Seed coverage + optional live/cache smoke for tickers that have shop URLs."""
     companies = load_seed_companies()
     if tickers:
         want = {t.upper() for t in tickers}
@@ -150,7 +185,11 @@ def smoke_live_listing_depth(
             row.live_detail = "B2B / no marketplace shop — keep listings empty"
             continue
         status, detail, live_listings = attempt_live_for_shops(
-            shops, use_playwright=use_playwright
+            shops,
+            stock_code=row.stock_code,
+            use_playwright=use_playwright,
+            prefer_cache=prefer_cache,
+            use_cache_on_fail=use_cache_on_fail,
         )
         row.live_status = status
         row.live_detail = detail

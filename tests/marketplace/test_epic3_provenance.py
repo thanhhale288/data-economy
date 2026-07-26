@@ -66,6 +66,11 @@ def test_block_still_falls_back_to_seed(monkeypatch, sample_company):
         "crawlers.marketplace.shop_finder.fetch_shopee_listings",
         blocked,
     )
+    # Task #35: RAL has allowlisted live cache — disable it to assert seed path.
+    monkeypatch.setattr(
+        "crawlers.marketplace.shop_finder.load_cached_listings",
+        lambda *_a, **_k: [],
+    )
     products = scrape_marketplace_products(sample_company, attempt_live=True)
     assert products
     assert all(p.get("source") == "seed" for p in products)

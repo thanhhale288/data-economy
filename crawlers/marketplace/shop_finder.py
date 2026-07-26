@@ -27,6 +27,7 @@ from crawlers.marketplace.common import (
     normalize_listing_source,
     provenance_counts,
 )
+from crawlers.marketplace.live_cache import load_cached_listings
 from crawlers.marketplace.shopee import fetch_shopee_listings
 from crawlers.marketplace.tiktok import fetch_tiktok_listings
 from ml.shop_matcher import DEFAULT_THRESHOLD, ShopMatcher
@@ -132,26 +133,50 @@ def find_shops_for_company(company: Company) -> list[dict]:
 def _attempt_live_scrape(
     shop: dict[str, Any],
     *,
+    stock_code: str,
     client: httpx.Client | None,
     rate_limiter,
+    prefer_cache: bool = False,
 ) -> list[dict[str, Any]]:
-    """Try live scrape for one shop; return listings or empty on block/error."""
+    """Try live scrape for one shop; on fail use allowlisted cache; else empty.
+
+    Order (Task #35): optional prefer_cache → HTTP live → allowlisted cache.
+    Never invents listings. Empty return lets caller use seed/fallback.
+    """
     channel = shop["channel_type"]
     url = shop["url"]
+
+    if prefer_cache:
+        cached = load_cached_listings(stock_code, channel)
+        if cached:
+            return cached
+
     if channel == "shopee":
         result = fetch_shopee_listings(url, client=client, rate_limiter=rate_limiter)
     elif channel == "tiktok":
         result = fetch_tiktok_listings(url, client=client, rate_limiter=rate_limiter)
     else:
-        # Lazada optional — not implemented live; empty triggers fallback
-        logger.info("Lazada live scrape not implemented; falling back for %s", url)
-        return []
+        # Lazada optional — not implemented live; try cache then empty
+        logger.info("Lazada live scrape not implemented for %s", url)
+        cached = load_cached_listings(stock_code, channel)
+        return cached if cached else []
 
     if result.status == "ok" and result.listings:
         return annotate_provenance(result.listings, "live")
 
+    cached = load_cached_listings(stock_code, channel)
+    if cached:
+        logger.info(
+            "Live scrape %s for %s (%s): %s — using allowlisted live cache",
+            result.status,
+            url,
+            channel,
+            result.detail,
+        )
+        return cached
+
     logger.warning(
-        "Live marketplace scrape %s for %s (%s): %s — using sourced fallback",
+        "Live marketplace scrape %s for %s (%s): %s — no cache; using sourced fallback",
         result.status,
         url,
         channel,
@@ -166,11 +191,12 @@ def scrape_marketplace_products(
     client: httpx.Client | None = None,
     attempt_live: bool = True,
     rate_limiter=None,
+    prefer_cache: bool = False,
 ) -> list[dict]:
-    """Scrape listings for a company: live first (optional), then seed/fallback.
+    """Scrape listings for a company: live (+cache), then seed/fallback.
 
-    Never invents sales numbers. On anti-bot → empty live result + log +
-    sourced seed/fallback with provenance.
+    Never invents sales numbers. On anti-bot → allowlisted live cache if present,
+    else sourced seed/fallback with provenance.
     """
     seed = load_seed_for_ticker(company.stock_code)
     shops = find_shops_for_company(company)
@@ -182,7 +208,13 @@ def scrape_marketplace_products(
             if not shop.get("is_match"):
                 continue
             live_listings.extend(
-                _attempt_live_scrape(shop, client=client, rate_limiter=limiter)
+                _attempt_live_scrape(
+                    shop,
+                    stock_code=company.stock_code,
+                    client=client,
+                    rate_limiter=limiter,
+                    prefer_cache=prefer_cache,
+                )
             )
 
     if live_listings:

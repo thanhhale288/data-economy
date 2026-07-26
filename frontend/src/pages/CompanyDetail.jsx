@@ -358,11 +358,20 @@ export default function CompanyDetail() {
                   <th>Units est.</th>
                   <th>Revenue est.</th>
                   <th>Rating</th>
+                  <th>Nguồn</th>
                   <th>Crawl</th>
                 </tr>
               </thead>
               <tbody>
-                {mktListings.map((ml) => (
+                {mktListings.map((ml) => {
+                  const src = (ml.source || 'seed').toLowerCase()
+                  const badgeClass =
+                    src === 'live'
+                      ? 'badge-success'
+                      : src === 'fallback'
+                        ? 'badge-warning'
+                        : 'badge-info'
+                  return (
                   <tr key={ml.id}>
                     <td>{ml.platform}</td>
                     <td>
@@ -378,13 +387,17 @@ export default function CompanyDetail() {
                     <td>{ml.units_sold_est != null ? formatGrouped(ml.units_sold_est) : '—'}</td>
                     <td>{formatVND(ml.revenue_est)}</td>
                     <td>{ml.rating != null ? ml.rating.toFixed(1) : '—'}</td>
+                    <td>
+                      <span className={`badge ${badgeClass}`}>{src}</span>
+                    </td>
                     <td>{formatWhen(ml.crawled_at)}</td>
                   </tr>
-                ))}
+                  )
+                })}
               </tbody>
             </table>
             <p className="chart-note">
-              Ước lượng từ snapshot listing (seed/fallback khi live scrape tạm hoãn) —
+              Badge nguồn ∈ live|seed|fallback (ADR-0002: live có thể từ cache allowlist khi HTTP 403) —
               không phải doanh thu kiểm toán.
             </p>
             {productData.length > 0 && (

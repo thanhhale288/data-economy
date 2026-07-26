@@ -438,13 +438,14 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
 - [x] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
 - [x] **Task #34 — Listing depth** — curated DQC (price, units null) + live smoke report; không bịa GMV peer B2B; docs mẫu niêm yết vs TMĐT
-- [ ] **Task #35 — Marketplace live strategy** — allowlist+cache / session / API spike; ADR ngắn; không silent invent (bằng chứng #34: live Shopee/TikTok `live_ok=0`, HTTP 403)
+- [x] **Task #35 — Marketplace live strategy** — ADR-0002 allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; demo path `data/raw/marketplace_live_cache/` (RAL/VNM)
 - [ ] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
 - [ ] **Task #37 — Industry-ratio re-gate** — wire chỉ khi có citation CBCT; không dùng % KT số/GDP
 - [ ] **Task #38 — GRDP/VA re-gate** — crawl chỉ khi NSO table ID xác nhận
 - [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
-- [ ] **Task #41 — GMV backfill sau live/cache (nợ từ #34)** — khi #35 có đường ổn định: điền `units_sold_est` cho DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; không invent; GMV tickers có thể tăng >5
+- [ ] **Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)** — điền `units_sold_est` DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; refresh snapshot `marketplace_live_cache/` bằng capture thật + PROVENANCE; không invent; GMV tickers có thể tăng >5
+- [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay `SHOPEE_SESSION_COOKIE`/`TIKTOK_SESSION_COOKIE` (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 

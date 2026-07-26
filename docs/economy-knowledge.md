@@ -232,6 +232,11 @@ cộng peer clusters (VHC, ANV, … DQC, AAA, DCM, …) — xem `data/seeds/comp
 | **Mẫu có listing** | ≥1 dòng `marketplace_listings` | 6 |
 | **Mẫu có GMV listing** | Listing đủ `price` × `units_sold_est` | 5 (DQC chỉ có giá catalog — units null) |
 
+**Live marketplace (Task #35):** mặc định **allowlist + cache + badge**
+(`docs/adr/0002-marketplace-live-strategy.md`). Snapshot demo:
+`data/raw/marketplace_live_cache/` (RAL×shopee, VNM×tiktok). HTTP 403 → cache
+allowlist → seed → fallback — không bịa units.
+
 **10 DN mẫu ≠ 10 DN có listing.** Peer B2B (thép, hóa chất, …) giữ
 `marketplace_listings: []` — không bịa GMV. Báo cáo ops:
 `.scratch/epic3-task34-listing-depth.md`.
