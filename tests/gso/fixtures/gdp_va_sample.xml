@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<message:StructureSpecificData xmlns:ss="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/data/structurespecific" xmlns:message="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/message" xmlns:common="http://www.sdmx.org/resources/sdmxml/schemas/v2_1/common" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:ns1="urn:sdmx:org.sdmx.infomodel.datastructure.DataStructure=IMF:ECOFIN_DSD(1.0):ObsLevelDim:TIME_PERIOD">
+  <message:Header>
+    <message:ID>TEST-GDP-VA</message:ID>
+    <message:Test>true</message:Test>
+    <message:Prepared>2026-07-26T00:00:00Z</message:Prepared>
+    <message:Sender id="GSO"/>
+  </message:Header>
+  <message:DataSet>
+    <!-- Annual series: should be skipped when quarterly preferred -->
+    <Series DATA_DOMAIN="NAG" REF_AREA="VN" INDICATOR="NGDPVA_R_ISIC4_C_XDC" COUNTERPART_AREA="_Z" FREQ="A" BASE_PER="2010" UNIT_MULT="9">
+      <Obs TIME_PERIOD="2024" OBS_VALUE="1477401.5"/>
+    </Series>
+    <Series DATA_DOMAIN="NAG" REF_AREA="VN" INDICATOR="NGDPVA_R_ISIC4_C_XDC" COUNTERPART_AREA="_Z" FREQ="Q" BASE_PER="2010" UNIT_MULT="9">
+      <Obs TIME_PERIOD="2024-Q1" OBS_VALUE="350000"/>
+      <Obs TIME_PERIOD="2024-Q2" OBS_VALUE="360000"/>
+      <Obs TIME_PERIOD="bad-Q" OBS_VALUE="1"/>
+      <Obs TIME_PERIOD="2024-Q3" OBS_VALUE="NA"/>
+    </Series>
+    <Series DATA_DOMAIN="NAG" REF_AREA="VN" INDICATOR="NGDPVA_ISIC4_C_XDC" COUNTERPART_AREA="_Z" FREQ="Q" BASE_PER="_Z" UNIT_MULT="9">
+      <Obs TIME_PERIOD="2024-Q1" OBS_VALUE="700000"/>
+    </Series>
+    <!-- Unmapped industry aggregate — must not invent into VA_C -->
+    <Series DATA_DOMAIN="NAG" REF_AREA="VN" INDICATOR="NGDPVA_ISIC4_B_XDC" COUNTERPART_AREA="_Z" FREQ="Q" BASE_PER="_Z" UNIT_MULT="9">
+      <Obs TIME_PERIOD="2024-Q1" OBS_VALUE="999"/>
+    </Series>
+  </message:DataSet>
+</message:StructureSpecificData>

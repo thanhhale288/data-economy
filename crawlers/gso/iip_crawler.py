@@ -1,9 +1,12 @@
 """GSO/NSO macro crawler (VSIC Section C).
 
-- IIP: monthly NSDP SDMX (`nsdp.nso.gov.vn`), series by INDICATOR key.
+- IIP: monthly NSDP SDMX (`nsdp.nso.gov.vn` IIPVNM.xml), series by INDICATOR key.
+- Manufacturing VA: National Accounts SDMX (`GDPVNM.xml`) — quarterly preferred,
+  step-held to monthly (no invented intra-period path).
 - Shipment / inventory: annual PX-Web (`pxweb.nso.gov.vn` E07.03 / E07.04),
   step-held to monthly via `pxweb_client` (same policy as OECD INDIGO).
 
+Province-by-industry GRDP remains deferred (no confirmed table ID).
 Sourced fallbacks only when live fetches fail — never random values.
 """
 
@@ -11,6 +14,7 @@ from __future__ import annotations
 
 import csv
 import logging
+import re
 from dataclasses import dataclass, field
 from datetime import date, datetime
 from pathlib import Path
@@ -34,24 +38,62 @@ GSO_IIP_URLS: tuple[str, ...] = (
     "https://nsdp.gso.gov.vn/GSO-chung/SDMXFiles/GSO/IIPVNM.xml",
 )
 
-# Map SDMX INDICATOR concept id → (vsic_code, indicator_code, indicator_name).
-# AIP_ISIC4_C_IX = Manufacturing / chế biến chế tạo (ISIC/VSIC Section C).
-INDICATOR_BY_SDMX_KEY: dict[str, tuple[str, str, str]] = {
-    "AIP_ISIC4_C_IX": (
+GSO_GDP_VA_URLS: tuple[str, ...] = (
+    "https://nsdp.nso.gov.vn/GSO-chung/SDMXFiles/GSO/GDPVNM.xml",
+    "http://nsdp.nso.gov.vn/GSO-chung/SDMXFiles/GSO/GDPVNM.xml",
+)
+
+
+@dataclass(frozen=True)
+class SdmxIndicatorSpec:
+    """Map one SDMX INDICATOR key to a `gso_macro` series."""
+
+    vsic_code: str
+    indicator_code: str
+    indicator_name: str
+    unit: str | None = None  # None → index_{BASE_PER}=100 (IIP-style)
+    prefer_freq: str | None = None  # e.g. "Q" over "A" when both exist
+    expand_to_monthly: bool = False
+
+
+# AIP_ISIC4_C_IX = Manufacturing IIP (ISIC/VSIC Section C).
+# NGDPVA_*_ISIC4_C_XDC = National-accounts manufacturing value added (not GRDP).
+INDICATOR_BY_SDMX_KEY: dict[str, SdmxIndicatorSpec] = {
+    "AIP_ISIC4_C_IX": SdmxIndicatorSpec(
         "C",
         "IIP_C",
         "Chỉ số SXCN - Chế biến chế tạo",
     ),
+    "NGDPVA_R_ISIC4_C_XDC": SdmxIndicatorSpec(
+        "C",
+        "VA_C",
+        "Giá trị gia tăng CBCT (giá so sánh 2010)",
+        unit="billion_vnd_constant_2010",
+        prefer_freq="Q",
+        expand_to_monthly=True,
+    ),
+    "NGDPVA_ISIC4_C_XDC": SdmxIndicatorSpec(
+        "C",
+        "VA_C_NOMINAL",
+        "Giá trị gia tăng CBCT (giá hiện hành)",
+        unit="billion_vnd_current",
+        prefer_freq="Q",
+        expand_to_monthly=True,
+    ),
 }
 
+IIP_INDICATOR_CODES: frozenset[str] = frozenset({"IIP_C"})
+PXWEB_INDICATOR_CODES: frozenset[str] = frozenset({"SHIPMENT_C", "INVENTORY_C"})
+GDP_VA_INDICATOR_CODES: frozenset[str] = frozenset({"VA_C", "VA_C_NOMINAL"})
+
 # Target Section C series this crawler is responsible for.
-TARGET_INDICATOR_CODES: frozenset[str] = frozenset(
-    {"IIP_C", "SHIPMENT_C", "INVENTORY_C"}
+TARGET_INDICATOR_CODES: frozenset[str] = (
+    IIP_INDICATOR_CODES | PXWEB_INDICATOR_CODES | GDP_VA_INDICATOR_CODES
 )
 
-FALLBACK_CSV = (
-    Path(__file__).resolve().parents[2] / "data" / "raw" / "gso_iip_fallback.csv"
-)
+RAW_DIR = Path(__file__).resolve().parents[2] / "data" / "raw"
+FALLBACK_CSV = RAW_DIR / "gso_iip_fallback.csv"
+VA_FALLBACK_CSV = RAW_DIR / "gso_va_fallback.csv"
 FALLBACK_SOURCE = "GSO_FALLBACK"
 LIVE_SOURCE = "GSO"
 
@@ -145,6 +187,11 @@ def _parse_period(period_str: str) -> date | None:
     text = (period_str or "").strip()
     if not text:
         return None
+    quarterly = re.fullmatch(r"(\d{4})-Q([1-4])", text, flags=re.IGNORECASE)
+    if quarterly:
+        year = int(quarterly.group(1))
+        quarter = int(quarterly.group(2))
+        return date(year, (quarter - 1) * 3 + 1, 1)
     for fmt in ("%Y-%m-%d", "%Y-%m", "%Y"):
         try:
             dt = datetime.strptime(text, fmt)
@@ -164,11 +211,106 @@ def _parse_obs_value(value_str: str) -> float | None:
         return None
 
 
+def _expand_step_hold_to_monthly(
+    records: list[dict[str, Any]], *, freq: str
+) -> list[dict[str, Any]]:
+    """Expand annual/quarterly levels to monthly via step-hold (no invented path)."""
+    freq_norm = (freq or "M").upper()
+    if freq_norm in {"M", "MONTHLY", ""}:
+        return list(records)
+
+    out: list[dict[str, Any]] = []
+    for record in records:
+        year = record["period"].year
+        start_month = record["period"].month
+        if freq_norm in {"A", "ANNUAL"}:
+            months = range(1, 13)
+        elif freq_norm in {"Q", "QUARTERLY"}:
+            months = range(start_month, start_month + 3)
+        else:
+            out.append(dict(record))
+            continue
+        for month in months:
+            row = dict(record)
+            row["period"] = date(year, month, 1)
+            out.append(row)
+    return out
+
+
+def _resolve_unit(spec: SdmxIndicatorSpec, series: dict[str, Any]) -> str:
+    if spec.unit:
+        return spec.unit
+    base_per = _attr(series, "BASE_PER") or "2015"
+    if base_per in {"", "_Z"}:
+        base_per = "2015"
+    return f"index_{base_per}=100"
+
+
+def _emit_series_observations(
+    *,
+    series: dict[str, Any],
+    spec: SdmxIndicatorSpec,
+    indicator_key: str,
+    result: ParseResult,
+) -> list[dict[str, Any]]:
+    unit = _resolve_unit(spec, series)
+    freq = (_attr(series, "FREQ") or "M").upper()
+    observations = _as_list(series.get("Obs"))
+    if not observations:
+        result.skipped.append(f"empty_observations:{indicator_key}")
+        return []
+
+    raw: list[dict[str, Any]] = []
+    for obs in observations:
+        if not isinstance(obs, dict):
+            result.skipped.append(f"non_dict_obs:{indicator_key}")
+            continue
+        period_str = _attr(obs, "TIME_PERIOD")
+        value_str = _attr(obs, "OBS_VALUE")
+        if not period_str:
+            result.skipped.append(f"missing_TIME_PERIOD:{indicator_key}")
+            continue
+        period = _parse_period(period_str)
+        if period is None:
+            result.skipped.append(
+                f"invalid_TIME_PERIOD:{indicator_key}:{period_str}"
+            )
+            continue
+        if not value_str:
+            result.skipped.append(
+                f"missing_OBS_VALUE:{indicator_key}:{period_str}"
+            )
+            continue
+        value = _parse_obs_value(value_str)
+        if value is None:
+            result.skipped.append(
+                f"invalid_OBS_VALUE:{indicator_key}:{period_str}:{value_str}"
+            )
+            continue
+        raw.append(
+            {
+                "vsic_code": spec.vsic_code,
+                "indicator_code": spec.indicator_code,
+                "indicator_name": spec.indicator_name,
+                "period": period,
+                "value": value,
+                "unit": unit,
+                "source": LIVE_SOURCE,
+            }
+        )
+
+    if spec.expand_to_monthly:
+        return _expand_step_hold_to_monthly(raw, freq=freq)
+    return raw
+
+
 def parse_sdmx_series(xml_text: str) -> ParseResult:
     """Parse GSO StructureSpecificData SDMX XML into GsoMacro-ready records.
 
     Identifies series via the INDICATOR dimension (e.g. AIP_ISIC4_C_IX).
     Skips missing/invalid observations with reasons; does not raise on bad obs.
+    When a mapped indicator prefers FREQ=Q and quarterly series exist, annual
+    series for that indicator are ignored (avoids colliding monthly expansions).
     """
     if not xml_text or not xml_text.strip():
         raise GsoParseError("Empty SDMX document")
@@ -186,63 +328,42 @@ def parse_sdmx_series(xml_text: str) -> ParseResult:
     except Exception as exc:
         raise GsoParseError(f"Unexpected SDMX structure: {exc}") from exc
 
+    grouped: dict[str, list[dict[str, Any]]] = {}
     for series in series_list:
         indicator_key = _attr(series, "INDICATOR")
         result.series_found.append(indicator_key or "<missing>")
-        mapping = INDICATOR_BY_SDMX_KEY.get(indicator_key)
-        if not mapping:
-            if indicator_key:
-                result.series_unmapped.append(indicator_key)
+        if not indicator_key:
+            result.skipped.append("series_missing_INDICATOR")
+            continue
+        if indicator_key not in INDICATOR_BY_SDMX_KEY:
+            result.series_unmapped.append(indicator_key)
+            continue
+        grouped.setdefault(indicator_key, []).append(series)
+
+    for indicator_key, series_group in grouped.items():
+        spec = INDICATOR_BY_SDMX_KEY[indicator_key]
+        selected = series_group
+        if spec.prefer_freq:
+            preferred = [
+                s
+                for s in series_group
+                if (_attr(s, "FREQ") or "").upper() == spec.prefer_freq.upper()
+            ]
+            if preferred:
+                selected = preferred
             else:
-                result.skipped.append("series_missing_INDICATOR")
-            continue
-
-        vsic_code, indicator_code, indicator_name = mapping
-        base_per = _attr(series, "BASE_PER") or "2015"
-        unit = f"index_{base_per}=100"
-        observations = _as_list(series.get("Obs"))
-
-        if not observations:
-            result.skipped.append(f"empty_observations:{indicator_key}")
-            continue
-
-        for obs in observations:
-            if not isinstance(obs, dict):
-                result.skipped.append(f"non_dict_obs:{indicator_key}")
-                continue
-            period_str = _attr(obs, "TIME_PERIOD")
-            value_str = _attr(obs, "OBS_VALUE")
-            if not period_str:
-                result.skipped.append(f"missing_TIME_PERIOD:{indicator_key}")
-                continue
-            period = _parse_period(period_str)
-            if period is None:
                 result.skipped.append(
-                    f"invalid_TIME_PERIOD:{indicator_key}:{period_str}"
+                    f"prefer_freq_missing:{indicator_key}:{spec.prefer_freq}"
                 )
-                continue
-            if not value_str:
-                result.skipped.append(
-                    f"missing_OBS_VALUE:{indicator_key}:{period_str}"
-                )
-                continue
-            value = _parse_obs_value(value_str)
-            if value is None:
-                result.skipped.append(
-                    f"invalid_OBS_VALUE:{indicator_key}:{period_str}:{value_str}"
-                )
-                continue
 
-            result.records.append(
-                {
-                    "vsic_code": vsic_code,
-                    "indicator_code": indicator_code,
-                    "indicator_name": indicator_name,
-                    "period": period,
-                    "value": value,
-                    "unit": unit,
-                    "source": LIVE_SOURCE,
-                }
+        for series in selected:
+            result.records.extend(
+                _emit_series_observations(
+                    series=series,
+                    spec=spec,
+                    indicator_key=indicator_key,
+                    result=result,
+                )
             )
 
     return result
@@ -346,10 +467,11 @@ def fetch_gso_iip(
                 )
                 if missing:
                     detail += f"; series_unavailable={missing}"
-                    # Shipment/inventory live in PX-Web, not this SDMX file — expected.
-                    if set(missing) <= {"SHIPMENT_C", "INVENTORY_C"}:
+                    # Shipment/inventory/VA live in other endpoints — expected here.
+                    expected_elsewhere = PXWEB_INDICATOR_CODES | GDP_VA_INDICATOR_CODES
+                    if set(missing) <= expected_elsewhere:
                         logger.info(
-                            "SDMX IIP omits %s (fetched separately via PX-Web)",
+                            "SDMX IIP omits %s (fetched separately)",
                             missing,
                         )
                     else:
@@ -425,6 +547,124 @@ def fetch_gso_iip(
     )
 
 
+def fetch_gso_va(
+    *,
+    urls: tuple[str, ...] | None = None,
+    client: httpx.Client | None = None,
+    use_fallback: bool = True,
+) -> FetchResult:
+    """Fetch manufacturing VA from GDPVNM.xml; sourced CSV fallback on failure.
+
+    Maps national-accounts Section C value added (`NGDPVA_*_ISIC4_C_XDC`) only.
+    Does not invent province GRDP or treat IIP as VA.
+    """
+    candidate_urls = urls or GSO_GDP_VA_URLS
+    errors: list[str] = []
+    owns_client = client is None
+    http_client = client or httpx.Client(
+        timeout=HTTP_TIMEOUT, follow_redirects=True
+    )
+
+    try:
+        for url in candidate_urls:
+            try:
+                logger.info("Fetching GSO GDP/VA SDMX from %s", url)
+                xml_text = _download_xml(url, http_client)
+                parse = parse_sdmx_series(xml_text)
+                va_records = [
+                    r
+                    for r in parse.records
+                    if r["indicator_code"] in GDP_VA_INDICATOR_CODES
+                ]
+                if not va_records:
+                    raise GsoEmptySeriesError(
+                        "No mapped Section C VA observations "
+                        f"(found={parse.series_found}, unmapped={parse.series_unmapped})"
+                    )
+                missing_va = sorted(GDP_VA_INDICATOR_CODES - {r["indicator_code"] for r in va_records})
+                detail = (
+                    f"Parsed {len(va_records)} VA records from {url}; "
+                    f"skipped={len(parse.skipped)}"
+                )
+                if missing_va:
+                    detail += f"; series_unavailable={missing_va}"
+                    logger.warning("GSO GDP SDMX missing VA series %s", missing_va)
+                logger.info(detail)
+                return FetchResult(
+                    records=va_records,
+                    status="ok",
+                    detail=detail,
+                    source_url=url,
+                    parse=parse,
+                )
+            except GsoNetworkError as exc:
+                msg = f"network_error:{url}:{exc}"
+                logger.warning(msg)
+                errors.append(msg)
+            except GsoHttpError as exc:
+                msg = f"http_error:{exc.status_code}:{url}:{exc.body_preview!r}"
+                logger.warning(msg)
+                errors.append(msg)
+            except GsoParseError as exc:
+                msg = f"parse_error:{url}:{exc}"
+                logger.error(msg)
+                errors.append(msg)
+            except GsoEmptySeriesError as exc:
+                msg = f"empty_or_unavailable:{url}:{exc}"
+                logger.warning(msg)
+                errors.append(msg)
+    finally:
+        if owns_client:
+            http_client.close()
+
+    failure_summary = " | ".join(errors) if errors else "no_urls_attempted"
+    if not use_fallback:
+        return FetchResult(
+            records=[],
+            status="error",
+            detail=failure_summary,
+            source_url=None,
+        )
+
+    logger.warning(
+        "All live GSO VA fetches failed (%s); loading deterministic fallback %s",
+        failure_summary,
+        VA_FALLBACK_CSV,
+    )
+    try:
+        records = [
+            r
+            for r in load_fallback_records(VA_FALLBACK_CSV)
+            if r["indicator_code"] in GDP_VA_INDICATOR_CODES
+        ]
+        if not records:
+            raise GsoEmptySeriesError(
+                f"VA fallback CSV produced no VA records: {VA_FALLBACK_CSV}"
+            )
+    except (OSError, GsoEmptySeriesError) as exc:
+        logger.error("VA fallback load failed: %s", exc)
+        return FetchResult(
+            records=[],
+            status="error",
+            detail=f"{failure_summary} | fallback_error:{exc}",
+            source_url=str(VA_FALLBACK_CSV),
+        )
+
+    missing = sorted(GDP_VA_INDICATOR_CODES - {r["indicator_code"] for r in records})
+    detail = (
+        f"fallback_after: {failure_summary}; "
+        f"loaded {len(records)} VA records from {VA_FALLBACK_CSV}"
+    )
+    if missing:
+        detail += f"; series_unavailable={missing}"
+    return FetchResult(
+        records=records,
+        status="fallback",
+        detail=detail,
+        source_url=str(VA_FALLBACK_CSV),
+    )
+
+
 def save_gso_records(db: Session, records: list[dict[str, Any]]) -> int:
     """Upsert GsoMacro rows on (vsic_code, indicator_code, period). Idempotent."""
     inserted = 0
@@ -465,39 +705,47 @@ def fetch_gso_macro(
     client: httpx.Client | None = None,
     use_fallback: bool = True,
 ) -> FetchResult:
-    """Fetch IIP (SDMX) + shipment/inventory (PX-Web) for Section C."""
+    """Fetch IIP (SDMX) + VA (GDP SDMX) + shipment/inventory (PX-Web) for Section C."""
     from crawlers.gso.pxweb_client import fetch_pxweb_section_c
 
     owns = client is None
     http = client or httpx.Client(timeout=HTTP_TIMEOUT, follow_redirects=True)
     try:
         iip = fetch_gso_iip(urls=urls, client=http, use_fallback=use_fallback)
+        va = fetch_gso_va(client=http, use_fallback=use_fallback)
         px = fetch_pxweb_section_c(client=http, use_fallback=use_fallback)
 
-        # IIP-only SDMX naturally lacks shipment/inventory — drop that noise once PX-Web runs.
+        # IIP-only SDMX naturally lacks shipment/inventory/VA — drop that noise once
+        # the dedicated fetches run.
         iip_detail = iip.detail
         if "series_unavailable=" in iip_detail:
             iip_detail = iip_detail.split("; series_unavailable=")[0]
 
-        records = list(iip.records) + list(px.records)
+        records = list(iip.records) + list(va.records) + list(px.records)
         missing = _unavailable_targets(records)
-        parts = [f"iip:{iip.status}:{iip_detail}", f"pxweb:{px.status}:{px.detail}"]
+        parts = [
+            f"iip:{iip.status}:{iip_detail}",
+            f"va:{va.status}:{va.detail}",
+            f"pxweb:{px.status}:{px.detail}",
+        ]
         if missing:
             parts.append(f"series_unavailable={missing}")
         detail = " | ".join(parts)
 
+        statuses = {iip.status, va.status, px.status}
         if not records:
             status = "error"
-        elif iip.status == "error" and px.status == "error":
+        elif statuses <= {"error"}:
             status = "error"
-        elif iip.status == "fallback" or px.status == "fallback":
+        elif "fallback" in statuses:
             status = "fallback"
         else:
             status = "ok"
 
-        source_url = iip.source_url
+        source_parts = [p for p in (iip.source_url, va.source_url) if p]
         if px.source_urls:
-            source_url = f"{source_url or ''};{','.join(px.source_urls)}"
+            source_parts.append(",".join(px.source_urls))
+        source_url = ";".join(source_parts) if source_parts else None
 
         return FetchResult(
             records=records,

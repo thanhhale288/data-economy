@@ -109,6 +109,10 @@ Các dimension hay gặp:
 
 **Index of Industrial Production** — Chỉ số sản xuất công nghiệp. Trong project: `IIP_C` cho Section C; biến mục tiêu dự báo chính của ML Lab.
 
+### Manufacturing VA (`VA_C`)
+
+**Value added** quốc gia cho VSIC/ISIC Section C từ NSO SDMX `GDPVNM.xml` (`NGDPVA_R_ISIC4_C_XDC` → `VA_C` giá so sánh 2010; `NGDPVA_ISIC4_C_XDC` → `VA_C_NOMINAL`). Khác Digital VA (cấp DN) và khác IIP (chỉ số). **Không** phải GRDP tỉnh×ngành (vẫn deferred).
+
 ### Shipment index
 
 Chỉ số **xuất hàng** công nghiệp (hàng đã xuất khỏi nhà máy). Plan: `SHIPMENT_C`. File SDMX IIP hiện không có → cần nguồn khác (PX-Web).

@@ -12,7 +12,8 @@
 # Extracted: 2026-07-17; host update noted: 2026-07-18
 # Unit: index, BASE_PER=2015 (2015=100)
 #
-# Shipment (chỉ số tiêu thụ) and inventory (chỉ số tồn kho) are NOT in the NSDP
-# IIP SDMX document. Live PX-Web: pxweb.gso.gov.vn times out; pxweb.nso.gov.vn
-# responds (HTML) but table IDs for shipment/inventory are not yet wired — those
-# series are omitted rather than fabricated.
+# Shipment (E07.03) and inventory (E07.04) are NOT in this IIP SDMX document —
+# they are crawled separately via PX-Web (`pxweb.nso.gov.vn`) with their own
+# fallbacks under data/raw/gso_pxweb_*_fallback.json.
+# Manufacturing VA is NOT in this file — see GDPVNM.xml + gso_va_fallback.csv
+# (Task #38).
