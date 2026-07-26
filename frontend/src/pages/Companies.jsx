@@ -45,18 +45,19 @@ export default function Companies() {
   return (
     <div>
       <h2 className="page-title">{title}</h2>
-      <p className="chart-note" style={{ marginTop: -8, marginBottom: 16 }}>
-        Hồ sơ số: website / Shopee / TikTok + ước lượng online. Case study:{' '}
-        <Link to="/companies/RAL">Rạng Đông (RAL)</Link>
-        {vsicFilter ? (
-          <>
-            {' · '}
-            <Link to="/companies">Xóa lọc VSIC {vsicFilter}</Link>
-            {' · '}
-            <Link to={`/benchmark?vsic=${vsicFilter}`}>Benchmark division {vsicFilter}</Link>
-          </>
-        ) : null}
-      </p>
+      {vsicFilter ? (
+        <div className="page-nav-actions filter-actions" role="group" aria-label="Thao tác bộ lọc VSIC">
+          <Link to="/companies" className="page-nav-chip">
+            Xóa bộ lọc VSIC {vsicFilter}
+          </Link>
+          <Link
+            to={`/benchmark?vsic=${vsicFilter}`}
+            className="page-nav-chip page-nav-chip--accent"
+          >
+            So sánh benchmark ngành {vsicFilter}
+          </Link>
+        </div>
+      ) : null}
       {companies.length === 0 ? (
         <div className="empty-state">
           {vsicFilter
@@ -64,6 +65,7 @@ export default function Companies() {
             : 'Chưa có DN trong DB — chạy seed (`PYTHONPATH=. python -m backend.app.seed`).'}
         </div>
       ) : (
+        <div className="table-scroll">
         <table>
           <thead>
             <tr>
@@ -78,7 +80,6 @@ export default function Companies() {
           </thead>
           <tbody>
             {companies.map((c) => {
-              const isRal = c.stock_code === 'RAL'
               const channels = c.digital_channels
                 ? Object.entries(c.digital_channels)
                     .filter(([, v]) => v)
@@ -86,14 +87,9 @@ export default function Companies() {
                     .join(', ')
                 : ''
               return (
-                <tr key={c.stock_code} style={isRal ? { background: 'var(--surface-muted, #fff8f9)' } : undefined}>
+                <tr key={c.stock_code}>
                   <td>
                     <strong>{c.stock_code}</strong>
-                    {isRal && (
-                      <span className="badge badge-info" style={{ marginLeft: 6 }}>
-                        Case study
-                      </span>
-                    )}
                   </td>
                   <td>{c.name}</td>
                   <td>
@@ -115,13 +111,14 @@ export default function Companies() {
                   </td>
                   <td>{channels || '—'}</td>
                   <td>
-                    <Link to={`/companies/${c.stock_code}`}>Chi tiết →</Link>
+                    <Link to={`/companies/${c.stock_code}`} className="link-action">Chi tiết →</Link>
                   </td>
                 </tr>
               )
             })}
           </tbody>
         </table>
+        </div>
       )}
     </div>
   )

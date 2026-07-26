@@ -25,6 +25,24 @@ function formatTs(value) {
   return value ? new Date(value).toLocaleString('vi-VN') : '—'
 }
 
+/** Compact crawl/job logs for cards — full text stays in title tooltip. */
+function shortenLog(text, maxLen = 88) {
+  if (text == null || text === '') return null
+  let s = String(text)
+    .replace(/https?:\/\/\S+/gi, '')
+    .replace(/Parsed\s+(\d+)\s+records\s+from\s*/gi, '$1 rec ')
+    .replace(/\s+from\s*(?=[(;|]|$)/gi, ' ')
+    .replace(/\bn=(\d+)\b/g, 'n=$1')
+    .replace(/\s*[|;]\s*/g, ' · ')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/\s+([.,;:])/g, '$1')
+    .replace(/(\s·\s)+/g, ' · ')
+    .trim()
+  if (!s) return '—'
+  if (s.length <= maxLen) return s
+  return `${s.slice(0, maxLen - 1).trimEnd()}…`
+}
+
 export default function Pipeline() {
   const [jobs, setJobs] = useState([])
   const [status, setStatus] = useState(null)
@@ -109,9 +127,6 @@ export default function Pipeline() {
   return (
     <div>
       <h2 className="page-title">Pipeline Monitor</h2>
-      <p className="page-subtitle">
-        Module 3 · job crawl + data_cleaning · quality từ parquet / cleaning_report
-      </p>
 
       {error && (
         <div className="empty-state" style={{ marginBottom: 16 }}>
@@ -119,7 +134,7 @@ export default function Pipeline() {
         </div>
       )}
 
-      <div style={{ display: 'flex', gap: 8, flexWrap: 'wrap', marginBottom: 24 }}>
+      <div className="toolbar">
         {CRAWLERS.map((c) => (
           <button
             key={c.id}
@@ -162,8 +177,8 @@ export default function Pipeline() {
                       </span>
                     )}
                   </div>
-                  <div className="sub muted" style={{ marginTop: 8 }}>
-                    {src.detail || '—'}
+                  <div className="sub muted log-snip" style={{ marginTop: 8 }} title={src.detail || undefined}>
+                    {shortenLog(src.detail) || '—'}
                   </div>
                   <div className="sub muted">
                     Last success: {formatTs(src.last_success_at)}
@@ -205,12 +220,9 @@ export default function Pipeline() {
                   <div className="sub">{run.records_processed} records</div>
                 )}
                 {run.error_message && (
-                  <div className="sub" style={{ color: '#0d9488', fontSize: 12 }}>
-                    {run.error_message}
+                  <div className="sub log-snip" style={{ color: 'var(--danger)', fontSize: 12 }} title={run.error_message}>
+                    {shortenLog(run.error_message)}
                   </div>
-                )}
-                {run.detail && !run.error_message && (
-                  <div className="sub muted" style={{ fontSize: 12 }}>{run.detail}</div>
                 )}
               </div>
             ))}
@@ -252,15 +264,6 @@ export default function Pipeline() {
                 <span>{summary?.vsic_fails ?? '—'}</span>
               </span>
             </div>
-            <p className="chart-note">
-              Nguồn: {quality.report_path}
-              {summary?.series_missing?.length
-                ? ` · series_missing: ${summary.series_missing.join(', ')}`
-                : ' · series_missing: none'}
-              {summary?.artifacts?.length
-                ? ` · artifacts: ${summary.artifacts.join(', ')}`
-                : ''}
-            </p>
           </>
         )}
       </div>
@@ -272,6 +275,7 @@ export default function Pipeline() {
             Chưa có pipeline_jobs — bấm trigger hoặc chạy scheduler.
           </div>
         ) : (
+          <div className="table-scroll">
           <table>
             <thead>
               <tr>
@@ -294,17 +298,21 @@ export default function Pipeline() {
                   <td>{formatTs(j.started_at)}</td>
                   <td>{formatTs(j.finished_at)}</td>
                   <td
+                    className="log-snip"
+                    title={j.error_message || j.detail || undefined}
                     style={{
                       color: j.error_message ? 'var(--danger)' : undefined,
                       fontSize: 12,
+                      maxWidth: 280,
                     }}
                   >
-                    {j.error_message || j.detail || '—'}
+                    {shortenLog(j.error_message || j.detail, 72) || '—'}
                   </td>
                 </tr>
               ))}
             </tbody>
           </table>
+          </div>
         )}
       </div>
     </div>
