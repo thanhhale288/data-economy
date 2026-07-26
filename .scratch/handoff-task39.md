@@ -1,10 +1,10 @@
 # Handoff — Task #39 Scale architecture (toàn Section C)
 
-**Status:** DONE (uncommitted — commit/PR when user asks)  
+**Status:** DONE (PR open)  
 **Branch:** `cursor/epic3-phase2-task39-scale-architecture`  
 **Date:** 2026-07-26  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(pending user request)_  
+**Commit / PR:** `903f298` · PR https://github.com/thanhhale288/data-economy/pull/26  
 **Base:** `main` @ `f4f5022` (Task #38 PR #25 merged)
 
 ---
@@ -31,7 +31,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task39-scale-architecture` · uncommitted on `f4f5022` · PR pending
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task39-scale-architecture` · `903f298` · PR #26
 
 ### Đã làm được gì (đối chiếu AC)
 
