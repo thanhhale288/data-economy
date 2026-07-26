@@ -439,7 +439,7 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
 - [x] **Task #34 — Listing depth** — curated DQC (price, units null) + live smoke report; không bịa GMV peer B2B; docs mẫu niêm yết vs TMĐT
 - [x] **Task #35 — Marketplace live strategy** — ADR-0002 allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; demo path `data/raw/marketplace_live_cache/` (RAL/VNM)
-- [ ] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
+- [x] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
 - [ ] **Task #37 — Industry-ratio re-gate** — wire chỉ khi có citation CBCT; không dùng % KT số/GDP
 - [ ] **Task #38 — GRDP/VA re-gate** — crawl chỉ khi NSO table ID xác nhận
 - [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)

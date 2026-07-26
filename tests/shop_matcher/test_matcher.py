@@ -40,7 +40,30 @@ NEGATIVE_PAIRS = [
     ("VHC", "dienquang_officialstore"),
 ]
 
-NO_MARKETPLACE_TICKERS = ("HPG", "GVR", "DGC", "REE", "BMP", "VHC", "AAA")
+NO_MARKETPLACE_TICKERS = (
+    "HPG",
+    "GVR",
+    "DGC",
+    "REE",
+    "BMP",
+    "VHC",
+    "AAA",
+    "ANV",
+    "IDI",
+    "SBT",
+    "QNS",
+    "HSG",
+    "NKG",
+    "POM",
+    "TLH",
+    "GEE",
+    "TYA",
+    "DPR",
+    "CSM",
+    "DCM",
+    "BFC",
+    "CSV",
+)
 
 COMPANIES = {
     "RAL": "Công ty Cổ phần Bóng đèn Rạng Đông",
@@ -56,6 +79,12 @@ COMPANIES = {
     "DQC": "Công ty Cổ phần Điện Quang",
     "VHC": "Công ty Cổ phần Vĩnh Hoàn",
     "AAA": "Công ty Cổ phần Nhựa An Phát Xanh",
+}
+
+# Rubber peers (not in precision matrix — short token "dong" ⊂ rangdong is a known fuzzy quirk)
+RUBBER_PEERS = {
+    "DPR": "Công ty Cổ phần Cao su Đồng Phú",
+    "CSM": "Công ty Cổ phần Cao su miền Nam",
 }
 
 
@@ -163,8 +192,8 @@ def test_evaluate_discovered_shop_gates_on_threshold():
         )
         is None
     )
-    # Plausible brand handle for Hòa Phát — would pass fuzzy; gating is caller's
-    # responsibility only when discovery finds such a URL (not invented here).
+    # Brand-aligned handle can score ≥ 0.65 (matcher behaviour). Product linking
+    # still requires discover_shops_for_company (flag + QA allowlist) — see gate tests.
     linked = evaluate_discovered_shop(
         company,
         channel_type="shopee",
@@ -174,3 +203,132 @@ def test_evaluate_discovered_shop_gates_on_threshold():
     assert linked["is_match"] is True
     assert linked["match_source"] == "fuzzy_threshold"
     assert linked["match_confidence"] >= DEFAULT_THRESHOLD
+
+
+def test_discovery_disabled_by_default(monkeypatch):
+    from crawlers.marketplace import shop_finder
+
+    monkeypatch.delenv(shop_finder.DISCOVERY_ENABLED_ENV, raising=False)
+    assert shop_finder.is_marketplace_discovery_enabled() is False
+
+    company = type("C", (), {"stock_code": "HPG", "name": COMPANIES["HPG"]})()
+    candidates = [
+        {
+            "ticker": "HPG",
+            "channel_type": "shopee",
+            "url": "https://shopee.vn/hoaphat_official",
+        }
+    ]
+    assert (
+        shop_finder.discover_shops_for_company(
+            company, enabled=None, allowlist=candidates
+        )
+        == []
+    )
+    assert (
+        shop_finder.discover_shops_for_company(
+            company, enabled=False, allowlist=candidates
+        )
+        == []
+    )
+
+
+def test_discovery_enabled_requires_allowlist_and_threshold(monkeypatch):
+    from backend.app.models import Company
+    from crawlers.marketplace import shop_finder
+
+    monkeypatch.setenv(shop_finder.DISCOVERY_ENABLED_ENV, "1")
+    assert shop_finder.is_marketplace_discovery_enabled() is True
+    assert shop_finder.marketplace_discovery_threshold() == 0.65
+
+    hpg = Company(
+        stock_code="HPG",
+        name=COMPANIES["HPG"],
+        vsic_code="2410",
+        exchange="HOSE",
+    )
+    ral = Company(
+        stock_code="RAL",
+        name=COMPANIES["RAL"],
+        vsic_code="2740",
+        exchange="HOSE",
+    )
+    # Enabled but ticker not on QA list → still unlinked (no invent)
+    assert (
+        shop_finder.discover_shops_for_company(
+            hpg,
+            enabled=True,
+            allowlist=[
+                {
+                    "ticker": "RAL",
+                    "channel_type": "shopee",
+                    "url": "https://shopee.vn/rangdong_official",
+                }
+            ],
+        )
+        == []
+    )
+    # HPG brand-perfect URL still unlinked without allowlist entry
+    assert (
+        shop_finder.discover_shops_for_company(
+            hpg,
+            enabled=True,
+            allowlist=[],
+        )
+        == []
+    )
+    # QA allowlisted RAL candidate that passes 0.65 → linked with qa_discovery
+    linked = shop_finder.discover_shops_for_company(
+        ral,
+        enabled=True,
+        allowlist=[
+            {
+                "ticker": "RAL",
+                "channel_type": "shopee",
+                "url": "https://shopee.vn/rangdong_official",
+            }
+        ],
+    )
+    assert len(linked) == 1
+    assert linked[0]["is_match"] is True
+    assert linked[0]["match_source"] == "qa_discovery"
+    assert linked[0]["match_confidence"] >= DEFAULT_THRESHOLD
+
+    # Allowlisted but wrong brand for company → below threshold → empty
+    assert (
+        shop_finder.discover_shops_for_company(
+            ral,
+            enabled=True,
+            allowlist=[
+                {
+                    "ticker": "RAL",
+                    "channel_type": "shopee",
+                    "url": "https://shopee.vn/vinamilk_official",
+                }
+            ],
+        )
+        == []
+    )
+
+
+def test_gvr_aliases_do_not_contaminate_dpr_csm(matcher: ShopMatcher):
+    """GVR marker is specific; DPR/CSM must not inherit gvr ticker handle as a match."""
+    assert matcher.is_match(COMPANIES["GVR"], "gvr_official") is True
+    assert matcher.is_match(RUBBER_PEERS["DPR"], "gvr_official") is False
+    assert matcher.is_match(RUBBER_PEERS["CSM"], "gvr_official") is False
+
+
+def test_train_skips_website_aliases_for_no_shop_tickers(tmp_path, monkeypatch):
+    """Do not force website-host aliases onto the 22 no-shop tickers."""
+    from ml.shop_matcher import matcher as matcher_mod
+
+    monkeypatch.setattr(matcher_mod, "MODEL_PATH", tmp_path / "shop_matcher.joblib")
+    m = ShopMatcher()
+    m.train()
+    # HPG has website but no marketplace shop — no seed_aliases forced
+    hpg_key = matcher_mod._normalize_text(COMPANIES["HPG"])
+    assert hpg_key not in m._seed_aliases
+    # RAL has shop — aliases present
+    ral_key = matcher_mod._normalize_text(COMPANIES["RAL"])
+    assert ral_key in m._seed_aliases
+    assert any("rangdong" in a for a in m._seed_aliases[ral_key])
