@@ -1,10 +1,10 @@
 # Handoff — Task #36 Matcher gate (chỉ DN có shop; discovery có cổng)
 
-**Status:** DONE (code complete; commit/PR khi user yêu cầu)  
+**Status:** DONE (PR open)  
 **Branch:** `cursor/epic3-phase2-task36-matcher-gate`  
 **Date:** 2026-07-26  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(chưa ship — user chưa yêu cầu commit/push)_  
+**Commit / PR:** `9cafd4c` · PR https://github.com/thanhhale288/data-economy/pull/23  
 **Base:** `main` @ `091c0a6` (Task #35 merged)
 
 ---
@@ -36,7 +36,7 @@ export MARKETPLACE_DISCOVERY_THRESHOLD=0.65
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task36-matcher-gate` · _(uncommitted)_ · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task36-matcher-gate` · `9cafd4c` · https://github.com/thanhhale288/data-economy/pull/23
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -89,7 +89,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa yêu cầu | Khi ship |
+| Commit/PR | Shipped PR #23 | Merge khi CI green |
 | Live Shopee search crawler | Ngoài scope — chỉ cổng | Khi có discovery source thật |
 
 ---
