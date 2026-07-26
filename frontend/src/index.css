@@ -321,6 +321,55 @@ td.num,
 .card .sub.down { color: var(--danger); }
 .card .sub.muted { color: var(--muted); }
 
+.card .value.up { color: var(--success); }
+.card .value.down { color: var(--danger); }
+
+.card .value-unit {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--muted);
+  letter-spacing: 0;
+}
+
+.sparkline {
+  display: block;
+  margin-top: 10px;
+  width: 100%;
+  max-width: 160px;
+  height: 34px;
+}
+
+.mini-rank {
+  list-style: none;
+  margin: 10px 0 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.mini-rank li {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  font-size: 12px;
+  color: var(--ink-soft);
+}
+
+.mini-rank-name {
+  min-width: 0;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+
+.mini-rank-val {
+  flex-shrink: 0;
+  font-weight: 700;
+  color: var(--accent);
+}
+
 .metric-strip {
   display: flex;
   flex-wrap: wrap;

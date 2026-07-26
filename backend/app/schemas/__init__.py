@@ -283,8 +283,10 @@ class BenchmarkResult(BaseModel):
 class DashboardSummary(BaseModel):
     iip_latest: float | None = None
     iip_growth_pct: float | None = None
+    iip_yoy_pct: float | None = None
     total_companies: int = 0
     companies_with_ecommerce: int = 0
+    companies_with_metrics: int = 0
     avg_digital_adoption: float | None = None
     total_digital_va: float | None = None
     latest_period: date | None = None

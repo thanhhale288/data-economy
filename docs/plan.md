@@ -91,6 +91,7 @@ flowchart TB
 | Dataset                           | Chỉ tiêu                           | Tần suất (nguồn) | Phương pháp / trạng thái Phase 1 |
 | --------------------------------- | ---------------------------------- | ---------------- | -------------------------------- |
 | IIP (Chỉ số sản xuất công nghiệp) | IIP Section C (`AIP_ISIC4_C_IX`)   | Tháng            | **Đã làm** — SDMX `nsdp.nso.gov.vn/.../IIPVNM.xml` |
+| IIP theo ngành VSIC (cấp 2+)      | IIP từng division / class         | Tháng (nếu có)   | **Deferred** — nguồn NSO/GSO chưa ingest; cần để Dashboard «ngành nổi bật» (tăng/giảm SXCN theo ngành). Không bịa khi thiếu. |
 | Chỉ số tiêu thụ CN CBCT           | Shipment / WHOLE MANUFACTURING     | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.03.px`; step-hold → tháng khi ingest |
 | Chỉ số tồn kho CN CBCT            | Inventory as of 31/12              | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.04.px`; step-hold → tháng khi ingest |
 | GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm          | Chưa (Phase sau) |
@@ -301,6 +302,8 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - Biểu đồ IIP, giá trị gia tăng, xu hướng dự báo
 - Heatmap đóng góp KTS theo nhóm ngành VSIC
 - So sánh OECD leading indicators vs GSO lagging
+- KPI phụ: tăng trưởng IIP (MoM/YoY + sparkline), dự báo 6 tháng (điểm + Δ), cơ cấu Digital VA trong mẫu, độ phủ Digital metrics
+- **Deferred — «Ngành nổi bật» theo tăng trưởng IIP từng VSIC:** cần chuỗi IIP theo ngành (ít nhất VSIC 2 chữ số). Hiện chỉ có `IIP_C` Section C tổng (`vsic_code=C`); không xếp hạng tăng/giảm theo ngành khi thiếu dữ liệu. Làm sau khi crawl/seed GSO có IIP theo ngành (xem Luồng A).
 
 ### Module 2: Doanh nghiệp (~10 DN mẫu)
 
@@ -444,6 +447,8 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [ ] **Task #38 — GRDP/VA re-gate** — crawl chỉ khi NSO table ID xác nhận
 - [ ] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; doc + stub (không invent trăm BCTC)
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
+
+**Deferred (sau khi có nguồn):** IIP theo ngành VSIC (cấp 2+) → unlock Dashboard card «Ngành nổi bật» (top/bottom tăng trưởng SXCN). Phụ thuộc bảng Luồng A; không invent số IIP theo ngành.
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
