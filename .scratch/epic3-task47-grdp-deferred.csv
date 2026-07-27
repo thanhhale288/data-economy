@@ -1,0 +1,9 @@
+candidate_id,source_kind,role,usable_as_province_x_industry_grdp,notes,cited_by
+NGDPVA_R_ISIC4_C_XDC,SDMX GDPVNM.xml,national VA_C (constant 2010),no,REF_AREA=VN Section C only — not province,task38+task47
+NGDPVA_ISIC4_C_XDC,SDMX GDPVNM.xml,national VA_C_NOMINAL,no,same national scope,task38+task47
+E07.03.px,PX-Web Industry,shipment index SHIPMENT_C,no,wired industry shipment — not GRDP,task31+task47
+E07.04.px,PX-Web Industry,inventory index INVENTORY_C,no,wired industry inventory — not GRDP,task31+task47
+province_grdp_index_qualitative,PX-Web National Accounts (qualitative),province GRDP index without Section-C industry cut,no,noted in #38 spike — no confirmed table ID for tỉnh×ngành CBCT in repo,task38+task47
+digital_economy_va_share_gdp_grdp,GSO digital-economy lookalike,share of GDP/GRDP,no,wrong concept — rejected,task31+task47
+copy_national_VA_C_to_provinces,forbidden proxy,allocation of national VA,no,explicitly banned — never implement,task47
+(none_confirmed),—,province × manufacturing industry GRDP,no,citation gap — no usable NSO table ID as of 2026-07-28,task47

@@ -30,6 +30,12 @@ No confirmed PX-Web/SDMX table ID for **GRDP by province × manufacturing indust
 
 Do **not** invent GRDP; do **not** relabel IIP as VA/GRDP.
 
+### Task #47 re-gate (2026-07-28) — NO-GO confirmed
+
+Re-gate closed as **deferred/NO-GO biên bản only** (no crawl). Citation gap unchanged: no usable NSO table ID for tỉnh×ngành CBCT. **Forbidden:** copy/allocate national `VA_C` to provinces. National VA from #38 remains valid.
+
+**Artifact:** `.scratch/epic3-task47-grdp-deferred.md` (+ `.csv` search log). Crawl stays parked under `docs/plan.md` «Chưa làm được…» until a credible table ID + separate crawl task.
+
 ### Rejected lookalikes
 
 - GSO digital-economy VA shares of GDP/GRDP — not industry production VA.

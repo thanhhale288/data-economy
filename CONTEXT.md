@@ -23,7 +23,7 @@ _Avoid_: GDP, PMI (unless explicitly added later)
 
 **GSO macro**:
 Vietnam statistical series ingested from NSO/GSO NSDP SDMX (host `nsdp.nso.gov.vn`) and PX-Web (`pxweb.nso.gov.vn`), stored in `gso_macro` — monthly IIP; national manufacturing value added (`VA_C` constant-2010 / `VA_C_NOMINAL` current) from `GDPVNM.xml` (quarterly preferred, step-held to monthly); annual shipment (E07.03) and inventory (E07.04) step-held to monthly. `source` ∈ `{GSO, GSO_FALLBACK}`.
-_Avoid_: inventing GSO numbers; treating IIP as VA/GRDP; inventing province×industry GRDP (still deferred — see `.scratch/epic3-task31-grdp-spike.md`)
+_Avoid_: inventing GSO numbers; treating IIP as VA/GRDP; inventing province×industry GRDP or copying national `VA_C` to provinces (deferred/NO-GO — see `.scratch/epic3-task47-grdp-deferred.md`, spike `.scratch/epic3-task31-grdp-spike.md`)
 
 **Manufacturing VA (`VA_C`)**:
 National-accounts value added for ISIC/VSIC Section C from NSO `GDPVNM.xml` (`NGDPVA_R_ISIC4_C_XDC`). Monetary production-account series for M1 — distinct from firm-level Digital VA and from IIP.
