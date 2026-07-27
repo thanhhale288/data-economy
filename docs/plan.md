@@ -328,8 +328,10 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 
 - Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương) + cân đối kế toán
 - Output: ROA, ROE, Current Ratio, Equity Ratio (+ revenue/profit per worker) + **percentile so với peer cùng VSIC 2-digit** từ BCTC seed
+- Bổ sung (design branch): biên LN, vòng quay tài sản, nợ/VCSH; P25–trung vị–P75 (≥4 peer); câu tổng kết + radar theo phân vị
 - Thiếu peer / field → null percentile + `insufficient_peers` (không bịa 50th); prototype n≈10 DN niêm yết
 - Nội suy GSO khi thiếu BCTC → deferred (không invent industry ratio)
+- **Deferred — xu hướng theo năm (mục 4):** chọn năm / vẽ ROA·ROE (và chỉ số chính) 2–3 năm khi BCTC CafeF có nhiều kỳ đủ field. Cần kiểm tra multi-year trước khi làm; không invent chuỗi năm.
 
 ---
 
@@ -449,6 +451,8 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
 
 **Deferred (sau khi có nguồn):** IIP theo ngành VSIC (cấp 2+) → unlock Dashboard card «Ngành nổi bật» (top/bottom tăng trưởng SXCN). Phụ thuộc bảng Luồng A; không invent số IIP theo ngành.
+
+**Deferred (Benchmark):** xu hướng chỉ số theo năm (ROA/ROE…) khi có ≥2 kỳ BCTC đủ field — xem Module 5.
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 

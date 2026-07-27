@@ -260,6 +260,24 @@ class BenchmarkInput(BaseModel):
     current_liabilities: float | None = None
 
 
+class DigitalBenchmark(BaseModel):
+    """Digital-adoption comparison against same-division listed peers.
+
+    Only populated when the form was prefilled from a listed company
+    (``stock_code``); manual input has no digital footprint to compare.
+    """
+
+    status: str  # ok | no_stock_code | no_company | no_metrics
+    stock_code: str | None = None
+    period: date | None = None
+    metrics: dict[str, float | None] = {}
+    percentiles: dict[str, float | None] = {}
+    industry_averages: dict[str, float | None] = {}
+    industry_quartiles: dict[str, dict[str, float] | None] = {}
+    comparison: dict[str, str] = {}
+    peer_count: int = 0
+
+
 class BenchmarkResult(BaseModel):
     roa: float | None = None
     roe: float | None = None
@@ -267,6 +285,9 @@ class BenchmarkResult(BaseModel):
     equity_ratio: float | None = None
     revenue_per_worker: float | None = None
     profit_per_worker: float | None = None
+    profit_margin: float | None = None
+    asset_turnover: float | None = None
+    debt_to_equity: float | None = None
     # SingStat BITE expenditure ratios (null when inputs missing — never invent)
     expenditure_related_ratio: float | None = None
     purchase_goods_share: float | None = None
@@ -274,10 +295,13 @@ class BenchmarkResult(BaseModel):
     remuneration_share: float | None = None
     percentiles: dict[str, float | None] = {}
     industry_averages: dict[str, float | None] = {}
+    # Per-metric {p25,p50,p75} when ≥4 peer values; otherwise null (never invent).
+    industry_quartiles: dict[str, dict[str, float] | None] = {}
     comparison: dict[str, str] = {}
     peer_count: int = 0
     peer_scope: str | None = None
     warnings: list[str] = []
+    digital: DigitalBenchmark | None = None
 
 
 class DashboardSummary(BaseModel):
