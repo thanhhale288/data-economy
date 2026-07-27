@@ -94,7 +94,7 @@ flowchart TB
 | IIP theo ngành VSIC (cấp 2+)      | IIP từng division / class         | Tháng (nếu có)   | **Deferred** — nguồn NSO/GSO chưa ingest; cần để Dashboard «ngành nổi bật» (tăng/giảm SXCN theo ngành). Không bịa khi thiếu. |
 | Chỉ số tiêu thụ CN CBCT           | Shipment / WHOLE MANUFACTURING     | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.03.px`; step-hold → tháng khi ingest |
 | Chỉ số tồn kho CN CBCT            | Inventory as of 31/12              | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.04.px`; step-hold → tháng khi ingest |
-| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm → step-hold tháng | **Đã làm (VA quốc gia)** — SDMX `GDPVNM.xml` `NGDPVA_R_ISIC4_C_XDC` → `VA_C`; nominal → `VA_C_NOMINAL`. **GRDP tỉnh×ngành** vẫn deferred |
+| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm → step-hold tháng | **Đã làm (VA quốc gia)** — SDMX `GDPVNM.xml` `NGDPVA_R_ISIC4_C_XDC` → `VA_C`; nominal → `VA_C_NOMINAL`. **GRDP tỉnh×ngành** deferred/NO-GO (#47 biên bản; không crawl; cấm copy `VA_C` → tỉnh) |
 | Số DN, lao động, doanh thu ngành  | Thống kê doanh nghiệp công nghiệp  | Năm              | Chưa (Phase sau) |
 
 
@@ -375,7 +375,7 @@ Checklist nghiệm thu (đã kiểm chứng bằng code + live HTTP + pytest):
 - [x] Alembic: `48406b8f82a5` initial schema + `b7c2e1a94d10` cột `oecd_indicators.source`
 - [x] GSO/NSO crawler:
   - IIP_C tháng từ SDMX `nsdp.nso.gov.vn`
-  - VA_C + VA_C_NOMINAL từ SDMX `GDPVNM.xml` (quý ưu tiên → step-hold tháng); GRDP tỉnh×ngành vẫn deferred
+  - VA_C + VA_C_NOMINAL từ SDMX `GDPVNM.xml` (quý ưu tiên → step-hold tháng); GRDP tỉnh×ngành deferred/NO-GO (#47 biên bản)
   - SHIPMENT_C + INVENTORY_C từ PX-Web `E07.03` / `E07.04` (năm → step-hold tháng)
   - Fallback sourced dưới `data/raw/` (không random)
 - [x] OECD SDMX (`sdmx.oecd.org`): INDIGO@VNM; MEI_IP@EA20 peer; MEI/BCI/ICT@VNM = unavailable rõ ràng
@@ -477,7 +477,7 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 - [x] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 - [x] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [x] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
-- [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **chỉ biên bản** deferred/NO-GO (chưa có table ID NSO); không crawl; không copy `VA_C` quốc gia xuống tỉnh
+- [x] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **biên bản NO-GO/deferred** (chưa table ID NSO tỉnh×ngành CBCT); không crawl; **cấm** copy `VA_C` quốc gia → tỉnh; national VA #38/#45/#46 giữ nguyên — `.scratch/epic3-task47-grdp-deferred.md`
 - [ ] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
 
 #### Tạm dừng có chủ đích (có thể reopen khi user bảo)
@@ -496,7 +496,7 @@ Không mở agent cho đến khi user reopen tường minh.
 | Mục (ex-task) | Lý do dừng | Điều kiện reopen |
 |---------------|------------|------------------|
 | **Industry-ratio wire (ex-#44)** | Không có citation CBCT **TMĐT ÷ doanh thu** đủ chuẩn; `#30`/`#37` giữ `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (xem `.scratch/epic3-task30-industry-ratio-research.md`) | Có bảng/figure + năm + URL đúng khái niệm → mappings + PROVENANCE; **cấm** % KT số/GDP, % bán lẻ online, bin VECOM all-sector, invent 0.15 |
-| **Crawl GRDP tỉnh×ngành** (phần crawl của ex-phạm vi #47) | Chưa có table ID NSO đáng tin | Có table ID NSO tỉnh×ngành CBCT → task crawl riêng; **cấm** copy `VA_C` quốc gia xuống tỉnh |
+| **Crawl GRDP tỉnh×ngành** (phần crawl của ex-phạm vi #47) | Chưa có table ID NSO đáng tin — xác nhận lại Task #47 biên bản `.scratch/epic3-task47-grdp-deferred.md` | Có table ID NSO tỉnh×ngành CBCT → task crawl riêng; **cấm** copy `VA_C` quốc gia xuống tỉnh |
 | **IIP theo ngành VSIC (cấp 2+)** | Chưa có bảng Luồng A | Có chuỗi IIP theo ngành → unlock card «Ngành nổi bật» |
 | **Benchmark xu hướng theo năm** | Chưa đủ ≥2 kỳ BCTC đủ field trên peer | Có ≥2 kỳ CafeF/seed đủ field |
 

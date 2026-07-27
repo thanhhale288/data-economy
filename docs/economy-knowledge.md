@@ -145,7 +145,7 @@ Chế tạo là nơi:
 
 Không nhầm IIP với:
 
-- GDP / GRDP (giá trị gia tăng tiền tệ — VA quốc gia Section C đã có `VA_C` / `VA_C_NOMINAL`; GRDP tỉnh×ngành vẫn deferred).
+- GDP / GRDP (giá trị gia tăng tiền tệ — VA quốc gia Section C đã có `VA_C` / `VA_C_NOMINAL`; GRDP tỉnh×ngành deferred/NO-GO Task #47).
 - PMI (chưa nằm trong phạm vi project).
 - Doanh thu TMĐT DN (micro).
 
@@ -175,7 +175,7 @@ Trong bộ VDEI (M1) là chỉ tiêu **cốt lõi về hiệu quả kinh tế th
 
 Tần suất quý được ưu tiên; đưa vào chuỗi tháng bằng **step-hold**. Nguồn `GSO` / `GSO_FALLBACK` — không bịa số. Dashboard M1 vẫn lấy IIP làm nhịp sản xuất; VA đọc qua `gso_macro` / API macro.
 
-**Vẫn deferred:** GRDP theo tỉnh × ngành — chưa có table ID PX-Web/SDMX xác nhận. Không gán IIP thành GRDP.
+**Vẫn deferred (Task #47 NO-GO biên bản):** GRDP theo tỉnh × ngành — chưa có table ID PX-Web/SDMX xác nhận cho tỉnh×ngành CBCT. Không gán IIP thành GRDP; **cấm** copy `VA_C` quốc gia xuống tỉnh. Chi tiết: `.scratch/epic3-task47-grdp-deferred.md`.
 ### 4.5. Quy tắc nguồn macro Việt Nam
 
 **GSO-first**: số Việt Nam về sản xuất lấy từ NSO/GSO.  
@@ -550,7 +550,7 @@ Những nguyên tắc này bảo vệ **ý nghĩa kinh tế** của mọi biểu
 | Firm universe toàn Section C | Stub rỗng | Chưa có nguồn + crawl; không invent |
 | M7–M9 (logistics, thanh toán, XK số) | Thường thiếu nguồn crawl ổn định | Pillar khung còn trống hoặc proxy yếu |
 | Cost_savings, Digital_investment trong Digital VA | Khó quan sát trực tiếp | Cần giả định tường minh hoặc tạm thời phần = 0 / thiếu |
-| GRDP / VA ngành chính thức | VA quốc gia `VA_C` / `VA_C_NOMINAL` đã wire; GRDP tỉnh×ngành deferred | M1: IIP = nhịp SX; VA = quy mô tiền tệ quốc gia |
+| GRDP / VA ngành chính thức | VA quốc gia `VA_C` / `VA_C_NOMINAL` đã wire; GRDP tỉnh×ngành deferred/NO-GO (#47 biên bản) | M1: IIP = nhịp SX; VA = quy mô tiền tệ quốc gia; không copy VA → tỉnh |
 | Industry-ratio TMĐT ngành | Có thể chưa gắn nguồn | Online revenue phụ thuộc listing |
 | Causal claim “số hóa → tăng IIP” | Feature tương tác ≠ chứng minh nhân quả | Chỉ là tín hiệu thống kê cần kiểm định thêm |
 

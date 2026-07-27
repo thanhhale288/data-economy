@@ -6,7 +6,7 @@
 - Shipment / inventory: annual PX-Web (`pxweb.nso.gov.vn` E07.03 / E07.04),
   step-held to monthly via `pxweb_client` (same policy as OECD INDIGO).
 
-Province-by-industry GRDP remains deferred (no confirmed table ID).
+Province-by-industry GRDP remains deferred/NO-GO (Task #47 biên bản; no confirmed table ID).
 Sourced fallbacks only when live fetches fail — never random values.
 """
 

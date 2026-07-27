@@ -148,6 +148,20 @@ flowchart LR
 **Artifact:** `.scratch/epic3-task31-grdp-spike.md` § Task #38 · `crawlers/gso/iip_crawler.py` (`fetch_gso_va`) · `data/raw/gso_va_fallback.csv`
 ---
 
+## Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)
+
+**Status:** DONE (2026-07-28) — **NO-GO / deferred** biên bản only; no crawl; national `VA_C` remains GO.
+
+**Trả lời thắc mắc:** còn thiếu GRDP tỉnh×ngành sau #38?
+
+**Việc chính:** xác nhận lại citation gap (chưa table ID NSO tỉnh×ngành CBCT); ghi biên bản; **không** implement crawler; **cấm** copy `VA_C` quốc gia xuống tỉnh.
+
+**AC:** biên bản deferred/NO-GO + evidence gap; plan `#47` `[x]`; crawl vẫn nằm «Chưa làm được…».
+
+**Artifact:** `.scratch/epic3-task47-grdp-deferred.md` · `.scratch/epic3-task47-grdp-deferred.csv` · pointer trong `.scratch/epic3-task31-grdp-spike.md`
+
+---
+
 ## Task #39 — Scale architecture (toàn Section C)
 
 **Status:** DONE (2026-07-26) — docs + ADR-0003 + empty universe stub; no nationwide crawl.
@@ -292,7 +306,7 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → `#47` / `#50` (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
+**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → **`#47` ✓** → `#50` (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 ✓ (website domain fix — 27/28 OK; GEE SSL còn fail có biên bản).
@@ -300,3 +314,4 @@ flowchart LR
 - Task #42 ✓ (session cookie ops smoke + partner API spike note) — cookie present nhưng live HTTP vẫn block; cache path giữ.
 - **Task #43 ✓ (discovery crawl thật + fuzzy hygiene)** — search path + deferred anti-bot biên bản; token FP `dong`⊂`rangdong` siết; cổng #36 giữ OFF mặc định.
 - **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; **không còn task roadmap** (chưa citation) per quyết định 2026-07-27.
+- **Task #47 ✓ (GRDP tỉnh×ngành re-gate)** — NO-GO/deferred biên bản; crawl vẫn parked; cấm copy `VA_C` → tỉnh.
