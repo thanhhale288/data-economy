@@ -3,6 +3,11 @@
 Primary clean path for the DAG: loads GSO/OECD macro + marketplace listings from
 DB, cleans via ``cleaner`` / ``marketplace_clean`` / ``validate_vsic``, and writes
 parquet + JSON under ``data/processed/`` without overwriting raw DB rows.
+
+Task #46 also carries manufacturing VA (``VA_C`` / optional ``VA_C_NOMINAL``) from
+``gso_macro`` into the cleaned wide frame as auxiliary columns. VA is already
+quarterly→monthly step-held at ingest — cleaning does not re-interpolate or invent
+dynamics. Forecast target remains GSO ``IIP_C`` (column ``iip``).
 """
 
 from __future__ import annotations
@@ -26,6 +31,13 @@ CLEANED_MARKETPLACE_NAME = "cleaned_marketplace.parquet"
 CLEANING_REPORT_NAME = "cleaning_report.json"
 
 MACRO_SERIES = ("iip", "indigo", "mei_ip")
+# Auxiliary GSO VA columns (not forecast targets). Keys = parquet col, values = DB code.
+VA_INDICATOR_MAP = {
+    "va_c": "VA_C",
+    "va_c_nominal": "VA_C_NOMINAL",
+}
+VA_MACRO_SERIES = tuple(VA_INDICATOR_MAP.keys())
+VA_ALIGNMENT = "step_hold_at_ingest"
 
 
 def _processed_dir() -> Path:
@@ -39,8 +51,37 @@ def _provenance_dict(prov: CleanProvenance | Any) -> dict[str, Any]:
     return dict(prov)
 
 
+def _load_va_frame(
+    db: Session, *, parquet_col: str, indicator_code: str
+) -> pd.DataFrame | None:
+    """Load one VA series with source/unit/alignment; None if absent (no invent)."""
+    rows = (
+        db.query(GsoMacro)
+        .filter(
+            GsoMacro.indicator_code == indicator_code,
+            GsoMacro.vsic_code == "C",
+        )
+        .order_by(GsoMacro.period)
+        .all()
+    )
+    if not rows:
+        return None
+    return pd.DataFrame(
+        [
+            {
+                "period": r.period,
+                parquet_col: r.value,
+                f"{parquet_col}_source": r.source,
+                f"{parquet_col}_unit": r.unit,
+                f"{parquet_col}_alignment": VA_ALIGNMENT,
+            }
+            for r in rows
+        ]
+    )
+
+
 def _load_raw_macro(db: Session) -> tuple[pd.DataFrame, list[str]]:
-    """Load IIP_C / INDIGO@VNM / MEI_IP@EA20 with the same filters as engineering."""
+    """Load IIP_C / VA_C(+nominal) / INDIGO@VNM / MEI_IP@EA20 for cleaning."""
     series_missing: list[str] = []
 
     gso = (
@@ -54,6 +95,13 @@ def _load_raw_macro(db: Session) -> tuple[pd.DataFrame, list[str]]:
         series_missing.append("iip")
 
     frames: list[pd.DataFrame] = [gso_df] if not gso_df.empty else []
+
+    for parquet_col, indicator_code in VA_INDICATOR_MAP.items():
+        va_df = _load_va_frame(db, parquet_col=parquet_col, indicator_code=indicator_code)
+        if va_df is None:
+            series_missing.append(parquet_col)
+        else:
+            frames.append(va_df)
 
     indigo = (
         db.query(OecdIndicator)
@@ -99,6 +147,47 @@ def _load_raw_macro(db: Session) -> tuple[pd.DataFrame, list[str]]:
     return df, series_missing
 
 
+def _clean_va_series(
+    raw: pd.DataFrame, col: str
+) -> tuple[pd.DataFrame, dict[str, Any]]:
+    """Pass-through VA levels: no linear gap fill / outlier rewrite (honest step-hold)."""
+    series_df = raw[["period", col]].rename(columns={col: "value"})
+    cleaned_df, prov = clean_timeseries(
+        series_df,
+        "value",
+        max_gap=0,
+        fill_long_gaps=False,
+        outlier_method="none",
+        return_provenance=True,
+    )
+    report = _provenance_dict(prov)
+    sources = (
+        sorted(raw[f"{col}_source"].dropna().astype(str).unique())
+        if f"{col}_source" in raw.columns
+        else []
+    )
+    units = (
+        sorted(raw[f"{col}_unit"].dropna().astype(str).unique())
+        if f"{col}_unit" in raw.columns
+        else []
+    )
+    notes = list(report.get("notes") or [])
+    notes.append(
+        "VA levels from gso_macro; quarterly→monthly step-hold already applied at ingest"
+    )
+    notes.append("no linear gap fill / outlier rewrite (avoid inventing dynamics)")
+    notes.append("auxiliary feature only — forecast target remains iip / IIP_C")
+    if sources:
+        notes.append("source=" + ",".join(sources))
+    if units:
+        notes.append("unit=" + ",".join(units))
+    report["notes"] = notes
+    report["alignment"] = VA_ALIGNMENT
+    report["indicator_code"] = VA_INDICATOR_MAP[col]
+    report["role"] = "auxiliary_feature"
+    return cleaned_df.rename(columns={"value": col})[["period", col]], report
+
+
 def _clean_macro_series(
     raw: pd.DataFrame,
 ) -> tuple[pd.DataFrame, dict[str, dict[str, Any]]]:
@@ -121,6 +210,25 @@ def _clean_macro_series(
             how="left",
         )
         macro_report[col] = _provenance_dict(prov)
+
+    for col in VA_MACRO_SERIES:
+        if col not in raw.columns:
+            continue
+        va_cleaned, va_report = _clean_va_series(raw, col)
+        meta_cols = [
+            m
+            for m in (f"{col}_source", f"{col}_unit", f"{col}_alignment")
+            if m in raw.columns
+        ]
+        va_frame = va_cleaned
+        if meta_cols:
+            va_frame = va_cleaned.merge(
+                raw[["period", *meta_cols]].drop_duplicates(subset=["period"]),
+                on="period",
+                how="left",
+            )
+        cleaned = cleaned.merge(va_frame, on="period", how="left")
+        macro_report[col] = va_report
 
     cleaned = cleaned.sort_values("period").reset_index(drop=True)
     return cleaned, macro_report

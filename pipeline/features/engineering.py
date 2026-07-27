@@ -5,6 +5,10 @@ Vietnam-first: GSO IIP_C is the target. OECD joins:
 - MEI_IP @ EA20 peer (source=OECD_PEER) as mei_ip — never treat as Vietnam data
 - MEI_BCI omitted when unavailable for VNM (no fabrication)
 
+Task #46: manufacturing VA (``va_c`` / optional ``va_c_nominal``) may appear as
+**auxiliary features** from cleaned_macro / ``gso_macro``. They are not the forecast
+target — do not put them in ``_IIP_DROPNA_SUBSET`` or change ML ``target_col``.
+
 Cleaning ownership: Task #10 ``data_cleaning`` owns the primary clean and writes
 ``data/processed/cleaned_macro.parquet``. ``load_macro_dataframe`` prefers that
 artifact when present; the DB + ``clean_timeseries`` path is a fallback for
@@ -30,6 +34,7 @@ from sqlalchemy.orm import Session
 from backend.app.models import GsoMacro, OecdIndicator
 from crawlers.oecd.sdmx_client import PEER_MEI_IP_COUNTRY
 from pipeline.cleaning.cleaner import clean_timeseries
+from pipeline.cleaning.run_cleaning import VA_ALIGNMENT, VA_INDICATOR_MAP
 from pipeline.features.digital_features import (
     DIGITAL_FEATURE_COLUMNS,
     digital_features_for_calendar,
@@ -51,6 +56,7 @@ _MANIFEST_PATH = _PROCESSED_DIR / "features_manifest.json"
 
 _IIP_DROPNA_SUBSET = ("iip", "iip_lag1", "iip_lag2", "iip_lag3")
 _CROSS_COL = CROSS_FEATURE_COLUMNS[0]
+_MACRO_PRESENT_CANDIDATES = ("iip", "indigo", "mei_ip", "va_c", "va_c_nominal")
 
 
 def _usable_cleaned_macro(path: Path) -> pd.DataFrame | None:
@@ -77,6 +83,38 @@ def _normalize_period(df: pd.DataFrame) -> pd.DataFrame:
         .dt.to_timestamp()
     )
     return out.dropna(subset=["period"]).sort_values("period").reset_index(drop=True)
+
+
+def _load_va_from_db(db: Session) -> list[pd.DataFrame]:
+    """Load auxiliary VA series from gso_macro (levels + provenance cols)."""
+    frames: list[pd.DataFrame] = []
+    for parquet_col, indicator_code in VA_INDICATOR_MAP.items():
+        rows = (
+            db.query(GsoMacro)
+            .filter(
+                GsoMacro.indicator_code == indicator_code,
+                GsoMacro.vsic_code == "C",
+            )
+            .order_by(GsoMacro.period)
+            .all()
+        )
+        if not rows:
+            continue
+        frames.append(
+            pd.DataFrame(
+                [
+                    {
+                        "period": r.period,
+                        parquet_col: r.value,
+                        f"{parquet_col}_source": r.source,
+                        f"{parquet_col}_unit": r.unit,
+                        f"{parquet_col}_alignment": VA_ALIGNMENT,
+                    }
+                    for r in rows
+                ]
+            )
+        )
+    return frames
 
 
 def load_macro_dataframe(db: Session) -> pd.DataFrame:
@@ -130,6 +168,8 @@ def load_macro_dataframe(db: Session) -> pd.DataFrame:
             )
         )
 
+    oecd_dfs.extend(_load_va_from_db(db))
+
     df = gso_df
     for oecd_df in oecd_dfs:
         df = df.merge(oecd_df, on="period", how="outer")
@@ -163,7 +203,11 @@ def _dropna_required_iip_lags(df: pd.DataFrame) -> pd.DataFrame:
 
 
 def build_features(db: Session, *, validate: bool = True) -> pd.DataFrame:
-    """Build monthly feature frame: macro lags/rolls + digital + financial + cross."""
+    """Build monthly feature frame: macro lags/rolls + digital + financial + cross.
+
+    VA columns (``va_c`` / ``va_c_nominal``) pass through as level features when
+    present — no lags/rolls in v1; target remains ``iip``.
+    """
     df = load_macro_dataframe(db)
 
     for col in ["mei_ip", "indigo"]:
@@ -191,11 +235,31 @@ def _manifest_for(df: pd.DataFrame) -> dict[str, Any]:
     columns = list(df.columns)
     digital_present = all(col in df.columns for col in DIGITAL_FEATURE_COLUMNS)
     financial_present = all(col in df.columns for col in FINANCIAL_FEATURE_COLUMNS)
+    va_present = [c for c in ("va_c", "va_c_nominal") if c in columns]
     notes: list[str] = [
         "dropna only on IIP lag subset; digital/financial NaNs preserved",
         "MEI_BCI never fabricated; mei_ip is OECD peer EA20 when present",
         f"mei_ip_peer_country={PEER_MEI_IP_COUNTRY}",
+        "forecast target remains iip / IIP_C; VA columns are auxiliary features only",
     ]
+    if va_present:
+        notes.append(
+            "va_alignment="
+            + ",".join(
+                sorted(
+                    {
+                        str(v)
+                        for col in va_present
+                        for v in (
+                            df[f"{col}_alignment"].dropna().astype(str).unique()
+                            if f"{col}_alignment" in df.columns
+                            else [VA_ALIGNMENT]
+                        )
+                    }
+                )
+            )
+        )
+        notes.append("va_present=" + ",".join(va_present))
     if "digital_alignment" in df.columns:
         notes.append(
             "digital_alignment="
@@ -217,17 +281,22 @@ def _manifest_for(df: pd.DataFrame) -> dict[str, Any]:
         "columns": columns,
         "row_count": int(len(df)),
         "sources": {
-            "macro": "cleaned_macro.parquet preferred; else DB GSO IIP_C + INDIGO@VNM + MEI_IP@EA20",
+            "macro": (
+                "cleaned_macro.parquet preferred; else DB GSO IIP_C (+ VA_C/"
+                "VA_C_NOMINAL when present) + INDIGO@VNM + MEI_IP@EA20"
+            ),
             "digital": "digital_metrics mean across firms; broadcast_latest or period_aggregate",
             "financial": "financial_reports ratios mean; step-hold or broadcast_latest",
             "cross": _CROSS_COL if _CROSS_COL in columns else None,
         },
         "feature_groups": {
-            "macro_present": [c for c in ("iip", "indigo", "mei_ip") if c in columns],
+            "macro_present": [c for c in _MACRO_PRESENT_CANDIDATES if c in columns],
             "digital_present": digital_present,
             "financial_present": financial_present,
             "cross_present": _CROSS_COL in columns,
+            "va_auxiliary": va_present,
         },
+        "forecast_target": "iip",
         "mei_ip_peer_country": PEER_MEI_IP_COUNTRY,
         "dropna_subset": [c for c in _IIP_DROPNA_SUBSET if c in columns],
         "notes": notes,

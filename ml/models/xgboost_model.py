@@ -50,7 +50,20 @@ from ml.evaluation.walk_forward import (
 
 MODELS_DIR = Path(__file__).resolve().parents[2] / "data" / "models"
 
-_EXCLUDE_ALWAYS = frozenset({"period", "digital_alignment", "financial_alignment"})
+_EXCLUDE_ALWAYS = frozenset(
+    {
+        "period",
+        "digital_alignment",
+        "financial_alignment",
+        # Task #46 VA provenance strings (numeric va_c / va_c_nominal stay as exog).
+        "va_c_alignment",
+        "va_c_source",
+        "va_c_unit",
+        "va_c_nominal_alignment",
+        "va_c_nominal_source",
+        "va_c_nominal_unit",
+    }
+)
 _ARTIFACT_MODEL = "xgboost_model.joblib"
 _ARTIFACT_FEATURES = "xgboost_features.joblib"
 _ARTIFACT_IMPORTANCE = "xgboost_importance.json"

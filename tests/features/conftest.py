@@ -104,6 +104,37 @@ def seeded_macro_db(db_session, macro_months):
 
 
 @pytest.fixture()
+def seeded_macro_with_va(seeded_macro_db, macro_months):
+    """IIP + OECD plus VA_C / VA_C_NOMINAL for Task #46 feature wiring."""
+    db = seeded_macro_db
+    for period in macro_months:
+        db.add(
+            GsoMacro(
+                vsic_code="C",
+                indicator_code="VA_C",
+                indicator_name="Manufacturing VA constant",
+                period=period.date(),
+                value=500.0,
+                unit="billion_vnd_constant_2010",
+                source="GSO",
+            )
+        )
+        db.add(
+            GsoMacro(
+                vsic_code="C",
+                indicator_code="VA_C_NOMINAL",
+                indicator_name="Manufacturing VA nominal",
+                period=period.date(),
+                value=800.0,
+                unit="billion_vnd_current",
+                source="GSO",
+            )
+        )
+    db.commit()
+    return db
+
+
+@pytest.fixture()
 def digital_rows(two_companies):
     a, b = two_companies
     return pd.DataFrame(

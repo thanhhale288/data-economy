@@ -104,3 +104,89 @@ def test_run_data_cleaning_writes_report_keys(cleaning_db, processed_tmpdir):
 def test_run_cleaning_module_imports_without_network():
     mod = importlib.import_module("pipeline.cleaning.run_cleaning")
     assert hasattr(mod, "run_data_cleaning")
+
+
+@pytest.fixture()
+def cleaning_db_with_va(cleaning_db):
+    """Extend cleaning_db with VA_C + VA_C_NOMINAL (no invent from IIP)."""
+    db = cleaning_db
+    for period, va_c, va_nom in (
+        (date(2024, 1, 1), 500.0, 800.0),
+        (date(2024, 2, 1), 500.0, 800.0),  # step-hold flat within quarter
+    ):
+        db.add(
+            GsoMacro(
+                indicator_code="VA_C",
+                indicator_name="Manufacturing VA constant",
+                vsic_code="C",
+                period=period,
+                value=va_c,
+                unit="billion_vnd_constant_2010",
+                source="GSO",
+            )
+        )
+        db.add(
+            GsoMacro(
+                indicator_code="VA_C_NOMINAL",
+                indicator_name="Manufacturing VA nominal",
+                vsic_code="C",
+                period=period,
+                value=va_nom,
+                unit="billion_vnd_current",
+                source="GSO",
+            )
+        )
+    db.commit()
+    return db
+
+
+def test_run_data_cleaning_includes_va_with_provenance(
+    cleaning_db_with_va, processed_tmpdir
+):
+    import pandas as pd
+
+    run_data_cleaning(cleaning_db_with_va)
+    macro = pd.read_parquet(processed_tmpdir / run_cleaning_mod.CLEANED_MACRO_NAME)
+    assert "va_c" in macro.columns
+    assert "va_c_nominal" in macro.columns
+    assert "va_c_source" in macro.columns
+    assert "va_c_unit" in macro.columns
+    assert "va_c_alignment" in macro.columns
+    assert set(macro["va_c"].dropna()) == {500.0}
+    assert set(macro["va_c_alignment"].dropna()) == {
+        run_cleaning_mod.VA_ALIGNMENT
+    }
+    assert set(macro["va_c_source"].dropna()) == {"GSO"}
+    assert set(macro["va_c_unit"].dropna()) == {"billion_vnd_constant_2010"}
+
+    report = json.loads(
+        (processed_tmpdir / run_cleaning_mod.CLEANING_REPORT_NAME).read_text(
+            encoding="utf-8"
+        )
+    )
+    assert "va_c" in report["macro"]
+    assert report["macro"]["va_c"]["role"] == "auxiliary_feature"
+    assert report["macro"]["va_c"]["alignment"] == run_cleaning_mod.VA_ALIGNMENT
+    assert report["macro"]["va_c"]["outlier_method"] == "none"
+    assert report["macro"]["va_c"]["long_gap_filled"] == 0
+    assert "va_c" not in report["series_missing"]
+    assert "va_c_nominal" not in report["series_missing"]
+
+
+def test_run_data_cleaning_does_not_invent_va_when_absent(
+    cleaning_db, processed_tmpdir
+):
+    import pandas as pd
+
+    run_data_cleaning(cleaning_db)
+    macro = pd.read_parquet(processed_tmpdir / run_cleaning_mod.CLEANED_MACRO_NAME)
+    assert "va_c" not in macro.columns
+    assert "iip" in macro.columns
+    report = json.loads(
+        (processed_tmpdir / run_cleaning_mod.CLEANING_REPORT_NAME).read_text(
+            encoding="utf-8"
+        )
+    )
+    assert "va_c" in report["series_missing"]
+    assert "va_c_nominal" in report["series_missing"]
+    assert "va_c" not in report["macro"]

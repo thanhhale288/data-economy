@@ -26,6 +26,36 @@ def test_select_feature_columns_excludes_period_and_strings(synthetic_feature_fr
     assert "indigo" in cols
 
 
+def test_va_c_is_exog_feature_target_remains_iip(synthetic_feature_frame, tmp_path):
+    """Task #46: VA levels may train as exog; target_col stays iip."""
+    df = synthetic_feature_frame.copy()
+    df["va_c"] = 500.0
+    df["va_c_alignment"] = "step_hold_at_ingest"
+    df["va_c_source"] = "GSO"
+    df["va_c_unit"] = "billion_vnd_constant_2010"
+    cols = select_feature_columns(df, target_col="iip")
+    assert "va_c" in cols
+    assert "iip" not in cols
+    assert "va_c_alignment" not in cols
+    assert "va_c_source" not in cols
+    assert "va_c_unit" not in cols
+
+    result = train_xgboost_model(
+        df,
+        artifact_dir=tmp_path,
+        n_estimators=10,
+        max_depth=2,
+        learning_rate=0.1,
+    )
+    assert result["status"] == "ok"
+    assert "va_c" in result["feature_cols"]
+    assert "iip" not in result["feature_cols"]
+    import joblib
+
+    art = joblib.load(result["artifact_path"])
+    assert art.get("target", "iip") == "iip"
+
+
 def test_train_xgboost_importance_and_forecast(synthetic_feature_frame, tmp_path):
     result = train_xgboost_model(
         synthetic_feature_frame,
