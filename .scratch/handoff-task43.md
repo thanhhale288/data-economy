@@ -1,10 +1,10 @@
 # Handoff — Task #43 Discovery crawl + fuzzy hygiene (nợ từ #36)
 
-**Status:** DONE (shipped locally — commit/PR khi user Explicit yêu cầu)  
+**Status:** DONE (shipped — PR open)  
 **Branch:** `cursor/epic3-phase2-task43-discovery-crawl`  
 **Date:** 2026-07-27  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(chưa — user chưa yêu cầu commit)_  
+**Commit / PR:** `f10473e` / https://github.com/thanhhale288/data-economy/pull/33  
 **Base:** `origin/main` @ `94f459c` (PR #32 Task #46 merged)
 
 ---
@@ -22,7 +22,7 @@
 
 - Task #47 GRDP biên bản, #50 UniverseCoverageNote
 - #41 / #48 / #49 / #19b (tạm dừng)
-- Commit/push/PR — chờ user Explicit
+- Commit/push/PR — done (`f10473e` / PR #33)
 - Live search unlock / anti-bot SaaS
 - Bật discovery mặc định; ép alias no-shop tickers
 
@@ -33,7 +33,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task43-discovery-crawl` · _(uncommitted)_ · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task43-discovery-crawl` · `f10473e` · [#33](https://github.com/thanhhale288/data-economy/pull/33)
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -85,7 +85,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa Explicit yêu cầu | Khi user bảo ship |
+| Commit/PR | Shipped `f10473e` / PR #33 | — |
 | Full `pytest tests/` | Scope #43 đủ AC | CI khi mở PR |
 | Live search success path | Anti-bot | Khi ToS/ops cho phép |
 
