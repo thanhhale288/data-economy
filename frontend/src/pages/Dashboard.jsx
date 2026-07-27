@@ -6,6 +6,7 @@ import {
 import { api } from '../api'
 import { formatMoney } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
+import SampleHonestyBanner from '../SampleHonestyBanner'
 
 /** KPI help copy — formulas match CONTEXT.md / proposal-v2 (do not invent). */
 const KPI_TIPS = {
@@ -20,13 +21,13 @@ const KPI_TIPS = {
     formula:
       'Digital_VA = (Online_revenue × Gross_margin) + (Cost_savings × Adoption_score) − Digital_investment',
     blurb:
-      'Tổng ước lượng giá trị gia tăng kinh tế số của các doanh nghiệp trong mẫu (cộng Digital VA từng DN). Không đồng nghĩa với doanh thu hay với IIP.',
+      'Tổng ước lượng giá trị gia tăng kinh tế số của các doanh nghiệp trong mẫu ~28 DN niêm yết (cộng Digital VA từng DN). Không phải VA ngành GSO (VA_C), không đồng nghĩa với doanh thu hay IIP, và không đại diện toàn Section C.',
   },
   adoption: {
     title: 'Digital Adoption (trung bình)',
     formula: 'Trung bình cộng điểm số hóa (0–1) của DN mẫu',
     blurb:
-      'Mức độ số hóa kênh bán trung bình (mean) của DN mẫu (website, sàn TMĐT, tín hiệu giao dịch…). Dùng trong tính Digital VA và các feature dự báo.',
+      'Mức độ số hóa kênh bán trung bình (mean) của DN mẫu ~28 (website, sàn TMĐT, tín hiệu giao dịch…). Dùng trong tính Digital VA và các feature dự báo — không phải chuẩn toàn ngành.',
   },
   iipGrowth: {
     title: 'Tăng trưởng IIP',
@@ -269,6 +270,8 @@ export default function Dashboard() {
           : ''}
       </p>
 
+      <SampleHonestyBanner style={{ marginBottom: 16 }} />
+
       {summary?.iip_latest == null && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
           Chưa có IIP Section C trong DB — chạy <code>make bootstrap</code> (seed + crawl GSO).
@@ -298,7 +301,10 @@ export default function Dashboard() {
           )}
         </div>
         <div className="card">
-          <div className="label">Doanh nghiệp mẫu</div>
+          <div className="card-label-row">
+            <div className="label">Doanh nghiệp mẫu</div>
+            <span className="badge badge-warning">mẫu ~28 · không phải Section C</span>
+          </div>
           <div className="value">{summary?.total_companies ?? 0}</div>
           <div className="sub">{summary?.companies_with_ecommerce ?? 0} có kênh TMĐT</div>
           <div className="sub muted">
@@ -315,7 +321,10 @@ export default function Dashboard() {
               ? `${(summary.avg_digital_adoption * 100).toFixed(0)}%`
               : '—'}
           </div>
-          <div className="sub muted">Trung bình DN mẫu</div>
+          <div className="sub muted">
+            Trung bình DN mẫu{' '}
+            <span className="badge badge-info">trong mẫu</span>
+          </div>
         </div>
         <div className="card">
           <div className="card-label-row">
@@ -323,7 +332,10 @@ export default function Dashboard() {
             <MetricInfoTip {...KPI_TIPS.digitalVa} />
           </div>
           <div className="value">{formatNumber(summary?.total_digital_va)}</div>
-          <div className="sub muted">Cộng dồn mẫu · kỳ {periodText}</div>
+          <div className="sub muted">
+            Cộng dồn mẫu · kỳ {periodText}{' '}
+            <span className="badge badge-warning">≠ VA_C GSO</span>
+          </div>
         </div>
       </div>
 

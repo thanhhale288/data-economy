@@ -151,6 +151,8 @@ export default function Pipeline() {
         <h3>Source health</h3>
         <p className="chart-note" style={{ marginTop: 0 }}>
           Trạng thái nguồn từ DB + job gần nhất — fallback/unavailable hiện rõ.
+          Card <strong>CafeF / BCTC</strong> cho biết có bao nhiêu báo cáo gắn URL CafeF
+          so với seed/fallback.
           {status?.sample_size != null ? ` · Mẫu DB: ${status.sample_size} DN` : ''}
         </p>
         {!status?.source_health?.length ? (
