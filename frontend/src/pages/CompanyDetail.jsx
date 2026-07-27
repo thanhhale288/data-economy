@@ -128,6 +128,7 @@ const CHANNEL_ORDER = ['website', 'shopee', 'tiktok', 'lazada']
 export default function CompanyDetail() {
   const { code } = useParams()
   const [company, setCompany] = useState(null)
+  const [coverageNote, setCoverageNote] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
 
@@ -135,9 +136,15 @@ export default function CompanyDetail() {
     let cancelled = false
     setLoading(true)
     setError(null)
-    api.getCompany(code)
-      .then((data) => {
-        if (!cancelled) setCompany(data)
+    Promise.all([
+      api.getCompany(code),
+      api.getUniverseCoverage().catch(() => null),
+    ])
+      .then(([data, cov]) => {
+        if (!cancelled) {
+          setCompany(data)
+          setCoverageNote(cov)
+        }
       })
       .catch((err) => {
         if (!cancelled) {
@@ -256,7 +263,10 @@ export default function CompanyDetail() {
         </div>
       </div>
 
-      <SampleHonestyBanner style={{ marginTop: 16, marginBottom: 16 }} />
+      <SampleHonestyBanner
+        style={{ marginTop: 16, marginBottom: 16 }}
+        coverageNote={coverageNote}
+      />
 
       <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
         <h3>Câu chuyện số liệu</h3>

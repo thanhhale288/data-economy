@@ -80,4 +80,6 @@ export const api = {
     body: JSON.stringify(data),
   }),
   benchmarkPrefill: (stockCode) => request(`/benchmark/prefill/${encodeURIComponent(stockCode)}`),
+  /** ADR-0003 / Task #50 — honesty label; empty universe stub is valid. */
+  getUniverseCoverage: () => request('/universe/coverage'),
 }

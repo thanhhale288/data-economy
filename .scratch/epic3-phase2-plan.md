@@ -306,7 +306,7 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → **`#47` ✓** → `#50` (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
+**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → **`#47` ✓** → **`#50` ✓** (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 ✓ (website domain fix — 27/28 OK; GEE SSL còn fail có biên bản).
@@ -315,3 +315,4 @@ flowchart LR
 - **Task #43 ✓ (discovery crawl thật + fuzzy hygiene)** — search path + deferred anti-bot biên bản; token FP `dong`⊂`rangdong` siết; cổng #36 giữ OFF mặc định.
 - **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; **không còn task roadmap** (chưa citation) per quyết định 2026-07-27.
 - **Task #47 ✓ (GRDP tỉnh×ngành re-gate)** — NO-GO/deferred biên bản; crawl vẫn parked; cấm copy `VA_C` → tỉnh.
+- **Task #50 ✓ (`UniverseCoverageNote` API + FE)** — `GET /api/universe/coverage` + SampleHonestyBanner; stub `rows=[]` → `prototype_listed_sample`; không invent universe.
