@@ -473,7 +473,7 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 
 #### Phase 2 — còn mở (được phép chạy)
 
-- [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay cookie env đã có (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
+- [x] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — cookie `present=yes`; live HTTP vẫn anti-bot/403 (`live_ok=0` no-cache); cache-on-fail `live_ok=2`; partner spike note (no implement); không anti-bot SaaS; artifacts `.scratch/epic3-task42-cookie-ops-smoke.md` + `epic3-task42-partner-api-spike.md`
 - [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 - [ ] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
@@ -525,7 +525,7 @@ Không mở agent cho đến khi user reopen tường minh.
 | P0 (#51) ✓ | Banner/badge mẫu ~28 trên Dashboard + Company detail | ADR-0003 / `prototype_listed_sample` |
 | P0 (#51) ✓ | Benchmark render mọi `warnings` (không chỉ `insufficient_peers`) | API `BenchmarkResult.warnings` |
 | P0 (#51) ✓ | Listing/GMV: `null` → `—`, **không** `\|\| 0` vào chart | Nợ honesty #34 |
-| P0 (#51) ✓ | Marketplace badge: `live` có thể là **cache allowlist** (ADR-0002) | Copy; API `live:cache` chi tiết hơn → #42 |
+| P0 (#51) ✓ | Marketplace badge: `live` có thể là **cache allowlist** (ADR-0002) | Copy; #42 cookie smoke: live HTTP vẫn block → cache path documented |
 | P0 (#51) ✓ | BCTC: ưu tiên kỳ có `source_url` CafeF; đừng gợi CafeF khi seed | #32 |
 | P1 (#51) ✓ | Link bấm được CafeF `source_url` + Pipeline nhấn CafeF `source_health` | #32 |
 | P1 | Chip “URL chưa verify / fail” (9 ticker) | Đầy đủ sau #40 |

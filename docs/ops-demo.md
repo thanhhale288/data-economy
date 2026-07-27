@@ -103,6 +103,25 @@ PYTHONPATH=. python scripts/enrich_marketplace_listings.py --prefer-cache --tick
 PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM,FPT
 ```
 
+### Session cookie ops smoke (Epic 3 Task #42)
+
+Set cookies in local `.env` only (names in `.env.example`). Never commit or paste values into `.scratch/`.
+
+```bash
+# Presence check (prints yes/no only — do not echo cookie strings)
+PYTHONPATH=. python -c "import os; from dotenv import load_dotenv; load_dotenv();
+print('SHOPEE', 'yes' if os.getenv('SHOPEE_SESSION_COOKIE','').strip() else 'no');
+print('TIKTOK', 'yes' if os.getenv('TIKTOK_SESSION_COOKIE','').strip() else 'no')"
+
+# True live HTTP (no cache mask) — expect block/403 if anti-bot still active
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM --no-cache
+
+# Ops default: HTTP then allowlisted cache
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM
+```
+
+**2026-07-27 smoke:** cookies `present=yes` for both; live HTTP still anti-bot/403 (`live_ok=0` with `--no-cache`); cache-on-fail `live_ok=2`. Biên bản: `.scratch/epic3-task42-cookie-ops-smoke.md`. Partner API spike (no implement): `.scratch/epic3-task42-partner-api-spike.md`.
+
 Company detail listing table shows badge **Nguồn** = `live` | `seed` | `fallback`.
 
 ## Matcher discovery gate (Epic 3 Task #36)

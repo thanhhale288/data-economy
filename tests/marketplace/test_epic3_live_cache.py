@@ -12,9 +12,27 @@ from crawlers.marketplace.live_cache import (
     is_cache_allowed,
     load_cached_listings,
     load_live_cache_allowlist,
+    marketplace_request_headers,
     provenance_tag,
+    session_cookie_headers,
 )
 from crawlers.marketplace.shop_finder import scrape_marketplace_products
+
+
+def test_session_cookie_headers_ops_only(monkeypatch):
+    """ADR-0002 §2: Cookie header only when env set; never invent listings."""
+    monkeypatch.delenv("SHOPEE_SESSION_COOKIE", raising=False)
+    monkeypatch.delenv("TIKTOK_SESSION_COOKIE", raising=False)
+    assert session_cookie_headers("shopee") == {}
+    assert session_cookie_headers("tiktok") == {}
+
+    monkeypatch.setenv("SHOPEE_SESSION_COOKIE", "spc_test=1")
+    monkeypatch.setenv("TIKTOK_SESSION_COOKIE", "tt_test=1")
+    assert session_cookie_headers("shopee") == {"Cookie": "spc_test=1"}
+    assert session_cookie_headers("tiktok") == {"Cookie": "tt_test=1"}
+    headers = marketplace_request_headers("shopee")
+    assert headers["Cookie"] == "spc_test=1"
+    assert "User-Agent" in headers
 
 
 def test_live_cache_allowlist_includes_ral_vnm():

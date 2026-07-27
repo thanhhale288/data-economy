@@ -1,0 +1,3 @@
+stock_code,has_shop,n_seed_listings,n_gmv_listings,seed_sources,live_status,n_live_listings,live_detail,shop_urls
+RAL,True,3,3,seed,blocked,0,shopee:blocked:Shopee anti-bot / captcha / access denied,https://shopee.vn/rangdong_official
+VNM,True,2,2,seed,blocked,0,shopee:blocked:Shopee anti-bot / captcha / access denied; tiktok:blocked:HTTP 403 for https://www.tiktok.com/@vinamilk,https://shopee.vn/vinamilk_official https://www.tiktok.com/@vinamilk

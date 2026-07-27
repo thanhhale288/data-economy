@@ -388,7 +388,8 @@ Trong project, mỗi listing lưu vào bảng `marketplace_listings`, gắn vớ
 **Live strategy (Task #35 / ADR-0002):** khi HTTP Shopee/TikTok bị 403, crawler
 có thể dùng **allowlist nhỏ + snapshot cache** (`data/raw/marketplace_live_cache/`)
 với provenance `live:cache:…` → `source=live`. Không dùng anti-bot SaaS làm mặc định;
-session cookie chỉ ops (env). Không silent invent GMV.
+session cookie chỉ ops (env). **Task #42:** cookie `present=yes` (2026-07-27) nhưng live
+HTTP vẫn anti-bot/403 — giữ cache; partner API spike-only. Không silent invent GMV.
 
 Phân biệt nhanh:
 

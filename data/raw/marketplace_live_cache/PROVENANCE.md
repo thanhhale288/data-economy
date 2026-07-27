@@ -26,3 +26,7 @@ These snapshots are **versioned demo artifacts** for a stable offline/demo path 
 3. Revenue = `price × units_sold_est` only when both present — never invent units.
 4. Do **not** relabel seed/fallback rows as `live` to fake source_health.
 5. Refreshing a snapshot from a real live parse (or ops session cookie) is allowed later; update this file with capture date/URL when that happens.
+
+## Task #42 note (2026-07-27)
+
+Ops session cookies were present and applied as `Cookie` headers. Live HTTP for RAL×shopee / VNM×tiktok still returned anti-bot / 403 (`live_ok=0` with `--no-cache`). **No cache files were overwritten.** See `.scratch/epic3-task42-cookie-ops-smoke.md`.
