@@ -1,11 +1,11 @@
 # Handoff — Task #40 Website domain fix + honesty guard
 
-**Status:** DONE (uncommitted — commit/PR when user asks)  
+**Status:** DONE (PR open)  
 **Branch:** `cursor/epic3-phase2-task40-website-domain-fix`  
 **Date:** 2026-07-27  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(pending user request)_  
-**Base:** `origin/main` @ `12281cf` (includes Task #39 via PR #26)
+**Commit / PR:** `5f48c26` · PR https://github.com/thanhhale288/data-economy/pull/29  
+**Base:** `origin/main` @ `12281cf` (includes Task #39 via PR #26; main later gained #51)
 
 ---
 
@@ -46,7 +46,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task40-website-domain-fix` · uncommitted · PR pending
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task40-website-domain-fix` · `5f48c26` · PR #29
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -93,7 +93,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa yêu cầu | Khi ship |
+| Commit/PR | Done — PR #29 | Merge when green |
 | `--fix-db` | No DB sync this chat | Ops / seed re-run |
 | FE “URL chưa verify” chip | Backlog P1 | Optional after #40 |
 
