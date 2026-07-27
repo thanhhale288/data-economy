@@ -1,10 +1,10 @@
 # Handoff — Task #47 GRDP tỉnh×ngành re-gate (deferred / NO-GO)
 
-**Status:** DONE (docs-only biên bản — **not committed**; commit/PR khi user Explicit yêu cầu)  
+**Status:** DONE (shipped — PR open)  
 **Branch:** `cursor/epic3-phase2-task47-grdp-deferred`  
 **Date:** 2026-07-28  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(pending user request)_  
+**Commit / PR:** `b5591c3` / https://github.com/thanhhale288/data-economy/pull/34  
 **Base:** `origin/main` @ `dff7919` (PR #33 Task #43 merged)
 
 ---
@@ -19,7 +19,7 @@
 ### Not done (out of scope)
 
 - Crawl GRDP tỉnh; invent GRDP; wire tỉnh vào dashboard/pipeline
-- Commit/push/PR — **chỉ khi user Explicit**
+- Commit/push/PR — done (`b5591c3` / PR #34)
 - Task #50 UniverseCoverageNote; #41 / #48 / #49 / #19b
 
 ---
@@ -29,7 +29,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task47-grdp-deferred` · _(uncommitted)_ · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task47-grdp-deferred` · `b5591c3` · [#34](https://github.com/thanhhale288/data-economy/pull/34)
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -81,7 +81,7 @@ _(none)_
 | FE build | docs-only | no |
 
 ### CI
-- No PR yet (commit/PR pending user Explicit)
+- PR: https://github.com/thanhhale288/data-economy/pull/34 — checks pending after push
 
 ---
 
