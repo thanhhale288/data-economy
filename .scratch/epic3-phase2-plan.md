@@ -216,7 +216,9 @@ flowchart LR
 
 ## Task #42 — Session cookie ops smoke + partner API spike note (nợ từ #35)
 
-**Nguồn:** ADR-0002 Decision §2–§3 — cookie env đã wire (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) nhưng **chưa smoke tay**; partner API chỉ “spike only”, chưa có biên bản nghiên cứu.
+**Status:** DONE (2026-07-27) — cookie `present=yes`; live HTTP vẫn anti-bot/403 (`live_ok=0` `--no-cache`); cache-on-fail `live_ok=2`; partner spike = no implement without contract; anti-bot SaaS rejected.
+
+**Nguồn:** ADR-0002 Decision §2–§3 — cookie env đã wire (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`); #42 chứng minh smoke tay + biên bản.
 
 **Việc chính:**
 - Ops: login tay → set cookie env → chạy smoke 1–2 shop allowlist; ghi kết quả 403 vs ok vào `.scratch/` (không commit secret).
@@ -226,7 +228,9 @@ flowchart LR
 
 **AC:** artifact smoke cookie (pass/fail + detail) + optional partner spike note trong `.scratch/`; secrets không vào git.
 
-**Không làm:** commit cookie; đổi Digital VA; implement ingest partner full.
+**Artifact:** `.scratch/epic3-task42-cookie-ops-smoke.md` · `.scratch/epic3-task42-partner-api-spike.md`
+
+**Không làm:** commit cookie; đổi Digital VA; implement ingest partner full; refresh live-cache (#41 — tạm dừng).
 
 ---
 
@@ -292,7 +296,7 @@ flowchart LR
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 ✓ (website domain fix — 27/28 OK; GEE SSL còn fail có biên bản).
-- Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35.
-- Task #42 (session cookie ops smoke + partner API spike note) — từ #35 (wire sẵn, chưa chứng minh tay).
+- Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35 — **tạm dừng có chủ đích** (2026-07-27).
+- Task #42 ✓ (session cookie ops smoke + partner API spike note) — cookie present nhưng live HTTP vẫn block; cache path giữ.
 - **Task #43 (discovery crawl thật + fuzzy hygiene)** — từ #36 (cổng sẵn, chưa search sàn; token FP quirk).
-- **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; trigger xem research note § “Next re-gate triggers”.
+- **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; **không còn task roadmap** (chưa citation) per quyết định 2026-07-27.
