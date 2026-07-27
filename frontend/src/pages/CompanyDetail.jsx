@@ -256,7 +256,7 @@ export default function CompanyDetail() {
         </div>
       </div>
 
-      <SampleHonestyBanner style={{ marginTop: 16, marginBottom: 0 }} />
+      <SampleHonestyBanner style={{ marginTop: 16, marginBottom: 16 }} />
 
       <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
         <h3>Câu chuyện số liệu</h3>
