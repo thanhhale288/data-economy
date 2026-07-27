@@ -15,6 +15,10 @@ data/raw/*
 !data/raw/companies/
 !data/raw/companies/**
 !data/raw/oecd_indigo_vnm.json
+!data/raw/marketplace_live_cache/
+!data/raw/marketplace_live_cache/**
+!data/raw/company_universe/
+!data/raw/company_universe/**
 data/models/*.pkl
 data/models/*.pt
 *.log

@@ -4,7 +4,8 @@ Tài liệu này giải thích **mục tiêu kinh tế**, **ý nghĩa các thàn
 
 Nguồn chuẩn hóa thuật ngữ ngắn: `CONTEXT.md`.  
 Sổ tay keyword kỹ thuật: `docs/knowledge.md`.  
-Quyết định macro OECD: `docs/adr/0001-oecd-vietnam-macro-policy.md`.
+Quyết định macro OECD: `docs/adr/0001-oecd-vietnam-macro-policy.md`.  
+Kiến trúc scale Section C: `docs/adr/0003-scale-section-c-architecture.md`.
 
 ---
 
@@ -39,12 +40,17 @@ Proposal gốc đo **tổng mức bán lẻ / Division 47**. Thực tế đề t
 
 ```
         ┌─────────────────────────────────────────┐
-        │  MACRO (GSO): IIP, shipment, inventory  │  ← “ngành đang sản xuất thế nào?”
+        │  MACRO (GSO): IIP, VA_C, shipment…      │  ← “ngành đang sản xuất thế nào?”
         └──────────────────┬──────────────────────┘
                            │ truyền dẫn / tương tác
         ┌──────────────────▼──────────────────────┐
-        │  MICRO (DN niêm yết): BCTC, kênh số,    │  ← “DN số hóa và kiếm tiền số thế nào?”
-        │  online revenue, Digital VA, ratios     │
+        │  UNIVERSE (nông): đăng ký / thống kê /  │  ← “có những DN Section C nào?”
+        │  niêm yết — identity + VSIC + website?  │     (stub; chưa crawl toàn quốc)
+        └──────────────────┬──────────────────────┘
+                           │ promote tường minh (onboard)
+        ┌──────────────────▼──────────────────────┐
+        │  DEEP SAMPLE (micro niêm yết): BCTC,    │  ← “DN số hóa & Digital VA thế nào?”
+        │  kênh số, listing, ratios (~28 seed)    │     prototype — không = chuẩn quốc gia
         └──────────────────┬──────────────────────┘
                            │ leading / đối chiếu
         ┌──────────────────▼──────────────────────┐
@@ -52,7 +58,7 @@ Proposal gốc đo **tổng mức bán lẻ / Division 47**. Thực tế đề t
         └─────────────────────────────────────────┘
 ```
 
-Ý nghĩa kinh tế: **macro** nói về sản lượng; **micro** nói về hành vi số và đóng góp giá trị ở DN; **quốc tế** cung cấp chỉ báo mở thương mại số và cầu sản xuất vùng peer — không thay thế số Việt Nam.
+Ý nghĩa kinh tế: **macro** nói về sản lượng / VA ngành; **universe** (tương lai) đếm / liệt kê DN nông; **deep sample** nói về hành vi số và Digital VA ở mẫu niêm yết; **quốc tế** là chỉ báo peer — không thay thế số Việt Nam. Chi tiết scale: §6.0 + ADR-0003.
 
 ---
 
@@ -139,7 +145,7 @@ Chế tạo là nơi:
 
 Không nhầm IIP với:
 
-- GDP / GRDP (giá trị gia tăng tiền tệ — pillar M1 hướng tới nhưng chưa đủ nguồn đầy đủ trong phase hiện tại).
+- GDP / GRDP (giá trị gia tăng tiền tệ — VA quốc gia Section C đã có `VA_C` / `VA_C_NOMINAL`; GRDP tỉnh×ngành vẫn deferred).
 - PMI (chưa nằm trong phạm vi project).
 - Doanh thu TMĐT DN (micro).
 
@@ -158,9 +164,18 @@ Series kiểu **E07.04** — tồn kho cuối kỳ (thường 31/12), cũng step
 
 ### 4.4. Giá trị gia tăng công nghiệp / GRDP ngành
 
-Trong bộ VDEI (M1) là chỉ tiêu **cốt lõi về hiệu quả kinh tế thực** (tiền tệ), khác IIP (chỉ số sản lượng).  
-Trong roadmap: còn phụ thuộc nguồn GSO quý/năm — **không invent**. Khi chưa có, dashboard vẫn lấy IIP làm proxy “quy mô & nhịp SXCN”.
+Trong bộ VDEI (M1) là chỉ tiêu **cốt lõi về hiệu quả kinh tế thực** (tiền tệ), khác IIP (chỉ số sản lượng).
 
+**Đã wire (Task #38):** VA quốc gia Section C từ SDMX `GDPVNM.xml`:
+
+| Code | SDMX INDICATOR | Ý nghĩa |
+|------|----------------|---------|
+| `VA_C` | `NGDPVA_R_ISIC4_C_XDC` | VA CBCT giá so sánh 2010 (tỷ VND, `UNIT_MULT=9`) |
+| `VA_C_NOMINAL` | `NGDPVA_ISIC4_C_XDC` | VA CBCT giá hiện hành |
+
+Tần suất quý được ưu tiên; đưa vào chuỗi tháng bằng **step-hold**. Nguồn `GSO` / `GSO_FALLBACK` — không bịa số. Dashboard M1 vẫn lấy IIP làm nhịp sản xuất; VA đọc qua `gso_macro` / API macro.
+
+**Vẫn deferred:** GRDP theo tỉnh × ngành — chưa có table ID PX-Web/SDMX xác nhận. Không gán IIP thành GRDP.
 ### 4.5. Quy tắc nguồn macro Việt Nam
 
 **GSO-first**: số Việt Nam về sản xuất lấy từ NSO/GSO.  
@@ -208,11 +223,41 @@ Business Confidence và ICT investment GFCF: **không có series VNM đáng tin 
 
 ## 6. Tầng micro — doanh nghiệp niêm yết mẫu
 
+### 6.0. Scale architecture — vũ trụ DN vs mẫu sâu vs macro (Task #39)
+
+**Câu hỏi:** sau này muốn “tất cả DN chế biến chế tạo” thì scale thế nào?  
+**Trả lời ngắn:** tách ba tập — **không** scale bằng copy seed demo, **không** invent hàng trăm BCTC/GMV, **không** crawl toàn quốc trong Task #39.
+
+| Tập | Nội dung | Hiện trạng |
+|-----|----------|------------|
+| **Macro ngành** | IIP, `VA_C` / `VA_C_NOMINAL`, OECD peer | Đã wire GSO/NSO + OECD (ADR-0001) |
+| **Universe (nông)** | Identity, VSIC, website?, provenance | Stub: `data/raw/company_universe/rows.json` = `[]` + schema `backend/app/schemas/universe.py` (ADR-0003) |
+| **Deep sample (sâu)** | BCTC + digital + listing + Digital VA | Allowlist ~28 trong `companies.json` → bảng `companies` |
+
+**Ingest nông (đặc tả — chưa chạy nationwide):**
+
+1. Nguồn ứng viên (chưa chọn authority): đăng ký DN / thống kê doanh nghiệp GSO-NSO / niêm yết HOSE·HNX — chỉ khi có quyền truy cập và bảng ID rõ.
+2. Trường tối thiểu: `universe_id`, `legal_name`, `vsic_code?`, `stock_code?`, `website_url?`, provenance (`source_url` / dataset / record id / `retrieved_at` / bằng chứng VSIC).
+3. Queue lô: `UniverseBatchManifest` (cursor, `rate_limit_per_host_seconds`, trạng thái `pending|fetched|verified|rejected|promoted`).
+4. Rate limit: tái sử dụng tinh thần marketplace (~1.5s/host) và batch CafeF/website (~0.4s) — cần policy theo host khi có adapter thật.
+5. **Promote → deep sample** chỉ qua `scripts/onboard_company.py` + cập nhật seed — `can_auto_promote_to_deep_sample` luôn `False`.
+
+**Honesty metric:**
+
+- Digital VA / percentile trên mẫu niêm yết = **`prototype_listed_sample`** — không tuyên bố chuẩn quốc gia Section C.
+- `VA_C` macro ≠ Σ Digital VA của mẫu.
+- Không ghi số lượng DN toàn quốc khi chưa có citation năm/bảng.
+- Universe rỗng (`[]`) là đúng cho Task #39 — không phải lỗi seed.
+
+Chi tiết quyết định: `docs/adr/0003-scale-section-c-architecture.md`.  
+Provenance stub: `data/raw/company_universe/PROVENANCE.md`.
+
 ### 6.1. Vì sao chỉ ~25–30 DN (prototype)
 
 Mẫu niêm yết cố định trong seed (Epic 2 mở rộng từ 10 → ~28) để peer VSIC có
 nghĩa cho Benchmark — **không** suy ra toàn Section C. Epic 3 hoàn thiện lớp
-dữ liệu (BCTC/digital/marketplace provenance) trên mẫu đó.
+dữ liệu (BCTC/digital/marketplace provenance) trên mẫu đó. Scale path cho toàn
+Section C nằm ở **§6.0** (universe nông), không bằng cách nhân bản seed.
 
 Mẫu cố định (HOSE/HNX, Epic 2+): RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP
 cộng peer clusters (VHC, ANV, … DQC, AAA, DCM, …) — xem `data/seeds/companies.json`.
@@ -222,6 +267,24 @@ cộng peer clusters (VHC, ANV, … DQC, AAA, DCM, …) — xem `data/seeds/comp
 - Đủ **đa dạng VSIC con** để minh họa heatmap / peer.
 - Đủ sâu để crawl BCTC + kênh số + listing.
 - **Không** phải mẫu đại diện thống kê toàn quốc — mọi percentile benchmark phải ghi rõ là **prototype trên mẫu seed**.
+
+#### Mẫu niêm yết vs mẫu có TMĐT (không đồng nhất)
+
+| Mẫu | Định nghĩa | n (sau Task #34) |
+|-----|------------|------------------|
+| **Mẫu niêm yết** | Allowlist trong `companies.json` | ~28 |
+| **Mẫu có shop TMĐT** | Có URL Shopee/TikTok/Lazada trong `digital_presence` | 6 (RAL, VNM, FPT, MSN, PNJ, DQC) |
+| **Mẫu có listing** | ≥1 dòng `marketplace_listings` | 6 |
+| **Mẫu có GMV listing** | Listing đủ `price` × `units_sold_est` | 5 (DQC chỉ có giá catalog — units null) |
+
+**Live marketplace (Task #35):** mặc định **allowlist + cache + badge**
+(`docs/adr/0002-marketplace-live-strategy.md`). Snapshot demo:
+`data/raw/marketplace_live_cache/` (RAL×shopee, VNM×tiktok). HTTP 403 → cache
+allowlist → seed → fallback — không bịa units.
+
+**10 DN mẫu ≠ 10 DN có listing.** Peer B2B (thép, hóa chất, …) giữ
+`marketplace_listings: []` — không bịa GMV. Báo cáo ops:
+`.scratch/epic3-task34-listing-depth.md`.
 
 ### 6.2. BCTC (báo cáo tài chính có cấu trúc)
 
@@ -422,7 +485,10 @@ BCTC (margin, assets, labour) ──► ratios & benchmark percentiles
 | MEI EA20 = IIP Việt Nam | Peer chỉ là chỉ báo phụ |
 | Digital VA = doanh thu online | VA đã nhân biên và trừ đầu tư |
 | Digital VA = IIP | Khác đơn vị, khác đối tượng (DN vs ngành) |
-| Percentile mẫu 10 DN = chuẩn ngành quốc gia | n nhỏ, prototype |
+| Percentile mẫu ~28 DN = chuẩn ngành quốc gia | n nhỏ, `prototype_listed_sample` (ADR-0003) |
+| Universe stub rỗng = “không có DN CBCT” | Chưa ingest nguồn; `[]` là giới hạn task |
+| Copy seed → universe để “scale” | Invent coverage; cấm |
+| Σ Digital VA mẫu = `VA_C` quốc gia | Khác đối tượng / phương pháp |
 | Fallback = số “thật mới nhất” | Fallback là dự phòng có nguồn, phải gắn provenance |
 | Step-hold năm→tháng = quan sát tháng thật | Chỉ là kỹ thuật khớp tần suất |
 
@@ -480,10 +546,11 @@ Những nguyên tắc này bảo vệ **ý nghĩa kinh tế** của mọi biểu
 
 | Hạng mục | Trạng thái ý niệm | Hệ quả diễn giải |
 |----------|-------------------|------------------|
-| Mẫu 10 DN | Prototype | Không suy ra toàn Section C |
+| Mẫu ~28 DN (deep sample) | Prototype listed | Không suy ra toàn Section C; xem §6.0 |
+| Firm universe toàn Section C | Stub rỗng | Chưa có nguồn + crawl; không invent |
 | M7–M9 (logistics, thanh toán, XK số) | Thường thiếu nguồn crawl ổn định | Pillar khung còn trống hoặc proxy yếu |
 | Cost_savings, Digital_investment trong Digital VA | Khó quan sát trực tiếp | Cần giả định tường minh hoặc tạm thời phần = 0 / thiếu |
-| GRDP / VA ngành chính thức | Chưa đủ chuỗi trong phase sớm | M1 nghiêng về IIP |
+| GRDP / VA ngành chính thức | VA quốc gia `VA_C` / `VA_C_NOMINAL` đã wire; GRDP tỉnh×ngành deferred | M1: IIP = nhịp SX; VA = quy mô tiền tệ quốc gia |
 | Industry-ratio TMĐT ngành | Có thể chưa gắn nguồn | Online revenue phụ thuộc listing |
 | Causal claim “số hóa → tăng IIP” | Feature tương tác ≠ chứng minh nhân quả | Chỉ là tín hiệu thống kê cần kiểm định thêm |
 

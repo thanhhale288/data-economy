@@ -1,0 +1,55 @@
+# provenance: Manufacturing value added (ISIC4 Section C) from NSO NSDP SDMX GDPVNM.xml
+# official_url: https://nsdp.nso.gov.vn/GSO-chung/SDMXFiles/GSO/GDPVNM.xml
+# sdmx_indicators: NGDPVA_R_ISIC4_C_XDC (VA_C), NGDPVA_ISIC4_C_XDC (VA_C_NOMINAL)
+# frequency_source: annual FREQ=A; expanded to monthly via step-hold (not invented dynamics)
+# extracted: 2026-07-26
+# unit_note: UNIT_MULT=9 → values are billions of VND
+vsic_code,indicator_code,indicator_name,period,value,unit,source
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-01,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-02,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-03,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-04,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-05,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-06,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-07,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-08,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-09,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-10,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-11,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2023-12,1348151.7116564875,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-01,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-02,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-03,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-04,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-05,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-06,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-07,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-08,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-09,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-10,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-11,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C,Giá trị gia tăng CBCT (giá so sánh 2010),2024-12,1477401.5384043476,billion_vnd_constant_2010,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-01,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-02,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-03,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-04,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-05,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-06,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-07,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-08,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-09,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-10,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-11,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2023-12,2488213.422477977,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-01,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-02,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-03,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-04,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-05,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-06,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-07,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-08,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-09,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-10,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-11,2800817.7372409482,billion_vnd_current,GSO_FALLBACK
+C,VA_C_NOMINAL,Giá trị gia tăng CBCT (giá hiện hành),2024-12,2800817.7372409482,billion_vnd_current,GSO_FALLBACK

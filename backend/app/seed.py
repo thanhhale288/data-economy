@@ -168,6 +168,59 @@ def _upsert_digital_presence(db, company_id: int, digital_presence: list) -> Non
         )
 
 
+def _upsert_marketplace_listings(db, company_id: int, listings: list) -> None:
+    """Upsert seed marketplace_listings by (platform, product_name).
+
+    Task #34: re-seed previously skipped listings on update, so curated depth
+    (e.g. DQC) reaches existing DB rows. Never invent revenue — recompute from
+    price × units when both present.
+    """
+    from crawlers.marketplace.common import compute_revenue_est, normalize_listing_source
+
+    for ml in listings or []:
+        platform = (ml.get("platform") or "").strip()
+        name = (ml.get("product_name") or "").strip()
+        if not platform or not name:
+            continue
+        price = ml.get("price")
+        units = ml.get("units_sold_est")
+        revenue = compute_revenue_est(price, units)
+        source = normalize_listing_source(ml.get("source") or "seed")
+        existing = (
+            db.query(MarketplaceListing)
+            .filter(
+                MarketplaceListing.company_id == company_id,
+                MarketplaceListing.platform == platform,
+                MarketplaceListing.product_name == name,
+            )
+            .first()
+        )
+        if existing:
+            existing.price = price
+            existing.units_sold_est = units
+            existing.revenue_est = revenue
+            existing.rating = ml.get("rating")
+            existing.source = source
+            if ml.get("product_url"):
+                existing.product_url = ml["product_url"]
+            existing.crawled_at = datetime.now(timezone.utc)
+            continue
+        db.add(
+            MarketplaceListing(
+                company_id=company_id,
+                platform=platform,
+                product_name=name,
+                price=price,
+                units_sold_est=units,
+                revenue_est=revenue,
+                rating=ml.get("rating"),
+                product_url=ml.get("product_url"),
+                source=source,
+                crawled_at=datetime.now(timezone.utc),
+            )
+        )
+
+
 def load_companies(db) -> tuple[int, int]:
     path = DATA_DIR / "seeds" / "companies.json"
     with open(path) as f:
@@ -197,6 +250,9 @@ def load_companies(db) -> tuple[int, int]:
                 )
             _upsert_financial(db, existing.id, c.get("financial", {}))
             _upsert_digital_presence(db, existing.id, c.get("digital_presence", []))
+            _upsert_marketplace_listings(
+                db, existing.id, c.get("marketplace_listings", [])
+            )
             updated += 1
             continue
 
@@ -214,33 +270,10 @@ def load_companies(db) -> tuple[int, int]:
         db.flush()
 
         _upsert_financial(db, company.id, c.get("financial", {}))
-
-        for dp in c.get("digital_presence", []):
-            db.add(
-                DigitalPresence(
-                    company_id=company.id,
-                    channel_type=dp["channel_type"],
-                    url=dp["url"],
-                    has_checkout=dp.get("has_checkout", False),
-                    match_confidence=dp.get("match_confidence"),
-                    crawled_at=datetime.now(timezone.utc),
-                )
-            )
-
-        for ml in c.get("marketplace_listings", []):
-            db.add(
-                MarketplaceListing(
-                    company_id=company.id,
-                    platform=ml["platform"],
-                    product_name=ml["product_name"],
-                    price=ml.get("price"),
-                    units_sold_est=ml.get("units_sold_est"),
-                    revenue_est=ml.get("revenue_est"),
-                    rating=ml.get("rating"),
-                    source=ml.get("source") or "seed",
-                    crawled_at=datetime.now(timezone.utc),
-                )
-            )
+        _upsert_digital_presence(db, company.id, c.get("digital_presence", []))
+        _upsert_marketplace_listings(
+            db, company.id, c.get("marketplace_listings", [])
+        )
 
         inserted += 1
 

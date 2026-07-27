@@ -22,8 +22,12 @@ Monthly manufacturing production index for Section C from GSO (`IIP_C`). Primary
 _Avoid_: GDP, PMI (unless explicitly added later)
 
 **GSO macro**:
-Vietnam statistical series ingested from NSO/GSO NSDP SDMX (host `nsdp.nso.gov.vn`) and PX-Web (`pxweb.nso.gov.vn`), stored in `gso_macro` — monthly IIP; annual shipment (E07.03) and inventory (E07.04) step-held to monthly. `source` ∈ `{GSO, GSO_FALLBACK}`.
-_Avoid_: inventing GSO numbers; prefer live NSO endpoints, then sourced fallback fixtures
+Vietnam statistical series ingested from NSO/GSO NSDP SDMX (host `nsdp.nso.gov.vn`) and PX-Web (`pxweb.nso.gov.vn`), stored in `gso_macro` — monthly IIP; national manufacturing value added (`VA_C` constant-2010 / `VA_C_NOMINAL` current) from `GDPVNM.xml` (quarterly preferred, step-held to monthly); annual shipment (E07.03) and inventory (E07.04) step-held to monthly. `source` ∈ `{GSO, GSO_FALLBACK}`.
+_Avoid_: inventing GSO numbers; treating IIP as VA/GRDP; inventing province×industry GRDP (still deferred — see `.scratch/epic3-task31-grdp-spike.md`)
+
+**Manufacturing VA (`VA_C`)**:
+National-accounts value added for ISIC/VSIC Section C from NSO `GDPVNM.xml` (`NGDPVA_R_ISIC4_C_XDC`). Monetary production-account series for M1 — distinct from firm-level Digital VA and from IIP.
+_Avoid_: equating with Digital VA, IIP, or province GRDP
 
 **OECD MEI IP**:
 OECD Main Economic Indicators industrial production — ISIC Section C. **Not published for VNM**; project stores peer **EA20** as `country=EA20`, `source=OECD_PEER` for IIP forecast lags only (see ADR-0001).
@@ -38,8 +42,12 @@ OECD digital trade openness index for VNM (annual). Harmonized to monthly via **
 
 ## Micro / companies
 
+**Company universe (shallow)**:
+Future/sourced register of Section C firms (identity, VSIC, optional website, provenance) separate from the deep listed sample. Stub path: `data/raw/company_universe/` + `backend.app.schemas.universe` (ADR-0003). Rows currently empty by design.
+_Avoid_: inventing hundreds of firms; copying seed demo to fake national coverage; auto-running BCTC/marketplace enrich on every universe row
+
 **Listed sample company**:
-One of the seeded HOSE/HNX firms used for micro analysis. Epic 2 expands the sample to ~25–30 tickers with VSIC peer clustering (see `data/seeds/companies.json`). Core originals include RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP.
+One of the seeded HOSE/HNX firms used for micro analysis (deep sample). Epic 2 expands the sample to ~25–30 tickers with VSIC peer clustering (see `data/seeds/companies.json`). Core originals include RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP. Promote from universe only via explicit onboard + seed.
 _Avoid_: inventing tickers without updating seed + VSIC mapping; assuming percentiles represent the national industry
 
 **BCTC**:
@@ -51,6 +59,9 @@ A verified digital sales channel for a company (website, Shopee, TikTok, Lazada,
 
 **Marketplace listing**:
 A scraped product row (price, units sold estimate, revenue estimate) linked to a company in `marketplace_listings`.
+`source` ∈ `{live, seed, fallback}`. When live HTTP is blocked, allowlisted
+versioned snapshots under `data/raw/marketplace_live_cache/` may supply
+`source=live` with provenance `live:cache:…` (ADR-0002). Never invent units/GMV.
 
 **Shop matcher**:
 Model/heuristic that links a marketplace shop name to a listed company (fuzzy + optional TF-IDF/embeddings; match threshold **0.65**).
@@ -60,8 +71,10 @@ _Avoid_: assuming 1.0 confidence without evidence
 Estimated digital sales = Σ(price × units_sold) from marketplace listings
 (`source` ∈ live|seed|fallback). Industry-ratio interpolation is allowed **only**
 when a sourced manufacturing e-commerce share is wired
-(`SOURCED_INDUSTRY_ECOMMERCE_RATIO`); Epic 3 research found no suitable CBCT
-revenue share — missing listings → 0 (see `.scratch/epic3-task30-industry-ratio-research.md`).
+(`SOURCED_INDUSTRY_ECOMMERCE_RATIO`); Epic 3 Tasks #30 and #37 re-gate found no
+suitable CBCT revenue share — missing listings → 0 (see
+`.scratch/epic3-task30-industry-ratio-research.md`). Do not use digital VA % of
+GDP or VECOM all-sector bins as × firm revenue.
 
 ## Digital economy metrics
 

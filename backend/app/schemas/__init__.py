@@ -3,6 +3,19 @@ from typing import Any
 
 from pydantic import BaseModel, ConfigDict
 
+# Shallow Section C universe stub (ADR-0003) — re-export for convenience.
+from backend.app.schemas.universe import (  # noqa: E402
+    DIGITAL_VA_COVERAGE_CLAIM,
+    PERCENTILE_COVERAGE_CLAIM,
+    MetricCoverageLabel,
+    UniverseBatchManifest,
+    UniverseCoverageNote,
+    UniverseFirmShallow,
+    UniverseIngestStatus,
+    UniverseProvenance,
+    UniverseSourceType,
+)
+
 
 class VsicCodeOut(BaseModel):
     model_config = ConfigDict(from_attributes=True)

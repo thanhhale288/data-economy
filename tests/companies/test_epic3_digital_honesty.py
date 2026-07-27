@@ -34,6 +34,15 @@ def test_msn_tiktok_flag_honest_without_url():
     assert msn["digital_channels"]["tiktok"] is False
 
 
+def test_dqc_listings_do_not_invent_marketplace_gmv():
+    """Task #34: curated DQC depth must not invent units/revenue."""
+    dqc = next(c for c in _companies() if c["stock_code"] == "DQC")
+    listings = dqc.get("marketplace_listings") or []
+    assert listings, "DQC should have curated catalog listings after #34"
+    assert all(ml.get("units_sold_est") is None for ml in listings)
+    assert all(ml.get("revenue_est") is None for ml in listings)
+
+
 def test_zero_marketplace_flags_without_url_across_allowlist():
     """Task #33 AC: 0 flag marketplace=true missing DP URL."""
     bad: list[str] = []
@@ -58,3 +67,10 @@ def test_ecommerce_site_flag_has_website_or_marketplace_url():
         assert any(d.get("url") for d in dps), (
             f"{c['stock_code']} has_ecommerce_site=true without any DP URL"
         )
+
+
+def test_industry_ratio_constant_not_silently_wired():
+    """Task #37: do not invent CBCT ratio from GDP digital % or similar."""
+    from pipeline.cleaning.digital_metrics import SOURCED_INDUSTRY_ECOMMERCE_RATIO
+
+    assert SOURCED_INDUSTRY_ECOMMERCE_RATIO is None

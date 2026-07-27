@@ -109,6 +109,10 @@ Các dimension hay gặp:
 
 **Index of Industrial Production** — Chỉ số sản xuất công nghiệp. Trong project: `IIP_C` cho Section C; biến mục tiêu dự báo chính của ML Lab.
 
+### Manufacturing VA (`VA_C`)
+
+**Value added** quốc gia cho VSIC/ISIC Section C từ NSO SDMX `GDPVNM.xml` (`NGDPVA_R_ISIC4_C_XDC` → `VA_C` giá so sánh 2010; `NGDPVA_ISIC4_C_XDC` → `VA_C_NOMINAL`). Khác Digital VA (cấp DN) và khác IIP (chỉ số). **Không** phải GRDP tỉnh×ngành (vẫn deferred).
+
 ### Shipment index
 
 Chỉ số **xuất hàng** công nghiệp (hàng đã xuất khỏi nhà máy). Plan: `SHIPMENT_C`. File SDMX IIP hiện không có → cần nguồn khác (PX-Web).
@@ -213,6 +217,14 @@ Ví dụ: `RAL` (Rạng Đông), `HPG` (Hòa Phát), `BMP` (Nhựa Bình Minh tr
 Trong code: allowlist lấy từ `data/seeds/companies.json`; crawl/enrich/benchmark đều khóa theo ticker. Không có trong allowlist → không invent DN mới.
 
 Một câu nhớ: **ticker = mã CK / ID ngắn của DN trong hệ thống.**
+
+### Company universe (shallow)
+
+**Company universe** = tập DN Section C ở mức **nông** (tên, VSIC, website?, provenance) — tách khỏi **mẫu sâu** niêm yết (~28 seed có BCTC + digital).
+
+Task #39 / ADR-0003: stub `data/raw/company_universe/rows.json` hiện **`[]`** (cố ý). Digital VA / percentile trên seed = `prototype_listed_sample`, không phải chuẩn quốc gia. Promote vào mẫu sâu chỉ qua onboard — không auto-crawl BCTC/sàn cho cả vũ trụ.
+
+Một câu nhớ: **universe = danh sách nông; deep sample = cho phép đo sâu; macro = ngành (IIP/VA).**
 
 ### Seed annual
 
@@ -345,7 +357,7 @@ Nếu chỉ so chữ trực tiếp, điểm giống sẽ thấp → match sai. V
 Trong code (`ml/shop_matcher/matcher.py`):
 
 - `_BRAND_MARKERS` — alias viết sẵn cho các DN seed có tên pháp lý ≠ tên thương hiệu
-- `train()` học thêm alias từ URL shop trong seed + tên miền website (vd. `rangdong` từ `rangdong.com.vn`), lưu vào `shop_matcher.joblib`
+- `train()` học thêm alias từ URL shop trong seed (và hostname website **chỉ khi DN đã có shop**), lưu vào `shop_matcher.joblib`. Không ép alias website cho ~22 ticker không shop.
 
 Alias chỉ giúp **tăng điểm giống khi đúng thương hiệu** — shop tìm mới vẫn phải vượt ngưỡng 0.65 mới được gắn DN.
 
@@ -355,9 +367,9 @@ Một câu nhớ: **alias = biệt danh thương hiệu, giúp matcher nhận ra
 
 Điểm giống nhau tối thiểu để được coi là match. Dưới ngưỡng → **không gắn** DN với shop.
 
-### Seed bypass ngưỡng
+### Seed vs discovery (Task #36)
 
-Shop/URL đã có trong seed được gắn DN luôn (`is_match=True`, `match_source=seed_known_url`), **không bắt buộc** vượt 0.65. Shop tìm mới phải qua `evaluate_discovered_shop` và ngưỡng.
+Shop/URL đã có trong seed vẫn phải vượt ngưỡng **0.65** trước khi gắn DN (`match_source=seed_known_url`). Shop tìm mới (discovery) **tắt mặc định**; chỉ bật với `MARKETPLACE_DISCOVERY_ENABLED=1` + entry trong `data/mappings/discovery_allowlist.json` + threshold 0.65 (`match_source=qa_discovery`). Không alias ép ticker không có shop.
 
 ### Listing marketplace (marketplace listing)
 
@@ -372,6 +384,11 @@ Trong project, mỗi listing lưu vào bảng `marketplace_listings`, gắn vớ
 - ước lượng doanh thu (`price × units_sold`)
 - nền tảng / shop liên quan
 - provenance (`live` / `seed` / `fallback`)
+
+**Live strategy (Task #35 / ADR-0002):** khi HTTP Shopee/TikTok bị 403, crawler
+có thể dùng **allowlist nhỏ + snapshot cache** (`data/raw/marketplace_live_cache/`)
+với provenance `live:cache:…` → `source=live`. Không dùng anti-bot SaaS làm mặc định;
+session cookie chỉ ops (env). Không silent invent GMV.
 
 Phân biệt nhanh:
 
@@ -399,6 +416,7 @@ Ví dụ: DN doanh thu 100 tỷ, tỷ lệ ngành TMĐT = 5% → ước online �
 
 - Plan/CONTEXT **cho phép** dùng cách này khi thiếu listing
 - Nhưng hiện **chưa gắn** một tỷ lệ có nguồn thật vào code (`SOURCED_INDUSTRY_ECOMMERCE_RATIO = None`)
+- Task #37 re-gate (2026-07-26): vẫn **None** — không có citation CBCT TMĐT/doanh thu; không dùng % KT số/GDP hay bin VECOM all-sector
 - Không được bịa số kiểu ×0.15 im lặng
 - Vì vậy nếu không có listing → `online_revenue_est = 0` + log (không invent)
 
@@ -409,6 +427,8 @@ Thứ tự thực tế gần như:
 1. **Scrape live** Shopee/TikTok được → dùng listing live  
 2. Không scrape được → dùng **listing trong seed/fallback** (số mẫu đã chuẩn bị)  
 3. DN không có listing nào dùng được → **không** tự nhân tỷ lệ ngành (vì ratio chưa gắn nguồn) → online rev = 0  
+
+**Mẫu niêm yết (~28) ≠ mẫu có TMĐT.** Chỉ ~6 ticker có shop sàn; ~5 có listing đủ `price×units` (GMV). Có shop nhưng thiếu units (ví dụ DQC catalog) → online rev vẫn 0. Peer B2B giữ listing rỗng — không pad cho “đủ 10 DN”.
 
 Vì Phase 2 scrape live thường fail/block, **số online revenue bạn thấy phần lớn đến từ listing seed**, không phải doanh thu TMĐT đã kiểm toán từ sàn thật.
 

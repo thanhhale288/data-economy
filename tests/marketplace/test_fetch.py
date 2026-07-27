@@ -91,7 +91,9 @@ def test_fetch_tiktok_ok_parses_live_json():
     assert result.listings[0]["units_sold_est"] == 1200
 
 
-def test_scrape_products_falls_back_to_seed_on_block(sample_company, monkeypatch):
+def test_scrape_products_uses_live_cache_on_block(sample_company, monkeypatch):
+    """Task #35: RAL allowlisted cache supplies source=live on HTTP block."""
+
     def fake_fetch(*_args, **_kwargs):
         from crawlers.marketplace.common import FetchResult
 
@@ -99,6 +101,34 @@ def test_scrape_products_falls_back_to_seed_on_block(sample_company, monkeypatch
 
     monkeypatch.setattr(shop_finder, "fetch_shopee_listings", fake_fetch)
     monkeypatch.setattr(shop_finder, "fetch_tiktok_listings", fake_fetch)
+
+    products = shop_finder.scrape_marketplace_products(
+        sample_company, client=MagicMock(), attempt_live=True
+    )
+
+    assert len(products) >= 1
+    assert all(str(p.get("provenance", "")).startswith("live:cache:") for p in products)
+    assert all(p.get("source") == "live" for p in products)
+    names = {p["product_name"] for p in products}
+    assert "Bóng LED Rạng Đông 9W" in names
+    for p in products:
+        if p.get("price") is not None and p.get("units_sold_est") is not None:
+            assert p["revenue_est"] == p["price"] * p["units_sold_est"]
+        else:
+            assert p.get("revenue_est") is None
+
+
+def test_scrape_products_falls_back_to_seed_on_block_without_cache(
+    sample_company, monkeypatch
+):
+    def fake_fetch(*_args, **_kwargs):
+        from crawlers.marketplace.common import FetchResult
+
+        return FetchResult(status="blocked", detail="anti-bot", listings=[], source=None)
+
+    monkeypatch.setattr(shop_finder, "fetch_shopee_listings", fake_fetch)
+    monkeypatch.setattr(shop_finder, "fetch_tiktok_listings", fake_fetch)
+    monkeypatch.setattr(shop_finder, "load_cached_listings", lambda *_a, **_k: [])
 
     products = shop_finder.scrape_marketplace_products(
         sample_company, client=MagicMock(), attempt_live=True
@@ -139,3 +169,34 @@ def test_find_shops_empty_for_company_without_marketplace(db_session):
 
     shops = shop_finder.find_shops_for_company(company)
     assert shops == []
+
+
+def test_discovery_default_off_even_with_brand_perfect_candidate(monkeypatch):
+    """Task #36: no-shop ticker stays unlinked; discovery off by default."""
+    monkeypatch.delenv(shop_finder.DISCOVERY_ENABLED_ENV, raising=False)
+    company = Company(
+        stock_code="HPG",
+        name="Tập đoàn Hòa Phát",
+        vsic_code="2410",
+        exchange="HOSE",
+    )
+    assert shop_finder.is_marketplace_discovery_enabled() is False
+    assert shop_finder.find_shops_for_company(company) == []
+    assert (
+        shop_finder.discover_shops_for_company(
+            company,
+            allowlist=[
+                {
+                    "ticker": "HPG",
+                    "channel_type": "shopee",
+                    "url": "https://shopee.vn/hoaphat_official",
+                }
+            ],
+        )
+        == []
+    )
+
+
+def test_load_discovery_allowlist_empty_by_default():
+    entries = shop_finder.load_discovery_allowlist()
+    assert entries == []

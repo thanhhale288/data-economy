@@ -18,7 +18,15 @@ flowchart LR
   T38[T38_GRDP_If_NSO]
   T39[T39_Scale_Architecture]
   T40[T40_Seed_Domain_Fix]
+  T41[T41_GMV_Cache_Refresh]
+  T42[T42_Cookie_Partner_Spike]
+  T43[T43_Discovery_Crawl_Hygiene]
+  T44[T44_Ratio_Wire_When_Sourced]
   P1 --> T32 --> T33 --> T34 --> T35 --> T36 --> T37 --> T38 --> T39 --> T40
+  T35 --> T41
+  T35 --> T42
+  T36 --> T43
+  T37 --> T44
 ```
 
 ---
@@ -61,6 +69,8 @@ flowchart LR
 
 ## Task #34 — Listing depth (không bịa GMV)
 
+**Status:** DONE (2026-07-25) — DQC curated website catalog (price, units null); live smoke script + report; docs mẫu niêm yết vs TMĐT; B2B giữ `[]`.
+
 **Trả lời thắc mắc:** vì sao ~5 brand; 10 DN ≠ 10 có listing.
 
 **Việc chính:**
@@ -70,11 +80,17 @@ flowchart LR
 
 **AC:** tăng số ticker có listing **chỉ** kèm provenance; digital_metrics không nhảy số không nguồn.
 
+**Artifact:** `.scratch/epic3-task34-listing-depth.{md,csv}` · lệnh `PYTHONPATH=. python scripts/enrich_marketplace_listings.py`
+
 ---
 
 ## Task #35 — Chiến lược marketplace live (sau Playwright mock)
 
+**Status:** DONE (2026-07-26) — ADR-0002: default allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; partner API spike-only.
+
 **Trả lời thắc mắc:** captcha/anti-bot; đề xuất xử lý.
+
+**Bằng chứng từ #34:** smoke `scripts/enrich_marketplace_listings.py` — Shopee/TikTok allowlist shops đều HTTP **403**; `live_ok=0`. DQC có catalog website (price) nhưng chưa có `units_sold_est` từ sàn.
 
 **Việc chính (chọn 1–2, ghi ADR ngắn nếu đụng ToS/chi phí):**
 1. Allowlist nhỏ + cache snapshot + badge live|seed|fallback (mặc định khuyến nghị).  
@@ -84,9 +100,13 @@ flowchart LR
 
 **AC:** document quyết định trong `.scratch/` hoặc `docs/adr/`; crawl contract không silent invent; ít nhất một đường demo ổn định (cache hoặc live thật).
 
+**Artifact:** `docs/adr/0002-marketplace-live-strategy.md` · `data/raw/marketplace_live_cache/` · `.scratch/epic3-task35-marketplace-live-strategy.md`
+
 ---
 
 ## Task #36 — Matcher: chỉ DN có shop; discovery có cổng
+
+**Status:** DONE (2026-07-26) — discovery OFF by default; enable via `MARKETPLACE_DISCOVERY_ENABLED` + QA allowlist + threshold 0.65; train() không ép website alias cho no-shop tickers.
 
 **Trả lời thắc mắc:** phần “chưa” #29.
 
@@ -97,9 +117,13 @@ flowchart LR
 
 **AC:** precision không tụt; ticker không shop vẫn unlinked.
 
+**Artifact:** `data/mappings/discovery_allowlist.json` · gate trong `crawlers/marketplace/shop_finder.py`
+
 ---
 
 ## Task #37 — Industry-ratio (re-gate)
+
+**Status:** DONE (2026-07-26) — **NO-GO**: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; research note re-gate; tests khóa None + no silent invent.
 
 **Trả lời thắc mắc:** phần chưa #30.
 
@@ -107,9 +131,13 @@ flowchart LR
 
 **AC:** constant set **có citation** hoặc task đóng lại với “vẫn None” + cập nhật research note.
 
+**Artifact:** `.scratch/epic3-task30-industry-ratio-research.md` § Task #37 re-gate
+
 ---
 
 ## Task #38 — GRDP/VA (re-gate NSO)
+
+**Status:** DONE (2026-07-26) — **GO** national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred.
 
 **Trả lời thắc mắc:** phần chưa #31.
 
@@ -117,9 +145,12 @@ flowchart LR
 
 **AC:** series thật trong `gso_macro` có `source=GSO|GSO_FALLBACK` hoặc biên bản “chưa có bảng”.
 
+**Artifact:** `.scratch/epic3-task31-grdp-spike.md` § Task #38 · `crawlers/gso/iip_crawler.py` (`fetch_gso_va`) · `data/raw/gso_va_fallback.csv`
 ---
 
 ## Task #39 — Scale architecture (toàn Section C)
+
+**Status:** DONE (2026-07-26) — docs + ADR-0003 + empty universe stub; no nationwide crawl.
 
 **Trả lời thắc mắc:** sau này tìm tất cả DN CBCT thì scale thế nào.
 
@@ -127,9 +158,14 @@ flowchart LR
 - Tách: **vũ trụ DN** (đăng ký / thống kê / niêm yết) vs **mẫu sâu** (BCTC+digital) vs **macro ngành**.
 - Đặc tả ingest nông (VSIC, tên, website?) + queue lô + rate limit + provenance.
 - Percentile/Digital VA trên mẫu niêm yết = prototype — không tuyên bố chuẩn quốc gia.
-- Doc trong `docs/economy-knowledge.md` + ADR ngắn nếu cần.
+- Doc trong `docs/economy-knowledge.md` + ADR-0003.
+- Stub: `data/raw/company_universe/rows.json` = `[]` + `backend/app/schemas/universe.py` (không migration DB — identity key chưa chốt).
 
-**AC:** tài liệu + optional schema/stub “universe” (không invent hàng trăm BCTC); plan ghi rõ giới hạn.
+**Giới hạn (ghi rõ):** không invent hàng trăm BCTC/GMV; không scale bằng copy seed; không chọn registry provider khi chưa verify access; #40–#43 ngoài phạm vi.
+
+**AC:** tài liệu + optional schema/stub “universe” (không invent hàng trăm BCTC); plan ghi rõ giới hạn. ✅
+
+**Artifact:** `docs/adr/0003-scale-section-c-architecture.md` · `docs/economy-knowledge.md` §6.0 · `data/raw/company_universe/` · `tests/universe/test_universe_stub.py`
 
 ---
 
@@ -160,6 +196,92 @@ flowchart LR
 
 ---
 
+## Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)
+
+**Nguồn:** Task #34 đóng với listing tickers 5→6 nhưng **GMV tickers vẫn 5**. DQC có listing catalog (`platform=website`, price set, `units_sold_est=null`). Live Shopee/TikTok 403. VNM/PNJ có TikTok shop URL nhưng chưa có TikTok listing rows.
+
+**Nợ thêm từ #35:** snapshot `data/raw/marketplace_live_cache/` hiện là **demo-shaped** (cùng parse shape fixture) — chưa phải bản ghi “scrape thật ngày X”. HTTP live vẫn 403; badge `live` từ cache chưa = “fetch mạng thành công lần này”.
+
+**Phụ thuộc:** sau Task #35 (đã có đường allowlist+cache ổn định). Không invent units.
+
+**Việc chính:**
+- Khi live/cache trả về items có `historical_sold` / sold: upsert DQC (và shop peers) với `source=live` (hoặc cache-tagged live), điền `units_sold_est` + `revenue_est = price × units`.
+- **Refresh cache:** nếu có parse live thật (hoặc session cookie ops #42) → ghi đè `RAL.shopee.json` / `VNM.tiktok.json` (và peers allowlist) + cập nhật `PROVENANCE.md` (ngày capture, URL).
+- Optional: TikTok listing depth cho VNM/PNJ nếu scrape/cache được.
+- Re-run `scripts/enrich_marketplace_listings.py`; so `with_gmv_listing` trước/sau trong `.scratch/`.
+- Peer B2B không shop vẫn `[]`.
+
+**AC:** DQC (hoặc ticker mục tiêu) có ≥1 listing GMV có provenance; online_revenue chỉ tăng đúng Σ listing có nguồn; không pad B2B; cache PROVENANCE phản ánh capture thật nếu đã refresh.
+
+**Không làm:** bịa units để “đủ 10 DN GMV”; đổi Digital VA; anti-bot SaaS.
+
+---
+
+## Task #42 — Session cookie ops smoke + partner API spike note (nợ từ #35)
+
+**Nguồn:** ADR-0002 Decision §2–§3 — cookie env đã wire (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) nhưng **chưa smoke tay**; partner API chỉ “spike only”, chưa có biên bản nghiên cứu.
+
+**Việc chính:**
+- Ops: login tay → set cookie env → chạy smoke 1–2 shop allowlist; ghi kết quả 403 vs ok vào `.scratch/` (không commit secret).
+- Nếu cookie hết hạn / vẫn 403 → ghi nhận; giữ cache/seed path.
+- Spike note ngắn: có API/đối tác dữ liệu TMĐT VN phù hợp đồ án không (chi phí/ToS) — **không implement full** nếu không có hợp đồng.
+- Không dùng anti-bot SaaS làm mặc định.
+
+**AC:** artifact smoke cookie (pass/fail + detail) + optional partner spike note trong `.scratch/`; secrets không vào git.
+
+**Không làm:** commit cookie; đổi Digital VA; implement ingest partner full.
+
+---
+
+## Task #43 — Discovery crawl thật + fuzzy hygiene (nợ từ #36)
+
+**Nguồn:** Task #36 đóng cổng discovery (OFF mặc định + QA allowlist + 0.65) nhưng **chưa** có crawler tìm shop trên sàn; matcher vẫn có vài quirks fuzzy.
+
+**Trả lời thắc mắc:** “bật discovery thì tìm shop ở đâu?”; “vì sao DPR có thể gần `rangdong`?”
+
+**Việc chính:**
+1. **Discovery source thật (khi ToS/ops cho phép):** crawler/search Shopee/TikTok theo brand → candidate URL → chỉ feed vào `discover_shops_for_company` (vẫn cần flag + allowlist hoặc promote vào allowlist sau QA). Không invent URL.
+2. **Ops smoke cổng:** thêm ≥1 entry QA thật vào `discovery_allowlist.json` (ticker đã có shop đã biết, ví dụ RAL) → bật env → chứng minh `match_source=qa_discovery`; rồi có thể để lại empty nếu chỉ demo gate.
+3. **Fuzzy hygiene (optional nhưng nên làm):**
+   - Token ngắn generic (`dong`, …) dễ FP giữa DN cao su / đèn — siết rule token ≥N hoặc noise list có citation test.
+   - Cân nhắc: `_BRAND_MARKERS` no-shop peers chỉ dùng khi ticker nằm allowlist (score-only hôm nay vẫn OK vì gate chặn link).
+   - `resolve_shop_to_company` (pipeline clean) nếu nhận discovery rows → tôn trọng cùng gate/allowlist, không bypass.
+4. **ML nâng cấp (đã ghi plan cũ):** TF-IDF / classifier đầy đủ chỉ khi fuzzy + gate không đủ precision trên mẫu lớn hơn.
+
+**AC:** có đường candidate shop từ search **hoặc** biên bản “vẫn chưa crawl search (anti-bot/ToS)”; cổng #36 không bị phá; precision baseline không tụt; không invent shop/GMV.
+
+**Không làm trong #43:** đổi Digital VA; bật discovery mặc định; anti-bot SaaS; ép alias 22 ticker không shop.
+
+**Artifact gợi ý:** `.scratch/epic3-task43-discovery-crawl.{md,csv}` · cập nhật `docs/ops-demo.md`
+
+---
+
+## Task #44 — Industry-ratio wire (khi có citation CBCT) — nợ từ #37
+
+**Nguồn:** Task #37 đóng **NO-GO** — không có tỷ trọng TMĐT/doanh thu chế biến chế tạo (VSIC C) có citation đủ. Code giữ `SOURCED_INDUSTRY_ECOMMERCE_RATIO = None`; thiếu listing → `online_revenue = 0` + log.
+
+**Trả lời thắc mắc:** “bao giờ DN không có listing mới có online_revenue ước từ ngành?”
+
+**Điều kiện mở task (bắt buộc có ≥1):**
+- GSO/NSO: module DN ICT/TMĐT theo VSIC, hoặc
+- MoIT white paper: breakout online/total revenue cho CBCT, hoặc
+- VECOM: bảng **chỉ manufacturing** mean/median online÷doanh thu (không dùng Fig. 20 all-sector bins), hoặc
+- UNCTAD/NSO: VN có business e-commerce sales by industry
+
+**Việc chính (khi GO):**
+1. File `data/mappings/` (vd. `manufacturing_ecommerce_ratio.json`) + `*.PROVENANCE.md` (năm, table/figure ID, URL).
+2. Set `SOURCED_INDUSTRY_ECOMMERCE_RATIO` (load từ mapping, không hard-code im lặng).
+3. Cập nhật tests: HPG/no-listing có thể nhận `ratio × BCTC` **chỉ** khi constant wired; giữ guard chống GDP digital % / bin VECOM.
+4. Docs: `CONTEXT.md`, `docs/knowledge.md`, `docs/ops-demo.md`; ADR ngắn nếu đụng Digital VA path.
+
+**AC:** constant >0 có citation trong mappings + PROVENANCE; missing listings dùng ratio có nguồn; không dùng % KT số/GDP hay invent 0.15.
+
+**Không làm:** bịa số trước khi có bảng; dùng digital VA % GDP; dùng VECOM all-sector bins.
+
+**Artifact:** cập nhật `.scratch/epic3-task30-industry-ratio-research.md` § GO + mapping file.
+
+---
+
 ## Definition of Done Phase 2
 
 - Cho phép demo/ops: BCTC trên mẫu 28 **ưu tiên số CafeF/live** khi mạng cho phép; seed chỉ fallback có nhãn.
@@ -169,6 +291,11 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40.
+**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41) → **#43** (discovery crawl + fuzzy hygiene, sau #36) → **#44** (wire industry-ratio **chỉ khi** có citation CBCT — nợ #37; có thể sau Phase 2 nếu nguồn chưa ra).
 
-**Nợ kỹ thuật đã ghi:** Task #40 (9 domain website fail từ audit #33) — làm sau, không chặn #34.
+**Nợ kỹ thuật đã ghi:**
+- Task #40 (9 domain website fail từ audit #33).
+- Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35.
+- Task #42 (session cookie ops smoke + partner API spike note) — từ #35 (wire sẵn, chưa chứng minh tay).
+- **Task #43 (discovery crawl thật + fuzzy hygiene)** — từ #36 (cổng sẵn, chưa search sàn; token FP quirk).
+- **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; trigger xem research note § “Next re-gate triggers”.

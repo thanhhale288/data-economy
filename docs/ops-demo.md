@@ -18,7 +18,7 @@ Allowlist = stock codes in `data/seeds/companies.json`.
 
 - `digital_channels.shopee|tiktok|lazada=true` **chỉ** khi có URL trong `digital_presence`.
 - Marketplace crawl: live → seed → fallback; `marketplace_listings.source` ∈ `live|seed|fallback`.
-- Industry-ratio online revenue: **không** bật silent ratio — xem `.scratch/epic3-task30-industry-ratio-research.md`.
+- Industry-ratio online revenue: **không** bật silent ratio (Tasks #30/#37 still `None`) — xem `.scratch/epic3-task30-industry-ratio-research.md`.
 
 ## CafeF BCTC enrich (Epic 3 Task #32)
 
@@ -52,6 +52,74 @@ PYTHONPATH=. python scripts/audit_website_marketplace.py --fix-db --no-detect
 ```
 
 Report columns: `stock_code | website_ok | has_checkout | shopee_url | tiktok_url | flag_vs_url_mismatch`. Exit code 3 if any marketplace flag lacks a URL.
+
+## Listing depth (Epic 3 Task #34)
+
+**Mẫu niêm yết (~28)** ≠ **mẫu có shop TMĐT** ≠ **mẫu có listing GMV**.
+
+| Sample | Meaning |
+|--------|---------|
+| Niêm yết | Seed allowlist |
+| Có shop TMĐT | Shopee/TikTok/Lazada URL trong seed/`digital_presence` |
+| Có listing | ≥1 `marketplace_listings` (kể cả website catalog, units null) |
+| Có GMV | Listing có cả `price` và `units_sold_est` → đóng góp online revenue |
+
+Chỉ thêm listing khi live scrape `source=live` **hoặc** curation có PROVENANCE
+(`data/raw/marketplace_listings_fallback.PROVENANCE.md`). Peer B2B không shop → `[]`.
+
+```bash
+# Seed coverage + live smoke (needs network). Writes .scratch/epic3-task34-listing-depth.{md,csv}
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py
+
+# Offline seed coverage only
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --no-live
+
+# Persist via crawl upsert (live→seed→fallback); never invents units on block
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --persist-db
+```
+
+DQC (sau #34): curated **website** catalog rows từ `dienquang.com` — `units_sold_est=null`
+→ online revenue vẫn 0 cho đến khi live Shopee OK.
+
+## Marketplace live strategy (Epic 3 Task #35)
+
+**ADR:** [`docs/adr/0002-marketplace-live-strategy.md`](adr/0002-marketplace-live-strategy.md)
+
+| Option | Role |
+|--------|------|
+| Allowlist + cache + badge `live\|seed\|fallback` | **Default** — `data/raw/marketplace_live_cache/` (RAL×shopee, VNM×tiktok) |
+| Session cookie (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) | **Optional ops** — manual login; never commit secrets |
+| Partner API | Spike only — no full implement without contract |
+| Anti-bot SaaS | **Rejected** as đồ án default |
+
+Crawl when live attempted: HTTP → on 403/block, allowlisted cache (`source=live`,
+provenance `live:cache:…`) → seed → fallback. Never invent units/GMV.
+
+```bash
+# Demo-stable: prefer cache before HTTP (no invent)
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --prefer-cache --tickers RAL,VNM
+
+# Live HTTP then cache-on-fail (default when not --no-cache)
+PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM,FPT
+```
+
+Company detail listing table shows badge **Nguồn** = `live` | `seed` | `fallback`.
+
+## Matcher discovery gate (Epic 3 Task #36)
+
+Marketplace **shop discovery** (non-seed search) is **OFF by default**. Crawl only links seed known URLs that pass ShopMatcher ≥ **0.65**.
+
+To enable controlled discovery (ops/QA only):
+
+```bash
+export MARKETPLACE_DISCOVERY_ENABLED=1
+# optional override; default 0.65
+export MARKETPLACE_DISCOVERY_THRESHOLD=0.65
+# Edit data/mappings/discovery_allowlist.json — add {ticker, channel_type, url}
+# Empty entries[] ⇒ no discovered shops even when enabled
+```
+
+Ticker không có shop trong seed vẫn **unlinked** trừ khi có entry QA allowlist + score ≥ 0.65. Không invent shop/GMV.
 
 ## Bootstrap (recommended)
 

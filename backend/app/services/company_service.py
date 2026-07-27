@@ -319,6 +319,8 @@ def _listing_is_complete(ml: MarketplaceListing) -> bool:
 
 def _listing_detail(ml: MarketplaceListing) -> str:
     parts = [f"platform={ml.platform}"]
+    listing_source = (ml.source or "seed").strip().lower()
+    parts.append(f"listing_source={listing_source}")
     if ml.price is not None:
         parts.append(f"price={ml.price}")
     if ml.units_sold_est is not None:
