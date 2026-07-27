@@ -302,7 +302,9 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - Biểu đồ IIP, giá trị gia tăng, xu hướng dự báo
 - Heatmap đóng góp KTS theo nhóm ngành VSIC
 - So sánh OECD leading indicators vs GSO lagging
-- KPI phụ: tăng trưởng IIP (MoM/YoY + sparkline), dự báo 6 tháng (điểm + Δ), cơ cấu Digital VA trong mẫu, độ phủ Digital metrics
+- KPI phụ (design-system PR #27): tăng trưởng IIP (MoM/YoY + sparkline), dự báo 6 tháng (điểm + Δ), cơ cấu Digital VA trong mẫu, độ phủ Digital metrics
+- **Done FE — Task #51:** banner/badge honesty — Digital VA / số hóa = mẫu ~28, không phải toàn Section C (ADR-0003)
+- **Deferred — KPI/chart `VA_C` đầy đủ:** data NSO đã vào `gso_macro` (#38); UI chuẩn = Task #45
 - **Deferred — «Ngành nổi bật» theo tăng trưởng IIP từng VSIC:** cần chuỗi IIP theo ngành (ít nhất VSIC 2 chữ số). Hiện chỉ có `IIP_C` Section C tổng (`vsic_code=C`); không xếp hạng tăng/giảm theo ngành khi thiếu dữ liệu. Làm sau khi crawl/seed GSO có IIP theo ngành (xem Luồng A).
 
 ### Module 2: Doanh nghiệp (~10 DN mẫu)
@@ -328,10 +330,10 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 
 - Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương) + cân đối kế toán
 - Output: ROA, ROE, Current Ratio, Equity Ratio (+ revenue/profit per worker) + **percentile so với peer cùng VSIC 2-digit** từ BCTC seed
-- Bổ sung (design branch): biên LN, vòng quay tài sản, nợ/VCSH; P25–trung vị–P75 (≥4 peer); câu tổng kết + radar theo phân vị
-- Thiếu peer / field → null percentile + `insufficient_peers` (không bịa 50th); prototype n≈10 DN niêm yết
+- Đã ship (PR #27): biên LN, vòng quay tài sản, nợ/VCSH; P25–trung vị–P75 (≥4 peer) + nhãn «Bạn»; câu tổng kết + radar; so sánh số hóa khi có `stock_code`
+- API `warnings`: `insufficient_peers` | `prototype_listed_sample` | `small_peer_sample` — **Task #51** FE hiện đủ warning bằng tiếng Việt
 - Nội suy GSO khi thiếu BCTC → deferred (không invent industry ratio)
-- **Deferred — xu hướng theo năm (mục 4):** chọn năm / vẽ ROA·ROE (và chỉ số chính) 2–3 năm khi BCTC CafeF có nhiều kỳ đủ field. Cần kiểm tra multi-year trước khi làm; không invent chuỗi năm.
+- **Deferred — xu hướng theo năm (mục 4):** chọn năm / vẽ ROA·ROE (và chỉ số chính) 2–3 năm khi BCTC CafeF có nhiều kỳ đủ field — xem mục **Design system**; không invent chuỗi năm.
 
 ---
 
@@ -439,7 +441,9 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #30 — Industry-ratio gate** — research: no CBCT revenue share → keep `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (`.scratch/epic3-task30-industry-ratio-research.md`)
 - [x] **Task #31 — Macro + refresh docs** — GRDP deferred (spike note); plan/economy-knowledge/handoff Epic 3 Phase 1
 
-#### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (TODO)
+#### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (DONE data/#39; FE honesty #51)
+
+Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết kế scale (chưa đổ DN cả nước); #51 = FE honesty surface.** Design-system PR #27 đã merge `main` (2026-07-27).
 
 - [x] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
 - [x] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
@@ -449,6 +453,7 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #37 — Industry-ratio re-gate** — NO-GO: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; không wire % KT số/GDP (biên bản cập nhật `.scratch/epic3-task30-industry-ratio-research.md`)
 - [x] **Task #38 — GRDP/VA re-gate** — national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred
 - [x] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; ADR-0003 + stub `company_universe` (rows=`[]`); **không** crawl toàn quốc / invent BCTC
+- [x] **Task #51 — FE Epic 3 honesty surface (P0)** — banner/badge mẫu ~28; Benchmark mọi `warnings` VI; listing chart null≠0; CafeF `source_url` clickable; marketplace live-cache note; BCTC không gợi CafeF khi kỳ seed. Không redesign KPI/radar/format tiền.
 - [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
 - [ ] **Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)** — điền `units_sold_est` DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; refresh snapshot `marketplace_live_cache/` bằng capture thật + PROVENANCE; không invent; GMV tickers có thể tăng >5
 - [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay `SHOPEE_SESSION_COOKIE`/`TIKTOK_SESSION_COOKIE` (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
@@ -457,12 +462,45 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [ ] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — đưa `VA_C` vào cleaned/features **hoặc** biên bản giữ IIP-only; không thay target forecast im lặng
 - [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — crawl chỉ khi có table ID NSO; không invent / không copy `VA_C` quốc gia xuống tỉnh
+- [ ] **Task #48 — Universe nông ingest stub→thật** — theo ADR-0003 tầng 2
+- [ ] **Task #49 — Deep-sample expand có kiểm soát** — không invent trăm BCTC
+- [ ] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39
 
 **Deferred (sau khi có nguồn):** IIP theo ngành VSIC (cấp 2+) → unlock Dashboard card «Ngành nổi bật» (top/bottom tăng trưởng SXCN). Phụ thuộc bảng Luồng A; không invent số IIP theo ngành.
 
-**Deferred (Benchmark):** xu hướng chỉ số theo năm (ROA/ROE…) khi có ≥2 kỳ BCTC đủ field — xem Module 5.
+**Deferred (Benchmark data):** xu hướng chỉ số theo năm (ROA/ROE…) khi có ≥2 kỳ BCTC đủ field — xem Module 5 + mục Design system dưới đây.
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
+
+---
+
+## Design system — đã ship & backlog FE
+
+**Đã merge `main`:** PR #27 (`new-design-system`) — palette xanh báo cáo, sidebar gradient, hamburger/mobile, nav Benchmark sau Dashboard, format tiền thống nhất, Dashboard KPI phong phú, Benchmark ratios + quartile «Bạn» + radar + so sánh số hóa, MetricInfoTip, copy OECD/ML dễ hiểu hơn.
+
+### Không làm lại (đã cover)
+
+- Layout/responsive/nav/hamburger
+- Format tiền USD/VND compact
+- Dashboard KPI strip + tip MetricInfoTip (siết badge honesty ở #51 — không viết lại KPI)
+- Benchmark radar / P25–P75 / digital section
+- Dọn note kỹ thuật dài (Pipeline log, chart-note thừa)
+
+### Backlog gắn honesty Epic 3 (ưu tiên #51 DONE, rồi đợi BE)
+
+| Ưu tiên | Việc FE | Phụ thuộc |
+|--------|---------|-----------|
+| P0 (#51) ✓ | Banner/badge mẫu ~28 trên Dashboard + Company detail | ADR-0003 / `prototype_listed_sample` |
+| P0 (#51) ✓ | Benchmark render mọi `warnings` (không chỉ `insufficient_peers`) | API `BenchmarkResult.warnings` |
+| P0 (#51) ✓ | Listing/GMV: `null` → `—`, **không** `\|\| 0` vào chart | Nợ honesty #34 |
+| P0 (#51) ✓ | Marketplace badge: `live` có thể là **cache allowlist** (ADR-0002) | Copy; API `live:cache` chi tiết hơn → #42 |
+| P0 (#51) ✓ | BCTC: ưu tiên kỳ có `source_url` CafeF; đừng gợi CafeF khi seed | #32 |
+| P1 (#51) ✓ | Link bấm được CafeF `source_url` + Pipeline nhấn CafeF `source_health` | #32 |
+| P1 | Chip “URL chưa verify / fail” (9 ticker) | Đầy đủ sau #40 |
+| P1 | Empty state “không có shop / discovery tắt” | #36 |
+| P2 (#45) | KPI/chart `VA_C` đầy đủ (tách Digital VA) | #38 data đã có |
+| P2 | Xu hướng Benchmark theo năm (ROA/ROE…) | ≥2 kỳ CafeF đủ field |
+| P2 | «Ngành nổi bật» theo tăng trưởng IIP từng VSIC | IIP theo ngành (Luồng A) |
 
 ---
 

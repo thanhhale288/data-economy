@@ -117,6 +117,16 @@ const DEBT_COMPARISON_LABELS = {
   neutral: '—',
 }
 
+/** API BenchmarkResult.warnings → Vietnamese honesty copy (show all, not only insufficient_peers). */
+const WARNING_LABELS = {
+  prototype_listed_sample:
+    'So sánh trên mẫu DN niêm yết trong nền tảng (~28 DN) — chưa phải chuẩn ngành quốc gia (VSIC Section C).',
+  small_peer_sample:
+    'Ít hơn 3 DN cùng ngành có BCTC — phân vị chỉ mang tính tham khảo.',
+  insufficient_peers:
+    'Chưa đủ doanh nghiệp cùng ngành trong dữ liệu để so sánh phân vị.',
+}
+
 const KEY_EXPENDITURE_ROWS = [
   { key: 'purchase_goods_share', label: 'Chi phí hàng hóa & nguyên vật liệu' },
   { key: 'rental_cost_share', label: 'Chi phí thuê mặt bằng' },
@@ -673,6 +683,7 @@ export default function Benchmark() {
 
   const insufficientPeers = (result?.warnings || []).includes('insufficient_peers')
     || result?.peer_count === 0
+  const resultWarnings = result?.warnings || []
   const metricEntries = result
     ? Object.entries(METRIC_LABELS).filter(([key]) => result[key] != null)
     : []
@@ -855,6 +866,23 @@ export default function Benchmark() {
 
       {result && (
         <div style={{ marginTop: 24 }}>
+          {resultWarnings.length > 0 && (
+            <div style={{ marginBottom: 16 }}>
+              {resultWarnings.map((code) => (
+                <div
+                  key={code}
+                  className="banner banner-warn"
+                  style={{ marginBottom: 8 }}
+                  role="status"
+                >
+                  <span className="badge badge-warning" style={{ marginRight: 8 }}>
+                    {code}
+                  </span>
+                  {WARNING_LABELS[code] || code}
+                </div>
+              ))}
+            </div>
+          )}
           <div className="chart-container" style={{ marginBottom: 16 }}>
             <p style={{ fontSize: 14, margin: 0, lineHeight: 1.5 }}>
               {describePeerScope(result)}
