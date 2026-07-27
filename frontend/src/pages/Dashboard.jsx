@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { api } from '../api'
-import { formatMoney } from '../format'
+import { formatGrouped, formatMacroVa, formatMoney } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 import SampleHonestyBanner from '../SampleHonestyBanner'
 
@@ -16,8 +16,14 @@ const KPI_TIPS = {
     blurb:
       'Đo mức sản xuất theo tháng của ngành chế biến, chế tạo. Đây là chỉ số công bố từ thống kê chính thức, không phải số do nền tảng tự tính.',
   },
+  vaC: {
+    title: 'VA ngành CBCT (VA_C)',
+    formula: 'Nguồn: GSO/NSO SDMX · NGDPVA_R_ISIC4_C_XDC → VA_C (giá so sánh 2010)',
+    blurb:
+      'Giá trị gia tăng quốc gia của VSIC Section C (chế biến, chế tạo), đơn vị tỷ VND. Khác IIP (chỉ số sản xuất) và khác Digital VA cấp doanh nghiệp trong mẫu.',
+  },
   digitalVa: {
-    title: 'Tổng Digital VA',
+    title: 'Tổng Digital VA (mẫu DN)',
     formula:
       'Digital_VA = (Online_revenue × Gross_margin) + (Cost_savings × Adoption_score) − Digital_investment',
     blurb:
@@ -142,6 +148,8 @@ function heatTextColor(intensity) {
 export default function Dashboard() {
   const [summary, setSummary] = useState(null)
   const [iip, setIip] = useState([])
+  const [vaC, setVaC] = useState([])
+  const [vaNominal, setVaNominal] = useState([])
   const [heatmap, setHeatmap] = useState([])
   const [oecdGso, setOecdGso] = useState(null)
   const [forecast, setForecast] = useState(null)
@@ -153,15 +161,19 @@ export default function Dashboard() {
 
     async function load() {
       try {
-        const [s, i, h, og] = await Promise.all([
+        const [s, i, va, van, h, og] = await Promise.all([
           api.getSummary(),
           api.getIip(),
+          api.getVa('VA_C'),
+          api.getVa('VA_C_NOMINAL'),
           api.getHeatmap(),
           api.getOecdVsGso(),
         ])
         if (cancelled) return
         setSummary(s)
         setIip(i)
+        setVaC(va)
+        setVaNominal(van)
         setHeatmap(h)
         setOecdGso(og)
 
@@ -232,6 +244,25 @@ export default function Dashboard() {
   const periodText = summary?.latest_period
     ? periodLabel(summary.latest_period)
     : '—'
+  const vaPeriodText = summary?.va_c_period
+    ? periodLabel(summary.va_c_period)
+    : '—'
+  const vaSourceBadge = summary?.va_c_source || null
+  const vaSourceFallback = String(vaSourceBadge || '').includes('FALLBACK')
+
+  // Align VA_C + optional nominal by period for the macro chart.
+  const vaByPeriod = new Map()
+  for (const row of vaC) {
+    const key = periodLabel(row.period)
+    vaByPeriod.set(key, { period: key, va_c: row.value, va_nominal: null })
+  }
+  for (const row of vaNominal) {
+    const key = periodLabel(row.period)
+    const existing = vaByPeriod.get(key) || { period: key, va_c: null, va_nominal: null }
+    existing.va_nominal = row.value
+    vaByPeriod.set(key, existing)
+  }
+  const vaChart = [...vaByPeriod.values()].sort((a, b) => a.period.localeCompare(b.period))
 
   // Last 12 IIP points for the trend sparkline.
   const iipTrend = iip.slice(-12).map((r) => r.value)
@@ -277,9 +308,71 @@ export default function Dashboard() {
           Chưa có IIP Section C trong DB — chạy <code>make bootstrap</code> (seed + crawl GSO).
         </div>
       )}
+      {summary?.va_c_latest == null && (
+        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+          Chưa có VA ngành CBCT (<code>VA_C</code>) trong DB — chạy bootstrap / crawl GSO VA.
+          Không ước từ IIP hay Digital VA mẫu.
+        </div>
+      )}
       {!summary?.preferred_forecast_model && summary?.iip_latest != null && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
           Chưa có model active trong registry — chạy bootstrap/train ML trước khi xem dự báo.
+        </div>
+      )}
+
+      {summary?.va_c_latest != null && (
+        <div className="metric-strip" role="region" aria-label="VA ngành CBCT">
+          <div className="metric-chip">
+            <strong>VA ngành CBCT (VA_C)</strong>
+            <MetricInfoTip {...KPI_TIPS.vaC} />
+            <span>{formatMacroVa(summary.va_c_latest)}</span>
+            <span className="muted">kỳ {vaPeriodText}</span>
+            {vaSourceBadge && (
+              <span className={`badge ${vaSourceFallback ? 'badge-warning' : 'badge-info'}`}>
+                {vaSourceBadge}
+              </span>
+            )}
+            <span className="badge badge-info">≠ Digital VA mẫu</span>
+          </div>
+          {summary.va_c_nominal_latest != null && (
+            <div className="metric-chip">
+              <strong>VA_C_NOMINAL</strong>
+              <span>{formatMacroVa(summary.va_c_nominal_latest)}</span>
+              <span className="muted">
+                giá hiện hành
+                {summary.va_c_nominal_period
+                  ? ` · kỳ ${periodLabel(summary.va_c_nominal_period)}`
+                  : ''}
+              </span>
+              {summary.va_c_nominal_source && (
+                <span
+                  className={`badge ${
+                    String(summary.va_c_nominal_source).includes('FALLBACK')
+                      ? 'badge-warning'
+                      : 'badge-info'
+                  }`}
+                >
+                  {summary.va_c_nominal_source}
+                </span>
+              )}
+            </div>
+          )}
+          {summary.va_c_growth_pct != null && (
+            <div className="metric-chip">
+              <strong>VA MoM</strong>
+              <span className={summary.va_c_growth_pct >= 0 ? 'up' : 'down'}>
+                {pctText(summary.va_c_growth_pct)}
+              </span>
+            </div>
+          )}
+          {summary.va_c_yoy_pct != null && (
+            <div className="metric-chip">
+              <strong>VA YoY</strong>
+              <span className={summary.va_c_yoy_pct >= 0 ? 'up' : 'down'}>
+                {pctText(summary.va_c_yoy_pct)}
+              </span>
+            </div>
+          )}
         </div>
       )}
 
@@ -328,7 +421,7 @@ export default function Dashboard() {
         </div>
         <div className="card">
           <div className="card-label-row">
-            <div className="label">Tổng Digital VA</div>
+            <div className="label">Tổng Digital VA (mẫu DN)</div>
             <MetricInfoTip {...KPI_TIPS.digitalVa} />
           </div>
           <div className="value">{formatNumber(summary?.total_digital_va)}</div>
@@ -498,6 +591,68 @@ export default function Dashboard() {
       </div>
 
       <div className="chart-container">
+        <h3>VA ngành Section C (VA_C) — GSO/NSO</h3>
+        <p className="chart-note" style={{ marginTop: 0 }}>
+          Giá trị gia tăng quốc gia chế biến, chế tạo (tỷ VND). Không phải Digital VA mẫu DN,
+          không phải IIP, không phải GRDP tỉnh×ngành.
+          {vaSourceBadge ? (
+            <>
+              {' '}
+              <span className={`badge ${vaSourceFallback ? 'badge-warning' : 'badge-info'}`}>
+                {vaSourceBadge}
+              </span>
+            </>
+          ) : null}
+        </p>
+        {vaChart.length === 0 ? (
+          <div className="empty-state">
+            Chưa có chuỗi <code>VA_C</code> trong DB. Chạy bootstrap / crawl GSO VA —
+            không ước từ IIP hay Digital VA.
+          </div>
+        ) : (
+          <ResponsiveContainer width="100%" height={320}>
+            <LineChart data={vaChart}>
+              <CartesianGrid strokeDasharray="3 3" />
+              <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
+              <YAxis
+                tickFormatter={(v) => formatGrouped(v, { maxFractionDigits: 0 })}
+                width={88}
+                label={{ value: 'tỷ VND', angle: -90, position: 'insideLeft', offset: 8, style: { fontSize: 11 } }}
+              />
+              <Tooltip
+                formatter={(value, name) => [
+                  formatMacroVa(value),
+                  name === 'va_nominal' ? 'VA_C_NOMINAL (giá hiện hành)' : 'VA_C (giá so sánh 2010)',
+                ]}
+              />
+              <Legend />
+              <Line
+                type="monotone"
+                dataKey="va_c"
+                stroke="#367ea2"
+                strokeWidth={2}
+                dot={false}
+                name="VA_C (giá so sánh 2010)"
+                connectNulls={false}
+              />
+              {vaNominal.length > 0 && (
+                <Line
+                  type="monotone"
+                  dataKey="va_nominal"
+                  stroke="#164654"
+                  strokeWidth={2}
+                  strokeDasharray="6 4"
+                  dot={false}
+                  name="VA_C_NOMINAL (giá hiện hành)"
+                  connectNulls={false}
+                />
+              )}
+            </LineChart>
+          </ResponsiveContainer>
+        )}
+      </div>
+
+      <div className="chart-container">
         <h3>OECD leading (peer) vs GSO lagging (IIP)</h3>
         {oecdMissing ? (
           <div className="empty-state">
@@ -575,10 +730,10 @@ export default function Dashboard() {
       </div>
 
       <div className="chart-container">
-        <h3>Heatmap đóng góp Kinh tế số theo VSIC</h3>
+        <h3>Heatmap Digital VA theo VSIC (trong mẫu)</h3>
         {heatmap.length === 0 ? (
           <div className="empty-state">
-            Chưa có Digital VA theo ngành. Chạy digital metrics / seed.
+            Chưa có Digital VA theo ngành trong mẫu. Chạy digital metrics / seed.
           </div>
         ) : (
           <div className="heatmap-grid">

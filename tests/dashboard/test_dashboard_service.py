@@ -1,8 +1,10 @@
-"""Task #13 — Dashboard ngành service tests."""
+"""Task #13 — Dashboard ngành service tests (+ Task #45 VA_C)."""
 
 from __future__ import annotations
 
 from datetime import date
+
+import pytest
 
 from backend.app.models import ModelRegistry
 from backend.app.services import dashboard_service as svc
@@ -86,3 +88,48 @@ def test_iip_timeseries_preserves_source(db_session, seeded_iip):
     assert series[0]["period"] == date(2024, 1, 1).isoformat()
     assert series[0]["source"] == "GSO"
     assert series[-1]["value"] == 106.0
+
+
+def test_va_timeseries_preserves_source_and_unit(db_session, seeded_va):
+    series = svc.get_va_timeseries(db_session, "VA_C", "C")
+    assert len(series) == 7  # 6 months 2024 + Jun 2023
+    assert series[0]["source"] == "GSO"
+    assert series[0]["unit"] == "billion_vnd_constant_2010"
+    assert series[0]["indicator_code"] == "VA_C"
+    assert series[-1]["value"] == 1_306_000.0
+
+    nominal = svc.get_va_timeseries(db_session, "VA_C_NOMINAL", "C")
+    assert len(nominal) == 6
+    assert nominal[-1]["unit"] == "billion_vnd_current"
+    assert nominal[-1]["value"] == 1_512_000.0
+
+
+def test_va_timeseries_unknown_indicator_returns_empty(db_session, seeded_va):
+    # Do not invent / do not fall through to IIP or Digital VA
+    assert svc.get_va_timeseries(db_session, "IIP_C", "C") == []
+    assert svc.get_va_timeseries(db_session, "DIGITAL_VA", "C") == []
+
+
+def test_summary_includes_va_c_when_present(db_session, seeded_iip, seeded_va):
+    summary = svc.get_dashboard_summary(db_session)
+    assert summary.va_c_latest == 1_306_000.0
+    assert summary.va_c_period == date(2024, 6, 1)
+    assert summary.va_c_unit == "billion_vnd_constant_2010"
+    assert summary.va_c_source == "GSO"
+    assert summary.va_c_growth_pct == pytest.approx(0.08, abs=0.01)  # 1306000/1305000
+    assert summary.va_c_yoy_pct == pytest.approx(8.83, abs=0.01)  # vs 2023-06
+    assert summary.va_c_nominal_latest == 1_512_000.0
+    assert summary.va_c_nominal_unit == "billion_vnd_current"
+    # Digital VA still independent — no companies seeded here
+    assert summary.total_digital_va is None
+
+
+def test_summary_va_c_null_when_absent(db_session, seeded_iip):
+    summary = svc.get_dashboard_summary(db_session)
+    assert summary.iip_latest == 106.0
+    assert summary.va_c_latest is None
+    assert summary.va_c_period is None
+    assert summary.va_c_source is None
+    assert summary.va_c_nominal_latest is None
+    # Must not invent VA from IIP
+    assert summary.va_c_latest != summary.iip_latest

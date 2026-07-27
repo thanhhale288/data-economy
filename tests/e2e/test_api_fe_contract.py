@@ -13,6 +13,7 @@ API_JS = REPO_ROOT / "frontend" / "src" / "api.js"
 REQUIRED_API_SNIPPETS = (
     "/dashboard/summary",
     "/dashboard/iip",
+    "/dashboard/va",
     "/dashboard/heatmap",
     "/dashboard/oecd-vs-gso",
     "/companies/",
@@ -32,6 +33,7 @@ REQUIRED_API_SNIPPETS = (
 REQUIRED_EXPORTS = (
     "getSummary",
     "getIip",
+    "getVa",
     "getHeatmap",
     "getOecdVsGso",
     "getCompanies",

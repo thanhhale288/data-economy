@@ -304,7 +304,7 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - So sánh OECD leading indicators vs GSO lagging
 - KPI phụ (design-system PR #27): tăng trưởng IIP (MoM/YoY + sparkline), dự báo 6 tháng (điểm + Δ), cơ cấu Digital VA trong mẫu, độ phủ Digital metrics
 - **Done FE — Task #51:** banner/badge honesty — Digital VA / số hóa = mẫu ~28, không phải toàn Section C (ADR-0003)
-- **Deferred — KPI/chart `VA_C` đầy đủ:** data NSO đã vào `gso_macro` (#38); UI chuẩn = Task #45
+- **Deferred — KPI/chart `VA_C` đầy đủ:** ~~data NSO đã vào `gso_macro` (#38); UI chuẩn = Task #45~~ → **DONE #45**
 - **Deferred — «Ngành nổi bật» theo tăng trưởng IIP từng VSIC:** cần chuỗi IIP theo ngành (ít nhất VSIC 2 chữ số). Hiện chỉ có `IIP_C` Section C tổng (`vsic_code=C`); không xếp hạng tăng/giảm theo ngành khi thiếu dữ liệu. Làm sau khi crawl/seed GSO có IIP theo ngành (xem Luồng A).
 
 ### Module 2: Doanh nghiệp (~10 DN mẫu)
@@ -475,7 +475,7 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 
 - [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay cookie env đã có (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
 - [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
-- [ ] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
+- [x] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
 - [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **chỉ biên bản** deferred/NO-GO (chưa có table ID NSO); không crawl; không copy `VA_C` quốc gia xuống tỉnh
 - [ ] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
@@ -530,7 +530,7 @@ Không mở agent cho đến khi user reopen tường minh.
 | P1 (#51) ✓ | Link bấm được CafeF `source_url` + Pipeline nhấn CafeF `source_health` | #32 |
 | P1 | Chip “URL chưa verify / fail” (9 ticker) | Đầy đủ sau #40 |
 | P1 | Empty state “không có shop / discovery tắt” | #36 |
-| P2 (#45) | KPI/chart `VA_C` đầy đủ (tách Digital VA) | #38 data đã có |
+| P2 (#45) ✓ | KPI/chart `VA_C` đầy đủ (tách Digital VA) | #38 data đã có |
 | P2 | Xu hướng Benchmark theo năm (ROA/ROE…) | ≥2 kỳ CafeF đủ field |
 | P2 | «Ngành nổi bật» theo tăng trưởng IIP từng VSIC | IIP theo ngành (Luồng A) |
 

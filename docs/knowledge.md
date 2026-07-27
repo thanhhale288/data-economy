@@ -111,7 +111,7 @@ Các dimension hay gặp:
 
 ### Manufacturing VA (`VA_C`)
 
-**Value added** quốc gia cho VSIC/ISIC Section C từ NSO SDMX `GDPVNM.xml` (`NGDPVA_R_ISIC4_C_XDC` → `VA_C` giá so sánh 2010; `NGDPVA_ISIC4_C_XDC` → `VA_C_NOMINAL`). Khác Digital VA (cấp DN) và khác IIP (chỉ số). **Không** phải GRDP tỉnh×ngành (vẫn deferred).
+**Value added** quốc gia cho VSIC/ISIC Section C từ NSO SDMX `GDPVNM.xml` (`NGDPVA_R_ISIC4_C_XDC` → `VA_C` giá so sánh 2010; `NGDPVA_ISIC4_C_XDC` → `VA_C_NOMINAL`). Khác Digital VA (cấp DN) và khác IIP (chỉ số). **Không** phải GRDP tỉnh×ngành (vẫn deferred). Dashboard M1 surfaces via `GET /api/dashboard/va` + summary `va_c_*` fields (Task #45) — empty when absent, never invent from IIP/Digital VA.
 
 ### Shipment index
 

@@ -99,6 +99,50 @@ def seeded_peer_mei(db_session):
 
 
 @pytest.fixture()
+def seeded_va(db_session):
+    """National manufacturing VA (VA_C + VA_C_NOMINAL) — Task #38 units."""
+    rows = []
+    for m in range(1, 7):
+        rows.append(
+            GsoMacro(
+                vsic_code="C",
+                indicator_code="VA_C",
+                indicator_name="Giá trị gia tăng CBCT (giá so sánh 2010)",
+                period=date(2024, m, 1),
+                value=1_300_000.0 + m * 1000,
+                unit="billion_vnd_constant_2010",
+                source="GSO",
+            )
+        )
+        rows.append(
+            GsoMacro(
+                vsic_code="C",
+                indicator_code="VA_C_NOMINAL",
+                indicator_name="Giá trị gia tăng CBCT (giá hiện hành)",
+                period=date(2024, m, 1),
+                value=1_500_000.0 + m * 2000,
+                unit="billion_vnd_current",
+                source="GSO",
+            )
+        )
+    # Prior year same month for YoY on latest (Jun)
+    rows.append(
+        GsoMacro(
+            vsic_code="C",
+            indicator_code="VA_C",
+            indicator_name="Giá trị gia tăng CBCT (giá so sánh 2010)",
+            period=date(2023, 6, 1),
+            value=1_200_000.0,
+            unit="billion_vnd_constant_2010",
+            source="GSO",
+        )
+    )
+    db_session.add_all(rows)
+    db_session.commit()
+    return rows
+
+
+@pytest.fixture()
 def seeded_companies_va(db_session):
     ral = Company(
         stock_code="RAL",
