@@ -1,10 +1,10 @@
 # Handoff — Task #45 Dashboard/API M1 hiện VA (nợ từ #38)
 
-**Status:** DONE (local; commit/PR khi user Explicit yêu cầu)  
+**Status:** DONE (shipped — PR open)  
 **Branch:** `cursor/epic3-phase2-task45-dashboard-va`  
 **Date:** 2026-07-27  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** — (chưa ship)  
+**Commit / PR:** `f94aecc` / https://github.com/thanhhale288/data-economy/pull/31  
 **Base:** `origin/main` @ `e699d9b` (PR #29 #40 + gate quyết định 2026-07-27 + #51)
 
 ---
@@ -32,7 +32,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task45-dashboard-va` · uncommitted on `e699d9b` · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task45-dashboard-va` · `f94aecc` · [#31](https://github.com/thanhhale288/data-economy/pull/31)
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -81,7 +81,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa Explicit | Khi ship |
+| Commit/PR | Shipped `f94aecc` / PR #31 | — |
 | Live DB smoke với seed VA | Unit fixtures đủ AC | Ops bootstrap khi demo |
 | Pipeline cleaned VA | #46 | Có |
 
