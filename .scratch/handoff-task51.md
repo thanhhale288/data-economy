@@ -4,7 +4,7 @@
 **Branch:** `cursor/epic3-phase2-task51-fe-honesty`  
 **Date:** 2026-07-27  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** `290e611` · PR https://github.com/thanhhale288/data-economy/pull/28  
+**Commit / PR:** `7297010` · PR https://github.com/thanhhale288/data-economy/pull/28  
 **Base:** `origin/main` @ `12281cf` (design-system PR #27 merged)
 
 ---
@@ -32,7 +32,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%** P0 (+ P1 nhẹ)
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task51-fe-honesty` · `290e611` · PR #28
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task51-fe-honesty` · `7297010` · PR #28
 
 ### Đã làm được gì (đối chiếu AC)
 
