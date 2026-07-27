@@ -156,6 +156,86 @@ def test_resolve_shop_just_below_threshold_skips():
     assert score < DEFAULT_THRESHOLD
 
 
+def test_resolve_discovery_gated_off_refuses_assignment(monkeypatch):
+    """Task #43: discovery rows cannot assign when gate #36 is OFF."""
+    from crawlers.marketplace import shop_finder
+
+    monkeypatch.delenv(shop_finder.DISCOVERY_ENABLED_ENV, raising=False)
+    company_id, score = resolve_shop_to_company(
+        "rangdong_official",
+        COMPANIES,
+        discovery_gated=True,
+        allowed_company_ids={1},
+    )
+    assert company_id is None
+    assert score == 0.0
+
+
+def test_resolve_discovery_gated_on_with_allowlist(monkeypatch):
+    from crawlers.marketplace import shop_finder
+    from pipeline.cleaning.marketplace_clean import allowed_company_ids_for_discovery_url
+
+    monkeypatch.setenv(shop_finder.DISCOVERY_ENABLED_ENV, "1")
+    allowlist = [
+        {
+            "ticker": "RAL",
+            "channel_type": "shopee",
+            "url": "https://shopee.vn/rangdong_official",
+        }
+    ]
+    allowed = allowed_company_ids_for_discovery_url(
+        "https://shopee.vn/rangdong_official",
+        companies_by_ticker={"RAL": 1},
+        allowlist=allowlist,
+        enabled=True,
+    )
+    assert allowed == {1}
+    company_id, score = resolve_shop_to_company(
+        "rangdong_official",
+        COMPANIES,
+        discovery_gated=True,
+        allowed_company_ids=allowed,
+    )
+    assert company_id == 1
+    assert score >= DEFAULT_THRESHOLD
+
+
+def test_resolve_dpr_alone_does_not_claim_rangdong():
+    """Hygiene + resolve: DPR-only pool must not assign rangdong shop."""
+    dpr_only = {99: "Công ty Cổ phần Cao su Đồng Phú"}
+    company_id, score = resolve_shop_to_company(
+        "rangdong_official",
+        dpr_only,
+        threshold=DEFAULT_THRESHOLD,
+    )
+    assert company_id is None
+    assert score < DEFAULT_THRESHOLD
+
+
+def test_clean_skips_qa_discovery_rows_without_allowed_ids(monkeypatch):
+    from crawlers.marketplace import shop_finder
+
+    monkeypatch.delenv(shop_finder.DISCOVERY_ENABLED_ENV, raising=False)
+    df = pd.DataFrame(
+        {
+            "price": [45_000.0],
+            "units_sold_est": [100],
+            "revenue_est": [4_500_000.0],
+            "shop_name": ["rangdong_official"],
+            "company_id": [None],
+            "match_source": ["qa_discovery"],
+        }
+    )
+    cleaned, prov = clean_marketplace_listings(
+        df,
+        company_names=COMPANIES,
+        outlier_method="none",
+        run_entity_resolution=True,
+    )
+    assert pd.isna(cleaned.loc[0, "company_id"]) or cleaned.loc[0, "company_id"] is None
+    assert prov.matches_assigned == 0
+
+
 def test_clean_marketplace_entity_resolution_threshold():
     df = _listings_frame()
     cleaned, prov = clean_marketplace_listings(

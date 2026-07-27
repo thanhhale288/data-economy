@@ -249,11 +249,11 @@ flowchart LR
    - `resolve_shop_to_company` (pipeline clean) nếu nhận discovery rows → tôn trọng cùng gate/allowlist, không bypass.
 4. **ML nâng cấp (đã ghi plan cũ):** TF-IDF / classifier đầy đủ chỉ khi fuzzy + gate không đủ precision trên mẫu lớn hơn.
 
-**AC:** có đường candidate shop từ search **hoặc** biên bản “vẫn chưa crawl search (anti-bot/ToS)”; cổng #36 không bị phá; precision baseline không tụt; không invent shop/GMV.
+**AC:** có đường candidate shop từ search **hoặc** biên bản “vẫn chưa crawl search (anti-bot/ToS)”; cổng #36 không bị phá; precision baseline không tụt; không invent shop/GMV. ✅
 
 **Không làm trong #43:** đổi Digital VA; bật discovery mặc định; anti-bot SaaS; ép alias 22 ticker không shop.
 
-**Artifact gợi ý:** `.scratch/epic3-task43-discovery-crawl.{md,csv}` · cập nhật `docs/ops-demo.md`
+**Artifact:** `.scratch/epic3-task43-discovery-crawl.{md,csv}` · `docs/ops-demo.md` · search path in `shop_finder.py` · fuzzy hygiene in `matcher.py`
 
 ---
 
@@ -292,11 +292,11 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → `#43` / `#47` / `#50` (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
+**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → `#47` / `#50` (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 ✓ (website domain fix — 27/28 OK; GEE SSL còn fail có biên bản).
 - Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35 — **tạm dừng có chủ đích** (2026-07-27).
 - Task #42 ✓ (session cookie ops smoke + partner API spike note) — cookie present nhưng live HTTP vẫn block; cache path giữ.
-- **Task #43 (discovery crawl thật + fuzzy hygiene)** — từ #36 (cổng sẵn, chưa search sàn; token FP quirk).
+- **Task #43 ✓ (discovery crawl thật + fuzzy hygiene)** — search path + deferred anti-bot biên bản; token FP `dong`⊂`rangdong` siết; cổng #36 giữ OFF mặc định.
 - **Task #44 (industry-ratio wire khi có nguồn CBCT)** — từ #37 NO-GO; **không còn task roadmap** (chưa citation) per quyết định 2026-07-27.

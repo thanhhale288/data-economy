@@ -28,6 +28,10 @@ MODEL_PATH = DATA_DIR / "models" / "shop_matcher.joblib"
 
 MARKETPLACE_CHANNELS = frozenset({"shopee", "tiktok", "lazada"})
 
+# Minimum length for company/shop token ⊂ compact-string containment (Task #43).
+# len≥4 still false-fired DPR "Đồng"→dong ⊂ rangdong; seed positives use brand aliases.
+MIN_TOKEN_CONTAINMENT_LEN = 5
+
 # Legal / noise tokens stripped from company and shop strings
 _COMPANY_NOISE = frozenset(
     {
@@ -58,6 +62,8 @@ _COMPANY_NOISE = frozenset(
         "vietnam",
         # Too generic — false-fires DQC shop vs REE ("dien" ⊂ dienquang…)
         "dien",
+        # Short place/industry token — "Đồng" in rubber names ⊂ rangdong (Task #43)
+        "dong",
     }
 )
 
@@ -191,14 +197,14 @@ class ShopMatcher:
                 # short ticker-like brands (fpt, pnj) only when substring of handle
                 strong.append(0.92)
 
-        # Distinctive company token ⊂ shop handle
+        # Distinctive company token ⊂ shop handle (min length avoids short generic FP)
         for tok in company_tokens:
-            if len(tok) >= 4 and tok in shop_compact:
+            if len(tok) >= MIN_TOKEN_CONTAINMENT_LEN and tok in shop_compact:
                 strong.append(0.92)
 
         # Shop handle token ⊂ company compact (e.g. masan ⊂ tapdoanmasan)
         for tok in shop_tokens:
-            if len(tok) >= 4 and tok in company_compact:
+            if len(tok) >= MIN_TOKEN_CONTAINMENT_LEN and tok in company_compact:
                 strong.append(0.92)
 
         if strong:

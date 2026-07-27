@@ -14,6 +14,7 @@ from __future__ import annotations
 import json
 import logging
 import os
+import re
 from datetime import datetime
 from pathlib import Path
 from typing import Any
@@ -57,6 +58,8 @@ __all__ = [
     "load_discovery_allowlist",
     "find_shops_for_company",
     "discover_shops_for_company",
+    "search_marketplace_shop_candidates",
+    "candidates_to_qa_allowlist_entries",
     "scrape_marketplace_products",
     "run_marketplace_crawl",
     "evaluate_discovered_shop",
@@ -236,6 +239,246 @@ def discover_shops_for_company(
         results.append(linked)
         seen_urls.add(url)
     return results
+
+
+# Shop URL patterns extracted from search HTML / JSON (never invent — only parse).
+_SHOPEE_SHOP_URL_RE = re.compile(
+    r"https?://(?:www\.)?shopee\.vn/(?:shop/)?([\w.-]+)",
+    re.IGNORECASE,
+)
+_TIKTOK_SHOP_URL_RE = re.compile(
+    r"https?://(?:www\.)?tiktok\.com/@([\w.-]+)",
+    re.IGNORECASE,
+)
+
+# Paths that are not shop usernames on Shopee search pages
+_SHOPEE_PATH_NOISE = frozenset(
+    {
+        "search",
+        "buyer",
+        "seller",
+        "mall",
+        "cart",
+        "product",
+        "api",
+        "shop",
+        "login",
+        "buyer",
+    }
+)
+
+
+def _parse_shopee_shop_candidates(text: str, *, limit: int = 20) -> list[dict[str, Any]]:
+    """Extract Shopee shop URLs from response text. Empty if none found."""
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for match in _SHOPEE_SHOP_URL_RE.finditer(text or ""):
+        handle = match.group(1).strip().lower()
+        if not handle or handle in _SHOPEE_PATH_NOISE or handle in seen:
+            continue
+        if handle.startswith("api") or "." in handle and handle.endswith(".json"):
+            continue
+        url = f"https://shopee.vn/{handle}"
+        seen.add(handle)
+        out.append(
+            {
+                "channel_type": "shopee",
+                "url": url,
+                "shop_name": handle,
+                "source": "marketplace_search",
+            }
+        )
+        if len(out) >= limit:
+            break
+    return out
+
+
+def _parse_tiktok_shop_candidates(text: str, *, limit: int = 20) -> list[dict[str, Any]]:
+    """Extract TikTok @handles from response text. Empty if none found."""
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for match in _TIKTOK_SHOP_URL_RE.finditer(text or ""):
+        handle = match.group(1).strip().lstrip("@").lower()
+        if not handle or handle in seen:
+            continue
+        url = f"https://www.tiktok.com/@{handle}"
+        seen.add(handle)
+        out.append(
+            {
+                "channel_type": "tiktok",
+                "url": url,
+                "shop_name": handle,
+                "source": "marketplace_search",
+            }
+        )
+        if len(out) >= limit:
+            break
+    return out
+
+
+def search_marketplace_shop_candidates(
+    query: str,
+    *,
+    channel: str = "shopee",
+    client: httpx.Client | None = None,
+    timeout: float = 20.0,
+) -> dict[str, Any]:
+    """Best-effort brand → shop URL search (Task #43).
+
+    Returns ``{status, detail, query, channel, candidates}``. Candidates are
+    **never invented** — only parsed from live HTTP when the platform returns
+    usable HTML/JSON. On anti-bot / ToS block → ``status=blocked``, empty list.
+
+    Does **not** link shops to companies. Callers must promote vetted URLs into
+    ``discovery_allowlist.json`` and use ``discover_shops_for_company`` (gate #36).
+    """
+    from crawlers.marketplace.live_cache import marketplace_request_headers
+    from crawlers.marketplace.shopee import detect_shopee_block
+    from crawlers.marketplace.tiktok import detect_tiktok_block
+
+    q = (query or "").strip()
+    channel_l = (channel or "shopee").strip().lower()
+    empty: dict[str, Any] = {
+        "status": "empty",
+        "detail": "empty_query",
+        "query": q,
+        "channel": channel_l,
+        "candidates": [],
+    }
+    if not q:
+        return empty
+    if channel_l not in {"shopee", "tiktok"}:
+        return {
+            **empty,
+            "status": "error",
+            "detail": f"unsupported_channel:{channel_l}",
+        }
+
+    if channel_l == "shopee":
+        search_url = f"https://shopee.vn/search?keyword={q.replace(' ', '%20')}"
+    else:
+        search_url = f"https://www.tiktok.com/search?q={q.replace(' ', '%20')}"
+
+    own_client = client is None
+    http = client or httpx.Client(timeout=timeout, follow_redirects=True)
+    try:
+        response = http.get(
+            search_url,
+            headers=marketplace_request_headers(channel_l),
+        )
+        if response.status_code in {403, 429, 503}:
+            return {
+                "status": "blocked",
+                "detail": f"HTTP {response.status_code} for {search_url}",
+                "query": q,
+                "channel": channel_l,
+                "candidates": [],
+            }
+        if response.status_code >= 400:
+            return {
+                "status": "error",
+                "detail": f"HTTP {response.status_code} for {search_url}",
+                "query": q,
+                "channel": channel_l,
+                "candidates": [],
+            }
+
+        body = response.text or ""
+        if channel_l == "shopee" and detect_shopee_block(body):
+            return {
+                "status": "blocked",
+                "detail": f"Shopee anti-bot / captcha for {search_url}",
+                "query": q,
+                "channel": channel_l,
+                "candidates": [],
+            }
+        if channel_l == "tiktok" and detect_tiktok_block(body):
+            return {
+                "status": "blocked",
+                "detail": f"TikTok anti-bot / captcha for {search_url}",
+                "query": q,
+                "channel": channel_l,
+                "candidates": [],
+            }
+
+        candidates = (
+            _parse_shopee_shop_candidates(body)
+            if channel_l == "shopee"
+            else _parse_tiktok_shop_candidates(body)
+        )
+        if not candidates:
+            return {
+                "status": "empty",
+                "detail": f"no_shop_urls_parsed from {search_url}",
+                "query": q,
+                "channel": channel_l,
+                "candidates": [],
+            }
+        return {
+            "status": "ok",
+            "detail": f"parsed_{len(candidates)}_candidates from {search_url}",
+            "query": q,
+            "channel": channel_l,
+            "candidates": candidates,
+        }
+    except httpx.HTTPError as exc:
+        logger.warning("Marketplace shop search failed for %s: %s", q, exc)
+        return {
+            "status": "error",
+            "detail": str(exc),
+            "query": q,
+            "channel": channel_l,
+            "candidates": [],
+        }
+    finally:
+        if own_client:
+            http.close()
+
+
+def candidates_to_qa_allowlist_entries(
+    ticker: str,
+    candidates: list[dict[str, Any]],
+    *,
+    limit: int = 5,
+) -> list[dict[str, Any]]:
+    """Format search candidates as QA allowlist rows (manual promote only).
+
+    Does not write the allowlist file and does not enable discovery.
+    """
+    ticker_u = (ticker or "").strip().upper()
+    if not ticker_u:
+        return []
+    out: list[dict[str, Any]] = []
+    seen: set[str] = set()
+    for cand in candidates:
+        url = str(cand.get("url") or "").strip()
+        channel = str(cand.get("channel_type") or cand.get("channel") or "").strip().lower()
+        if not url or url in seen:
+            continue
+        if channel and channel not in MARKETPLACE_CHANNELS:
+            continue
+        if not channel:
+            lowered = url.lower()
+            if "shopee" in lowered:
+                channel = "shopee"
+            elif "tiktok" in lowered:
+                channel = "tiktok"
+            else:
+                continue
+        seen.add(url)
+        out.append(
+            {
+                "ticker": ticker_u,
+                "channel_type": channel,
+                "url": url,
+                "shop_name": cand.get("shop_name"),
+                "has_checkout": False,
+                "qa_note": "from_marketplace_search_pending_human_qa",
+            }
+        )
+        if len(out) >= limit:
+            break
+    return out
 
 
 def find_shops_for_company(company: Company) -> list[dict]:

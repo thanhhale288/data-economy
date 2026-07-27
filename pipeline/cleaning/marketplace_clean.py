@@ -103,19 +103,42 @@ def resolve_shop_to_company(
     *,
     threshold: float = DEFAULT_THRESHOLD,
     matcher: ShopMatcher | None = None,
+    allowed_company_ids: set[int] | frozenset[int] | None = None,
+    discovery_gated: bool = False,
 ) -> tuple[int | None, float]:
     """Best company match for a marketplace shop handle.
 
     Returns ``(company_id, score)``. ``company_id`` is ``None`` when no candidate
     reaches ``threshold`` (default 0.65). Does not invent a company assignment.
+
+    Task #43 — discovery rows must not bypass the #36 gate:
+    - ``discovery_gated=True``: refuse assignment unless marketplace discovery
+      is enabled (env) **and** ``allowed_company_ids`` is a non-empty set of
+      company ids whose tickers appear on the QA allowlist (caller supplies).
+    - ``allowed_company_ids``: when set (including empty), only those ids compete.
     """
     if not shop_name or not companies:
         return None, 0.0
 
+    if discovery_gated:
+        from crawlers.marketplace.shop_finder import is_marketplace_discovery_enabled
+
+        if not is_marketplace_discovery_enabled():
+            return None, 0.0
+        if not allowed_company_ids:
+            return None, 0.0
+
+    pool = companies
+    if allowed_company_ids is not None:
+        allowed = set(allowed_company_ids)
+        pool = {cid: name for cid, name in companies.items() if int(cid) in allowed}
+        if not pool:
+            return None, 0.0
+
     m = matcher or ShopMatcher(threshold=threshold)
     best_id: int | None = None
     best_score = 0.0
-    for company_id, name in companies.items():
+    for company_id, name in pool.items():
         if not name:
             continue
         score = m.match_score(name, shop_name)
@@ -126,6 +149,45 @@ def resolve_shop_to_company(
     if best_id is None or best_score < threshold:
         return None, float(best_score)
     return best_id, float(best_score)
+
+
+def allowed_company_ids_for_discovery_url(
+    url: str,
+    *,
+    companies_by_ticker: dict[str, int],
+    allowlist: list[dict] | None = None,
+    enabled: bool | None = None,
+) -> set[int]:
+    """Company ids permitted to resolve a discovery shop URL (Task #36/#43 gate).
+
+    Returns empty set when discovery is OFF or the URL is not on the QA allowlist.
+    Does not invent URLs — only maps allowlist ticker → company_id.
+    """
+    from crawlers.marketplace.shop_finder import (
+        is_marketplace_discovery_enabled,
+        load_discovery_allowlist,
+    )
+
+    if enabled is None:
+        enabled = is_marketplace_discovery_enabled()
+    if not enabled:
+        return set()
+
+    entries = allowlist if allowlist is not None else load_discovery_allowlist()
+    target = (url or "").strip()
+    if not target:
+        return set()
+
+    allowed: set[int] = set()
+    for entry in entries:
+        entry_url = str(entry.get("url") or "").strip()
+        if entry_url != target:
+            continue
+        ticker = str(entry.get("ticker") or "").strip().upper()
+        company_id = companies_by_ticker.get(ticker)
+        if company_id is not None:
+            allowed.add(int(company_id))
+    return allowed
 
 
 def _company_id_is_set(value: object) -> bool:
@@ -150,6 +212,7 @@ def clean_marketplace_listings(
     zscore_threshold: float = 3.0,
     match_threshold: float = DEFAULT_THRESHOLD,
     run_entity_resolution: bool = True,
+    discovery_allowed_company_ids: set[int] | frozenset[int] | None = None,
 ) -> tuple[pd.DataFrame, MarketplaceCleanProvenance]:
     """Clean a marketplace listings DataFrame (copy); never invent numeric fills.
 
@@ -161,6 +224,9 @@ def clean_marketplace_listings(
     Entity resolution: existing non-null ``company_id`` is left unchanged. If
     ``shop_name_col`` is present and ``company_names`` is provided, unmatched
     rows may receive ``company_id`` only when ``ShopMatcher`` score ≥ threshold.
+    Rows with ``match_source`` in ``{qa_discovery, discovery}`` are discovery-gated
+    (Task #36/#43): assignment requires discovery env ON and
+    ``discovery_allowed_company_ids`` (from QA allowlist) — never bypass.
     ``MarketplaceListing`` itself has no shop field — without ``shop_name_col``,
     matching is skipped and noted; use ``resolve_shop_to_company`` for discovery.
     """
@@ -245,6 +311,7 @@ def clean_marketplace_listings(
             out["match_score"] = np.nan
 
         matcher = ShopMatcher(threshold=match_threshold)
+        has_match_source = "match_source" in out.columns
         for idx in out.index:
             if _company_id_is_set(out.at[idx, "company_id"]):
                 continue  # idempotent: keep existing assignment
@@ -253,11 +320,26 @@ def clean_marketplace_listings(
             if shop is None or (isinstance(shop, float) and pd.isna(shop)) or str(shop).strip() == "":
                 continue
 
+            discovery_gated = False
+            allowed_ids: set[int] | frozenset[int] | None = None
+            if has_match_source:
+                source = str(out.at[idx, "match_source"] or "").strip().lower()
+                if source in {"qa_discovery", "discovery"}:
+                    discovery_gated = True
+                    # Empty set when caller omitted allowlist ids → refuse invent
+                    allowed_ids = (
+                        set(discovery_allowed_company_ids)
+                        if discovery_allowed_company_ids is not None
+                        else set()
+                    )
+
             company_id, score = resolve_shop_to_company(
                 str(shop),
                 company_names,
                 threshold=match_threshold,
                 matcher=matcher,
+                allowed_company_ids=allowed_ids,
+                discovery_gated=discovery_gated,
             )
             out.at[idx, "match_score"] = score
             if company_id is not None:

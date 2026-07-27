@@ -124,7 +124,7 @@ PYTHONPATH=. python scripts/enrich_marketplace_listings.py --tickers RAL,VNM
 
 Company detail listing table shows badge **Nguồn** = `live` | `seed` | `fallback`.
 
-## Matcher discovery gate (Epic 3 Task #36)
+## Matcher discovery gate (Epic 3 Task #36 / #43)
 
 Marketplace **shop discovery** (non-seed search) is **OFF by default**. Crawl only links seed known URLs that pass ShopMatcher ≥ **0.65**.
 
@@ -139,6 +139,28 @@ export MARKETPLACE_DISCOVERY_THRESHOLD=0.65
 ```
 
 Ticker không có shop trong seed vẫn **unlinked** trừ khi có entry QA allowlist + score ≥ 0.65. Không invent shop/GMV.
+
+**Task #43 — search path + fuzzy hygiene:**
+
+- Code: `search_marketplace_shop_candidates(query, channel=…)` → parse-only candidates; `candidates_to_qa_allowlist_entries` formats rows for **manual** QA promote. Never auto-links; still requires flag + allowlist via `discover_shops_for_company`.
+- **Live search (2026-07-27):** Shopee/TikTok search HTTP **blocked** (anti-bot) — biên bản `.scratch/epic3-task43-discovery-crawl.md`. Same class as #42 cookie listing smoke.
+- Fuzzy: token containment min length **5** + noise `dong` — DPR no longer false-matches `rangdong_official`.
+- Pipeline: `resolve_shop_to_company(..., discovery_gated=True)` respects the same gate (no bypass).
+
+Ops smoke (injected allowlist, keep committed `entries: []`):
+
+```bash
+export MARKETPLACE_DISCOVERY_ENABLED=1
+PYTHONPATH=. python -c "
+from backend.app.models import Company
+from crawlers.marketplace.shop_finder import discover_shops_for_company
+ral = Company(stock_code='RAL', name='Công ty Cổ phần Bóng đèn Rạng Đông', vsic_code='2740', exchange='HOSE')
+print(discover_shops_for_company(ral, enabled=True, allowlist=[{
+  'ticker':'RAL','channel_type':'shopee','url':'https://shopee.vn/rangdong_official'}])[0]['match_source'])
+"
+# → qa_discovery
+unset MARKETPLACE_DISCOVERY_ENABLED
+```
 
 ## Bootstrap (recommended)
 
