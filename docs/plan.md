@@ -478,7 +478,7 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 - [x] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [x] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
 - [x] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **biên bản NO-GO/deferred** (chưa table ID NSO tỉnh×ngành CBCT); không crawl; **cấm** copy `VA_C` quốc gia → tỉnh; national VA #38/#45/#46 giữ nguyên — `.scratch/epic3-task47-grdp-deferred.md`
-- [ ] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
+- [x] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
 
 #### Tạm dừng có chủ đích (có thể reopen khi user bảo)
 

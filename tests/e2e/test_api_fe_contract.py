@@ -28,6 +28,7 @@ REQUIRED_API_SNIPPETS = (
     "/ml/forecast",
     "/benchmark/compare",
     "/benchmark/prefill/",
+    "/universe/coverage",
 )
 
 REQUIRED_EXPORTS = (
@@ -47,6 +48,7 @@ REQUIRED_EXPORTS = (
     "forecast",
     "benchmark",
     "benchmarkPrefill",
+    "getUniverseCoverage",
 )
 
 

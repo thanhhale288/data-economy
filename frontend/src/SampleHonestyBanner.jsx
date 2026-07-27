@@ -1,17 +1,65 @@
 /**
  * Persistent honesty signal (ADR-0003): Digital VA / digitalization =
- * listed sample (~28), not all of VSIC Section C.
+ * listed sample, not all of VSIC Section C.
+ *
+ * When ``coverageNote`` (UniverseCoverageNote from GET /api/universe/coverage)
+ * is present, badge + copy use API sizes / claim instead of hard-coded ~28.
  */
+
 export const SAMPLE_HONESTY_TEXT =
   'Số liệu Digital VA và mức độ số hóa trên trang này tính trên mẫu ~28 doanh nghiệp niêm yết, không đại diện toàn ngành chế biến, chế tạo (VSIC Section C).'
 
-export default function SampleHonestyBanner({ style }) {
+/** Vietnamese copy for UniverseCoverageNote.claim (contract #39). */
+export const COVERAGE_CLAIM_LABELS = {
+  prototype_listed_sample:
+    'Số liệu Digital VA và mức độ số hóa trên trang này tính trên mẫu doanh nghiệp niêm yết trong nền tảng, không đại diện toàn ngành chế biến, chế tạo (VSIC Section C).',
+  universe_shallow_only:
+    'Chỉ có vũ trụ DN nông (identity/VSIC) — chưa đủ mẫu sâu để suy ra chuẩn số hóa toàn Section C.',
+  official_macro:
+    'Đây là chỉ số macro chính thức (GSO/NSO) — không đồng nghĩa với Digital VA cấp doanh nghiệp trong mẫu.',
+  insufficient_data:
+    'Chưa đủ dữ liệu universe/mẫu sâu để tuyên bố độ phủ ngành chế biến, chế tạo.',
+}
+
+function badgeLabel(coverageNote) {
+  if (!coverageNote) return 'mẫu ~28'
+  const n = coverageNote.deep_sample_size
+  const u = coverageNote.universe_row_count
+  if (typeof n === 'number' && n > 0) {
+    return `mẫu ~${n}`
+  }
+  if (typeof u === 'number' && u > 0) {
+    return `universe ${u}`
+  }
+  return coverageNote.claim || 'coverage'
+}
+
+function bannerText(coverageNote) {
+  if (!coverageNote) return SAMPLE_HONESTY_TEXT
+  const mapped = COVERAGE_CLAIM_LABELS[coverageNote.claim]
+  if (mapped) {
+    const n = coverageNote.deep_sample_size
+    const u = coverageNote.universe_row_count
+    const sizeBit =
+      typeof n === 'number'
+        ? ` Mẫu sâu (listed): ${n} DN.`
+        : ''
+    const universeBit =
+      typeof u === 'number'
+        ? ` Universe nông: ${u} dòng (không phải coverage toàn Section C).`
+        : ''
+    return `${mapped}${sizeBit}${universeBit}`
+  }
+  return coverageNote.detail || SAMPLE_HONESTY_TEXT
+}
+
+export default function SampleHonestyBanner({ style, coverageNote }) {
   return (
     <div className="banner banner-warn" style={style} role="status">
       <span className="badge badge-warning" style={{ marginRight: 8 }}>
-        mẫu ~28
+        {badgeLabel(coverageNote)}
       </span>
-      {SAMPLE_HONESTY_TEXT}
+      {bannerText(coverageNote)}
     </div>
   )
 }

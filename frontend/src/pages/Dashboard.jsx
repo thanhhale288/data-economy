@@ -154,6 +154,7 @@ export default function Dashboard() {
   const [oecdGso, setOecdGso] = useState(null)
   const [forecast, setForecast] = useState(null)
   const [forecastError, setForecastError] = useState(null)
+  const [coverageNote, setCoverageNote] = useState(null)
   const [loading, setLoading] = useState(true)
 
   useEffect(() => {
@@ -161,13 +162,14 @@ export default function Dashboard() {
 
     async function load() {
       try {
-        const [s, i, va, van, h, og] = await Promise.all([
+        const [s, i, va, van, h, og, cov] = await Promise.all([
           api.getSummary(),
           api.getIip(),
           api.getVa('VA_C'),
           api.getVa('VA_C_NOMINAL'),
           api.getHeatmap(),
           api.getOecdVsGso(),
+          api.getUniverseCoverage().catch(() => null),
         ])
         if (cancelled) return
         setSummary(s)
@@ -176,6 +178,7 @@ export default function Dashboard() {
         setVaNominal(van)
         setHeatmap(h)
         setOecdGso(og)
+        setCoverageNote(cov)
 
         const model = s?.preferred_forecast_model || 'xgboost'
         try {
@@ -301,7 +304,7 @@ export default function Dashboard() {
           : ''}
       </p>
 
-      <SampleHonestyBanner style={{ marginBottom: 16 }} />
+      <SampleHonestyBanner style={{ marginBottom: 16 }} coverageNote={coverageNote} />
 
       {summary?.iip_latest == null && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>

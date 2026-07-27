@@ -65,6 +65,18 @@ def coverage_note(
     )
 
 
+def get_coverage_note(db) -> UniverseCoverageNote:
+    """Build coverage note from DB deep-sample count + stub universe rows.
+
+    ``companies`` row count is the listed deep sample only — never Section C
+    national coverage (ADR-0003).
+    """
+    from backend.app.models import Company
+
+    deep_n = db.query(Company).count()
+    return coverage_note(deep_sample_size=deep_n)
+
+
 def can_auto_promote_to_deep_sample(row: UniverseFirmShallow) -> bool:
     """Always False — promotion is explicit onboard only (ADR-0003)."""
     _ = row
