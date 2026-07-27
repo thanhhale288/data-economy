@@ -85,3 +85,69 @@ def test_prefers_cleaned_macro_artifact(
     # Warm-up dropna removes first 3 lag rows; remaining IIP values are from artifact.
     assert set(out["iip"].tolist()) == {104.0, 105.0}
     assert out["iip"].iloc[0] == 104.0
+
+
+def test_build_features_carries_va_as_auxiliary_keeps_iip_target(
+    monkeypatch, tmp_path, seeded_macro_with_va, seeded_financial
+):
+    import json
+
+    import pipeline.features.engineering as eng
+    from pipeline.cleaning.run_cleaning import VA_ALIGNMENT
+    from pipeline.features.engineering import _IIP_DROPNA_SUBSET, _manifest_for
+
+    monkeypatch.setattr(eng, "_CLEANED_MACRO_PATH", tmp_path / "missing_cleaned.parquet")
+    out = build_features(seeded_macro_with_va)
+    assert "iip" in out.columns
+    assert "va_c" in out.columns
+    assert "va_c_nominal" in out.columns
+    assert "va_c_alignment" in out.columns
+    assert set(out["va_c_alignment"].dropna()) == {VA_ALIGNMENT}
+    # Levels pass through; no VA lags in v1; dropna still IIP-only.
+    assert "va_c_lag1" not in out.columns
+    assert eng._IIP_DROPNA_SUBSET == ("iip", "iip_lag1", "iip_lag2", "iip_lag3")
+    assert list(_IIP_DROPNA_SUBSET) == ["iip", "iip_lag1", "iip_lag2", "iip_lag3"]
+
+    processed = tmp_path / "processed"
+    monkeypatch.setattr(eng, "_PROCESSED_DIR", processed)
+    monkeypatch.setattr(eng, "_FEATURES_PATH", processed / "features.parquet")
+    monkeypatch.setattr(eng, "_MANIFEST_PATH", processed / "features_manifest.json")
+    n = run_feature_engineering(seeded_macro_with_va)
+    assert n > 0
+    manifest = json.loads(
+        (processed / "features_manifest.json").read_text(encoding="utf-8")
+    )
+    assert manifest["forecast_target"] == "iip"
+    assert "va_c" in manifest["feature_groups"]["va_auxiliary"]
+    assert manifest["dropna_subset"] == [
+        c for c in _IIP_DROPNA_SUBSET if c in out.columns
+    ]
+    assert any("auxiliary" in note for note in manifest["notes"])
+    # Sanity: _manifest_for documents target even when called directly.
+    assert _manifest_for(out)["forecast_target"] == "iip"
+
+
+def test_cleaned_artifact_with_va_passes_through(
+    monkeypatch, tmp_path, seeded_macro_db, seeded_financial
+):
+    import pipeline.features.engineering as eng
+    from pipeline.cleaning.run_cleaning import VA_ALIGNMENT
+
+    cleaned = pd.DataFrame(
+        {
+            "period": pd.date_range("2024-01-01", periods=6, freq="MS"),
+            "iip": [100.0, 101.0, 102.0, 103.0, 104.0, 105.0],
+            "va_c": [500.0] * 6,
+            "va_c_source": ["GSO"] * 6,
+            "va_c_unit": ["billion_vnd_constant_2010"] * 6,
+            "va_c_alignment": [VA_ALIGNMENT] * 6,
+        }
+    )
+    cleaned_path = tmp_path / "cleaned_macro.parquet"
+    cleaned.to_parquet(cleaned_path, index=False)
+    monkeypatch.setattr(eng, "_CLEANED_MACRO_PATH", cleaned_path)
+
+    out = build_features(seeded_macro_db)
+    assert "va_c" in out.columns
+    assert set(out["va_c"].dropna()) == {500.0}
+    assert "iip" in out.columns
