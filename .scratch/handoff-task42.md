@@ -1,10 +1,10 @@
 # Handoff — Task #42 Session cookie ops smoke + partner API spike
 
-**Status:** DONE (local; commit/PR khi user yêu cầu)  
+**Status:** DONE (pushed; PR mở)  
 **Branch:** `cursor/epic3-phase2-task42-cookie-ops-smoke`  
 **Date:** 2026-07-27  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** — (chưa ship)  
+**Commit / PR:** `8ef889b` · PR https://github.com/thanhhale288/data-economy/pull/30  
 **Base:** `origin/main` @ `e699d9b` (PR #29 #40 + plan quyết định 2026-07-27 + #51)
 
 ---
@@ -34,7 +34,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task42-cookie-ops-smoke` · (uncommitted) · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task42-cookie-ops-smoke` · `8ef889b` · https://github.com/thanhhale288/data-economy/pull/30
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -83,7 +83,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa yêu cầu Explicit | Khi ship |
+| Commit/PR | Done — PR #30 | — |
 | Cache JSON refresh | Không có live parse | #41 nếu reopen |
 | Partner API code | Spike-only | Khi có hợp đồng |
 
