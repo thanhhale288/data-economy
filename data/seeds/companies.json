@@ -583,7 +583,7 @@
     "name": "Công ty Cổ phần Đầu tư và Phát triển Đa Quốc Gia I.D.I",
     "vsic_code": "1020",
     "exchange": "HOSE",
-    "website_url": "https://idi.com.vn",
+    "website_url": "https://idiseafood.com",
     "has_ecommerce_site": false,
     "description": "Chế biến thủy sản; peer division 10.",
     "digital_channels": {
@@ -610,7 +610,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://idi.com.vn",
+        "url": "https://idiseafood.com",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -622,7 +622,7 @@
     "name": "Công ty Cổ phần Thành Thành Công — Biên Hòa",
     "vsic_code": "1072",
     "exchange": "HOSE",
-    "website_url": "https://ttcsugar.com.vn",
+    "website_url": "https://ttcagris.com.vn",
     "has_ecommerce_site": false,
     "description": "Sản xuất đường; peer division 10.",
     "digital_channels": {
@@ -649,7 +649,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://ttcsugar.com.vn",
+        "url": "https://ttcagris.com.vn",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -739,7 +739,7 @@
     "name": "Công ty Cổ phần Thép Nam Kim",
     "vsic_code": "2410",
     "exchange": "HOSE",
-    "website_url": "https://namkimgroup.vn",
+    "website_url": "https://tonnamkim.com",
     "has_ecommerce_site": false,
     "description": "Thép tôn mạ; peer VSIC 2410.",
     "digital_channels": {
@@ -766,7 +766,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://namkimgroup.vn",
+        "url": "https://tonnamkim.com",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -778,7 +778,7 @@
     "name": "Công ty Cổ phần Thép Pomina",
     "vsic_code": "2410",
     "exchange": "HOSE",
-    "website_url": "https://pomina-steel.com",
+    "website_url": "http://www.pomina-steel.com",
     "has_ecommerce_site": false,
     "description": "Thép xây dựng; peer VSIC 2410.",
     "digital_channels": {
@@ -805,7 +805,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://pomina-steel.com",
+        "url": "http://www.pomina-steel.com",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -817,7 +817,7 @@
     "name": "Công ty Cổ phần Tập đoàn Thép Tiến Lên",
     "vsic_code": "2410",
     "exchange": "HOSE",
-    "website_url": "https://tienlensteel.com.vn",
+    "website_url": "https://www.tienlengroup.vn",
     "has_ecommerce_site": false,
     "description": "Thép; peer VSIC 2410.",
     "digital_channels": {
@@ -844,8 +844,8 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://tienlensteel.com.vn",
-        "has_checkout": false,
+        "url": "https://www.tienlengroup.vn",
+        "has_checkout": true,
         "match_confidence": 1.0
       }
     ],
@@ -922,7 +922,7 @@
     "name": "Công ty Cổ phần Điện Gia Dụng Gelex",
     "vsic_code": "2710",
     "exchange": "HOSE",
-    "website_url": "https://gelexelectric.com.vn",
+    "website_url": "https://gelex-electric.com",
     "has_ecommerce_site": false,
     "description": "Thiết bị điện; peer VSIC 2710 với REE.",
     "digital_channels": {
@@ -949,7 +949,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://gelexelectric.com.vn",
+        "url": "https://gelex-electric.com",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -1000,7 +1000,7 @@
     "name": "Công ty Cổ phần Cao su Đồng Phú",
     "vsic_code": "2211",
     "exchange": "HOSE",
-    "website_url": "https://dpr.com.vn",
+    "website_url": "https://doruco.com.vn",
     "has_ecommerce_site": false,
     "description": "Cao su; peer division 22 với GVR.",
     "digital_channels": {
@@ -1027,7 +1027,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://dpr.com.vn",
+        "url": "https://doruco.com.vn",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -1117,7 +1117,7 @@
     "name": "Công ty Cổ phần Đạm Cà Mau",
     "vsic_code": "2012",
     "exchange": "HOSE",
-    "website_url": "https://damcamau.vn",
+    "website_url": "https://www.pvcfc.com.vn",
     "has_ecommerce_site": false,
     "description": "Phân bón; peer division 20 với DGC.",
     "digital_channels": {
@@ -1144,7 +1144,7 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://damcamau.vn",
+        "url": "https://www.pvcfc.com.vn",
         "has_checkout": false,
         "match_confidence": 1.0
       }
@@ -1195,7 +1195,7 @@
     "name": "Công ty Cổ phần Hóa chất Cơ bản miền Nam",
     "vsic_code": "2011",
     "exchange": "HOSE",
-    "website_url": "https://hcb.com.vn",
+    "website_url": "https://sochemvn.com",
     "has_ecommerce_site": false,
     "description": "Hóa chất cơ bản; peer VSIC 2011 với DGC.",
     "digital_channels": {
@@ -1222,8 +1222,8 @@
     "digital_presence": [
       {
         "channel_type": "website",
-        "url": "https://hcb.com.vn",
-        "has_checkout": false,
+        "url": "https://sochemvn.com",
+        "has_checkout": true,
         "match_confidence": 1.0
       }
     ],

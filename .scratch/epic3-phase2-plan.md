@@ -171,28 +171,25 @@ flowchart LR
 
 ## Task #40 — Sửa domain website seed (nợ kỹ thuật từ audit #33)
 
-**Nguồn:** audit Task #33 chạy live 2026-07-25 — `website_ok=19/28`. 9 ticker còn lại **chưa đo được** (không phải “không có TMĐT”). Bằng chứng: [`.scratch/epic3-task33-website-url-audit.md`](epic3-task33-website-url-audit.md).
+**Status:** DONE (2026-07-27) — `website_ok` 19→**27/28**; chỉ GEE còn SSL fail + checkout `unknown`. Biên bản: [`.scratch/epic3-task40-website-domain-fix.md`](epic3-task40-website-domain-fix.md).
 
-| Ticker | URL seed hiện tại | Lỗi |
-|--------|-------------------|-----|
-| IDI | `https://idi.com.vn` | DNS không phân giải |
-| SBT | `https://ttcsugar.com.vn` | DNS không phân giải |
-| NKG | `https://namkimgroup.vn` | ConnectTimeout |
-| POM | `https://pomina-steel.com` | SSL: EE certificate key too weak |
-| TLH | `https://tienlensteel.com.vn` | SSL: unable to get local issuer certificate |
-| GEE | `https://gelexelectric.com.vn` | SSL: self-signed certificate |
-| DPR | `https://dpr.com.vn` | SSL: self-signed certificate |
-| CSV | `https://hcb.com.vn` | SSL: hostname mismatch |
-| DCM | `https://damcamau.vn` | Connection reset by peer |
+**Nguồn:** audit Task #33 chạy live 2026-07-25 — `website_ok=19/28`. 9 ticker còn lại **chưa đo được** (không phải “không có TMĐT”).
 
-**Việc chính:**
-- Xác minh tay domain/URL công bố (công bố thông tin HOSE/HNX, CafeF profile) → cập nhật `data/seeds/companies.json` (`website_url` + `digital_presence.website.url`).
-- Với site SSL yếu/self-signed: quyết định rõ ràng — đổi URL đúng, hoặc ghi nhận “không fetch được” như trạng thái hợp lệ. **Không** tắt verify SSL toàn cục để lấy số.
-- Chạy lại `PYTHONPATH=. python scripts/audit_website_marketplace.py` và so `website_ok` trước/sau trong report.
+| Ticker | Seed sau #40 | Kết luận |
+|--------|--------------|----------|
+| IDI | `https://idiseafood.com` | OK 200 |
+| SBT | `https://ttcagris.com.vn` | OK 200 |
+| NKG | `https://tonnamkim.com` | OK 200 |
+| POM | `http://www.pomina-steel.com` | OK 200 (HTTPS weak key — dùng HTTP) |
+| TLH | `https://www.tienlengroup.vn` | OK 200 |
+| GEE | `https://gelex-electric.com` | **FAIL** SSL issuer — giữ URL + checkout unknown |
+| DPR | `https://doruco.com.vn` | OK 200 |
+| CSV | `https://sochemvn.com` | OK 200 |
+| DCM | `https://www.pvcfc.com.vn` | OK 200 |
 
-**AC:** mỗi ticker trong bảng trên có kết luận: URL mới `website_ok=true`, **hoặc** ghi nhận lý do vẫn fail (giữ `has_checkout=unknown`). Không ticker nào bị suy checkout khi chưa fetch được.
+**AC:** ✅ mỗi ticker có kết luận URL mới OK hoặc biên bản fail; không suy checkout khi chưa fetch; không tắt SSL verify.
 
-**Không làm:** đổi Digital VA; invent checkout/GMV; tắt SSL verify mặc định.
+**Artifact:** `.scratch/epic3-task40-website-domain-fix.md` · audit refresh `.scratch/epic3-task33-website-url-audit.{md,csv}`
 
 ---
 
@@ -291,10 +288,10 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat:** #32 → #33 → #34 → #35 → #36 → #37 → #38 → #39 → #40 → #41 (sau #35) → #42 (ops cookie / partner spike, có thể song song #41) → **#43** (discovery crawl + fuzzy hygiene, sau #36) → **#44** (wire industry-ratio **chỉ khi** có citation CBCT — nợ #37; có thể sau Phase 2 nếu nguồn chưa ra).
+**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45`** → `#41` → `#46` → `#42`/`#43` → … (không làm cả chuỗi trong một chat).
 
 **Nợ kỹ thuật đã ghi:**
-- Task #40 (9 domain website fail từ audit #33).
+- Task #40 ✓ (website domain fix — 27/28 OK; GEE SSL còn fail có biên bản).
 - Task #41 (GMV backfill DQC + refresh live-cache từ capture thật; optional TikTok) — từ #34/#35.
 - Task #42 (session cookie ops smoke + partner API spike note) — từ #35 (wire sẵn, chưa chứng minh tay).
 - **Task #43 (discovery crawl thật + fuzzy hygiene)** — từ #36 (cổng sẵn, chưa search sàn; token FP quirk).

@@ -1,7 +1,7 @@
 # Epic 3 Task #33 — website detector + marketplace URL audit
 
-**Generated (UTC):** 2026-07-25T15:49:14Z
-**Counts:** tickers=28, website_ok=19, website_fail=9, website_unknown=0, has_checkout=11, checkout_unknown=9, flag_url_mismatch=0, db_mismatch=0, marketplace_urls=8
+**Generated (UTC):** 2026-07-27T10:53:33Z
+**Counts:** tickers=28, website_ok=27, website_fail=1, website_unknown=0, has_checkout=13, checkout_unknown=1, flag_url_mismatch=0, db_mismatch=0, marketplace_urls=8
 
 | stock_code | website_ok | has_checkout | shopee_url | tiktok_url | flag_vs_url_mismatch | db_mismatch | detect_detail |
 |------------|-----------|--------------|------------|------------|----------------------|-------------|---------------|
@@ -17,22 +17,22 @@
 | BMP | true | false |  |  | - | - | ok |
 | VHC | true | true |  |  | - | - | ok |
 | ANV | true | false |  |  | - | - | ok |
-| IDI | false | unknown |  |  | - | - | error:ConnectError:[Errno 8] nodename nor servname provided, or not known |
-| SBT | false | unknown |  |  | - | - | error:ConnectError:[Errno 8] nodename nor servname provided, or not known |
+| IDI | true | false |  |  | - | - | ok |
+| SBT | true | false |  |  | - | - | ok |
 | QNS | true | true |  |  | - | - | ok |
 | HSG | true | true |  |  | - | - | ok |
-| NKG | false | unknown |  |  | - | - | error:ConnectTimeout:timed out |
-| POM | false | unknown |  |  | - | - | error:ConnectError:[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: EE certificate key too weak (_ssl.c:1032) |
-| TLH | false | unknown |  |  | - | - | error:ConnectError:[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) |
+| NKG | true | false |  |  | - | - | ok |
+| POM | true | false |  |  | - | - | ok |
+| TLH | true | true |  |  | - | - | ok |
 | DQC | true | true | https://shopee.vn/dienquang_officialstore |  | - | - | ok |
-| GEE | false | unknown |  |  | - | - | error:ConnectError:[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1032) |
+| GEE | false | unknown |  |  | - | - | error:ConnectError:[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: unable to get local issuer certificate (_ssl.c:1032) |
 | TYA | true | false |  |  | - | - | ok |
-| DPR | false | unknown |  |  | - | - | error:ConnectError:[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1032) |
+| DPR | true | false |  |  | - | - | ok |
 | CSM | true | true |  |  | - | - | ok |
 | AAA | true | true |  |  | - | - | ok |
-| DCM | false | unknown |  |  | - | - | error:ConnectError:[Errno 54] Connection reset by peer |
+| DCM | true | false |  |  | - | - | ok |
 | BFC | true | false |  |  | - | - | ok |
-| CSV | false | unknown |  |  | - | - | error:ConnectError:[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: Hostname mismatch, certificate is not valid for 'hcb.com.vn'. (_ssl.c:1032) |
+| CSV | true | true |  |  | - | - | ok |
 
 `unknown` = HTTP block/timeout or detection skipped — **not** a false. Checkout is never inferred from a failed fetch.
 

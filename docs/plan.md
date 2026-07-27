@@ -412,7 +412,7 @@ Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
 ### Giai đoạn 5: Báo cáo & Demo (Tuần 18)
 
 - [x] **Task #19a — Demo ops polish** — `make bootstrap` (metrics→clean→features→train), README/ops, FE empty-state gaps, `scripts/smoke_demo.sh` (branch `cursor/phase5-task19-demo-ops`)
-- [ ] **Task #19b — Proposal Mục 4** — cập nhật kết quả thực tế (không invent số)
+- **#19b — Proposal Mục 4** — *tạm dừng có chủ đích* (2026-07-27); xem mục «Tạm dừng có chủ đích» dưới Epic 3 Phase 2. Không mở agent cho đến khi user reopen.
 - [ ] Demo presentation (slides) nếu còn thiếu sau docs
 
 ### Epic 2 — Product-first (sau demo học kỳ)
@@ -454,21 +454,53 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 - [x] **Task #38 — GRDP/VA re-gate** — national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred
 - [x] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; ADR-0003 + stub `company_universe` (rows=`[]`); **không** crawl toàn quốc / invent BCTC
 - [x] **Task #51 — FE Epic 3 honesty surface (P0)** — banner/badge mẫu ~28; Benchmark mọi `warnings` VI; listing chart null≠0; CafeF `source_url` clickable; marketplace live-cache note; BCTC không gợi CafeF khi kỳ seed. Không redesign KPI/radar/format tiền.
-- [ ] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 9 ticker `website_ok=false`: IDI, SBT (DNS), NKG (timeout), POM, TLH, GEE, DPR, CSV (SSL), DCM (reset) — tìm domain/URL đúng, không suy checkout khi chưa fetch được (bằng chứng: `.scratch/epic3-task33-website-url-audit.md`)
-- [ ] **Task #41 — GMV backfill + refresh live-cache (nợ từ #34/#35)** — điền `units_sold_est` DQC (và optionally TikTok VNM/PNJ) chỉ từ live/cache/curation có nguồn; refresh snapshot `marketplace_live_cache/` bằng capture thật + PROVENANCE; không invent; GMV tickers có thể tăng >5
-- [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay `SHOPEE_SESSION_COOKIE`/`TIKTOK_SESSION_COOKIE` (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
-- [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — search sàn thật → candidates vào cổng QA; siết token FP; không bật discovery mặc định
-- [ ] **Task #44 — Industry-ratio wire (nợ từ #37)** — chỉ khi có citation CBCT TMĐT÷doanh thu; `data/mappings/` + PROVENANCE; không GDP digital % / bin VECOM all-sector (xem `.scratch/epic3-task30-industry-ratio-research.md`)
+- [x] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 8/9 URL đổi + verify OK (`website_ok` 19→27/28); GEE giữ `gelex-electric.com` SSL fail hợp lệ + checkout `unknown`; không tắt SSL verify (biên bản: `.scratch/epic3-task40-website-domain-fix.md`)
+
+**Quyết định người dùng (2026-07-27)** — chốt trước khi mở agent song song:
+
+| # | Quyết định |
+|---|------------|
+| #44 | Không có citation → **không còn là task**; đưa vào «Chưa làm được…» dưới đây |
+| #48 | **A — tạm hoãn** — chưa có nguồn DN Section C để ingest; không mở agent |
+| #47 | Chưa có table ID NSO → task chỉ viết **biên bản NO-GO / deferred**; **không crawl** |
+| #46 | **Wire** `VA_C` vào cleaned/features; không đổi target forecast im lặng |
+| #42 | Cookie đã có trong env (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) — smoke được |
+| #41 | **Tạm dừng có chủ đích** (không mở agent) |
+| #43 | **GO** — cho phép search sàn thật → QA gate; discovery vẫn OFF mặc định |
+| #49 | **Hoãn theo #48** — chỉ làm sau khi #48 có nguồn + chạy xong |
+| #19b | **Tạm dừng có chủ đích** |
+| Wave | Ưu tiên mở: `#42` `#43` `#45` `#46` `#47` `#50` (tách worktree theo lane; **không** #48/#49) |
+
+#### Phase 2 — còn mở (được phép chạy)
+
+- [ ] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — smoke tay cookie env đã có (không commit secret); spike note API/đối tác — không implement full không hợp đồng; không anti-bot SaaS mặc định
+- [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 - [ ] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
-- [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — đưa `VA_C` vào cleaned/features **hoặc** biên bản giữ IIP-only; không thay target forecast im lặng
-- [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — crawl chỉ khi có table ID NSO; không invent / không copy `VA_C` quốc gia xuống tỉnh
-- [ ] **Task #48 — Universe nông ingest stub→thật** — theo ADR-0003 tầng 2
-- [ ] **Task #49 — Deep-sample expand có kiểm soát** — không invent trăm BCTC
-- [ ] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39
+- [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
+- [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **chỉ biên bản** deferred/NO-GO (chưa có table ID NSO); không crawl; không copy `VA_C` quốc gia xuống tỉnh
+- [ ] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
 
-**Deferred (sau khi có nguồn):** IIP theo ngành VSIC (cấp 2+) → unlock Dashboard card «Ngành nổi bật» (top/bottom tăng trưởng SXCN). Phụ thuộc bảng Luồng A; không invent số IIP theo ngành.
+#### Tạm dừng có chủ đích (có thể reopen khi user bảo)
 
-**Deferred (Benchmark data):** xu hướng chỉ số theo năm (ROA/ROE…) khi có ≥2 kỳ BCTC đủ field — xem Module 5 + mục Design system dưới đây.
+Không mở agent cho đến khi user reopen tường minh.
+
+- **#41 — GMV backfill + refresh live-cache** — điền `units_sold_est` chỉ từ live/cache/curation có PROVENANCE; refresh `marketplace_live_cache/`; không invent units
+- **#19b — Proposal Mục 4** — cập nhật kết quả thực tế (không invent số)
+- **#48 — Universe nông ingest stub→thật** — chưa có nguồn DN Section C; không invent/copy seed; reopen khi có nguồn + quyền truy cập
+- **#49 — Deep-sample expand có kiểm soát** — **hoãn theo #48** (làm sau #48); không invent trăm BCTC
+
+#### Chưa làm được / chưa có khả năng giải quyết — tạm dừng vô thời hạn
+
+**Không phải task roadmap.** Không mở agent, không wire code, không invent số. Chỉ reopen khi có nguồn/citation mới **và** user yêu cầu tường minh.
+
+| Mục (ex-task) | Lý do dừng | Điều kiện reopen |
+|---------------|------------|------------------|
+| **Industry-ratio wire (ex-#44)** | Không có citation CBCT **TMĐT ÷ doanh thu** đủ chuẩn; `#30`/`#37` giữ `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (xem `.scratch/epic3-task30-industry-ratio-research.md`) | Có bảng/figure + năm + URL đúng khái niệm → mappings + PROVENANCE; **cấm** % KT số/GDP, % bán lẻ online, bin VECOM all-sector, invent 0.15 |
+| **Crawl GRDP tỉnh×ngành** (phần crawl của ex-phạm vi #47) | Chưa có table ID NSO đáng tin | Có table ID NSO tỉnh×ngành CBCT → task crawl riêng; **cấm** copy `VA_C` quốc gia xuống tỉnh |
+| **IIP theo ngành VSIC (cấp 2+)** | Chưa có bảng Luồng A | Có chuỗi IIP theo ngành → unlock card «Ngành nổi bật» |
+| **Benchmark xu hướng theo năm** | Chưa đủ ≥2 kỳ BCTC đủ field trên peer | Có ≥2 kỳ CafeF/seed đủ field |
+
+**Deferred (Benchmark data):** xu hướng chỉ số theo năm (ROA/ROE…) — xem bảng trên + Module 5 / Design system.
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
