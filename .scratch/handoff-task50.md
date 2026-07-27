@@ -1,10 +1,10 @@
 # Handoff — Task #50 UniverseCoverageNote API + FE
 
-**Status:** DONE (shipped locally — commit/PR pending user request)  
+**Status:** DONE (shipped — PR open)  
 **Branch:** `cursor/epic3-phase2-task50-universe-coverage-note`  
 **Date:** 2026-07-28  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(chưa — user chưa Explicit yêu cầu commit/PR)_  
+**Commit / PR:** `d11d701` / https://github.com/thanhhale288/data-economy/pull/35  
 **Base:** `origin/main` @ `fa3b083` (PR #34 Task #47 merged)
 
 ---
@@ -20,7 +20,7 @@
 
 ### Not done (out of scope)
 
-- Commit/push/PR — chờ user Explicit
+- Commit/push/PR — done (`d11d701` / PR #35)
 - #41 / #48 / #49 / #19b (tạm dừng)
 - Invent universe rows / crawl toàn quốc / Alembic `company_universe`
 - Dashboard redesign
@@ -32,7 +32,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task50-universe-coverage-note` · _(uncommitted)_ · —
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task50-universe-coverage-note` · `d11d701` · [#35](https://github.com/thanhhale288/data-economy/pull/35)
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -55,7 +55,6 @@ Deliverable chính:
 - So với plan: đúng #50 only; không mở paused tasks
 
 ### Còn lại / rủi ro
-- Ship: commit + PR khi user yêu cầu
 - Phase 2 **không còn open runnable task** — wave tiếp theo = **phase-close audit** (không tự mở #41/#48/#49/#19b)
 - Optional later: #48 khi có nguồn DN Section C → có thể đổi claim sang `universe_shallow_only` khi stub có rows
 
@@ -81,12 +80,12 @@ _(none)_
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa Explicit | Khi ship |
+| Commit/PR | — | done (`d11d701` / PR #35) |
 | Live browser smoke | Không bắt buộc AC | Optional demo |
 | Full `pytest tests/` | Scope #50 đủ | CI on PR |
 
 ### CI
-- PR chưa mở
+- PR: https://github.com/thanhhale288/data-economy/pull/35 — checks pending after push
 
 ---
 
