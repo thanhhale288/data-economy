@@ -81,7 +81,7 @@ COMPANIES = {
     "AAA": "Công ty Cổ phần Nhựa An Phát Xanh",
 }
 
-# Rubber peers (not in precision matrix — short token "dong" ⊂ rangdong is a known fuzzy quirk)
+# Rubber peers — short token "dong" ⊂ rangdong was a known FP; Task #43 hygiene.
 RUBBER_PEERS = {
     "DPR": "Công ty Cổ phần Cao su Đồng Phú",
     "CSM": "Công ty Cổ phần Cao su miền Nam",
@@ -316,6 +316,42 @@ def test_gvr_aliases_do_not_contaminate_dpr_csm(matcher: ShopMatcher):
     assert matcher.is_match(COMPANIES["GVR"], "gvr_official") is True
     assert matcher.is_match(RUBBER_PEERS["DPR"], "gvr_official") is False
     assert matcher.is_match(RUBBER_PEERS["CSM"], "gvr_official") is False
+
+
+def test_dpr_does_not_match_rangdong_official(matcher: ShopMatcher):
+    """Task #43: short token dong ⊂ rangdong must not link DPR to Rạng Đông shop."""
+    from ml.shop_matcher.matcher import MIN_TOKEN_CONTAINMENT_LEN
+
+    assert MIN_TOKEN_CONTAINMENT_LEN >= 5
+    score = matcher.match_score(RUBBER_PEERS["DPR"], "rangdong_official")
+    assert score < DEFAULT_THRESHOLD, f"DPR↔rangdong unexpectedly matched score={score}"
+    assert matcher.is_match(RUBBER_PEERS["DPR"], "rangdong_official") is False
+    # RAL still matches via brand alias (not token containment alone)
+    assert matcher.is_match(COMPANIES["RAL"], "rangdong_official") is True
+
+
+def test_ral_does_not_match_dongphu_via_short_token(matcher: ShopMatcher):
+    """Symmetric hygiene: RAL must not match dongphu via token 'dong'."""
+    score = matcher.match_score(COMPANIES["RAL"], "dongphu_official")
+    assert score < DEFAULT_THRESHOLD, f"RAL↔dongphu unexpectedly matched score={score}"
+    assert matcher.is_match(COMPANIES["RAL"], "dongphu_official") is False
+
+
+def test_cross_matrix_includes_rubber_peers_after_hygiene(matcher: ShopMatcher):
+    """After Task #43 hygiene, DPR/CSM can sit in the precision matrix without FP."""
+    shops = [(p["ticker"], p["shop"]) for p in labeled_seed_pairs()]
+    pool = {**COMPANIES, **RUBBER_PEERS}
+    tp = fp = 0
+    for owner, shop in shops:
+        for ticker, company in pool.items():
+            pred = matcher.is_match(company, shop)
+            truth = ticker == owner
+            if pred and truth:
+                tp += 1
+            elif pred and not truth:
+                fp += 1
+    assert tp >= 5
+    assert fp == 0
 
 
 def test_train_skips_website_aliases_for_no_shop_tickers(tmp_path, monkeypatch):

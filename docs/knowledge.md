@@ -371,6 +371,10 @@ Một câu nhớ: **alias = biệt danh thương hiệu, giúp matcher nhận ra
 
 Shop/URL đã có trong seed vẫn phải vượt ngưỡng **0.65** trước khi gắn DN (`match_source=seed_known_url`). Shop tìm mới (discovery) **tắt mặc định**; chỉ bật với `MARKETPLACE_DISCOVERY_ENABLED=1` + entry trong `data/mappings/discovery_allowlist.json` + threshold 0.65 (`match_source=qa_discovery`). Không alias ép ticker không có shop.
 
+### Discovery search + fuzzy hygiene (Task #43)
+
+`search_marketplace_shop_candidates` thử search Shopee/TikTok theo brand → chỉ **parse** URL (không invent); kết quả đưa vào QA allowlist thủ công, rồi mới qua cổng #36. Live search thường bị anti-bot (biên bản `.scratch/epic3-task43-discovery-crawl.md`). Fuzzy: token containment tối thiểu **5** ký tự + noise `dong` để tránh FP kiểu DPR ↔ `rangdong`. `resolve_shop_to_company(..., discovery_gated=True)` không bypass gate.
+
 ### Listing marketplace (marketplace listing)
 
 **Listing** = **một dòng sản phẩm** trên sàn TMĐT (Shopee, TikTok, Lazada…).

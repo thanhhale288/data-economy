@@ -1,0 +1,4 @@
+timestamp_utc,ticker,channel,query,status,n_candidates,detail,ops_smoke_qa_discovery
+2026-07-27T17:07:34Z,RAL,shopee,rang dong,blocked,0,Shopee anti-bot / captcha for https://shopee.vn/search?keyword=rang%20dong,qa_discovery
+2026-07-27T17:07:34Z,VNM,shopee,vinamilk,blocked,0,Shopee anti-bot / captcha for https://shopee.vn/search?keyword=vinamilk,qa_discovery
+2026-07-27T17:07:34Z,VNM,tiktok,vinamilk,blocked,0,TikTok anti-bot / captcha for https://www.tiktok.com/search?q=vinamilk,qa_discovery

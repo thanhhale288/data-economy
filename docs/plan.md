@@ -474,7 +474,7 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 #### Phase 2 — còn mở (được phép chạy)
 
 - [x] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — cookie `present=yes`; live HTTP vẫn anti-bot/403 (`live_ok=0` no-cache); cache-on-fail `live_ok=2`; partner spike note (no implement); không anti-bot SaaS; artifacts `.scratch/epic3-task42-cookie-ops-smoke.md` + `epic3-task42-partner-api-spike.md`
-- [ ] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
+- [x] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 - [x] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [x] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
 - [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **chỉ biên bản** deferred/NO-GO (chưa có table ID NSO); không crawl; không copy `VA_C` quốc gia xuống tỉnh
