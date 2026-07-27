@@ -51,8 +51,32 @@ def get_dashboard_summary(db: Session) -> DashboardSummary:
     if latest_iip and prev_iip and prev_iip.value:
         iip_growth = (latest_iip.value - prev_iip.value) / prev_iip.value * 100
 
+    # Year-over-year: same month, one year earlier (exact period match, no interpolation).
+    iip_yoy = None
+    if latest_iip:
+        try:
+            yoy_period = latest_iip.period.replace(year=latest_iip.period.year - 1)
+        except ValueError:  # Feb 29 → fall back to Feb 28
+            yoy_period = latest_iip.period.replace(
+                year=latest_iip.period.year - 1, day=28
+            )
+        year_ago_iip = (
+            db.query(GsoMacro)
+            .filter(
+                GsoMacro.indicator_code == _GSO_IIP_CODE,
+                GsoMacro.vsic_code == "C",
+                GsoMacro.period == yoy_period,
+            )
+            .first()
+        )
+        if year_ago_iip and year_ago_iip.value:
+            iip_yoy = (latest_iip.value - year_ago_iip.value) / year_ago_iip.value * 100
+
     avg_adoption = db.query(func.avg(DigitalMetric.digital_adoption_score)).scalar()
     total_va = db.query(func.sum(DigitalMetric.digital_va_contribution)).scalar()
+    companies_with_metrics = (
+        db.query(func.count(func.distinct(DigitalMetric.company_id))).scalar() or 0
+    )
 
     active_models = (
         db.query(ModelRegistry).filter(ModelRegistry.is_active.is_(True)).all()
@@ -63,8 +87,10 @@ def get_dashboard_summary(db: Session) -> DashboardSummary:
     return DashboardSummary(
         iip_latest=latest_iip.value if latest_iip else None,
         iip_growth_pct=round(iip_growth, 2) if iip_growth is not None else None,
+        iip_yoy_pct=round(iip_yoy, 2) if iip_yoy is not None else None,
         total_companies=len(companies),
         companies_with_ecommerce=companies_with_ecom,
+        companies_with_metrics=int(companies_with_metrics),
         avg_digital_adoption=round(avg_adoption, 2) if avg_adoption else None,
         total_digital_va=round(total_va, 2) if total_va else None,
         latest_period=latest_iip.period if latest_iip else None,

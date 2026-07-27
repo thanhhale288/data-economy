@@ -6,7 +6,7 @@ from datetime import date
 
 from pytest import approx
 
-from backend.app.models import Company, FinancialReport
+from backend.app.models import Company, DigitalMetric, FinancialReport
 from backend.app.schemas import BenchmarkInput
 from backend.app.services import benchmark_service as svc
 
@@ -45,6 +45,11 @@ def test_compute_ratios_from_period_end_bctc():
     assert ratios["current_ratio"] == approx(3_100_000_000_000 / 2_100_000_000_000)
     assert ratios["equity_ratio"] == approx(3_200_000_000_000 / 6_800_000_000_000)
     assert ratios["revenue_per_worker"] == approx(5_200_000_000_000 / 3200)
+    assert ratios["profit_margin"] == approx(420_000_000_000 / 5_200_000_000_000)
+    assert ratios["asset_turnover"] == approx(5_200_000_000_000 / 6_800_000_000_000)
+    assert ratios["debt_to_equity"] == approx(
+        (6_800_000_000_000 - 3_200_000_000_000) / 3_200_000_000_000
+    )
     # BITE expenditure block (operating_expenses present → non-null)
     assert ratios["expenditure_related_ratio"] == approx(4_000_000_000_000 / 5_200_000_000_000)
     assert ratios["purchase_goods_share"] == approx(3_200_000_000_000 / 4_000_000_000_000)
@@ -130,6 +135,57 @@ def test_peers_same_vsic_division_compute_percentile(peers_division_27):
     assert 0 <= result.percentiles["roa"] <= 100
     assert result.industry_averages["roa"] is not None
     assert result.comparison["roa"] in {"above_average", "below_average", "average"}
+    # n=2 < QUARTILE_MIN_PEERS → no invented P25/P50/P75 band
+    assert result.industry_quartiles.get("roa") is None
+    assert result.profit_margin is not None
+    assert result.asset_turnover is not None
+    assert result.debt_to_equity is not None
+
+
+def test_quartiles_require_four_peer_values(db_session):
+    """P25/P50/P75 only when ≥4 peer values for that metric."""
+    for i, code in enumerate(["QA1", "QA2", "QA3", "QA4"]):
+        company = Company(
+            stock_code=code,
+            name=f"Quartile Co {code}",
+            vsic_code="2211",
+            exchange="HOSE",
+        )
+        db_session.add(company)
+        db_session.flush()
+        assets = (i + 1) * 1_000_000_000_000
+        equity = assets / 2
+        db_session.add(
+            FinancialReport(
+                company_id=company.id,
+                period=date(2025, 12, 31),
+                report_type="annual",
+                revenue=assets,
+                profit_before_tax=assets * 0.1,
+                total_assets=assets,
+                total_equity=equity,
+                current_assets=assets * 0.4,
+                current_liabilities=assets * 0.2,
+                employees=1000 + i * 100,
+            )
+        )
+    db_session.commit()
+
+    result = svc.run_benchmark(
+        db_session,
+        _ral_like_input(
+            vsic_code="2211",
+            operating_revenue=2_500_000_000_000,
+            profit_before_tax=250_000_000_000,
+            total_assets=2_500_000_000_000,
+            total_equity=1_250_000_000_000,
+        ),
+    )
+    assert result.peer_count == 4
+    q = result.industry_quartiles.get("roa")
+    assert q is not None
+    assert q["p25"] <= q["p50"] <= q["p75"]
+    assert result.industry_quartiles.get("debt_to_equity") is not None
 
 
 def test_peers_with_cost_fields_yield_expenditure_industry_averages(peers_division_27):
@@ -230,6 +286,59 @@ def test_prefill_skips_incomplete_newer_quarterly(peers_division_27, db_session)
     ral_peer = next(r for r in reports if r.company_id == company.id)
     assert ral_peer.period == date(2025, 12, 31)
     assert ral_peer.report_type == "annual"
+
+
+def _add_digital_metric(session, stock_code, *, adoption, ratio=None, online=None):
+    company = session.query(Company).filter(Company.stock_code == stock_code).one()
+    session.add(
+        DigitalMetric(
+            company_id=company.id,
+            period=date(2025, 12, 31),
+            digital_adoption_score=adoption,
+            online_revenue_ratio=ratio,
+            online_revenue_est=online,
+        )
+    )
+    session.commit()
+
+
+def test_digital_benchmark_requires_stock_code(peers_division_27):
+    result = svc.run_benchmark(peers_division_27, _ral_like_input())
+    assert result.digital is not None
+    assert result.digital.status == "no_stock_code"
+
+
+def test_digital_benchmark_compares_adoption_to_peers(peers_division_27):
+    _add_digital_metric(peers_division_27, "RAL", adoption=0.8, ratio=0.25)
+    _add_digital_metric(peers_division_27, "REE", adoption=0.4, ratio=0.10)
+
+    result = svc.run_benchmark(
+        peers_division_27, _ral_like_input(stock_code="RAL")
+    )
+    digital = result.digital
+    assert digital.status == "ok"
+    assert digital.stock_code == "RAL"
+    assert digital.peer_count == 1
+    assert digital.metrics["digital_adoption_score"] == approx(0.8)
+    assert digital.percentiles["digital_adoption_score"] == 100.0
+    assert digital.comparison["digital_adoption_score"] == "above_average"
+
+
+def test_digital_ratio_falls_back_to_online_over_revenue(peers_division_27):
+    """Stored ratio missing → derive from online estimate ÷ BCTC revenue."""
+    _add_digital_metric(
+        peers_division_27, "RAL", adoption=0.6, ratio=None, online=520_000_000_000
+    )
+    result = svc.run_benchmark(peers_division_27, _ral_like_input(stock_code="RAL"))
+    assert result.digital.metrics["online_revenue_ratio"] == approx(
+        520_000_000_000 / 5_200_000_000_000
+    )
+
+
+def test_digital_benchmark_without_metrics_reports_status(peers_division_27):
+    result = svc.run_benchmark(peers_division_27, _ral_like_input(stock_code="RAL"))
+    assert result.digital.status == "no_metrics"
+    assert result.digital.percentiles == {}
 
 
 def test_singleton_peer_warns_small_sample(singleton_peer):

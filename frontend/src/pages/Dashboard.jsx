@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { api } from '../api'
-import { formatCompact } from '../format'
+import { formatMoney } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 
 /** KPI help copy — formulas match CONTEXT.md / proposal-v2 (do not invent). */
@@ -23,15 +23,83 @@ const KPI_TIPS = {
       'Tổng ước lượng giá trị gia tăng kinh tế số của các doanh nghiệp trong mẫu (cộng Digital VA từng DN). Không đồng nghĩa với doanh thu hay với IIP.',
   },
   adoption: {
-    title: 'Digital Adoption',
-    formula: 'Điểm tổng hợp kênh / checkout / hoạt động (0–1)',
+    title: 'Digital Adoption (trung bình)',
+    formula: 'Trung bình cộng điểm số hóa (0–1) của DN mẫu',
     blurb:
-      'Mức độ số hóa kênh bán trung bình của DN mẫu (website, sàn TMĐT, tín hiệu giao dịch…). Dùng trong tính Digital VA và các feature dự báo.',
+      'Mức độ số hóa kênh bán trung bình (mean) của DN mẫu (website, sàn TMĐT, tín hiệu giao dịch…). Dùng trong tính Digital VA và các feature dự báo.',
+  },
+  iipGrowth: {
+    title: 'Tăng trưởng IIP',
+    formula: 'MoM = so kỳ liền trước · YoY = so cùng kỳ năm trước',
+    blurb:
+      'MoM cho biết sản xuất tháng này nhanh/chậm hơn tháng trước; YoY loại bỏ yếu tố mùa vụ bằng cách so với cùng tháng năm ngoái. Đường nhỏ là xu hướng 12 kỳ gần nhất.',
+  },
+  forecast: {
+    title: 'Dự báo IIP 6 tháng',
+    formula: 'Giá trị dự báo cuối kỳ so với IIP mới nhất',
+    blurb:
+      'Giá trị IIP mô hình dự báo cho tháng cuối trong 6 tháng tới, kèm mức thay đổi so với kỳ thực tế gần nhất. Chỉ là ước lượng từ mô hình, không phải số công bố.',
+  },
+  vaMix: {
+    title: 'Cơ cấu Digital VA (trong mẫu)',
+    formula: 'Digital VA từng ngành ÷ tổng Digital VA của mẫu',
+    blurb:
+      'Ngành (VSIC) đóng góp nhiều Digital VA nhất trong nhóm DN mẫu. Đây là cơ cấu nội bộ mẫu, không phải tỷ trọng trên toàn ngành chế biến, chế tạo.',
+  },
+  coverage: {
+    title: 'Độ phủ dữ liệu',
+    formula: 'Số DN có Digital metrics ÷ tổng DN mẫu',
+    blurb:
+      'Tỷ lệ doanh nghiệp trong mẫu đã có chỉ số số hóa (Digital metrics). Độ phủ càng cao thì các số tổng hợp phía trên càng đại diện.',
   },
 }
 
+/** Compact inline SVG sparkline (no axes) for KPI trend. */
+function Sparkline({ values, width = 132, height = 34, stroke = '#367ea2' }) {
+  const nums = (values || []).filter((v) => typeof v === 'number' && !Number.isNaN(v))
+  if (nums.length < 2) return null
+  const min = Math.min(...nums)
+  const max = Math.max(...nums)
+  const span = max - min || 1
+  const stepX = width / (nums.length - 1)
+  const pad = 3
+  const usable = height - pad * 2
+  const points = nums.map((v, i) => {
+    const x = i * stepX
+    const y = pad + (1 - (v - min) / span) * usable
+    return `${x.toFixed(1)},${y.toFixed(1)}`
+  })
+  const last = points[points.length - 1].split(',')
+  return (
+    <svg
+      className="sparkline"
+      viewBox={`0 0 ${width} ${height}`}
+      width={width}
+      height={height}
+      role="img"
+      aria-hidden="true"
+      preserveAspectRatio="none"
+    >
+      <polyline
+        points={points.join(' ')}
+        fill="none"
+        stroke={stroke}
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
+      />
+      <circle cx={last[0]} cy={last[1]} r="2.6" fill={stroke} />
+    </svg>
+  )
+}
+
+function pctText(v) {
+  if (v == null) return null
+  return `${v > 0 ? '+' : ''}${v}%`
+}
+
 function formatNumber(n) {
-  return formatCompact(n)
+  return formatMoney(n, 'VND')
 }
 
 function periodLabel(p) {
@@ -164,6 +232,33 @@ export default function Dashboard() {
     ? periodLabel(summary.latest_period)
     : '—'
 
+  // Last 12 IIP points for the trend sparkline.
+  const iipTrend = iip.slice(-12).map((r) => r.value)
+
+  // Forecast KPI (2B): final horizon point + change vs latest actual, no CI/MAPE.
+  const forecastRows = forecast?.forecasts || []
+  const lastForecast = forecastRows.length ? forecastRows[forecastRows.length - 1] : null
+  const latestActual = summary?.iip_latest ?? (iip.length ? iip[iip.length - 1].value : null)
+  const forecastDelta =
+    lastForecast?.predicted_value != null && latestActual
+      ? ((lastForecast.predicted_value - latestActual) / latestActual) * 100
+      : null
+
+  // Digital VA composition (1A): top VSIC share within the sample.
+  const vaRows = (heatmap || []).filter((r) => (r.digital_va ?? 0) > 0)
+  const vaTotal = vaRows.reduce((sum, r) => sum + (r.digital_va || 0), 0)
+  const vaTop = vaRows.length
+    ? [...vaRows].sort((a, b) => (b.digital_va || 0) - (a.digital_va || 0)).slice(0, 3)
+    : []
+  const vaTopShare =
+    vaTop.length && vaTotal > 0 ? (vaTop[0].digital_va / vaTotal) * 100 : null
+
+  // Data coverage (4): companies with digital metrics over the sample.
+  const totalCompanies = summary?.total_companies ?? 0
+  const withMetrics = summary?.companies_with_metrics ?? 0
+  const coveragePct =
+    totalCompanies > 0 ? (withMetrics / totalCompanies) * 100 : null
+
   return (
     <div>
       <h2 className="page-title">Dashboard — Công nghiệp Chế biến, Chế tạo</h2>
@@ -194,9 +289,10 @@ export default function Dashboard() {
           <div className="value">{summary?.iip_latest?.toFixed(1) ?? '—'}</div>
           {summary?.iip_growth_pct != null && (
             <div className={`sub ${summary.iip_growth_pct >= 0 ? 'up' : 'down'}`}>
-              {summary.iip_growth_pct > 0 ? '+' : ''}{summary.iip_growth_pct}% so với kỳ trước
+              {pctText(summary.iip_growth_pct)} so với kỳ trước (MoM)
             </div>
           )}
+          <div className="sub muted">Kỳ {periodText}</div>
           {summary?.iip_latest == null && (
             <div className="sub muted">Chưa có chuỗi IIP</div>
           )}
@@ -219,6 +315,7 @@ export default function Dashboard() {
               ? `${(summary.avg_digital_adoption * 100).toFixed(0)}%`
               : '—'}
           </div>
+          <div className="sub muted">Trung bình DN mẫu</div>
         </div>
         <div className="card">
           <div className="card-label-row">
@@ -226,7 +323,106 @@ export default function Dashboard() {
             <MetricInfoTip {...KPI_TIPS.digitalVa} />
           </div>
           <div className="value">{formatNumber(summary?.total_digital_va)}</div>
-          <div className="sub muted">Theo công thức Digital VA</div>
+          <div className="sub muted">Cộng dồn mẫu · kỳ {periodText}</div>
+        </div>
+      </div>
+
+      <div className="cards cards-kpi">
+        <div className="card">
+          <div className="card-label-row">
+            <div className="label">Tăng trưởng IIP</div>
+            <MetricInfoTip {...KPI_TIPS.iipGrowth} placement="below" />
+          </div>
+          <div className={`value ${(summary?.iip_growth_pct ?? 0) >= 0 ? 'up' : 'down'}`}>
+            {pctText(summary?.iip_growth_pct) ?? '—'}
+            <span className="value-unit"> MoM</span>
+          </div>
+          {summary?.iip_yoy_pct != null ? (
+            <div className={`sub ${summary.iip_yoy_pct >= 0 ? 'up' : 'down'}`}>
+              {pctText(summary.iip_yoy_pct)} so cùng kỳ năm trước (YoY)
+            </div>
+          ) : (
+            <div className="sub muted">Chưa đủ dữ liệu cho YoY</div>
+          )}
+          {iipTrend.length >= 2 && (
+            <Sparkline values={iipTrend} />
+          )}
+        </div>
+
+        <div className="card">
+          <div className="card-label-row">
+            <div className="label">Dự báo 6 tháng</div>
+            <MetricInfoTip {...KPI_TIPS.forecast} placement="below" />
+          </div>
+          {lastForecast?.predicted_value != null ? (
+            <>
+              <div className="value">{lastForecast.predicted_value.toFixed(1)}</div>
+              {forecastDelta != null && (
+                <div className={`sub ${forecastDelta >= 0 ? 'up' : 'down'}`}>
+                  {pctText(Number(forecastDelta.toFixed(1)))} so với kỳ mới nhất
+                </div>
+              )}
+              <div className="sub muted">
+                {forecast?.model ? `Model ${forecast.model}` : 'Mô hình dự báo'}
+                {lastForecast.period ? ` · ${periodLabel(lastForecast.period)}` : ''}
+              </div>
+            </>
+          ) : (
+            <>
+              <div className="value">—</div>
+              <div className="sub muted">Chưa có đường dự báo</div>
+            </>
+          )}
+        </div>
+
+        <div className="card">
+          <div className="card-label-row">
+            <div className="label">Cơ cấu Digital VA</div>
+            <MetricInfoTip {...KPI_TIPS.vaMix} placement="below" />
+          </div>
+          {vaTop.length ? (
+            <>
+              <div className="value">
+                {vaTopShare != null ? `${vaTopShare.toFixed(0)}%` : '—'}
+              </div>
+              <div className="sub">
+                ngành dẫn đầu: {vaTop[0].vsic_name || `VSIC ${vaTop[0].vsic_code}`}
+              </div>
+              <ul className="mini-rank">
+                {vaTop.map((r) => (
+                  <li key={r.vsic_code}>
+                    <span className="mini-rank-name">
+                      {r.vsic_name || `VSIC ${r.vsic_code}`}
+                    </span>
+                    <span className="mini-rank-val">
+                      {vaTotal > 0 ? `${((r.digital_va / vaTotal) * 100).toFixed(0)}%` : '—'}
+                    </span>
+                  </li>
+                ))}
+              </ul>
+            </>
+          ) : (
+            <>
+              <div className="value">—</div>
+              <div className="sub muted">Chưa có Digital VA theo ngành</div>
+            </>
+          )}
+        </div>
+
+        <div className="card">
+          <div className="card-label-row">
+            <div className="label">Độ phủ dữ liệu</div>
+            <MetricInfoTip {...KPI_TIPS.coverage} placement="below" />
+          </div>
+          <div className="value">
+            {coveragePct != null ? `${coveragePct.toFixed(0)}%` : '—'}
+          </div>
+          <div className="sub">
+            {withMetrics}/{totalCompanies} DN có Digital metrics
+          </div>
+          <div className="sub muted">
+            {summary?.companies_with_ecommerce ?? 0} có kênh TMĐT
+          </div>
         </div>
       </div>
 

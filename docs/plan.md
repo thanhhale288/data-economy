@@ -91,6 +91,7 @@ flowchart TB
 | Dataset                           | Chỉ tiêu                           | Tần suất (nguồn) | Phương pháp / trạng thái Phase 1 |
 | --------------------------------- | ---------------------------------- | ---------------- | -------------------------------- |
 | IIP (Chỉ số sản xuất công nghiệp) | IIP Section C (`AIP_ISIC4_C_IX`)   | Tháng            | **Đã làm** — SDMX `nsdp.nso.gov.vn/.../IIPVNM.xml` |
+| IIP theo ngành VSIC (cấp 2+)      | IIP từng division / class         | Tháng (nếu có)   | **Deferred** — nguồn NSO/GSO chưa ingest; cần để Dashboard «ngành nổi bật» (tăng/giảm SXCN theo ngành). Không bịa khi thiếu. |
 | Chỉ số tiêu thụ CN CBCT           | Shipment / WHOLE MANUFACTURING     | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.03.px`; step-hold → tháng khi ingest |
 | Chỉ số tồn kho CN CBCT            | Inventory as of 31/12              | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.04.px`; step-hold → tháng khi ingest |
 | GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm → step-hold tháng | **Đã làm (VA quốc gia)** — SDMX `GDPVNM.xml` `NGDPVA_R_ISIC4_C_XDC` → `VA_C`; nominal → `VA_C_NOMINAL`. **GRDP tỉnh×ngành** vẫn deferred |
@@ -301,6 +302,8 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 - Biểu đồ IIP, giá trị gia tăng, xu hướng dự báo
 - Heatmap đóng góp KTS theo nhóm ngành VSIC
 - So sánh OECD leading indicators vs GSO lagging
+- KPI phụ: tăng trưởng IIP (MoM/YoY + sparkline), dự báo 6 tháng (điểm + Δ), cơ cấu Digital VA trong mẫu, độ phủ Digital metrics
+- **Deferred — «Ngành nổi bật» theo tăng trưởng IIP từng VSIC:** cần chuỗi IIP theo ngành (ít nhất VSIC 2 chữ số). Hiện chỉ có `IIP_C` Section C tổng (`vsic_code=C`); không xếp hạng tăng/giảm theo ngành khi thiếu dữ liệu. Làm sau khi crawl/seed GSO có IIP theo ngành (xem Luồng A).
 
 ### Module 2: Doanh nghiệp (~10 DN mẫu)
 
@@ -325,8 +328,10 @@ Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_e
 
 - Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương) + cân đối kế toán
 - Output: ROA, ROE, Current Ratio, Equity Ratio (+ revenue/profit per worker) + **percentile so với peer cùng VSIC 2-digit** từ BCTC seed
+- Bổ sung (design branch): biên LN, vòng quay tài sản, nợ/VCSH; P25–trung vị–P75 (≥4 peer); câu tổng kết + radar theo phân vị
 - Thiếu peer / field → null percentile + `insufficient_peers` (không bịa 50th); prototype n≈10 DN niêm yết
 - Nội suy GSO khi thiếu BCTC → deferred (không invent industry ratio)
+- **Deferred — xu hướng theo năm (mục 4):** chọn năm / vẽ ROA·ROE (và chỉ số chính) 2–3 năm khi BCTC CafeF có nhiều kỳ đủ field. Cần kiểm tra multi-year trước khi làm; không invent chuỗi năm.
 
 ---
 
@@ -452,6 +457,10 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [ ] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [ ] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — đưa `VA_C` vào cleaned/features **hoặc** biên bản giữ IIP-only; không thay target forecast im lặng
 - [ ] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — crawl chỉ khi có table ID NSO; không invent / không copy `VA_C` quốc gia xuống tỉnh
+
+**Deferred (sau khi có nguồn):** IIP theo ngành VSIC (cấp 2+) → unlock Dashboard card «Ngành nổi bật» (top/bottom tăng trưởng SXCN). Phụ thuộc bảng Luồng A; không invent số IIP theo ngành.
+
+**Deferred (Benchmark):** xu hướng chỉ số theo năm (ROA/ROE…) khi có ≥2 kỳ BCTC đủ field — xem Module 5.
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 

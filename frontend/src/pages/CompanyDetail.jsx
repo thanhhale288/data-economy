@@ -2,10 +2,10 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '../api'
-import { formatCompactVnd, formatGrouped } from '../format'
+import { formatMoney, formatGrouped } from '../format'
 
 function formatVND(n) {
-  return formatCompactVnd(n)
+  return formatMoney(n, 'VND')
 }
 
 function periodLabel(p) {
