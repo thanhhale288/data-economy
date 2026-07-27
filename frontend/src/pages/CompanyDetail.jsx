@@ -3,6 +3,7 @@ import { useParams, Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '../api'
 import { formatMoney, formatGrouped } from '../format'
+import SampleHonestyBanner from '../SampleHonestyBanner'
 
 function formatVND(n) {
   return formatMoney(n, 'VND')
@@ -23,6 +24,53 @@ function bctcSourceKind(url) {
   return 'other'
 }
 
+function isHttpUrl(url) {
+  if (!url) return false
+  const u = String(url).toLowerCase()
+  return u.startsWith('http://') || u.startsWith('https://')
+}
+
+function latestByPeriod(rows) {
+  if (!rows?.length) return null
+  return [...rows].sort((a, b) => new Date(b.period) - new Date(a.period))[0]
+}
+
+/** Prefer CafeF HTTP source when present; otherwise newest period (may be seed). */
+function pickPreferredFinancial(rows) {
+  if (!rows?.length) return null
+  const cafefRows = rows.filter((r) => bctcSourceKind(r.source_url) === 'cafef')
+  if (cafefRows.length) return latestByPeriod(cafefRows)
+  return latestByPeriod(rows)
+}
+
+function bctcSourceDisplay(url) {
+  const kind = bctcSourceKind(url)
+  if (kind === 'cafef') {
+    return {
+      kind,
+      label: 'CafeF',
+      href: isHttpUrl(url) ? url : null,
+    }
+  }
+  if (kind === 'seed') {
+    return { kind, label: 'seed (BCTC mẫu)', href: null }
+  }
+  if (kind === 'fallback') {
+    return { kind, label: 'fallback', href: null }
+  }
+  if (kind === 'live') {
+    return {
+      kind,
+      label: 'live',
+      href: isHttpUrl(url) ? url : null,
+    }
+  }
+  if (isHttpUrl(url)) {
+    return { kind: kind || 'other', label: 'HTTP', href: url }
+  }
+  return { kind: kind || 'unknown', label: kind || 'unknown', href: null }
+}
+
 function formatWhen(iso) {
   if (!iso) return '—'
   try {
@@ -30,11 +78,6 @@ function formatWhen(iso) {
   } catch {
     return String(iso)
   }
-}
-
-function latestByPeriod(rows) {
-  if (!rows?.length) return null
-  return [...rows].sort((a, b) => new Date(b.period) - new Date(a.period))[0]
 }
 
 /** Map API data-quality notes to plain Vietnamese (no jargon, no "/"). */
@@ -120,7 +163,8 @@ export default function CompanyDetail() {
     )
   }
 
-  const latestFin = latestByPeriod(company.financial_reports)
+  const latestFin = pickPreferredFinancial(company.financial_reports)
+  const finSource = latestFin ? bctcSourceDisplay(latestFin.source_url) : null
   const latestMetric = latestByPeriod(company.digital_metrics)
   const presence = company.digital_presence || []
   const listings = company.marketplace_listings || []
@@ -141,10 +185,13 @@ export default function CompanyDetail() {
     return { channel: ch, dp, flagged }
   })
 
-  const productData = mktListings.map((ml) => ({
-    name: (ml.product_name || ml.platform || '').slice(0, 22),
-    revenue: ml.revenue_est || 0,
-  }))
+  // Null revenue must not become 0 on the chart (honesty — missing ≠ zero).
+  const productData = mktListings
+    .filter((ml) => ml.revenue_est != null)
+    .map((ml) => ({
+      name: (ml.product_name || ml.platform || '').slice(0, 22),
+      revenue: ml.revenue_est,
+    }))
 
   const qualityBadge =
     quality?.status === 'ok'
@@ -209,6 +256,8 @@ export default function CompanyDetail() {
         </div>
       </div>
 
+      <SampleHonestyBanner style={{ marginTop: 16, marginBottom: 0 }} />
+
       <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
         <h3>Câu chuyện số liệu</h3>
         <ol style={{ margin: '8px 0 0', paddingLeft: 22, lineHeight: 1.65, fontSize: 14 }}>
@@ -267,10 +316,20 @@ export default function CompanyDetail() {
           <div className="label">Doanh thu (BCTC)</div>
           <div className="value" style={{ fontSize: 20 }}>{formatVND(latestFin?.revenue)}</div>
           <div className="sub muted">{latestFin ? periodLabel(latestFin.period) : 'Chưa có BCTC'}</div>
-          {latestFin && (
+          {latestFin && finSource && (
             <div className="sub muted">
-              Nguồn: {bctcSourceKind(latestFin.source_url) || 'unknown'}
+              Nguồn:{' '}
+              {finSource.href ? (
+                <a href={finSource.href} target="_blank" rel="noreferrer">
+                  {finSource.label === 'CafeF' ? 'Xem trên CafeF' : finSource.label}
+                </a>
+              ) : (
+                finSource.label
+              )}
               {latestFin.report_type ? ` · ${latestFin.report_type}` : ''}
+              {finSource.kind === 'seed' || finSource.kind === 'fallback'
+                ? ' — chưa phải kỳ CafeF live'
+                : ''}
             </div>
           )}
         </div>
@@ -284,13 +343,19 @@ export default function CompanyDetail() {
               ? `Kỳ ${periodLabel(latestMetric.period)} · chỉ listing Shopee/TikTok/Lazada`
               : 'Chưa có digital_metrics'}
           </div>
+          <div className="sub muted">
+            Industry-ratio chưa áp — online chỉ từ listing
+          </div>
         </div>
         <div className="card">
-          <div className="label">Digital VA</div>
+          <div className="label">
+            Digital VA{' '}
+            <span className="badge badge-warning">mẫu ~28</span>
+          </div>
           <div className="value" style={{ fontSize: 20 }}>
             {formatVND(latestMetric?.digital_va_contribution)}
           </div>
-          <div className="sub muted">Công thức CONTEXT — không đổi</div>
+          <div className="sub muted">Công thức CONTEXT — không đổi · không phải VA_C GSO</div>
         </div>
         <div className="card">
           <div className="label">Đóng góp ngành (Digital VA)</div>
@@ -410,8 +475,10 @@ export default function CompanyDetail() {
             </table>
             </div>
             <p className="chart-note">
-              Badge nguồn ∈ live|seed|fallback (ADR-0002: live có thể từ cache allowlist khi HTTP 403) —
-              không phải doanh thu kiểm toán.
+              Badge nguồn ∈ live|seed|fallback. Nhãn <strong>live</strong> có thể lấy từ{' '}
+              <strong>bản cache allowlist</strong> (ADR-0002) khi sàn chặn scrape — chưa chắc
+              vừa scrape được trong lần chạy này; không phải doanh thu kiểm toán. Thiếu
+              units/revenue hiện «—», không điền 0.
             </p>
             {productData.length > 0 && (
               <ResponsiveContainer width="100%" height={220}>
@@ -423,6 +490,11 @@ export default function CompanyDetail() {
                   <Bar dataKey="revenue" fill="#367ea2" name="Revenue est." />
                 </BarChart>
               </ResponsiveContainer>
+            )}
+            {mktListings.length > 0 && productData.length === 0 && (
+              <p className="chart-note">
+                Có listing nhưng chưa có revenue_est — không vẽ cột giả = 0.
+              </p>
             )}
           </>
         )}
