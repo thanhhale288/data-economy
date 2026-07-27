@@ -136,3 +136,16 @@ export function formatCompactVnd(n) {
 export function formatCompact(n) {
   return formatMoney(n, 'VND')
 }
+
+/**
+ * Format GSO manufacturing VA (`VA_C` / `VA_C_NOMINAL`).
+ * Values in gso_macro are already **billion VND** (UNIT_MULT=9) — label as tỷ VND.
+ * Do not reuse company Digital VA money formatters without this unit.
+ */
+export function formatMacroVa(n, { maxFractionDigits = 0 } = {}) {
+  if (n == null || n === '') return '—'
+  const parts = splitSignAndAbs(n)
+  if (!parts) return '—'
+  const grouped = formatGrouped(parts.abs, { maxFractionDigits })
+  return `${parts.sign}${grouped} tỷ VND`
+}

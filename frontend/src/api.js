@@ -47,6 +47,10 @@ async function request(path, options = {}) {
 export const api = {
   getSummary: () => request('/dashboard/summary'),
   getIip: (vsic = 'C') => request(`/dashboard/iip?vsic_code=${vsic}`),
+  getVa: (indicator = 'VA_C', vsic = 'C') =>
+    request(
+      `/dashboard/va?indicator_code=${encodeURIComponent(indicator)}&vsic_code=${encodeURIComponent(vsic)}`,
+    ),
   getHeatmap: () => request('/dashboard/heatmap'),
   getOecdVsGso: () => request('/dashboard/oecd-vs-gso'),
   getCompanies: (vsic) =>

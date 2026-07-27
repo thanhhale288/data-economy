@@ -329,6 +329,17 @@ class DashboardSummary(BaseModel):
     latest_period: date | None = None
     model_metrics: dict[str, Any] = {}
     preferred_forecast_model: str | None = None
+    # Macro manufacturing VA (GSO/NSO VA_C) — not firm Digital VA.
+    va_c_latest: float | None = None
+    va_c_growth_pct: float | None = None
+    va_c_yoy_pct: float | None = None
+    va_c_period: date | None = None
+    va_c_unit: str | None = None
+    va_c_source: str | None = None
+    va_c_nominal_latest: float | None = None
+    va_c_nominal_period: date | None = None
+    va_c_nominal_unit: str | None = None
+    va_c_nominal_source: str | None = None
 
 
 class ForecastRequest(BaseModel):
