@@ -1,10 +1,10 @@
 # Handoff — Task #46 Pipeline cleaning/features VA (nợ từ #38)
 
-**Status:** DONE (uncommitted — commit/PR when user Explicit asks)  
+**Status:** DONE (shipped — PR open)  
 **Branch:** `cursor/epic3-phase2-task46-pipeline-va`  
 **Date:** 2026-07-27  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** _(pending user request)_  
+**Commit / PR:** `9492954` / https://github.com/thanhhale288/data-economy/pull/32  
 **Base:** `origin/main` @ `58896dc` (PR #31 Task #45 merged)
 
 ---
@@ -23,7 +23,7 @@
 
 - Task #43 discovery, #47 GRDP biên bản, #50 UniverseCoverageNote
 - #41 / #48 / #49 / #19b (tạm dừng)
-- Commit/push/PR (user chưa Explicit yêu cầu)
+- Commit/push/PR — done (`9492954` / PR #32)
 - VA lags/rolls; ARIMA/LSTM VA exog; đổi forecast target
 
 ---
@@ -33,7 +33,7 @@
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task46-pipeline-va` · uncommitted on `58896dc` · PR pending
+- Phase · Branch · Tip · PR: Epic 3 Phase 2 · `cursor/epic3-phase2-task46-pipeline-va` · `9492954` · [#32](https://github.com/thanhhale288/data-economy/pull/32)
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -81,7 +81,7 @@ Deliverable chính:
 ### Skipped / chưa chạy
 | Kiểm tra | Lý do | Cần task sau? |
 |----------|-------|---------------|
-| Commit/PR | User chưa Explicit yêu cầu | Khi ship |
+| Commit/PR | Shipped `9492954` / PR #32 | — |
 | Full `pytest tests/` | Scope #46 đủ AC | CI khi mở PR |
 | Live seed → clean → features smoke | Unit fixtures cover wire | Ops bootstrap khi demo |
 
