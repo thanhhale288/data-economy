@@ -451,7 +451,11 @@ function DigitalSection({ digital }) {
   if (!entries.length) return null
 
   return (
-    <div id="digital-benchmark" className="chart-container" style={{ marginBottom: 16 }}>
+    <div
+      id="digital-benchmark"
+      className="chart-container digital-benchmark"
+      style={{ marginBottom: 16 }}
+    >
       <h3>So sánh mức độ số hóa</h3>
       <p className="chart-note" style={{ marginTop: 0 }}>
         Dữ liệu kênh số của <strong className="scope-highlight">{digital.stock_code}</strong>
@@ -460,7 +464,7 @@ function DigitalSection({ digital }) {
         phân ngành đã có dữ liệu số hóa.
       </p>
       {entries.some(([key]) => digital.industry_quartiles?.[key]) && <QuartileLegend />}
-      <div className="cards">
+      <div className="cards digital-benchmark-cards">
         {entries.map(([key, label]) => {
           const value = digital.metrics[key]
           const pct = digital.percentiles?.[key]

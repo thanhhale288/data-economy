@@ -43,6 +43,17 @@ function metricOrNull(value) {
   return value == null || Number.isNaN(Number(value)) ? null : Number(value)
 }
 
+function round2(value) {
+  const n = metricOrNull(value)
+  if (n == null) return null
+  return Math.round(n * 100) / 100
+}
+
+function format2(value) {
+  const n = round2(value)
+  return n == null ? '—' : n.toFixed(2)
+}
+
 /** Latest registry row per model_name (prefer is_active, then trained_at). */
 function pickLatestModels(models) {
   const byName = new Map()
@@ -154,9 +165,9 @@ export default function MLLab() {
   const latestModels = pickLatestModels(models)
   const metricsData = latestModels
     .map((m) => {
-      const mae = metricOrNull(m.metrics?.mae)
-      const rmse = metricOrNull(m.metrics?.rmse)
-      const mape = metricOrNull(m.metrics?.mape)
+      const mae = round2(m.metrics?.mae)
+      const rmse = round2(m.metrics?.rmse)
+      const mape = round2(m.metrics?.mape)
       if (mae == null && rmse == null && mape == null) return null
       return { name: m.model_name, mae, rmse, mape, status: m.metrics?.status }
     })
@@ -261,10 +272,10 @@ export default function MLLab() {
               {m ? (
                 <>
                   <div className="value" style={{ fontSize: 16 }}>
-                    MAE: {m.metrics?.mae ?? '—'} | RMSE: {m.metrics?.rmse ?? '—'}
+                    MAE: {format2(m.metrics?.mae)} | RMSE: {format2(m.metrics?.rmse)}
                   </div>
                   <div className="sub">
-                    MAPE: {m.metrics?.mape ?? '—'}%
+                    MAPE: {format2(m.metrics?.mape)}%
                     {status ? ` · status: ${status}` : ''}
                     {!m.is_active ? ' · inactive' : ''}
                   </div>
@@ -288,8 +299,8 @@ export default function MLLab() {
             <BarChart data={metricsData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={format2} />
+              <Tooltip formatter={(value, name) => [format2(value), name]} />
               <Legend />
               <Bar dataKey="mae" fill="#367ea2" name="MAE" />
               <Bar dataKey="rmse" fill="#164654" name="RMSE" />
@@ -311,8 +322,8 @@ export default function MLLab() {
             <LineChart data={holdoutCompare}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={format2} />
+              <Tooltip formatter={(value, name) => [format2(value), name]} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="Actual IIP" dot={false} connectNulls={false} />
               {MODEL_OPTIONS.map((opt) => (
@@ -344,8 +355,8 @@ export default function MLLab() {
             <LineChart data={selectedHoldout}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={format2} />
+              <Tooltip formatter={(value, name) => [format2(value), name]} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="Actual" connectNulls={false} />
               <Line type="monotone" dataKey="predicted" stroke="#367ea2" strokeWidth={2} strokeDasharray="5 5" name="Predicted" connectNulls={false} />
@@ -369,8 +380,8 @@ export default function MLLab() {
             <LineChart data={forecastVsActual}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={format2} />
+              <Tooltip formatter={(value, name) => [format2(value), name]} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="IIP actual" connectNulls={false} dot={false} />
               <Line type="monotone" dataKey="forecast" stroke="#367ea2" strokeWidth={2} strokeDasharray="5 5" name="Forecast" connectNulls={false} dot={false} />
@@ -395,9 +406,9 @@ export default function MLLab() {
           <ResponsiveContainer width="100%" height={Math.max(280, importanceBars.length * 22)}>
             <BarChart data={importanceBars} layout="vertical" margin={{ left: 120 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
+              <XAxis type="number" tickFormatter={format2} />
               <YAxis type="category" dataKey="feature" width={110} tick={{ fontSize: 11 }} />
-              <Tooltip />
+              <Tooltip formatter={(value, name) => [format2(value), name]} />
               <Bar dataKey="gain" fill="#367ea2" name="Gain" />
             </BarChart>
           </ResponsiveContainer>
