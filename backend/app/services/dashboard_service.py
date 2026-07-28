@@ -207,6 +207,7 @@ def get_industry_heatmap(db: Session) -> list[dict]:
             func.count(Company.id).label("company_count"),
         )
         .join(subquery, Company.id == subquery.c.company_id)
+        .filter(subquery.c.va > 0)
         .group_by(Company.vsic_code)
         .all()
     )

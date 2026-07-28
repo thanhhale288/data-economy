@@ -6,6 +6,7 @@ from datetime import date
 
 import pytest
 
+from backend.app.models import Company, DigitalMetric
 from backend.app.models import ModelRegistry
 from backend.app.services import dashboard_service as svc
 
@@ -52,6 +53,33 @@ def test_heatmap_includes_labels_and_intensity(db_session, seeded_companies_va):
     assert rows[0]["intensity"] == 1.0
     assert rows[1]["intensity"] == 0.2
     assert rows[0]["company_count"] == 1
+
+
+def test_heatmap_excludes_zero_contributors_from_count(db_session, seeded_companies_va):
+    zero = Company(
+        stock_code="ZERO",
+        name="Zero VA",
+        vsic_code="2410",
+        exchange="HOSE",
+        has_ecommerce_site=False,
+    )
+    db_session.add(zero)
+    db_session.flush()
+    db_session.add(
+        DigitalMetric(
+            company_id=zero.id,
+            period=date(2024, 12, 1),
+            digital_adoption_score=0.2,
+            online_revenue_est=0.0,
+            digital_va_contribution=0.0,
+        )
+    )
+    db_session.commit()
+
+    rows = svc.get_industry_heatmap(db_session)
+    by_code = {r["vsic_code"]: r for r in rows}
+    assert by_code["2410"]["digital_va"] == 1e8
+    assert by_code["2410"]["company_count"] == 1
 
 
 def test_summary_preferred_model_by_lowest_mape(db_session, seeded_iip):

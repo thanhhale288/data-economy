@@ -759,7 +759,7 @@ export default function Dashboard() {
         )}
       </div>
 
-      <div className="chart-container">
+      <div className="chart-container" id="dashboard-heatmap">
         <h3>Heatmap giá trị gia tăng số theo VSIC (trong mẫu)</h3>
         <p className="chart-note" style={{ marginTop: 0 }}>
           Mỗi ô = tổng giá trị gia tăng số của DN cùng mã VSIC 4 số trong mẫu.

@@ -29,11 +29,11 @@ export default function Companies() {
   }, [vsicFilter, contributorsOnly])
 
   const title = useMemo(() => {
-    if (!vsicFilter) return `Doanh nghiệp niêm yết — Mẫu ${companies.length || '…'} DN`
+    if (!vsicFilter) return `Doanh nghiệp niêm yết — Mẫu ${companies.length || '…'} doanh nghiệp`
     if (contributorsOnly) {
-      return `DN đóng góp giá trị gia tăng số — VSIC ${vsicFilter} (${companies.length} DN)`
+      return `Doanh nghiệp đóng góp giá trị gia tăng số — VSIC ${vsicFilter} (${companies.length} doanh nghiệp)`
     }
-    return `Doanh nghiệp — VSIC ${vsicFilter} (${companies.length} DN)`
+    return `Doanh nghiệp — VSIC ${vsicFilter} (${companies.length} doanh nghiệp)`
   }, [vsicFilter, companies.length, contributorsOnly])
 
   if (loading) return <div className="loading">Đang tải...</div>
@@ -52,6 +52,9 @@ export default function Companies() {
       <h2 className="page-title">{title}</h2>
       {vsicFilter ? (
         <div className="page-nav-actions filter-actions" role="group" aria-label="Thao tác bộ lọc VSIC">
+          <Link to="/#dashboard-heatmap" className="page-nav-chip">
+            ← Quay lại Dashboard
+          </Link>
           <Link to="/companies" className="page-nav-chip">
             Xóa bộ lọc VSIC {vsicFilter}
             {contributorsOnly ? ' · chỉ đóng góp' : ''}
