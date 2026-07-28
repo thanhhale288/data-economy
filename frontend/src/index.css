@@ -350,7 +350,7 @@ td.num,
 
 .mini-rank li {
   display: flex;
-  align-items: baseline;
+  align-items: flex-start;
   justify-content: space-between;
   gap: 10px;
   font-size: 12px;
@@ -359,9 +359,10 @@ td.num,
 
 .mini-rank-name {
   min-width: 0;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
+  flex: 1;
+  white-space: normal;
+  overflow-wrap: anywhere;
+  line-height: 1.35;
 }
 
 .mini-rank-val {

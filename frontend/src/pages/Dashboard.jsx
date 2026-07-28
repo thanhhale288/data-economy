@@ -17,20 +17,20 @@ const KPI_TIPS = {
       'Đo mức sản xuất theo tháng của ngành chế biến, chế tạo. Đây là chỉ số công bố từ thống kê chính thức, không phải số do nền tảng tự tính.',
   },
   vaC: {
-    title: 'VA ngành CBCT (VA_C)',
-    formula: 'Nguồn: GSO/NSO SDMX · NGDPVA_R_ISIC4_C_XDC → VA_C (giá so sánh 2010)',
+    title: 'Giá trị gia tăng ngành CBCT',
+    formula: 'Nguồn: GSO/NSO SDMX · giá so sánh 2010 (VA_C)',
     blurb:
-      'Giá trị gia tăng quốc gia của VSIC Section C (chế biến, chế tạo), đơn vị tỷ VND. Khác IIP (chỉ số sản xuất) và khác Digital VA cấp doanh nghiệp trong mẫu.',
+      'Giá trị gia tăng quốc gia của ngành chế biến, chế tạo, đơn vị tỷ VND. Khác IIP (chỉ số sản xuất) và khác Digital VA cấp doanh nghiệp trong mẫu.',
   },
   digitalVa: {
-    title: 'Tổng Digital VA (mẫu DN)',
+    title: 'Tổng giá trị gia tăng số (mẫu DN)',
     formula:
       'Digital_VA = (Online_revenue × Gross_margin) + (Cost_savings × Adoption_score) − Digital_investment',
     blurb:
-      'Tổng ước lượng giá trị gia tăng kinh tế số của các doanh nghiệp trong mẫu ~28 DN niêm yết (cộng Digital VA từng DN). Không phải VA ngành GSO (VA_C), không đồng nghĩa với doanh thu hay IIP, và không đại diện toàn Section C.',
+      'Tổng ước lượng giá trị gia tăng kinh tế số của các doanh nghiệp trong mẫu ~28 DN niêm yết (cộng từng DN). Không phải giá trị gia tăng ngành GSO, không đồng nghĩa với doanh thu hay IIP, và không đại diện toàn Section C.',
   },
   adoption: {
-    title: 'Digital Adoption (trung bình)',
+    title: 'Mức độ số hóa (trung bình)',
     formula: 'Trung bình cộng điểm số hóa (0–1) của DN mẫu',
     blurb:
       'Mức độ số hóa kênh bán trung bình (mean) của DN mẫu ~28 (website, sàn TMĐT, tín hiệu giao dịch…). Dùng trong tính Digital VA và các feature dự báo — không phải chuẩn toàn ngành.',
@@ -48,16 +48,38 @@ const KPI_TIPS = {
       'Giá trị IIP mô hình dự báo cho tháng cuối trong 6 tháng tới, kèm mức thay đổi so với kỳ thực tế gần nhất. Chỉ là ước lượng từ mô hình, không phải số công bố.',
   },
   vaMix: {
-    title: 'Cơ cấu Digital VA (trong mẫu)',
-    formula: 'Digital VA từng ngành ÷ tổng Digital VA của mẫu',
+    title: 'Cơ cấu giá trị gia tăng số (trong mẫu)',
+    formula: 'GTGT số từng ngành ÷ tổng GTGT số của mẫu',
     blurb:
-      'Ngành (VSIC) đóng góp nhiều Digital VA nhất trong nhóm DN mẫu. Đây là cơ cấu nội bộ mẫu, không phải tỷ trọng trên toàn ngành chế biến, chế tạo.',
+      'Ngành (VSIC) đóng góp nhiều giá trị gia tăng số nhất trong nhóm DN mẫu. Đây là cơ cấu nội bộ mẫu, không phải tỷ trọng trên toàn ngành chế biến, chế tạo.',
   },
   coverage: {
     title: 'Độ phủ dữ liệu',
     formula: 'Số DN có Digital metrics ÷ tổng DN mẫu',
     blurb:
       'Tỷ lệ doanh nghiệp trong mẫu đã có chỉ số số hóa (Digital metrics). Độ phủ càng cao thì các số tổng hợp phía trên càng đại diện.',
+  },
+}
+
+/** Plain-language help for each IIP forecast model (hover / focus tip). */
+const MODEL_TIPS = {
+  arima: {
+    title: 'ARIMA',
+    formula: 'Nhóm thống kê — mô hình chuỗi thời gian',
+    blurb:
+      'Dự báo IIP theo chuỗi thời gian: nhìn xu hướng và chu kỳ trong quá khứ của chính chỉ số đó. Không dựa vào nhiều biến ngoài (doanh thu số, mức độ số hóa…). Phù hợp khi muốn baseline “chỉ từ lịch sử IIP”.',
+  },
+  xgboost: {
+    title: 'XGBoost',
+    formula: 'Nhóm học máy — cây quyết định tăng cường',
+    blurb:
+      'Học quan hệ từ nhiều đặc trưng (feature) — ví dụ tín hiệu số hóa, biến kinh tế — rồi dự báo IIP. Thường giải thích được feature nào quan trọng (xem trang Phòng thí nghiệm ML).',
+  },
+  lstm: {
+    title: 'LSTM',
+    formula: 'Nhóm học sâu — mạng nơ-ron',
+    blurb:
+      'Mạng nơ-ron chuyên chuỗi thời gian: nhớ pattern dài hạn trong dữ liệu lịch sử để dự báo IIP. Mạnh khi chuỗi phức tạp, nhưng khó giải thích từng bước hơn ARIMA/XGBoost.',
   },
 }
 
@@ -313,7 +335,7 @@ export default function Dashboard() {
       )}
       {summary?.va_c_latest == null && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
-          Chưa có VA ngành CBCT (<code>VA_C</code>) trong DB — chạy bootstrap / crawl GSO VA.
+          Chưa có giá trị gia tăng ngành chế biến, chế tạo trong DB — chạy bootstrap / crawl GSO VA.
           Không ước từ IIP hay Digital VA mẫu.
         </div>
       )}
@@ -324,9 +346,9 @@ export default function Dashboard() {
       )}
 
       {summary?.va_c_latest != null && (
-        <div className="metric-strip" role="region" aria-label="VA ngành CBCT">
+        <div className="metric-strip" role="region" aria-label="Giá trị gia tăng ngành CBCT">
           <div className="metric-chip">
-            <strong>VA ngành CBCT (VA_C)</strong>
+            <strong>Giá trị gia tăng (giá so sánh 2010)</strong>
             <MetricInfoTip {...KPI_TIPS.vaC} />
             <span>{formatMacroVa(summary.va_c_latest)}</span>
             <span className="muted">kỳ {vaPeriodText}</span>
@@ -339,12 +361,11 @@ export default function Dashboard() {
           </div>
           {summary.va_c_nominal_latest != null && (
             <div className="metric-chip">
-              <strong>VA_C_NOMINAL</strong>
+              <strong>Giá trị gia tăng (giá hiện hành)</strong>
               <span>{formatMacroVa(summary.va_c_nominal_latest)}</span>
               <span className="muted">
-                giá hiện hành
                 {summary.va_c_nominal_period
-                  ? ` · kỳ ${periodLabel(summary.va_c_nominal_period)}`
+                  ? `kỳ ${periodLabel(summary.va_c_nominal_period)}`
                   : ''}
               </span>
               {summary.va_c_nominal_source && (
@@ -362,7 +383,7 @@ export default function Dashboard() {
           )}
           {summary.va_c_growth_pct != null && (
             <div className="metric-chip">
-              <strong>VA MoM</strong>
+              <strong>So kỳ trước</strong>
               <span className={summary.va_c_growth_pct >= 0 ? 'up' : 'down'}>
                 {pctText(summary.va_c_growth_pct)}
               </span>
@@ -370,7 +391,7 @@ export default function Dashboard() {
           )}
           {summary.va_c_yoy_pct != null && (
             <div className="metric-chip">
-              <strong>VA YoY</strong>
+              <strong>So cùng kỳ năm trước</strong>
               <span className={summary.va_c_yoy_pct >= 0 ? 'up' : 'down'}>
                 {pctText(summary.va_c_yoy_pct)}
               </span>
@@ -409,7 +430,7 @@ export default function Dashboard() {
         </div>
         <div className="card">
           <div className="card-label-row">
-            <div className="label">Digital Adoption</div>
+            <div className="label">Mức độ số hóa</div>
             <MetricInfoTip {...KPI_TIPS.adoption} />
           </div>
           <div className="value">
@@ -424,7 +445,7 @@ export default function Dashboard() {
         </div>
         <div className="card">
           <div className="card-label-row">
-            <div className="label">Tổng Digital VA (mẫu DN)</div>
+            <div className="label">Tổng giá trị gia tăng số (mẫu DN)</div>
             <MetricInfoTip {...KPI_TIPS.digitalVa} />
           </div>
           <div className="value">{formatNumber(summary?.total_digital_va)}</div>
@@ -485,7 +506,7 @@ export default function Dashboard() {
 
         <div className="card">
           <div className="card-label-row">
-            <div className="label">Cơ cấu Digital VA</div>
+            <div className="label">Cơ cấu giá trị gia tăng số</div>
             <MetricInfoTip {...KPI_TIPS.vaMix} placement="below" />
           </div>
           {vaTop.length ? (
@@ -494,7 +515,7 @@ export default function Dashboard() {
                 {vaTopShare != null ? `${vaTopShare.toFixed(0)}%` : '—'}
               </div>
               <div className="sub">
-                ngành dẫn đầu: {vaTop[0].vsic_name || `VSIC ${vaTop[0].vsic_code}`}
+                Ngành dẫn đầu: {vaTop[0].vsic_name || `VSIC ${vaTop[0].vsic_code}`}
               </div>
               <ul className="mini-rank">
                 {vaTop.map((r) => (
@@ -512,7 +533,7 @@ export default function Dashboard() {
           ) : (
             <>
               <div className="value">—</div>
-              <div className="sub muted">Chưa có Digital VA theo ngành</div>
+              <div className="sub muted">Chưa có giá trị gia tăng số theo ngành</div>
             </>
           )}
         </div>
@@ -536,14 +557,18 @@ export default function Dashboard() {
 
       {summary?.model_metrics && Object.keys(summary.model_metrics).length > 0 && (
         <div className="metric-strip">
-          {Object.entries(summary.model_metrics).map(([name, m]) => (
-            <div className="metric-chip" key={name}>
-              <strong>{name}</strong>
-              <span>MAE {m?.mae ?? '—'}</span>
-              <span>RMSE {m?.rmse ?? '—'}</span>
-              <span>MAPE {m?.mape != null ? `${m.mape}%` : '—'}</span>
-            </div>
-          ))}
+          {Object.entries(summary.model_metrics).map(([name, m]) => {
+            const tip = MODEL_TIPS[String(name).toLowerCase()]
+            return (
+              <div className="metric-chip" key={name}>
+                <strong>{name}</strong>
+                {tip ? <MetricInfoTip {...tip} placement="below" /> : null}
+                <span>MAE {m?.mae ?? '—'}</span>
+                <span>RMSE {m?.rmse ?? '—'}</span>
+                <span>MAPE {m?.mape != null ? `${m.mape}%` : '—'}</span>
+              </div>
+            )
+          })}
         </div>
       )}
 
@@ -594,7 +619,7 @@ export default function Dashboard() {
       </div>
 
       <div className="chart-container">
-        <h3>VA ngành Section C (VA_C) — GSO/NSO</h3>
+        <h3>Giá trị gia tăng ngành chế biến, chế tạo — GSO/NSO</h3>
         <p className="chart-note" style={{ marginTop: 0 }}>
           Giá trị gia tăng quốc gia chế biến, chế tạo (tỷ VND). Không phải Digital VA mẫu DN,
           không phải IIP, không phải GRDP tỉnh×ngành.
@@ -609,7 +634,7 @@ export default function Dashboard() {
         </p>
         {vaChart.length === 0 ? (
           <div className="empty-state">
-            Chưa có chuỗi <code>VA_C</code> trong DB. Chạy bootstrap / crawl GSO VA —
+            Chưa có chuỗi giá trị gia tăng ngành trong DB. Chạy bootstrap / crawl GSO VA —
             không ước từ IIP hay Digital VA.
           </div>
         ) : (
@@ -623,9 +648,11 @@ export default function Dashboard() {
                 label={{ value: 'tỷ VND', angle: -90, position: 'insideLeft', offset: 8, style: { fontSize: 11 } }}
               />
               <Tooltip
-                formatter={(value, name) => [
+                formatter={(value, _name, item) => [
                   formatMacroVa(value),
-                  name === 'va_nominal' ? 'VA_C_NOMINAL (giá hiện hành)' : 'VA_C (giá so sánh 2010)',
+                  item?.dataKey === 'va_nominal'
+                    ? 'Giá trị gia tăng (giá hiện hành)'
+                    : 'Giá trị gia tăng (giá so sánh 2010)',
                 ]}
               />
               <Legend />
@@ -635,7 +662,7 @@ export default function Dashboard() {
                 stroke="#367ea2"
                 strokeWidth={2}
                 dot={false}
-                name="VA_C (giá so sánh 2010)"
+                name="Giá trị gia tăng (giá so sánh 2010)"
                 connectNulls={false}
               />
               {vaNominal.length > 0 && (
@@ -646,7 +673,7 @@ export default function Dashboard() {
                   strokeWidth={2}
                   strokeDasharray="6 4"
                   dot={false}
-                  name="VA_C_NOMINAL (giá hiện hành)"
+                  name="Giá trị gia tăng (giá hiện hành)"
                   connectNulls={false}
                 />
               )}

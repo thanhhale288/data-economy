@@ -306,7 +306,9 @@ flowchart LR
 - Có blueprint scale Section C (không scale bằng copy seed).
 - `docs/plan.md` Epic 3 Phase 2 checklist cập nhật khi đóng từng task; handoff `.scratch/handoff-epic3-phase2-*.md`.
 
-**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → **`#47` ✓** → **`#50` ✓** (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
+**Close audit (2026-07-28):** DoD **đạt** (ratio/GRDP theo đường deferred; live marketplace honest-blocked). Handoff: [`.scratch/handoff-epic3-phase2.md`](handoff-epic3-phase2.md). Runnable `#40` `#42` `#43` `#45` `#46` `#47` `#50` (+ `#51`) DONE. Paused `#41` `#48` `#49` `#19b`. Không invent Epic 3 Phase 3.
+
+**Thứ tự chat (cân bằng micro ↔ macro sau #39):** `#40` → **`#45` ✓** → **`#46` ✓** → **`#43` ✓** → **`#47` ✓** → **`#50` ✓** → **phase-close** (không làm cả chuỗi trong một chat; `#41`/`#48`/`#49`/`#19b` tạm dừng).
 
 **Nợ kỹ thuật đã ghi:**
 - Task #40 ✓ (website domain fix — 27/28 OK; GEE SSL còn fail có biên bản).

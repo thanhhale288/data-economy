@@ -441,9 +441,9 @@ Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **
 - [x] **Task #30 — Industry-ratio gate** — research: no CBCT revenue share → keep `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (`.scratch/epic3-task30-industry-ratio-research.md`)
 - [x] **Task #31 — Macro + refresh docs** — GRDP deferred (spike note); plan/economy-knowledge/handoff Epic 3 Phase 1
 
-#### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (DONE data/#39; FE honesty #51)
+#### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (**CLOSED** 2026-07-28)
 
-Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết kế scale (chưa đổ DN cả nước); #51 = FE honesty surface.** Design-system PR #27 đã merge `main` (2026-07-27).
+Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết kế scale (chưa đổ DN cả nước); #51 = FE honesty surface; #40/#42/#43/#45–#47/#50 = wave runnable đóng.** Design-system PR #27 đã merge `main` (2026-07-27). Phase-close: [`.scratch/handoff-epic3-phase2.md`](../.scratch/handoff-epic3-phase2.md) (tour #40–#50). **Không** có Epic 3 Phase 3 trong plan trừ khi user Explicit viết phase mới.
 
 - [x] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
 - [x] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
@@ -471,14 +471,14 @@ Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết 
 | #19b | **Tạm dừng có chủ đích** |
 | Wave | Ưu tiên mở: `#42` `#43` `#45` `#46` `#47` `#50` (tách worktree theo lane; **không** #48/#49) |
 
-#### Phase 2 — còn mở (được phép chạy)
+#### Phase 2 — wave runnable (đã đóng — không còn task mở)
 
 - [x] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — cookie `present=yes`; live HTTP vẫn anti-bot/403 (`live_ok=0` no-cache); cache-on-fail `live_ok=2`; partner spike note (no implement); không anti-bot SaaS; artifacts `.scratch/epic3-task42-cookie-ops-smoke.md` + `epic3-task42-partner-api-spike.md`
 - [x] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
 - [x] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
 - [x] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
 - [x] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **biên bản NO-GO/deferred** (chưa table ID NSO tỉnh×ngành CBCT); không crawl; **cấm** copy `VA_C` quốc gia → tỉnh; national VA #38/#45/#46 giữ nguyên — `.scratch/epic3-task47-grdp-deferred.md`
-- [x] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
+- [x] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng); PR #35 merged `main`
 
 #### Tạm dừng có chủ đích (có thể reopen khi user bảo)
 
@@ -502,7 +502,7 @@ Không mở agent cho đến khi user reopen tường minh.
 
 **Deferred (Benchmark data):** xu hướng chỉ số theo năm (ROA/ROE…) — xem bảng trên + Module 5 / Design system.
 
-**Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
+**Git caveat (cũ Phase 3–4):** nhiều tip lịch sử; `origin/main` đã nhận Epic 3 Phase 2 qua PR #17–#35 (gồm #50). Demo honesty ưu tiên `main` + seed/ops docs. Milestone/release Phase 2 chỉ khi user Explicit.
 
 ---
 

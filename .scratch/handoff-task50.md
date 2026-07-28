@@ -1,11 +1,11 @@
 # Handoff — Task #50 UniverseCoverageNote API + FE
 
-**Status:** DONE (shipped — PR open)  
+**Status:** DONE (PR #35 **merged** `main`)  
 **Branch:** `cursor/epic3-phase2-task50-universe-coverage-note`  
 **Date:** 2026-07-28  
 **Phase:** Epic 3 Phase 2  
-**Commit / PR:** `d11d701` / https://github.com/thanhhale288/data-economy/pull/35  
-**Base:** `origin/main` @ `fa3b083` (PR #34 Task #47 merged)
+**Commit / PR:** `d11d701` / https://github.com/thanhhale288/data-economy/pull/35 (merge tip `6063a36`)  
+**Base:** was `origin/main` @ `fa3b083` (PR #34); now on `main` via merge
 
 ---
 
@@ -55,7 +55,7 @@ Deliverable chính:
 - So với plan: đúng #50 only; không mở paused tasks
 
 ### Còn lại / rủi ro
-- Phase 2 **không còn open runnable task** — wave tiếp theo = **phase-close audit** (không tự mở #41/#48/#49/#19b)
+- Phase 2 runnable closed — xem [handoff-epic3-phase2.md](handoff-epic3-phase2.md)
 - Optional later: #48 khi có nguồn DN Section C → có thể đổi claim sang `universe_shallow_only` khi stub có rows
 
 ---
@@ -99,9 +99,8 @@ _(none)_
 
 ## Next
 
-**Epic 3 Phase 2 — phase-close audit** (mọi open runnable task `#42`–`#47` + `#50` đã DONE; còn lại chỉ tạm dừng có chủ đích).
-
-Base: merge #50 vào `main` (sau commit/PR) hoặc tip `cursor/epic3-phase2-task50-universe-coverage-note`.
+Phase-close audit DONE → [`.scratch/handoff-epic3-phase2.md`](handoff-epic3-phase2.md) (tour #40–#50).  
+PR #35 đã merge `main` (`6063a36`). Không tự mở #41/#48/#49/#19b.
 
 ---
 
