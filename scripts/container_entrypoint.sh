@@ -1,5 +1,5 @@
 #!/bin/sh
-# Railway / Docker boot: best-effort migrate+seed, ALWAYS start uvicorn (UI+API).
+# Container boot: best-effort migrate+seed, ALWAYS start uvicorn (UI+API).
 cd /app
 export PYTHONPATH=/app
 

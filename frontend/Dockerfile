@@ -8,7 +8,7 @@ RUN npm ci
 COPY . .
 
 # Baked in at build time (Vite).
-ARG VITE_API_URL=https://thriving-vision-production-5dbb.up.railway.app
+ARG VITE_API_URL=
 ENV VITE_API_URL=$VITE_API_URL
 
 RUN npm run build

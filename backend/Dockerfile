@@ -24,6 +24,6 @@ COPY --from=frontend-build /fe/dist ./frontend/dist
 
 ENV PYTHONPATH=/app
 
-RUN chmod +x /app/scripts/railway_entrypoint.sh
+RUN chmod +x /app/scripts/container_entrypoint.sh
 
-CMD ["/app/scripts/railway_entrypoint.sh"]
+CMD ["/app/scripts/container_entrypoint.sh"]
