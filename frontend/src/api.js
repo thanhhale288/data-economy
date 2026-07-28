@@ -53,8 +53,13 @@ export const api = {
     ),
   getHeatmap: () => request('/dashboard/heatmap'),
   getOecdVsGso: () => request('/dashboard/oecd-vs-gso'),
-  getCompanies: (vsic) =>
-    request(`/companies/${vsic ? `?vsic=${encodeURIComponent(vsic)}` : ''}`),
+  getCompanies: (vsic, contributorsOnly = false) => {
+    const params = new URLSearchParams()
+    if (vsic) params.set('vsic', vsic)
+    if (contributorsOnly) params.set('contributors', 'true')
+    const qs = params.toString()
+    return request(`/companies/${qs ? `?${qs}` : ''}`)
+  },
   getCompany: (code) => request(`/companies/${code}`),
   getPipelineJobs: () => request('/pipeline/jobs'),
   getPipelineStatus: () => request('/pipeline/status'),

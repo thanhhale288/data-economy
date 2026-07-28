@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api'
+import { formatMoney } from '../format'
 
 export default function Companies() {
   const [searchParams] = useSearchParams()
   const vsicFilter = searchParams.get('vsic') || ''
+  const contributorsOnly = searchParams.get('contributors') === '1'
   const [companies, setCompanies] = useState([])
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
@@ -13,7 +15,7 @@ export default function Companies() {
     let cancelled = false
     setLoading(true)
     setError(null)
-    api.getCompanies(vsicFilter || undefined)
+    api.getCompanies(vsicFilter || undefined, contributorsOnly)
       .then((data) => {
         if (!cancelled) setCompanies(data)
       })
@@ -24,12 +26,15 @@ export default function Companies() {
         if (!cancelled) setLoading(false)
       })
     return () => { cancelled = true }
-  }, [vsicFilter])
+  }, [vsicFilter, contributorsOnly])
 
   const title = useMemo(() => {
     if (!vsicFilter) return `Doanh nghiệp niêm yết — Mẫu ${companies.length || '…'} DN`
+    if (contributorsOnly) {
+      return `DN đóng góp giá trị gia tăng số — VSIC ${vsicFilter} (${companies.length} DN)`
+    }
     return `Doanh nghiệp — VSIC ${vsicFilter} (${companies.length} DN)`
-  }, [vsicFilter, companies.length])
+  }, [vsicFilter, companies.length, contributorsOnly])
 
   if (loading) return <div className="loading">Đang tải...</div>
 
@@ -49,6 +54,7 @@ export default function Companies() {
         <div className="page-nav-actions filter-actions" role="group" aria-label="Thao tác bộ lọc VSIC">
           <Link to="/companies" className="page-nav-chip">
             Xóa bộ lọc VSIC {vsicFilter}
+            {contributorsOnly ? ' · chỉ đóng góp' : ''}
           </Link>
           <Link
             to={`/benchmark?vsic=${vsicFilter}`}
@@ -58,10 +64,18 @@ export default function Companies() {
           </Link>
         </div>
       ) : null}
+      {contributorsOnly && (
+        <p className="chart-note" style={{ marginTop: 0 }}>
+          Chỉ hiện doanh nghiệp có giá trị gia tăng số &gt; 0 trong mã VSIC này (từ heatmap Dashboard).
+          Tỷ trọng = đóng góp DN ÷ tổng đóng góp các DN đang liệt kê.
+        </p>
+      )}
       {companies.length === 0 ? (
         <div className="empty-state">
           {vsicFilter
-            ? `Không có DN với VSIC/division «${vsicFilter}» trong mẫu — không bịa peer.`
+            ? contributorsOnly
+              ? `Không có DN có đóng góp giá trị gia tăng số với VSIC «${vsicFilter}» trong mẫu.`
+              : `Không có DN với VSIC/division «${vsicFilter}» trong mẫu — không bịa peer.`
             : 'Chưa có DN trong DB — chạy seed (`PYTHONPATH=. python -m backend.app.seed`).'}
         </div>
       ) : (
@@ -72,6 +86,8 @@ export default function Companies() {
               <th>Mã CK</th>
               <th>Tên</th>
               <th>VSIC</th>
+              {contributorsOnly && <th>Giá trị gia tăng số</th>}
+              {contributorsOnly && <th>Tỷ trọng</th>}
               <th>Website</th>
               <th>TMĐT</th>
               <th>Kênh số</th>
@@ -93,13 +109,29 @@ export default function Companies() {
                   </td>
                   <td>{c.name}</td>
                   <td>
-                    <Link to={`/companies?vsic=${String(c.vsic_code || '').slice(0, 2)}`}>
+                    <Link to={`/companies?vsic=${encodeURIComponent(c.vsic_code || '')}`}>
                       {c.vsic_code}
                     </Link>
                   </td>
+                  {contributorsOnly && (
+                    <td>
+                      {c.digital_va_contribution != null
+                        ? formatMoney(c.digital_va_contribution, 'VND')
+                        : '—'}
+                    </td>
+                  )}
+                  {contributorsOnly && (
+                    <td>
+                      {c.digital_va_share_pct != null
+                        ? `${Number(c.digital_va_share_pct).toFixed(1)}%`
+                        : '—'}
+                    </td>
+                  )}
                   <td>
                     {c.website_url ? (
-                      <a href={c.website_url} target="_blank" rel="noreferrer">Link</a>
+                      <a href={c.website_url} target="_blank" rel="noreferrer">
+                        {c.website_url.replace(/^https?:\/\//, '')}
+                      </a>
                     ) : (
                       '—'
                     )}
@@ -111,7 +143,7 @@ export default function Companies() {
                   </td>
                   <td>{channels || '—'}</td>
                   <td>
-                    <Link to={`/companies/${c.stock_code}`} className="link-action">Chi tiết →</Link>
+                    <Link to={`/companies/${c.stock_code}`}>Chi tiết →</Link>
                   </td>
                 </tr>
               )

@@ -760,10 +760,14 @@ export default function Dashboard() {
       </div>
 
       <div className="chart-container">
-        <h3>Heatmap Digital VA theo VSIC (trong mẫu)</h3>
+        <h3>Heatmap giá trị gia tăng số theo VSIC (trong mẫu)</h3>
+        <p className="chart-note" style={{ marginTop: 0 }}>
+          Mỗi ô = tổng giá trị gia tăng số của DN cùng mã VSIC 4 số trong mẫu.
+          Bấm ô để xem <strong>chỉ các DN có đóng góp &gt; 0</strong> kèm tỷ trọng.
+        </p>
         {heatmap.length === 0 ? (
           <div className="empty-state">
-            Chưa có Digital VA theo ngành trong mẫu. Chạy digital metrics / seed.
+            Chưa có giá trị gia tăng số theo ngành trong mẫu. Chạy digital metrics / seed.
           </div>
         ) : (
           <div className="heatmap-grid">
@@ -771,10 +775,11 @@ export default function Dashboard() {
               const division = cell.division || String(cell.vsic_code || '').slice(0, 2)
               const fg = heatTextColor(cell.intensity)
               const isDark = fg === '#ffffff'
+              const vsic = cell.vsic_code || division
               return (
                 <Link
                   key={cell.vsic_code}
-                  to={`/companies?vsic=${encodeURIComponent(division)}`}
+                  to={`/companies?vsic=${encodeURIComponent(vsic)}&contributors=1`}
                   className="heatmap-cell"
                   data-heat={isDark ? 'dark' : 'light'}
                   style={{
@@ -783,12 +788,12 @@ export default function Dashboard() {
                     color: 'var(--heatmap-fg)',
                     textDecoration: 'none',
                   }}
-                  title={`${cell.vsic_name || cell.vsic_code}: ${formatNumber(cell.digital_va)} — click xem DN`}
+                  title={`${cell.vsic_name || cell.vsic_code}: ${formatNumber(cell.digital_va)} — xem DN đóng góp`}
                 >
                   <div className="heatmap-code">VSIC {cell.vsic_code}</div>
                   <div className="heatmap-name">{cell.vsic_name || '—'}</div>
                   <div className="heatmap-va">{formatNumber(cell.digital_va)}</div>
-                  <div className="heatmap-meta">{cell.company_count} DN · div {division}</div>
+                  <div className="heatmap-meta">{cell.company_count} DN đóng góp · div {division}</div>
                 </Link>
               )
             })}
@@ -799,7 +804,7 @@ export default function Dashboard() {
           <div className="heatmap-legend">
             <span>Thấp</span>
             <span className="heatmap-legend-bar" />
-            <span>Cao (Digital VA)</span>
+            <span>Cao (giá trị gia tăng số)</span>
           </div>
         )}
       </div>

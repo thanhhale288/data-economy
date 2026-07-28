@@ -128,6 +128,41 @@ def test_list_includes_bmp_not_bwe(db_session, company_ral, company_bmp):
     assert "RAL" in codes
 
 
+def test_list_contributors_only_filters_and_shares(db_session, company_ral, company_bmp):
+    """Heatmap drill-down: only Digital VA > 0, with share of listed set."""
+    # BMP has no DigitalMetric → excluded when contributors_only
+    # Add a zero-VA peer on same VSIC as RAL
+    zero = Company(
+        stock_code="DQC",
+        name="Điện Quang",
+        vsic_code="2740",
+        exchange="HOSE",
+        has_ecommerce_site=False,
+    )
+    db_session.add(zero)
+    db_session.flush()
+    db_session.add(
+        DigitalMetric(
+            company_id=zero.id,
+            period=date(2024, 12, 1),
+            digital_va_contribution=0.0,
+            digital_adoption_score=0.1,
+        )
+    )
+    db_session.commit()
+
+    all_2740 = company_service.list_companies(db_session, vsic="2740")
+    assert {c.stock_code for c in all_2740} >= {"RAL", "DQC"}
+
+    contrib = company_service.list_companies(
+        db_session, vsic="2740", contributors_only=True
+    )
+    codes = [c.stock_code for c in contrib]
+    assert codes == ["RAL"]
+    assert contrib[0].digital_va_contribution == 500_000_000
+    assert contrib[0].digital_va_share_pct == 100.0
+
+
 def test_get_company_case_insensitive(db_session, company_ral):
     detail = company_service.get_company(db_session, "ral")
     assert detail is not None

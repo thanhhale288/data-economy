@@ -40,6 +40,9 @@ class CompanyOut(BaseModel):
     has_ecommerce_site: bool
     digital_channels: dict | None = None
     description: str | None = None
+    # Optional — filled when listing heatmap contributors (Digital VA > 0).
+    digital_va_contribution: float | None = None
+    digital_va_share_pct: float | None = None
 
 
 class CompanyCrawlEventOut(BaseModel):

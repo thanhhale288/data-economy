@@ -671,11 +671,18 @@ def save_gso_records(db: Session, records: list[dict[str, Any]]) -> int:
     Dedupes within the incoming batch first so duplicate keys in one fetch
     (e.g. overlapping VA expansions) do not hit UNIQUE on flush.
     """
+    def _period_key(period: Any) -> Any:
+        # Normalize datetime → date so batch keys match the DB unique constraint.
+        if isinstance(period, datetime):
+            return period.date()
+        return period
+
     # Last-wins within the batch — pending inserts are invisible to later SELECTs.
     deduped: dict[tuple[str, str, Any], dict[str, Any]] = {}
     for r in records:
-        key = (r["vsic_code"], r["indicator_code"], r["period"])
-        deduped[key] = r
+        period = _period_key(r["period"])
+        key = (r["vsic_code"], r["indicator_code"], period)
+        deduped[key] = {**r, "period": period}
 
     inserted = 0
     pending: dict[tuple[str, str, Any], GsoMacro] = {}
