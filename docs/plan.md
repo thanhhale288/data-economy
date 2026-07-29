@@ -504,6 +504,24 @@ Không mở agent cho đến khi user reopen tường minh.
 
 **Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
 
+### Epic 4 — AI / ML / DL applications (planning)
+
+**Ưu tiên sản phẩm:** chuyển trọng tâm từ mở rộng data sang **ứng dụng ML/DL/AI** trên nền đã có. Chi tiết: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml-plan.md). Branch kế hoạch: `epic4-plan`.
+
+**Vị trí pipeline (8 stage):** cuối Evaluate (06) → đầu Deploy (07). Collect/Prepare/Features/Train/Evaluate v1 đã có (ARIMA/XGBoost/LSTM + ML Lab); Monitoring/Feedback còn partial.
+
+| Phase | Mục tiêu | Trạng thái |
+|-------|----------|------------|
+| **4.0 Plan** | Inventory + roadmap P0–P3 | Đang làm (PR `epic4-plan`) |
+| **4.1 DocAI Benchmark** | Upload BCTC → OCR/table extract → prefill form (user confirm) | Chưa |
+| **4.2 Forecast & anomaly** | Anomaly Lab; LightGBM optional; drift hooks | Chưa |
+| **4.3 Marketplace NLP** | Product categorizer + shop matcher v2 | Chưa |
+| **4.4 Assist UX** | Narrative LLM cho Benchmark + Forecast | Chưa |
+
+**P0 (ý tưởng chốt):** OCR/PDF extract báo cáo tài chính → auto-fill Benchmark thay nhập tay; AI chỉ suggest, không auto-submit percentile.
+
+Epic 3 paused/deferred (#41, #48, #49, #19b, ex-#44…) **giữ nguyên** — không xóa; hạ ưu tiên khi xung đột Epic 4.
+
 ---
 
 ## Design system — đã ship & backlog FE
