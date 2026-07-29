@@ -8,6 +8,8 @@ Web platform analyzing the **digital economy of Vietnam manufacturing** (VSIC Se
 
 Before inventing formulas, industry codes, or sample companies, read **`CONTEXT.md`** and **`docs/proposal-v2.md`**.
 
+**Do not read `docs/knowledge.md`** — human glossary only (listed in `.cursorignore`). Domain for agents = `CONTEXT.md` + `docs/adr/` + `docs/economy-knowledge.md` when formulas need depth.
+
 ## Stack
 
 | Layer | Tech |
@@ -54,6 +56,8 @@ cd frontend && npm install && npm run dev
 - Do **not** change Digital VA / VDEI formulas without updating `CONTEXT.md` and preferably an ADR under `docs/adr/`.
 - Sample listed companies live in `data/seeds/companies.json` (allowlist derived from seed; Epic 2 ~25–30 with VSIC peer clusters). Expand via seed + `scripts/onboard_company.py`, not ad-hoc DB rows.
 - Prefer Vietnamese domain terms from `CONTEXT.md` when talking about economics; keep code identifiers in English.
+- Do **not** read `docs/knowledge.md` (human glossary; `.cursorignore`).
+- Do **not** bulk-read `.scratch/archive/` — open one archived handoff only if the user asks for that task.
 
 ## Agent skills
 
@@ -86,5 +90,5 @@ One chat → one task → one branch → waves → PR; handoff + review + testin
 
 ### Catch-up (“những gì tôi chưa biết”)
 
-Tour Task #13–#18 (what/how/gaps) + terms missing from `docs/knowledge.md`:  
+Tour Task #13–#18 (what/how/gaps) + terms from `CONTEXT.md` (not `knowledge.md`):  
 `.cursor/skills/what-i-dont-know/SKILL.md`.

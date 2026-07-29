@@ -142,3 +142,109 @@ Tech refs: `docs/needGit.md` (camelot, PaddleOCR, pdfplumber).
 1. Mở milestone **Epic 4** trên GitHub (optional)
 2. Chat mới: Task #52 (hoặc số tiếp theo) — spike DocAI text-PDF → `BenchmarkInput`
 3. Branch: `cursor/epic4-phase1-task52-bctc-extract-spike`
+
+## 10. Task breakdown (để theo dõi)
+
+Quy ước branch mỗi task: `cursor/epic4-phaseP-taskT-slug`
+
+**Trước mỗi task (bắt buộc):** đọc mục *Pre-flight* của task → kiểm tra import / `pip show` → cài thiếu theo `docs/needGit.md` → ghi deps mới vào `requirements.txt` (hoặc extra optional) nếu chưa có → rồi mới code. Không cài darts/scrapy/wbgapi trừ khi task ghi rõ.
+
+### Phase 4.1 — DocAI Benchmark (P0)
+
+- [ ] **Task #52 — Extract spike (text PDF first)**  
+  **Pre-flight (repo/lib):**
+  1. `python -c "import pdfplumber; print(pdfplumber.__version__)"` — phải OK (`pdfplumber` đã trong `requirements.txt`).
+  2. Nếu bảng PDF sample fail với pdfplumber: cân nhắc cài **camelot** (`pip install camelot-py[cv]`) hoặc **tabula-py** — ghi optional; chỉ khi fixture cần.
+  3. Không cài PaddleOCR ở task này.
+  **Output:** service đọc PDF text + map field cơ bản (`operating_revenue`, `profit_before_tax`, `employees`, `total_assets`, `equity`) + test fixture nhỏ.
+
+- [ ] **Task #53 — OCR path for scanned reports**  
+  **Pre-flight (repo/lib):**
+  1. Xác nhận Task #52 path text-PDF vẫn chạy.
+  2. Cài **PaddleOCR** (VN): theo `docs/needGit.md` #16 — ưu tiên extra/optional deps (nặng); `pip install paddlepaddle paddleocr` (hoặc pin version đã chọn trong task notes).
+  3. Smoke: `python -c "from paddleocr import PaddleOCR; print('ok')"`.
+  4. Giữ camelot/pdfplumber cho digital PDF; OCR chỉ fallback scan/ảnh.
+  **Output:** fallback OCR cho file scan/image, normalize số (dấu phẩy/chấm, đơn vị nghìn/triệu).
+
+- [ ] **Task #54 — API extract endpoint + response contract**  
+  **Pre-flight (repo/lib):**
+  1. Không cần lib mới — tái dùng extract service từ #52/#53.
+  2. Kiểm tra FastAPI multipart đã có (`python-multipart` nếu thiếu khi upload file).
+  3. Xác nhận deps DocAI đã pin trong `requirements.txt` / optional extras trước khi merge API.
+  **Output:** `POST /api/benchmark/extract` trả `{fields, confidence, warnings, source_type}`; không ghi DB.
+
+- [ ] **Task #55 — FE prefill + human confirm UX**  
+  **Pre-flight (repo/lib):**
+  1. Không cài repo needGit mới — chỉ FE (`frontend/`) + contract #54.
+  2. Smoke API extract local trước khi gắn upload UI.
+  **Output:** Benchmark upload file, prefill form, highlight confidence thấp, user edit trước `POST /compare`.
+
+- [ ] **Task #56 — Eval + honesty guardrails**  
+  **Pre-flight (repo/lib):**
+  1. Có thể cài **great-expectations** (`pip install great-expectations`) nếu muốn schema validate extract output — optional; pytest + golden set đủ cho MVP.
+  2. Không bắt buộc Prefect/darts.
+  **Output:** golden set metrics (field accuracy), rule `confidence<threshold => null`, warning rõ ràng.
+
+### Phase 4.2 — Forecast & anomaly
+
+- [ ] **Task #57 — Anomaly detector v1**  
+  **Pre-flight (repo/lib):**
+  1. `sklearn` + `torch` đã trong `requirements.txt` — Isolation Forest / LSTM AE không cần lib mới.
+  2. `python -c "import sklearn, torch; print('ok')"`.
+  3. Không cài darts trừ khi quyết định đổi API so sánh model (mặc định: không).
+  **Output:** pipeline + API kết quả anomaly (IIP/VA), baseline threshold, test không invent alert.
+
+- [ ] **Task #58 — ML Lab anomaly panel + model compare refresh**  
+  **Pre-flight (repo/lib):**
+  1. Wire **LightGBM** đã có deps: `python -c "import lightgbm; print(lightgbm.__version__)"`.
+  2. Nếu chưa có train path: implement trên `lightgbm` hiện có — không thêm darts (Task 16 đã bỏ).
+  3. FE: không cần package needGit mới.
+  **Output:** hiển thị anomaly timeline + compare ARIMA/XGB/LSTM/(LightGBM nếu có).
+
+### Phase 4.3 — Marketplace NLP
+
+- [ ] **Task #59 — Product categorizer seed model**  
+  **Pre-flight (repo/lib):**
+  1. Baseline: `scikit-learn` (TF-IDF + classifier) — đã có.
+  2. Nếu dùng embedding: cài **sentence-transformers** (`pip install sentence-transformers`) — needGit #10; pin version vào `requirements.txt`.
+  3. Smoke: `python -c "from sentence_transformers import SentenceTransformer"` (chỉ khi chọn path embedding).
+  **Output:** classifier tên sản phẩm -> VSIC 4-digit với labeled sample nhỏ + precision report.
+
+- [ ] **Task #60 — Shop matcher v2 (fuzzy + vector/rerank)**  
+  **Pre-flight (repo/lib):**
+  1. Giữ **RapidFuzz** (`rapidfuzz` đã có).
+  2. Bắt buộc có **sentence-transformers** (hoặc tái dùng model #59) cho hybrid fuzzy + vector.
+  3. `python -c "from rapidfuzz import fuzz; from sentence_transformers import SentenceTransformer; print('ok')"`.
+  4. Không thay bằng Scrapy / Playwright ở task này (matcher only).
+  **Output:** cải thiện precision/recall so với matcher hiện tại, thêm QA gate report.
+
+### Phase 4.4 — Assist UX
+
+- [ ] **Task #61 — Benchmark narrative assistant**  
+  **Pre-flight (repo/lib):**
+  1. Không bắt buộc repo needGit — LLM qua API (env key) hoặc template rules-first.
+  2. Optional: agency-agents ML persona chọn lọc nếu muốn hỗ trợ agent chat — không cài full roster (`docs/needGit.md` #7).
+  3. Guardrail: chỉ cite số từ `BenchmarkResult` API.
+  **Output:** giải thích percentile/ROA/ROE bằng tiếng Việt từ API numbers only.
+
+- [ ] **Task #62 — Forecast narrative assistant**  
+  **Pre-flight (repo/lib):**
+  1. Như #61 — không cần sentence-transformers/OCR mới.
+  2. Xác nhận artifact feature importance XGB (và LGBM nếu #58 đã ship) đọc được từ disk/API.
+  **Output:** tóm tắt dự báo, sai số và driver chính (feature importance), không bịa nguyên nhân.
+
+### Phase 4.5 — Monitoring & feedback loop
+
+- [ ] **Task #63 — ML monitoring contract**  
+  **Pre-flight (repo/lib):**
+  1. Optional: **great-expectations** cho validate IIP/schema trước/sau train — needGit #13.
+  2. Mặc định: schema + counters bằng SQLAlchemy/API hiện có; chỉ cài GE nếu contract cần expectation suites.
+  3. **Prefect** chưa bắt buộc — giữ `schedule` trừ khi job monitor phức tạp hơn nightly.
+  **Output:** schema theo dõi model quality/drift + dashboard counters.
+
+- [ ] **Task #64 — Feedback-to-training loop**  
+  **Pre-flight (repo/lib):**
+  1. Nếu orchestration vượt `schedule` (OCR batch + retrain + ingest feedback): cân nhắc **Prefect** (`pip install prefect`) — needGit #12.
+  2. Không cài scrapy/wbgapi/graphify cho task này.
+  3. Xác nhận không lưu raw PDF/secret trong training signal.
+  **Output:** lưu chỉnh sửa user sau prefill thành training signal (an toàn, không chứa secret docs).

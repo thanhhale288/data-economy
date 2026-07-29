@@ -1,3 +1,5 @@
+<!-- HUMAN-ONLY: listed in .cursorignore. Agents must not read this file; use CONTEXT.md + docs/adr/. -->
+
 # Knowledge — Thuật ngữ đã hỏi trong dự án
 
 File này ghi lại các keyword/thuật ngữ đã được giải thích khi hỏi về project **Kinh tế số ngành Chế biến, Chế tạo**. Giọng viết hướng tới người mới, không giả định biết trước về data/crawl.

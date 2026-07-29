@@ -1,621 +1,83 @@
 # Kế hoạch dự án: Kinh tế số ngành Chế biến, Chế tạo
 
-## 1. Nhận xét điều chỉnh proposal hiện tại
-
-Proposal gốc ([Proposal-DataEconomy-Lê Thanh Hà.docx](Proposal-DataEconomy-Lê Thanh Hà.docx)) có nền tảng tốt về kiến trúc pipeline 4 tầng (CRISP-DM) nhưng **chưa đủ cho yêu cầu thực tiễn** của cô:
-
-
-| Vấn đề trong proposal                    | Cần điều chỉnh                                                                                                                                                                                                                        |
-| ---------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Case study **bán lẻ** (VSIC Division 47) | Chuyển sang **chế biến, chế tạo** (VSIC Section C, mã 10–33)                                                                                                                                                                          |
-| Chỉ crawl macro GSO + OECD               | Thêm **micro-level**: DN niêm yết, website, sàn TMĐT                                                                                                                                                                                  |
-| Biến mục tiêu = tổng mức bán lẻ          | Biến mục tiêu = **IIP, giá trị gia tăng công nghiệp, doanh thu TMĐT DN**                                                                                                                                                              |
-| Không đo kênh bán số                     | Thêm **phát hiện website riêng, Shopee, TikTok Shop**                                                                                                                                                                                 |
-| Visualization = Apache Superset          | **Web app full-stack** (backend API + frontend dashboard)                                                                                                                                                                             |
-| Không có benchmark DN                    | Chuẩn bị module **Benchmark My Performance** (tham chiếu [SingStat BITE](https://www.singstat.gov.sg/data-tools-services/business-insights-tool-for-enterprises-bite/benchmark-my-performance/retail-trade/wearing-apparel-footwear)) |
-| File CSV 81 chỉ tiêu TMĐT bán lẻ         | **Tái cấu trúc** thành bộ chỉ tiêu VDEI cho manufacturing                                                                                                                                                                             |
-
+**Hot plan** (agent đọc file này). Bản đầy đủ lịch sử: [`docs/plan-archive.md`](plan-archive.md).  
+Domain ngắn: `CONTEXT.md` · ADR: `docs/adr/` · Epic 4 chi tiết: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml-plan.md).
 
 ---
 
-## 2. Kiến trúc hệ thống tổng thể
+## Tiến độ (cập nhật 2026-07-29)
 
-```mermaid
-flowchart TB
-    subgraph sources [Nguồn dữ liệu]
-        GSO[GSO PX-Web / SDMX]
-        OECD[OECD SDMX API]
-        Exchange[HOSE/HNX - DN niêm yết]
-        FinReport[BCTC có cấu trúc]
-        WebCrawl[Website / Shopee / TikTok]
-    end
+| Giai đoạn / Epic | Trạng thái | Ghi chú |
+| ---------------- | ---------- | ------- |
+| Phase 1–5 học kỳ | DONE (trừ #19b) | Checklist đầy đủ → archive §6 |
+| Epic 2 Product-first | DONE | #20–#24 |
+| Epic 3 Data-first Phase 1–2 | DONE | #25–#51 (trừ paused/deferred) |
+| **Epic 4 AI/ML/DL** | **Đang plan** | Branch `epic4-plan` |
 
-    subgraph pipeline [Data Pipeline]
-        Ingest[Ingestion Layer]
-        Clean[Clean & Harmonize]
-        Feature[Feature Engineering]
-        ML[ML/DL Training]
-    end
-
-    subgraph storage [PostgreSQL]
-        Raw[(raw_data)]
-        Staging[(staging)]
-        Mart[(data_mart)]
-        Model[(model_registry)]
-    end
-
-    subgraph app [Web Application]
-        API[FastAPI Backend]
-        FE[React Frontend]
-        Bench[Benchmark Module]
-    end
-
-    sources --> Ingest --> Clean --> Feature --> ML
-    Ingest --> Raw --> Staging --> Mart
-    ML --> Model
-    Mart --> API --> FE
-    API --> Bench
-```
-
-
-
-**Tech stack đề xuất** (kế thừa proposal, bổ sung web app):
-
-- **Crawl**: Playwright (GSO PX-Web), `requests` + `pandasdmx` (OECD), BeautifulSoup
-- **Pipeline orchestration**: Prefect hoặc Apache Airflow (nhẹ hơn Spark cho quy mô ~10 DN)
-- **DB**: PostgreSQL 16
-- **Backend**: FastAPI + SQLAlchemy + Alembic migrations
-- **Frontend**: React + Vite + Recharts/ECharts
-- **ML/DL**: scikit-learn, XGBoost/LightGBM, PyTorch (LSTM/GRU)
-- **Deploy**: Docker Compose (app + db + redis + worker)
+**Handoff hiện tại:** `.scratch/handoff-task51.md`  
+**Không đọc:** `docs/knowledge.md` (human glossary; `.cursorignore`).
 
 ---
 
-## 3. Mục 4 chi tiết — Cấu trúc thu thập dữ liệu
+## Modules (shipped)
 
-### 3.1. Ánh xạ ngành ISIC ↔ VSIC (thay Division 47 → Section C)
-
-
-| Mã ISIC Rev.4  | Mã VSIC 2018           | Diễn giải                                                      |
-| -------------- | ---------------------- | -------------------------------------------------------------- |
-| Section C      | Ngành cấp 1 - Mã C     | Công nghiệp chế biến, chế tạo                                  |
-| Division 10–33 | Ngành cấp 2 - Mã 10–33 | Các nhóm ngành chế biến chế tạo                                |
-| Class 4-digit  | Mã 4 chữ số            | Chi tiết (vd: 2740 = sản xuất thiết bị chiếu sáng → Rạng Đông) |
-
-
-### 3.2. Ba luồng thu thập song song
-
-#### Luồng A — Macro ngành (GSO, tự động)
-
-
-| Dataset                           | Chỉ tiêu                           | Tần suất (nguồn) | Phương pháp / trạng thái Phase 1 |
-| --------------------------------- | ---------------------------------- | ---------------- | -------------------------------- |
-| IIP (Chỉ số sản xuất công nghiệp) | IIP Section C (`AIP_ISIC4_C_IX`)   | Tháng            | **Đã làm** — SDMX `nsdp.nso.gov.vn/.../IIPVNM.xml` |
-| IIP theo ngành VSIC (cấp 2+)      | IIP từng division / class         | Tháng (nếu có)   | **Deferred** — nguồn NSO/GSO chưa ingest; cần để Dashboard «ngành nổi bật» (tăng/giảm SXCN theo ngành). Không bịa khi thiếu. |
-| Chỉ số tiêu thụ CN CBCT           | Shipment / WHOLE MANUFACTURING     | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.03.px`; step-hold → tháng khi ingest |
-| Chỉ số tồn kho CN CBCT            | Inventory as of 31/12              | **Năm** (NSO)    | **Đã làm** — PX-Web `E07.04.px`; step-hold → tháng khi ingest |
-| GRDP/GDP theo ngành               | Giá trị gia tăng công nghiệp       | Quý/Năm → step-hold tháng | **Đã làm (VA quốc gia)** — SDMX `GDPVNM.xml` `NGDPVA_R_ISIC4_C_XDC` → `VA_C`; nominal → `VA_C_NOMINAL`. **GRDP tỉnh×ngành** deferred/NO-GO (#47 biên bản; không crawl; cấm copy `VA_C` → tỉnh) |
-| Số DN, lao động, doanh thu ngành  | Thống kê doanh nghiệp công nghiệp  | Năm              | Chưa (Phase sau) |
-
-
-**GSO/NSO PX-Web & SDMX đã xác nhận (2026-07-18):**
-
-- SDMX IIP: `https://nsdp.nso.gov.vn/GSO-chung/SDMXFiles/GSO/IIPVNM.xml` (host cũ `nsdp.gso.gov.vn` chết)
-- PX-Web API: `https://pxweb.nso.gov.vn/api/v1/en/Industry/`
-  - `E07.03.px` — shipment / chỉ số tiêu thụ CBCT
-  - `E07.04.px` — inventory / chỉ số tồn kho 31/12
-- Host cũ `*.gso.gov.vn` (industry pages, px-web) → **404 / timeout**; dùng `*.nso.gov.vn`
-#### Luồng B — Micro doanh nghiệp niêm yết (~10 DN mẫu)
-
-**Danh sách DN mẫu đề xuất** (đại diện đa ngành con):
-
-
-| Mã CK | Tên                   | VSIC                       | Lý do chọn            |
-| ----- | --------------------- | -------------------------- | --------------------- |
-| RAL   | Rạng Đông             | 2740 (thiết bị chiếu sáng) | Ví dụ cô nêu, có TMĐT |
-| HPG   | Hòa Phát              | 2410 (sắt thép)            | DN lớn, có website    |
-| VNM   | Vinamilk              | 1050 (sữa)                 | Bán online mạnh       |
-| FPT   | FPT (electronics mfg) | 2620                       | Chuyển đổi số cao     |
-| GVR   | Cao su Việt Nam       | 2211                       | Ngành truyền thống    |
-| DGC   | Đức Giang Chemicals   | 2011                       | Hóa chất              |
-| MSN   | Masan                 | 1071 (thực phẩm)           | Đa kênh bán           |
-| PNJ   | PNJ                   | 3211 (trang sức)           | Bán lẻ + TMĐT         |
-| REE   | REE Electric          | 2710                       | Thiết bị điện         |
-| BMP   | Bình Minh Plastics    | 2220                       | Nhựa                  |
-
-
-**Dữ liệu crawl từng DN:**
-
-
-| Nhóm                    | Trường dữ liệu                                  | Nguồn                         | Tự động?                  |
-| ----------------------- | ----------------------------------------------- | ----------------------------- | ------------------------- |
-| Thông tin cơ bản        | Tên, mã CK, VSIC, website chính thức            | HOSE/HNX API, Vietstock       | Có                        |
-| BCTC có cấu trúc        | Doanh thu, LNST, tài sản, vốn CSH, chi phí      | BCTC niêm yết (PDF/XBRL)      | Bán tự động (PDF extract) |
-| Hiện diện số            | Có website bán hàng? URL, có giỏ hàng/checkout? | HTTP crawl + rule-based       | Có                        |
-| Sàn TMĐT                | Có shop Shopee/TikTok/Lazada? URL shop          | Search API + scrape shop page | Có (ML hỗ trợ match)      |
-| Ước lượng bán online    | Số lượng đã bán, rating, giá TB                 | Scrape listing sản phẩm       | Có (ước lượng)            |
-| Doanh thu TMĐT (nếu có) | Tỷ trọng online trong BCTC/AR                   | BCTC thường niên              | Bán tự động               |
-
-
-#### Luồng C — Quốc tế (OECD, tự động)
-
-
-| Dataset OECD                      | Vai trò                | Mapping / trạng thái Phase 1 |
-| --------------------------------- | ---------------------- | ---------------------------- |
-| MEI — Industrial Production Index | Leading indicator      | **Không có cho VNM**; dùng peer **EA20** (`source=OECD_PEER`) cho forecast lags |
-| INDIGO (Digital trade openness)   | Leading indicator      | **Đã làm** — series năm VNM; step-hold → tháng |
-| ICT Investment by industry        | Digital adoption proxy | Unavailable cho VNM (không bịa) |
-| Business Confidence Index         | Leading indicator      | Unavailable cho VNM (không bịa) |
-
-
-**Đồng bộ tần suất**: quý→tháng (linear); năm→tháng (**step-hold**, không nội suy tuyến tính). Chi tiết: `docs/adr/0001-oecd-vietnam-macro-policy.md`.
-### 3.3. Bộ chỉ tiêu VDEI cho Manufacturing (tái cấu trúc từ CSV)
-
-Chuyển 10 pillar trong [File hướng dẫn crawl data - đề tài chỉ số kinh tế số - Trang tính1.csv](File hướng dẫn crawl data - đề tài chỉ số kinh tế số - Trang tính1.csv) sang ngữ cảnh chế biến chế tạo:
-
-
-| Pillar | Tên mới (Manufacturing) | Chỉ tiêu cốt lõi (Tier 1)                                                |
-| ------ | ----------------------- | ------------------------------------------------------------------------ |
-| M1     | Quy mô & hiệu quả SXCN  | IIP Section C, giá trị gia tăng công nghiệp, tốc độ tăng GRDP ngành      |
-| M2     | Chuyển đổi số DN        | % DN có website, % DN bán trên sàn, % DN dùng ERP/IoT                    |
-| M3     | Doanh thu TMĐT ngành SX | Doanh thu online ước tính / tổng doanh thu ngành                         |
-| M4     | Kênh bán số             | Tỷ trọng website riêng vs marketplace vs social commerce                 |
-| M5     | Hiệu quả số hóa         | Doanh thu/lao động, digital revenue per worker                           |
-| M6     | Đóng góp KTS            | Digital value-added = f(doanh thu TMĐT, chi phí số, productivity uplift) |
-| M7     | Hạ tầng & logistics số  | % DN dùng logistics TMĐT, thời gian giao hàng                            |
-| M8     | Thanh toán số B2B/B2C   | % giao dịch qua cổng thanh toán online                                   |
-| M9     | Xuất khẩu số            | % đơn hàng qua kênh online quốc tế                                       |
-| M10    | Năng lực cạnh tranh số  | So sánh percentile với ngành (benchmark module)                          |
-
-
-**Công thức ước lượng giá trị gia tăng kinh tế số (DN level):**
-
-```
-Digital_VA_estimate = 
-  (Estimated_online_revenue × Digital_margin_proxy) 
-  + (Cost_savings_from_digital × Adoption_score)
-  - Digital_investment_amortized
-
-Trong đó:
-- Estimated_online_revenue = Σ(unit_price × units_sold) từ scrape Shopee/TikTok
-  HOẶC nội suy từ tỷ lệ TMĐT/ngành × doanh thu DN (nếu không scrape được)
-- Digital_margin_proxy = lấy từ BCTC (gross margin) hoặc ngành benchmark
-- Adoption_score = weighted(C01 website + C06 marketplace + C05 social)
-```
-
-### 3.4. Schema database chính
-
-```mermaid
-erDiagram
-    companies ||--o{ financial_reports : has
-    companies ||--o{ digital_presence : has
-    companies ||--o{ marketplace_listings : has
-    companies ||--o{ digital_metrics : has
-    vsic_codes ||--o{ companies : classifies
-    gso_macro ||--o{ vsic_codes : belongs_to
-    oecd_indicators ||--o{ vsic_codes : maps_to
-    model_predictions ||--o{ gso_macro : forecasts
-
-    companies {
-        int id PK
-        string stock_code
-        string name
-        string vsic_code FK
-        string website_url
-        bool has_ecommerce_site
-        json digital_channels
-    }
-    digital_presence {
-        int id PK
-        int company_id FK
-        string channel_type
-        string url
-        bool is_active
-        datetime crawled_at
-    }
-    marketplace_listings {
-        int id PK
-        int company_id FK
-        string platform
-        string product_name
-        float price
-        int units_sold_est
-        float revenue_est
-    }
-    digital_metrics {
-        int id PK
-        int company_id FK
-        date period
-        float online_revenue_est
-        float digital_va_contribution
-        float industry_share_pct
-    }
-    gso_macro {
-        int id PK
-        string vsic_code
-        string indicator_code
-        date period
-        float value
-        string unit
-    }
-```
-
-
+| Module | Status |
+|--------|--------|
+| 1 Dashboard | IIP + forecast + VA_C + honesty banner (#51) |
+| 2 Company detail | Profile, kênh số, peers, narrative |
+| 3 Pipeline monitor | Jobs + source_health |
+| 4 ML Lab | ARIMA / XGB / LSTM compare |
+| 5 Benchmark | BITE-style; warnings VI (#51) |
 
 ---
 
-## 4. Pipeline xử lý & ML/DL
+## Epic 3 — còn mở / deferred
 
-### 4.1. Clean data (3 kịch bản từ proposal + bổ sung)
-
-1. **Missing values**: median (gap ngắn), linear interpolation (gap dài) — giữ từ proposal
-2. **Outlier detection**: IQR/Z-score cho scrape marketplace (giá/số lượng bất thường)
-3. **Entity resolution**: ML classifier (TF-IDF + cosine similarity) match tên shop Shopee ↔ tên DN niêm yết
-4. **VSIC mapping**: bảng ánh xạ 1:1 ISIC Section C ↔ VSIC 10–33
-
-**Lưu bản sạch (quyết định 2026-07-19):**
-
-| Giai đoạn | Cách lưu | Ghi chú |
-| --------- | -------- | ------- |
-| **Phase 3** (clean → features → ML) | Artifact **Parquet** dưới `data/processed/` (`cleaned_macro.parquet`, `cleaned_marketplace.parquet`, `cleaning_report.json`, `features.parquet`) | **Không** ghi đè cột raw `gso_macro` / `oecd_indicators` / listings — giữ provenance nguồn |
-| **Phase 4** Module 3–4 (Pipeline monitor, ML Lab / API) | Có thể thêm bảng **staging** trong PostgreSQL *song song* với parquet | Khi API/FE cần query series sạch ổn định; không bắt buộc nếu backend đọc parquet đủ dùng |
-| Không dùng | Overwrite một cột raw bằng giá trị đã clean | Mất số liệu nguồn / làm mờ `source` (trái AGENTS + ADR-0001) |
-
-Job scheduler: `data_cleaning` chạy sau `digital_metrics`, trước `feature_engineering`. Feature load ưu tiên artifact clean (non-empty + có `iip`); fallback DB + `clean_timeseries` khi chưa chạy clean.
-
-### 4.2. Feature engineering
-
-
-| Nhóm feature | Biến                                      | Mục đích                          |
-| ------------ | ----------------------------------------- | --------------------------------- |
-| Lag (macro)  | CCI_lag1q, INDIGO_lag1q, IIP_lag2m        | Truyền dẫn kinh tế quốc tế → SXCN |
-| Rolling      | IIP_roll3m, IIP_roll6m                    | Xu hướng trung hạn                |
-| Digital      | digital_adoption_score, channel_diversity | Mức số hóa DN                     |
-| Cross        | online_revenue_ratio × IIP_growth         | Tương tác KTS-SXCN                |
-| Financial    | ROA, ROE, current_ratio (từ BCTC)         | Input benchmark                   |
-
-
-### 4.3. Mô hình huấn luyện (3 tầng như proposal)
-
-
-| Tier        | Model            | Target variable               | Input                          |
-| ----------- | ---------------- | ----------------------------- | ------------------------------ |
-| Statistical | ARIMA/SARIMAX    | IIP Section C (tháng)         | IIP history + OECD lags        |
-| ML          | XGBoost/LightGBM | IIP + digital_va_growth       | Tabular features               |
-| DL          | LSTM/GRU         | Multi-step forecast 3–6 tháng | Sequence IIP + digital metrics |
-
-
-**Đánh giá**: MAE, RMSE, MAPE — walk-forward validation (train 2018–2023, test 2024–2025).
-
-**ML bổ sung cho crawl**:
-
-- **Shop matcher**: Binary classifier xác nhận shop Shopee/TikTok thuộc DN (precision > 90%)
-- **Product categorizer**: Phân loại sản phẩm theo VSIC 4-digit từ tên SP
-- **Trend detector**: Time series anomaly detection (Isolation Forest / LSTM autoencoder) trên IIP
+| Việc | Trạng thái | Unblock |
+|------|------------|---------|
+| #19b Proposal Mục 4 | Paused | Khi viết proposal |
+| #41 Enricher BCTC mở rộng | Paused | Sau DocAI Epic 4 nếu cần |
+| #48 / #49 | Paused | Xem archive / phase2 plan |
+| Crawl GRDP tỉnh×ngành | Deferred NO-GO | Table ID NSO; **cấm** copy `VA_C` quốc gia → tỉnh |
+| IIP theo ngành VSIC | Chưa | Có chuỗi IIP ngành |
+| Benchmark xu hướng theo năm | Chưa | ≥2 kỳ BCTC đủ field |
 
 ---
 
-## 5. Web application — các module
+## Epic 4 — AI / ML / DL (ưu tiên hiện tại)
 
-### Module 1: Dashboard tổng quan ngành
+Chi tiết task: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml-plan.md).
 
-- Biểu đồ IIP, giá trị gia tăng, xu hướng dự báo
-- Heatmap đóng góp KTS theo nhóm ngành VSIC
-- So sánh OECD leading indicators vs GSO lagging
-- KPI phụ (design-system PR #27): tăng trưởng IIP (MoM/YoY + sparkline), dự báo 6 tháng (điểm + Δ), cơ cấu Digital VA trong mẫu, độ phủ Digital metrics
-- **Done FE — Task #51:** banner/badge honesty — Digital VA / số hóa = mẫu ~28, không phải toàn Section C (ADR-0003)
-- **Deferred — KPI/chart `VA_C` đầy đủ:** ~~data NSO đã vào `gso_macro` (#38); UI chuẩn = Task #45~~ → **DONE #45**
-- **Deferred — «Ngành nổi bật» theo tăng trưởng IIP từng VSIC:** cần chuỗi IIP theo ngành (ít nhất VSIC 2 chữ số). Hiện chỉ có `IIP_C` Section C tổng (`vsic_code=C`); không xếp hạng tăng/giảm theo ngành khi thiếu dữ liệu. Làm sau khi crawl/seed GSO có IIP theo ngành (xem Luồng A).
+| Phase | Mục tiêu | Status |
+|-------|----------|--------|
+| **4.0 Plan** | Inventory + roadmap P0–P3 | Đang làm |
+| **4.1 DocAI Benchmark** | Upload BCTC → OCR/table → prefill (user confirm) | Chưa |
+| **4.2 Forecast & anomaly** | Anomaly Lab; LightGBM optional; drift | Chưa |
+| **4.3 Marketplace NLP** | Categorizer + shop matcher v2 | Chưa |
+| **4.4 Assist UX** | Narrative LLM Benchmark + Forecast | Chưa |
 
-### Module 2: Doanh nghiệp (~10 DN mẫu)
+**P0 ý tưởng:** OCR/PDF BCTC → suggest fill Benchmark; AI không auto-submit percentile.
 
-- Profile từng DN: kênh bán số (website/Shopee/TikTok), ước lượng doanh thu online
-- Ví dụ **Rạng Đông**: website `rangdong.com.vn`, shop Shopee, đóng góp vào ngành 2740
-- Timeline crawl history + data quality score
-
-### Module 3: Pipeline monitor
-
-- Trạng thái job crawl (GSO, marketplace, OECD) + job `data_cleaning`
-- Log lỗi, lần crawl cuối, số record mới; tóm tắt quality report (NaN sửa, outlier, VSIC fail)
-- **Tuỳ chọn Phase 4:** đọc/ghi staging Postgres cho bản sạch nếu cần monitor SQL; mặc định Phase 3 dùng parquet + `pipeline_jobs.detail`
-
-### Module 4: ML Lab
-
-- So sánh 3 model (ARIMA vs XGBoost vs LSTM)
-- Biểu đồ forecast vs actual
-- Feature importance
-- Input features/forecast từ artifact Phase 3; staging chỉ thêm nếu API Lab cần query DB thay vì file
-
-### Module 5: Benchmark (Phase 4 Task #18 — tham chiếu SingStat BITE)
-
-- Form nhập: Doanh thu, LN trước thuế, số NV, chi phí (hàng hóa, thuê, lương) + cân đối kế toán
-- Output: ROA, ROE, Current Ratio, Equity Ratio (+ revenue/profit per worker) + **percentile so với peer cùng VSIC 2-digit** từ BCTC seed
-- Đã ship (PR #27): biên LN, vòng quay tài sản, nợ/VCSH; P25–trung vị–P75 (≥4 peer) + nhãn «Bạn»; câu tổng kết + radar; so sánh số hóa khi có `stock_code`
-- API `warnings`: `insufficient_peers` | `prototype_listed_sample` | `small_peer_sample` — **Task #51** FE hiện đủ warning bằng tiếng Việt
-- Nội suy GSO khi thiếu BCTC → deferred (không invent industry ratio)
-- **Deferred — xu hướng theo năm (mục 4):** chọn năm / vẽ ROA·ROE (và chỉ số chính) 2–3 năm khi BCTC CafeF có nhiều kỳ đủ field — xem mục **Design system**; không invent chuỗi năm.
+Epic 3 paused/deferred **giữ nguyên** — hạ ưu tiên khi xung đột Epic 4.
 
 ---
 
-## 6. Lộ trình triển khai (~18 tuần / 1 học kỳ)
+## Design system FE
 
-### Tiến độ thực tế (cập nhật 2026-07-20)
+**Đã merge:** PR #27 — palette, sidebar, mobile, Benchmark UX.
 
-| Giai đoạn | Trạng thái | Ghi chú |
-| --------- | ---------- | ------- |
-| **1 — Nền tảng & Macro** | **Hoàn thành** | Đã merge `main` (PR #1, `410f373`) |
-| **2 — Enterprise crawl & Digital** | **Hoàn thành (demo)** | Đã merge `main` (PR #2). Caveat bên dưới |
-| **3 — Clean, Features & ML** | **Hoàn thành (chờ merge)** | Branch `cursor/phase3-clean-features-ml`; tip `#12` `9aed9c0`; **PR #5** → `main` |
-| **4 — Web hoàn thiện** | **Hoàn thành (chờ merge)** | Task #13–#18 DONE trên nhánh Phase 4; #18 Benchmark Module 5 |
-| 5 — Báo cáo & Demo | Đang làm | Demo ops #19a DONE; còn proposal Mục 4 (#19b) |
+**Không làm lại:** layout/nav, format tiền, KPI strip + MetricInfoTip, radar/quartile (honesty badge = #51).
 
-**Phase 2 — phạm vi chấp nhận cho demo (2026-07-19):**
-
-- 10 DN mẫu: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, **BMP** (Nhựa Bình Minh; thay slot BWE/Biwase).
-- Company enrich + website detector + shop-matcher (fuzzy ≥ 0.65) + digital metrics (Digital VA đúng CONTEXT).
-- **BCTC live:** CafeF HTML quý (`s.cafef.vn/{TICKER}/bao-cao-tai-chinh.chn`); HOSE/PDF năm → làm sau.
-- **Marketplace live (Shopee/TikTok):** tạm hoãn (anti-bot); pipeline + seed/fallback sẵn; discovery shop mới → sau.
-- Industry-ratio online khi không listing → sau (hiện để 0 + log, không bịa).
-
-**Git:** Phase 1 + Phase 2 trên `origin/main` (PR #1, PR #2). Phase 3: `cursor/phase3-clean-features-ml` → PR #5 (OPEN). Phase 4: Task #13–#17 PR #6–#10; Task #18 `cursor/phase4-task18-benchmark` (base tip Task #17).
-
-**Phase 3 — phạm vi chấp nhận (2026-07-20):**
-
-- Persistence = **parquet** dưới `data/processed/` (không overwrite raw); staging Postgres → Module 3–4 nếu cần.
-- #10–#12 DONE trên PR #5 (clean / features / ML thật + `/api/ml/*`).
-- Thin OK: `mei_ip` có thể `series_missing` — Dashboard hiện thiếu rõ, không bịa.
-
-### Giai đoạn 1: Nền tảng & Macro data (Tuần 1–5) — DONE
-
-Checklist nghiệm thu (đã kiểm chứng bằng code + live HTTP + pytest):
-
-- [x] Scaffold: Docker Compose (Postgres 16 + Redis), FastAPI, React/Vite shell
-- [x] VSIC/ISIC Section C: level-1 `C`, divisions **10–33**, class 4-digit cho 10 DN
-- [x] Seed 10 DN cố định: RAL, HPG, VNM, FPT, GVR, DGC, MSN, PNJ, REE, BMP (idempotent; schema từ Alembic)
-- [x] Alembic: `48406b8f82a5` initial schema + `b7c2e1a94d10` cột `oecd_indicators.source`
-- [x] GSO/NSO crawler:
-  - IIP_C tháng từ SDMX `nsdp.nso.gov.vn`
-  - VA_C + VA_C_NOMINAL từ SDMX `GDPVNM.xml` (quý ưu tiên → step-hold tháng); GRDP tỉnh×ngành deferred/NO-GO (#47 biên bản)
-  - SHIPMENT_C + INVENTORY_C từ PX-Web `E07.03` / `E07.04` (năm → step-hold tháng)
-  - Fallback sourced dưới `data/raw/` (không random)
-- [x] OECD SDMX (`sdmx.oecd.org`): INDIGO@VNM; MEI_IP@EA20 peer; MEI/BCI/ICT@VNM = unavailable rõ ràng
-- [x] Tests crawler: `tests/gso` + `tests/oecd` (33 passed tại thời điểm đóng Phase 1)
-- [x] Domain docs: `AGENTS.md`, `CONTEXT.md`, ADR-0001
-
-### Giai đoạn 2: Enterprise crawl & Digital detection (Tuần 6–10) — DONE (demo)
-
-Checklist nghiệm thu (code + pytest; live CafeF đã smoke 10 ticker):
-
-- [x] Crawl/enrich 10 DN niêm yết + metadata + website `digital_presence`
-- [x] Website detector (checkout/giỏ hàng), fail HTTP không đoán
-- [x] Marketplace scaffold (Shopee/TikTok parse + rate-limit + fallback) — **live scrape tạm hoãn**
-- [x] BCTC có cấu trúc: **CafeF quý** (HTML adapter); PDF/HOSE năm → sau
-- [x] Shop-matcher fuzzy threshold 0.65 + QA; (TF-IDF/classifier đầy đủ → sau nếu cần)
-- [x] Digital metrics per company (Digital VA đúng CONTEXT; online từ listing hoặc 0)
-- [x] Ticker mẫu: … REE, **BMP**
-
-### Giai đoạn 3: Clean, Features & ML (Tuần 11–14) — DONE (PR #5)
-
-- [x] **Task #10 — Cleaning pipeline** (parquet artifacts; không overwrite raw; job `data_cleaning`)
-- [x] **Task #11 — Feature engineering** (lag/rolling/digital/financial/cross; broadcast/step-hold + provenance; không MEI_BCI giả; `features.parquet` + `features_manifest.json`; tests `tests/features`)
-- [x] **Task #12 — ML models** — ARIMA/SARIMAX (statsmodels), XGBoost (+ importance), LSTM multi-step; MAE/RMSE/MAPE; time-based split; model registry + `/api/ml/*`; `tests/ml`
-
-### Giai đoạn 4: Web hoàn thiện & Demo (Tuần 15–17)
-
-- [x] **Task #13 — Dashboard ngành (Module 1)** — IIP + forecast từ ML API, summary/Digital VA, heatmap VSIC, OECD peer vs GSO (thiếu → hiện rõ, không bịa); `tests/dashboard`
-- [x] **Task #14 — Company detail (Module 2)** — profile DN, kênh bán số, ước lượng online; case study Rạng Đông (RAL); crawl timeline + data-quality score; `tests/companies/test_company_detail.py`
-- [x] **Task #15 — Pipeline monitor (Module 3)** — trạng thái job crawl + `data_cleaning`, log lỗi, lần chạy cuối, tóm tắt quality report; staging Postgres optional (§4.1); `tests/pipeline/test_pipeline_monitor.py`
-- [x] **Task #16 — ML Lab (Module 4)** — so sánh 3 model, forecast vs actual, feature importance (artifact #12); không retrain UI bắt buộc; `tests/ml/test_ml_lab_service.py` + `test_ml_api.py`
-- [x] **Task #17 — Integration testing E2E** — crawl → clean → features → ML → API → FE (`tests/e2e/`; offline fixtures + sourced fallback; honest skip/404)
-- [x] **Task #18 — Benchmark Module 5** — form (DT/LN/NV/chi phí + BS) → ROA/ROE/Current/Equity (+ worker) + percentile VSIC division từ BCTC seed; thiếu peer → null + `insufficient_peers` (không bịa 50th); `tests/benchmark`
-
-### Giai đoạn 5: Báo cáo & Demo (Tuần 18)
-
-- [x] **Task #19a — Demo ops polish** — `make bootstrap` (metrics→clean→features→train), README/ops, FE empty-state gaps, `scripts/smoke_demo.sh` (branch `cursor/phase5-task19-demo-ops`)
-- **#19b — Proposal Mục 4** — *tạm dừng có chủ đích* (2026-07-27); xem mục «Tạm dừng có chủ đích» dưới Epic 3 Phase 2. Không mở agent cho đến khi user reopen.
-- [ ] Demo presentation (slides) nếu còn thiếu sau docs
-
-### Epic 2 — Product-first (sau demo học kỳ)
-
-Ưu tiên UX + ops + mẫu vừa phải (~25–30 DN, peer clustering). Ngoài phạm vi: marketplace live, M7–M9, industry-ratio không nguồn. Rebase trên `main` sau merge Benchmark BITE FE.
-
-- [x] **Task #20 — Sample expand** — seed ~28 DN; VSIC peer ≥3 trên division 10/20/22/24/27; allowlist = seed JSON
-- [x] **Task #21 — Onboarding** — `scripts/onboard_company.py` + checklist trong `docs/ops-demo.md`
-- [x] **Task #22 — Source health** — `pipeline/status.source_health` + batch `tickers` cho companies crawl
-- [x] **Task #23 — Drill-down** — heatmap → `/companies?vsic=`; company peers + benchmark deep-link
-- [x] **Task #24 — Narrative + Benchmark UX** — CompanyDetail narrative; Benchmark `?vsic=` + peer-count (giữ BITE SingStat UI)
-
-### Epic 3 — Data-first (hoàn thiện data)
-
-Trên mẫu ~28 sau Epic 2. Ngoài phạm vi cả Epic 3: M7–M9, redesign FE lớn, Prefect full, invent GRDP/GMV. Chi tiết Phase 2: [`.scratch/epic3-phase2-plan.md`](../.scratch/epic3-phase2-plan.md). Handoff Phase 1: [`.scratch/handoff-epic3-phase1-data.md`](../.scratch/handoff-epic3-phase1-data.md).
-
-#### Phase 1 — Honesty & plumbing (DONE)
-
-Seed/fallback đủ 28, provenance listing, Playwright hook, gate ratio/GRDP. **Seed annual vẫn có thể là demo** nếu CafeF live chưa chạy thành công.
-
-- [x] **Task #25 — BCTC parity** — fallback/seed cover full allowlist 28; BMP nulls giữ nguyên; docstring/PROVENANCE cập nhật
-- [x] **Task #26 — Digital presence honesty** — MSN tiktok flag cleared; DQC Shopee URL; channel flag ⇒ DP URL
-- [x] **Task #27 — Marketplace provenance + seed depth** — `marketplace_listings.source`; fallback 28 tickers; pipeline source_health marketplace
-- [x] **Task #28 — Marketplace live Playwright** — httpx rồi Playwright follow-up; block→seed contract; tests mock PW
-- [x] **Task #29 — Shop matcher expand** — brand aliases DQC (+ peers); precision tests
-- [x] **Task #30 — Industry-ratio gate** — research: no CBCT revenue share → keep `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (`.scratch/epic3-task30-industry-ratio-research.md`)
-- [x] **Task #31 — Macro + refresh docs** — GRDP deferred (spike note); plan/economy-knowledge/handoff Epic 3 Phase 1
-
-#### Phase 2 — Số thật, QA hàng loạt, live strategy, scale path (DONE data/#39; FE honesty #51)
-
-Một dòng: **#32–#38 = số thật + honesty trên mẫu ~28; #39 = thiết kế scale (chưa đổ DN cả nước); #51 = FE honesty surface.** Design-system PR #27 đã merge `main` (2026-07-27).
-
-- [x] **Task #32 — CafeF live BCTC** — smoke + enrich thật allowlist; `source_url` CafeF; thiếu field = null (không lấp seed)
-- [x] **Task #33 — Batch website + URL audit** — report 28 DN; sửa mismatch flag/URL; chỗ xem URL documented
-- [x] **Task #34 — Listing depth** — curated DQC (price, units null) + live smoke report; không bịa GMV peer B2B; docs mẫu niêm yết vs TMĐT
-- [x] **Task #35 — Marketplace live strategy** — ADR-0002 allowlist+cache+badge; optional session cookie ops-only; reject anti-bot SaaS; demo path `data/raw/marketplace_live_cache/` (RAL/VNM)
-- [x] **Task #36 — Matcher gate** — alias theo URL mới; discovery tắt mặc định
-- [x] **Task #37 — Industry-ratio re-gate** — NO-GO: vẫn `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None`; không wire % KT số/GDP (biên bản cập nhật `.scratch/epic3-task30-industry-ratio-research.md`)
-- [x] **Task #38 — GRDP/VA re-gate** — national manufacturing VA from `GDPVNM.xml` (`VA_C` / `VA_C_NOMINAL`); province GRDP still deferred
-- [x] **Task #39 — Scale architecture Section C** — vũ trụ DN vs mẫu sâu vs macro; ADR-0003 + stub `company_universe` (rows=`[]`); **không** crawl toàn quốc / invent BCTC
-- [x] **Task #51 — FE Epic 3 honesty surface (P0)** — banner/badge mẫu ~28; Benchmark mọi `warnings` VI; listing chart null≠0; CafeF `source_url` clickable; marketplace live-cache note; BCTC không gợi CafeF khi kỳ seed. Không redesign KPI/radar/format tiền.
-- [x] **Task #40 — Sửa domain website seed (nợ từ audit #33)** — 8/9 URL đổi + verify OK (`website_ok` 19→27/28); GEE giữ `gelex-electric.com` SSL fail hợp lệ + checkout `unknown`; không tắt SSL verify (biên bản: `.scratch/epic3-task40-website-domain-fix.md`)
-
-**Quyết định người dùng (2026-07-27)** — chốt trước khi mở agent song song:
-
-| # | Quyết định |
-|---|------------|
-| #44 | Không có citation → **không còn là task**; đưa vào «Chưa làm được…» dưới đây |
-| #48 | **A — tạm hoãn** — chưa có nguồn DN Section C để ingest; không mở agent |
-| #47 | Chưa có table ID NSO → task chỉ viết **biên bản NO-GO / deferred**; **không crawl** |
-| #46 | **Wire** `VA_C` vào cleaned/features; không đổi target forecast im lặng |
-| #42 | Cookie đã có trong env (`SHOPEE_SESSION_COOKIE` / `TIKTOK_SESSION_COOKIE`) — smoke được |
-| #41 | **Tạm dừng có chủ đích** (không mở agent) |
-| #43 | **GO** — cho phép search sàn thật → QA gate; discovery vẫn OFF mặc định |
-| #49 | **Hoãn theo #48** — chỉ làm sau khi #48 có nguồn + chạy xong |
-| #19b | **Tạm dừng có chủ đích** |
-| Wave | Ưu tiên mở: `#42` `#43` `#45` `#46` `#47` `#50` (tách worktree theo lane; **không** #48/#49) |
-
-#### Phase 2 — còn mở (được phép chạy)
-
-- [x] **Task #42 — Session cookie ops smoke + partner API spike (nợ từ #35)** — cookie `present=yes`; live HTTP vẫn anti-bot/403 (`live_ok=0` no-cache); cache-on-fail `live_ok=2`; partner spike note (no implement); không anti-bot SaaS; artifacts `.scratch/epic3-task42-cookie-ops-smoke.md` + `epic3-task42-partner-api-spike.md`
-- [x] **Task #43 — Discovery crawl + fuzzy hygiene (nợ từ #36)** — **search sàn thật được phép** → candidates vào cổng QA; siết token FP; không bật discovery mặc định
-- [x] **Task #45 — Dashboard/API M1 hiện VA (nợ từ #38)** — KPI/timeseries `VA_C` (+ optional nominal); copy tách Digital VA DN; không invent
-- [x] **Task #46 — Pipeline cleaning/features VA (nợ từ #38)** — **đưa `VA_C` vào cleaned/features** + step-hold/provenance; không thay target forecast im lặng
-- [x] **Task #47 — GRDP tỉnh×ngành re-gate (nợ từ #38)** — **biên bản NO-GO/deferred** (chưa table ID NSO tỉnh×ngành CBCT); không crawl; **cấm** copy `VA_C` quốc gia → tỉnh; national VA #38/#45/#46 giữ nguyên — `.scratch/epic3-task47-grdp-deferred.md`
-- [x] **Task #50 — `UniverseCoverageNote` API + FE** — nhãn coverage từ contract #39 (làm được trên stub rỗng)
-
-#### Tạm dừng có chủ đích (có thể reopen khi user bảo)
-
-Không mở agent cho đến khi user reopen tường minh.
-
-- **#41 — GMV backfill + refresh live-cache** — điền `units_sold_est` chỉ từ live/cache/curation có PROVENANCE; refresh `marketplace_live_cache/`; không invent units
-- **#19b — Proposal Mục 4** — cập nhật kết quả thực tế (không invent số)
-- **#48 — Universe nông ingest stub→thật** — chưa có nguồn DN Section C; không invent/copy seed; reopen khi có nguồn + quyền truy cập
-- **#49 — Deep-sample expand có kiểm soát** — **hoãn theo #48** (làm sau #48); không invent trăm BCTC
-
-#### Chưa làm được / chưa có khả năng giải quyết — tạm dừng vô thời hạn
-
-**Không phải task roadmap.** Không mở agent, không wire code, không invent số. Chỉ reopen khi có nguồn/citation mới **và** user yêu cầu tường minh.
-
-| Mục (ex-task) | Lý do dừng | Điều kiện reopen |
-|---------------|------------|------------------|
-| **Industry-ratio wire (ex-#44)** | Không có citation CBCT **TMĐT ÷ doanh thu** đủ chuẩn; `#30`/`#37` giữ `SOURCED_INDUSTRY_ECOMMERCE_RATIO=None` (xem `.scratch/epic3-task30-industry-ratio-research.md`) | Có bảng/figure + năm + URL đúng khái niệm → mappings + PROVENANCE; **cấm** % KT số/GDP, % bán lẻ online, bin VECOM all-sector, invent 0.15 |
-| **Crawl GRDP tỉnh×ngành** (phần crawl của ex-phạm vi #47) | Chưa có table ID NSO đáng tin — xác nhận lại Task #47 biên bản `.scratch/epic3-task47-grdp-deferred.md` | Có table ID NSO tỉnh×ngành CBCT → task crawl riêng; **cấm** copy `VA_C` quốc gia xuống tỉnh |
-| **IIP theo ngành VSIC (cấp 2+)** | Chưa có bảng Luồng A | Có chuỗi IIP theo ngành → unlock card «Ngành nổi bật» |
-| **Benchmark xu hướng theo năm** | Chưa đủ ≥2 kỳ BCTC đủ field trên peer | Có ≥2 kỳ CafeF/seed đủ field |
-
-**Deferred (Benchmark data):** xu hướng chỉ số theo năm (ROA/ROE…) — xem bảng trên + Module 5 / Design system.
-
-**Git caveat:** Phase 3–4 tip may still be multi-PR (#5…#11) not on `main` — demo from Task #18 tip / this branch stack, not bare `main`.
-
-### Epic 4 — AI / ML / DL applications (planning)
-
-**Ưu tiên sản phẩm:** chuyển trọng tâm từ mở rộng data sang **ứng dụng ML/DL/AI** trên nền đã có. Chi tiết: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml-plan.md). Branch kế hoạch: `epic4-plan`.
-
-**Vị trí pipeline (8 stage):** cuối Evaluate (06) → đầu Deploy (07). Collect/Prepare/Features/Train/Evaluate v1 đã có (ARIMA/XGBoost/LSTM + ML Lab); Monitoring/Feedback còn partial.
-
-| Phase | Mục tiêu | Trạng thái |
-|-------|----------|------------|
-| **4.0 Plan** | Inventory + roadmap P0–P3 | Đang làm (PR `epic4-plan`) |
-| **4.1 DocAI Benchmark** | Upload BCTC → OCR/table extract → prefill form (user confirm) | Chưa |
-| **4.2 Forecast & anomaly** | Anomaly Lab; LightGBM optional; drift hooks | Chưa |
-| **4.3 Marketplace NLP** | Product categorizer + shop matcher v2 | Chưa |
-| **4.4 Assist UX** | Narrative LLM cho Benchmark + Forecast | Chưa |
-
-**P0 (ý tưởng chốt):** OCR/PDF extract báo cáo tài chính → auto-fill Benchmark thay nhập tay; AI chỉ suggest, không auto-submit percentile.
-
-Epic 3 paused/deferred (#41, #48, #49, #19b, ex-#44…) **giữ nguyên** — không xóa; hạ ưu tiên khi xung đột Epic 4.
+| Ưu tiên | Việc | Status |
+|--------|------|--------|
+| P0–P1 honesty Epic 3 | Banner mẫu ~28, warnings, null≠0, CafeF links… | DONE #51 |
+| P1 | Chip URL fail / empty shop discovery | Backlog |
+| P2 | Xu hướng Benchmark theo năm; «Ngành nổi bật» IIP | Blocked data |
 
 ---
 
-## Design system — đã ship & backlog FE
+## Agent rules (plan)
 
-**Đã merge `main`:** PR #27 (`new-design-system`) — palette xanh báo cáo, sidebar gradient, hamburger/mobile, nav Benchmark sau Dashboard, format tiền thống nhất, Dashboard KPI phong phú, Benchmark ratios + quartile «Bạn» + radar + so sánh số hóa, MetricInfoTip, copy OECD/ML dễ hiểu hơn.
-
-### Không làm lại (đã cover)
-
-- Layout/responsive/nav/hamburger
-- Format tiền USD/VND compact
-- Dashboard KPI strip + tip MetricInfoTip (siết badge honesty ở #51 — không viết lại KPI)
-- Benchmark radar / P25–P75 / digital section
-- Dọn note kỹ thuật dài (Pipeline log, chart-note thừa)
-
-### Backlog gắn honesty Epic 3 (ưu tiên #51 DONE, rồi đợi BE)
-
-| Ưu tiên | Việc FE | Phụ thuộc |
-|--------|---------|-----------|
-| P0 (#51) ✓ | Banner/badge mẫu ~28 trên Dashboard + Company detail | ADR-0003 / `prototype_listed_sample` |
-| P0 (#51) ✓ | Benchmark render mọi `warnings` (không chỉ `insufficient_peers`) | API `BenchmarkResult.warnings` |
-| P0 (#51) ✓ | Listing/GMV: `null` → `—`, **không** `\|\| 0` vào chart | Nợ honesty #34 |
-| P0 (#51) ✓ | Marketplace badge: `live` có thể là **cache allowlist** (ADR-0002) | Copy; #42 cookie smoke: live HTTP vẫn block → cache path documented |
-| P0 (#51) ✓ | BCTC: ưu tiên kỳ có `source_url` CafeF; đừng gợi CafeF khi seed | #32 |
-| P1 (#51) ✓ | Link bấm được CafeF `source_url` + Pipeline nhấn CafeF `source_health` | #32 |
-| P1 | Chip “URL chưa verify / fail” (9 ticker) | Đầy đủ sau #40 |
-| P1 | Empty state “không có shop / discovery tắt” | #36 |
-| P2 (#45) ✓ | KPI/chart `VA_C` đầy đủ (tách Digital VA) | #38 data đã có |
-| P2 | Xu hướng Benchmark theo năm (ROA/ROE…) | ≥2 kỳ CafeF đủ field |
-| P2 | «Ngành nổi bật» theo tăng trưởng IIP từng VSIC | IIP theo ngành (Luồng A) |
-
----
-
-## 7. Cấu trúc thư mục dự án đề xuất
-
-```
-ai-in-data-economy/
-├── docker-compose.yml
-├── backend/
-│   ├── app/
-│   │   ├── api/          # FastAPI routes
-│   │   ├── models/       # SQLAlchemy models
-│   │   ├── schemas/      # Pydantic schemas
-│   │   └── services/     # Business logic
-│   └── alembic/          # DB migrations
-├── crawlers/
-│   ├── gso/              # PX-Web + SDMX
-│   ├── oecd/             # SDMX API
-│   ├── marketplace/      # Shopee, TikTok
-│   ├── companies/        # Stock exchange, websites
-│   └── financial/        # BCTC parser
-├── pipeline/
-│   ├── cleaning/
-│   ├── features/
-│   └── dags/             # Prefect/Airflow flows
-├── ml/
-│   ├── models/           # ARIMA, XGBoost, LSTM
-│   ├── shop_matcher/
-│   └── evaluation/
-├── frontend/
-│   └── src/
-│       ├── pages/        # Dashboard, Company, ML, Benchmark
-│       └── components/
-├── data/
-│   ├── mappings/         # VSIC-ISIC table
-│   └── seeds/            # 10 sample companies
-└── docs/
-    └── proposal-v2.md    # Proposal cập nhật Mục 4
-```
-
----
-
-## 8. Rủi ro & giảm thiểu
-
-
-| Rủi ro                                   | Giảm thiểu                                                |
-| ---------------------------------------- | --------------------------------------------------------- |
-| Host GSO đổi sang NSO / URL chết         | Ưu tiên `*.nso.gov.vn`; SDMX + PX-Web API; fallback sourced có provenance |
-| PX-Web shipment/inventory chỉ có **năm** | Step-hold năm→tháng khi ingest; ghi rõ trong ADR / CONTEXT |
-| OECD thiếu MEI/BCI/ICT cho VNM           | Không bịa; dùng INDIGO@VNM + MEI_IP@EA20 peer cho forecast |
-| Shopee/TikTok chặn scrape                | Rate limiting, rotate UA; dùng official search API nếu có |
-| Shop không match đúng DN                 | ML matcher + manual QA cho 10 DN mẫu                      |
-| BCTC PDF khó parse                       | Ưu tiên DN có BCTC HTML/XBRL; nội suy cho field thiếu     |
-| Không có doanh thu TMĐT riêng trong BCTC | Ước lượng từ scrape marketplace + tỷ lệ ngành             |
-
-
----
-
-## 9. Kết quả deliverable cuối học kỳ
-
-1. **Web app chạy được** với 4 module chính (Dashboard, DN, Pipeline, ML Lab)
-2. **Database** chứa macro GSO/OECD + micro 10 DN + digital presence
-3. **Pipeline tự động** crawl định kỳ (cron/Prefect schedule)
-4. **3 model** đã train, so sánh metric, API forecast
-5. **Case study Rạng Đông** đầy đủ: kênh bán, ước lượng online, đóng góp ngành
-6. **Proposal v2** — Mục 4 cập nhật với schema, chỉ tiêu, công thức thực tế
-7. **Benchmark module** (prototype) nhập liệu → so sánh percentile ngành
-
+1. Cập nhật **file này** khi đóng/mở task — không phình lại architecture §1–4 (đó là archive).
+2. Domain/công thức: `CONTEXT.md` + ADR — không mở `docs/knowledge.md`.
+3. Một chat = một task; handoff mới ghi `.scratch/handoff-task<N>.md`; handoff cũ → `.scratch/archive/handoffs/` khi prune.

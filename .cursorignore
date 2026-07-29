@@ -1,0 +1,3 @@
+# Token / context hygiene — agents must not load these
+.worktrees/
+docs/knowledge.md

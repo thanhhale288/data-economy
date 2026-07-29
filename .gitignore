@@ -33,3 +33,6 @@ data/processed/cleaning_report.json
 
 # Nested clone — add as submodule later if needed
 diagram/drawio-ai-kit/
+
+# Git worktrees (local clones; do not index for agents)
+.worktrees/

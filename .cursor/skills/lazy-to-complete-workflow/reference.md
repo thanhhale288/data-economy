@@ -104,9 +104,29 @@ Deliverable chính:
 - Checks: …
 ```
 
-## Handoff layout
+## Handoff layout + cleanup
 
-`.scratch/handoff-taskM.md`: Status, Branch, Commit, PR, Delivered, **Task review**, **Testing results**, Do not reopen, Next, **Paste prompt**.
+```
+.scratch/handoff-taskM.md     # chỉ giữ bản của task vừa xong
+.scratch/handoff-phaseN.md    # chỉ giữ phase active / next (nếu có)
+```
+
+### Cleanup trước khi ghi handoff mới
+
+```bash
+# Task handoffs: xóa mọi bản cũ rồi ghi handoff-task<M>.md
+rm -f .scratch/handoff-task*.md
+
+# Phase: chỉ xóa phase DONE/superseded khi đã có handoff phase next mới
+# (không xóa phase next đang là nguồn cho chat sau)
+```
+
+**Giữ tối đa:** 1× `handoff-task*.md` + 0–1× `handoff-phase*.md` active.
+
+Handoff task sections: Status, Branch, Commit, PR, Delivered, **Task review**, **Testing results**, Do not reopen, Next, **Paste prompt** (có Waves).  
+Phải standalone — chat sau không được cần file task handoff đã xóa.
+
+Đóng chat: nêu paths đã `rm`.
 
 ## needGit filter
 
