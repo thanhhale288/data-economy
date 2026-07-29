@@ -1,11 +1,11 @@
 # Handoff — Task #52 BCTC extract spike (text PDF)
 
-**Status:** DONE (uncommitted — commit/PR khi user yêu cầu)  
+**Status:** DONE (PR open)  
 **Branch:** `cursor/epic4-phase1-task52-bctc-extract-spike`  
 **Date:** 2026-07-29  
 **Phase:** Epic 4 Phase 4.1 (DocAI Benchmark P0)  
 **Base:** `origin/main` @ `63a85fa` (Epic 4 plan PR #38 merged)  
-**Commit / PR:** chưa — user chưa Explicit yêu cầu commit
+**Commit / PR:** `f51c252` · PR https://github.com/thanhhale288/data-economy/pull/39
 
 ---
 
@@ -57,7 +57,7 @@ Reuse context: CafeF HTML aliases in `crawlers/financial/cafef.py` (×1000); pre
 ### Tiến độ
 - Ước lượng hoàn thành AC: **100%**
 - Status: **DONE**
-- Phase · Branch · Tip · PR: Epic 4.1 · `cursor/epic4-phase1-task52-bctc-extract-spike` · working tree · chưa PR
+- Phase · Branch · Tip · PR: Epic 4.1 · `cursor/epic4-phase1-task52-bctc-extract-spike` · `f51c252` · PR #39
 
 ### Đã làm được gì (đối chiếu AC)
 
@@ -114,7 +114,7 @@ Deliverable chính:
 | API/FE | #54–#55 | yes |
 
 ### CI
-- Chưa push/PR
+- PR #39: https://github.com/thanhhale288/data-economy/pull/39
 
 ---
 
