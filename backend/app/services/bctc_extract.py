@@ -29,6 +29,7 @@ EXTRACT_FIELDS: tuple[str, ...] = (
     "total_assets",
     "total_equity",
 )
+DEFAULT_FIELD_CONFIDENCE_THRESHOLD = 0.75
 
 # Longer / more specific aliases first (substring match on folded labels).
 # Folded = lowercased + Vietnamese diacritics stripped.
@@ -207,6 +208,7 @@ def extract_fields_from_lines(
     *,
     source_type: str = "pdf_text",
     confidence_scale: float = 1.0,
+    confidence_threshold: float = DEFAULT_FIELD_CONFIDENCE_THRESHOLD,
     empty_text_warning: str | None = "pdf_text_empty",
 ) -> BctcExtractResult:
     """Shared rules-first mapper over label+amount lines (text PDF or OCR).
@@ -264,6 +266,13 @@ def extract_fields_from_lines(
             confidence[key] = 0.0
             continue
         value, conf, _ = found[0]
+        if conf < confidence_threshold:
+            warnings.append(
+                f"low_confidence_field:{key}:{conf:.2f}<threshold:{confidence_threshold:.2f}"
+            )
+            fields[key] = None
+            confidence[key] = conf
+            continue
         fields[key] = value
         confidence[key] = conf
 
