@@ -12,6 +12,13 @@ from backend.app.database import Base
 from backend.app.models import Company, FinancialReport, VsicCode
 
 
+def pytest_configure(config):
+    config.addinivalue_line(
+        "markers",
+        "ocr: requires optional PaddleOCR extra (requirements-ocr.txt)",
+    )
+
+
 @pytest.fixture()
 def db_session(tmp_path):
     engine = create_engine(f"sqlite:///{tmp_path / 'benchmark_test.db'}")

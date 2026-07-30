@@ -12,9 +12,9 @@ Domain ngắn: `CONTEXT.md` · ADR: `docs/adr/` · Epic 4 chi tiết: [`.scratch
 | Phase 1–5 học kỳ | DONE (trừ #19b) | Checklist đầy đủ → archive §6 |
 | Epic 2 Product-first | DONE | #20–#24 |
 | Epic 3 Data-first Phase 1–2 | DONE | #25–#51 (trừ paused/deferred) |
-| **Epic 4 AI/ML/DL** | **In progress** | Phase 4.1 DocAI — Task #52 DONE |
+| **Epic 4 AI/ML/DL** | **In progress** | Phase 4.1 DocAI — Task #53 DONE |
 
-**Handoff hiện tại:** `.scratch/handoff-task52.md`  
+**Handoff hiện tại:** `.scratch/handoff-task53.md`  
 **Không đọc:** `docs/knowledge.md` (human glossary; `.cursorignore`).
 
 ---
@@ -51,7 +51,7 @@ Chi tiết task: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml-plan.m
 | Phase | Mục tiêu | Status |
 |-------|----------|--------|
 | **4.0 Plan** | Inventory + roadmap P0–P3 | DONE (PR #38) |
-| **4.1 DocAI Benchmark** | Upload BCTC → OCR/table → prefill (user confirm) | **#52 DONE** · next #53 OCR |
+| **4.1 DocAI Benchmark** | Upload BCTC → OCR/table → prefill (user confirm) | **#53 DONE** · next #54 API |
 | **4.2 Forecast & anomaly** | Anomaly Lab; LightGBM optional; drift | Chưa |
 | **4.3 Marketplace NLP** | Categorizer + shop matcher v2 | Chưa |
 | **4.4 Assist UX** | Narrative LLM Benchmark + Forecast | Chưa |
@@ -61,7 +61,7 @@ Chi tiết task: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml-plan.m
 ### Phase 4.1 checklist (hot)
 
 - [x] **#52** Extract spike (text PDF / pdfplumber) → `backend/app/services/bctc_extract.py`
-- [ ] **#53** OCR path (PaddleOCR) — scan/ảnh
+- [x] **#53** OCR path (PaddleOCR) — scan/ảnh → `bctc_extract_ocr.py` + router `extract_bctc`
 - [ ] **#54** `POST /api/benchmark/extract`
 - [ ] **#55** FE upload + confirm
 - [ ] **#56** Eval golden + honesty guards
