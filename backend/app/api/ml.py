@@ -28,9 +28,12 @@ def list_predictions(
 
 @router.get("/feature-importance")
 def feature_importance(
-    model_name: str = Query("xgboost", description="Model with importance artifact (xgboost)"),
+    model_name: str = Query(
+        "xgboost",
+        description="Model with importance artifact (xgboost|lightgbm)",
+    ),
 ):
-    """Read Phase 3 feature-importance artifact. Missing → available=false (no invented scores)."""
+    """Read feature-importance artifact. Missing → available=false (no invented scores)."""
     return ml_lab_service.get_feature_importance(model_name)
 
 

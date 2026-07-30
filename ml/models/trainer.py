@@ -22,6 +22,7 @@ from ml.models.lstm_model import (
     forecast_lstm,
     train_lstm_model,
 )
+from ml.models.lightgbm_model import forecast_lightgbm, train_lightgbm_model
 from ml.models.xgboost_model import forecast_xgboost, train_xgboost_model
 from pipeline.features.engineering import build_features
 
@@ -30,6 +31,7 @@ MODELS_DIR.mkdir(parents=True, exist_ok=True)
 
 ARIMA_ARTIFACT = MODELS_DIR / "arima_model.joblib"
 XGB_ARTIFACT = MODELS_DIR / "xgboost_model.joblib"
+LGBM_ARTIFACT = MODELS_DIR / "lightgbm_model.joblib"
 LSTM_ARTIFACT = MODELS_DIR / "lstm_model.pt"
 
 
@@ -160,6 +162,44 @@ def train_xgboost(db: Session) -> dict:
     return metrics
 
 
+def train_lightgbm(db: Session) -> dict:
+    """Train LightGBM on the same feature frame / IIP target as XGBoost.
+
+    Soft-fails when the package is missing (``status=unavailable``) so
+    ``train_all_models`` still registers ARIMA/XGB/LSTM.
+    """
+    df = build_features(db)
+    result = train_lightgbm_model(df)
+
+    if result.get("status") in ("insufficient_data", "unavailable"):
+        return {
+            "mae": None,
+            "rmse": None,
+            "mape": None,
+            "status": result.get("status"),
+            "n_train": result.get("n_train", 0),
+            "n_test": result.get("n_test", 0),
+            "message": result.get("message"),
+        }
+
+    periods, preds, acts = _align_preds_to_periods(
+        result.get("test_periods", []),
+        result.get("predictions", []),
+        result.get("actuals", []),
+    )
+    metrics = _metrics_only(result)
+    if periods:
+        _save_predictions(db, "lightgbm", periods, preds, acts, metrics)
+    _register_model(
+        db,
+        "lightgbm",
+        "ml",
+        metrics,
+        artifact_path=result["artifact_path"],
+    )
+    return metrics
+
+
 def train_lstm(db: Session) -> dict:
     series = _get_iip_series(db)
     if series.empty:
@@ -247,6 +287,7 @@ def train_all_models(db: Session) -> int:
     for name, func in [
         ("arima", train_arima),
         ("xgboost", train_xgboost),
+        ("lightgbm", train_lightgbm),
         ("lstm", train_lstm),
     ]:
         try:
@@ -326,6 +367,12 @@ def generate_forecast(db: Session, model_name: str, horizon: int = 6) -> dict:
             raise FileNotFoundError(f"No trained artifact for xgboost: {path}")
         history_df = build_features(db)
         values = forecast_xgboost(path, history_df=history_df, steps=horizon)
+    elif name == "lightgbm":
+        path = LGBM_ARTIFACT
+        if not path.exists():
+            raise FileNotFoundError(f"No trained artifact for lightgbm: {path}")
+        history_df = build_features(db)
+        values = forecast_lightgbm(path, history_df=history_df, steps=horizon)
     elif name == "lstm":
         path = LSTM_ARTIFACT
         if not path.exists():
@@ -340,7 +387,9 @@ def generate_forecast(db: Session, model_name: str, horizon: int = 6) -> dict:
             steps=horizon,
         )
     else:
-        raise ValueError(f"Unknown model_name={model_name!r}; use arima|xgboost|lstm")
+        raise ValueError(
+            f"Unknown model_name={model_name!r}; use arima|xgboost|lightgbm|lstm"
+        )
 
     values = np.asarray(values, dtype=float).ravel()
     if len(values) != horizon:
