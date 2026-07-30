@@ -5,7 +5,8 @@
 **Date:** 2026-07-30  
 **Phase:** Epic 4 Phase 4.5 (Monitoring & feedback loop)  
 **Base:** `origin/main` @ `179957c`  
-**Commit / PR:** *(điền sau push)*  
+**Commit:** `85db33a`
+**PR:** https://github.com/thanhhale288/data-economy/pull/48  
 **Next:** Task #64 — Feedback-to-training loop  
 **great-expectations:** **không cài** (default SQLAlchemy/API contract đủ)
 
