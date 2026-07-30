@@ -63,6 +63,32 @@ def test_feature_importance_reads_real_json(tmp_path: Path):
     assert {f["feature"] for f in result["features"]} == {"iip_lag1", "indigo", "digital_va"}
 
 
+def test_feature_importance_lightgbm_reads_json(tmp_path: Path):
+    path = tmp_path / "lightgbm_importance.json"
+    path.write_text(
+        json.dumps(
+            {
+                "gain": {"iip_lag1": 8.0, "indigo": 2.0},
+                "weight": {"iip_lag1": 3, "indigo": 1},
+                "feature_cols": ["iip_lag1", "indigo"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    result = svc.get_feature_importance("lightgbm", artifact_dir=tmp_path)
+    assert result["available"] is True
+    assert result["model_name"] == "lightgbm"
+    assert result["features"][0]["feature"] == "iip_lag1"
+    assert result["gain"]["iip_lag1"] == 8.0
+
+
+def test_feature_importance_lightgbm_missing_is_explicit(tmp_path: Path):
+    result = svc.get_feature_importance("lightgbm", artifact_dir=tmp_path)
+    assert result["available"] is False
+    assert result["features"] == []
+    assert "không bịa" in result["message"].lower()
+    assert "lightgbm" in result["message"].lower()
+
 def test_feature_importance_empty_gain_is_unavailable(tmp_path: Path):
     (tmp_path / "xgboost_importance.json").write_text(
         json.dumps({"gain": {}, "weight": {}, "feature_cols": []}),
