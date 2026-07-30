@@ -331,6 +331,10 @@ export default function Pipeline() {
                 <strong>Baseline</strong>
                 <span>{mlCounters?.baseline_available ? 'yes' : 'no'}</span>
               </span>
+              <span className="metric-chip">
+                <strong>Feedback signals</strong>
+                <span>{mlCounters?.feedback_signals_count ?? '—'}</span>
+              </span>
             </div>
             {!mlMonitor.models?.length ? (
               <div className="empty-state">Chưa có model snapshot.</div>

@@ -33,6 +33,8 @@ class MlMonitoringCounters(BaseModel):
     models_unknown_drift: int = 0
     artifacts_on_disk: int = 0
     baseline_available: bool = False
+    # Task #64 — safe edit→confirm training signals on disk (JSONL).
+    feedback_signals_count: int = 0
 
 
 class MlMonitoringStatusOut(BaseModel):

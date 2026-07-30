@@ -8,7 +8,8 @@ from backend.app.schemas import (
     BenchmarkNarrativeResponse,
     BenchmarkResult,
 )
-from backend.app.services import benchmark_narrative, benchmark_service
+from backend.app.schemas.feedback_signal import FeedbackSignalIn, FeedbackSignalOut
+from backend.app.services import benchmark_narrative, benchmark_service, feedback_signal
 from backend.app.services.bctc_extract import extract_bctc_dict
 
 router = APIRouter()
@@ -45,6 +46,19 @@ async def extract_benchmark_file(file: UploadFile = File(...)):
     if not content:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
     return extract_bctc_dict(content, filename=file.filename)
+
+
+@router.post("/feedback", response_model=FeedbackSignalOut)
+def benchmark_feedback(data: FeedbackSignalIn):
+    """Store DocAI/Benchmark edit→confirm as a safe training signal.
+
+    Persists field diffs + ticker + source_type + timestamp only.
+    Never stores raw PDF/bytes/API keys (Task #64).
+    """
+    try:
+        return feedback_signal.append_signal(data)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.get("/prefill/{stock_code}", response_model=BenchmarkInput)

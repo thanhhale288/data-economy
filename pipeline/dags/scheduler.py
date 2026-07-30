@@ -49,6 +49,14 @@ def _data_cleaning_with_detail(db):
     return run_data_cleaning(db)
 
 
+def _feedback_ingest_with_detail(db):
+    """Task #64 — thin hook: count safe training signals (no Prefect / no retrain)."""
+    del db  # unused; signature matches other detail jobs
+    from backend.app.services.feedback_signal import ingest_feedback_for_scheduler
+
+    return ingest_feedback_for_scheduler()
+
+
 def run_all_pipelines():
     from crawlers.companies.listed_companies import run_company_crawl
     from crawlers.marketplace.shop_finder import run_marketplace_crawl
@@ -71,6 +79,8 @@ def run_all_pipelines():
         ("ml_training", train_all_models),
     ):
         _run_job(name, func)
+    # Task #64: surface feedback JSONL count (does not auto-retrain)
+    _run_job("feedback_ingest", _feedback_ingest_with_detail, detail_from_result=True)
 
 
 def main():

@@ -22,6 +22,8 @@ from backend.app.schemas.ml_monitoring import (
     MlMonitoringStatusOut,
     ModelMetricSnapshot,
 )
+from backend.app.services import feedback_signal as feedback_signal_service
+
 
 logger = logging.getLogger(__name__)
 
@@ -243,6 +245,7 @@ def get_monitoring_status(
     *,
     baseline_path: Path | None = None,
     models_dir: Path | None = None,
+    feedback_store_path: Path | None = None,
 ) -> MlMonitoringStatusOut:
     """Assemble monitoring contract for API / Pipeline counters."""
     baseline_models, threshold, baseline_ok, baseline_warn = load_baseline(baseline_path)
@@ -271,10 +274,14 @@ def get_monitoring_status(
     with_drift = sum(1 for s in snapshots if s.drift_flag is True)
     unknown_drift = sum(1 for s in snapshots if s.drift_flag is None)
     artifacts = sum(1 for s in snapshots if s.artifact_present)
+    feedback_count = feedback_signal_service.count_signals(
+        store_path=feedback_store_path,
+    ).count
 
     note = (
         "ML monitoring contract (Task #63): metrics from model_registry; "
-        "drift only when data/models/ml_monitoring_baseline.json exists."
+        "drift only when data/models/ml_monitoring_baseline.json exists; "
+        "feedback_signals_count from Task #64 JSONL store."
     )
     return MlMonitoringStatusOut(
         as_of=_utc_now(),
@@ -287,6 +294,7 @@ def get_monitoring_status(
             models_unknown_drift=unknown_drift,
             artifacts_on_disk=artifacts,
             baseline_available=baseline_ok,
+            feedback_signals_count=feedback_count,
         ),
         warnings=global_warnings,
         note=note,
