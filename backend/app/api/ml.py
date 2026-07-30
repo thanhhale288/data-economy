@@ -3,8 +3,13 @@ from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
 from backend.app.models import ModelPrediction, ModelRegistry
-from backend.app.schemas import ForecastRequest, ModelPredictionOut
-from backend.app.services import ml_lab_service
+from backend.app.schemas import (
+    ForecastNarrativeRequest,
+    ForecastNarrativeResponse,
+    ForecastRequest,
+    ModelPredictionOut,
+)
+from backend.app.services import forecast_narrative, ml_lab_service
 
 router = APIRouter()
 
@@ -35,6 +40,24 @@ def feature_importance(
 ):
     """Read feature-importance artifact. Missing → available=false (no invented scores)."""
     return ml_lab_service.get_feature_importance(model_name)
+
+
+@router.post("/narrative", response_model=ForecastNarrativeResponse)
+def forecast_narrative_explain(data: ForecastNarrativeRequest):
+    """Tóm tắt horizon / sai số / driver tiếng Việt — chỉ cite số từ payload + importance.
+
+    Không train lại; thiếu importance → nói thiếu, không bịa nguyên nhân.
+    """
+    return forecast_narrative.generate_forecast_narrative(
+        {
+            "model": data.model,
+            "horizon": data.horizon,
+            "forecasts": [p.model_dump() for p in data.forecasts],
+        },
+        metrics=data.metrics,
+        importance=data.importance,
+        load_importance=data.load_importance,
+    )
 
 
 @router.post("/forecast")

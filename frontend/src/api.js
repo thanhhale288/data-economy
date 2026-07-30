@@ -99,6 +99,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify({ model_name: 'lightgbm', horizon_months: horizon }),
     }),
+  /** Task #62 — Vietnamese forecast narrative (horizon / error / drivers only). */
+  forecastNarrative: (payload) =>
+    request('/ml/narrative', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
   benchmark: (data) => request('/benchmark/compare', {
     method: 'POST',
     body: JSON.stringify(data),
