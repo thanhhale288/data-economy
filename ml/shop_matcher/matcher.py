@@ -1,9 +1,13 @@
-"""Fuzzy shop↔company matcher.
+"""Fuzzy shop↔company matcher (baseline).
 
 Links marketplace shop handles to listed-company names using normalized
 Vietnamese tokens, brand aliases, and RapidFuzz ratios. Match threshold
-defaults to **0.65** (CONTEXT.md). Only call sites that set ``is_match``
-from ``is_match(...)`` should assign a company to a discovered shop.
+defaults to **0.65** (CONTEXT.md).
+
+Task #60 ships ``HybridShopMatcher`` (fuzzy + vector/rerank) as the default
+``ShopMatcher`` export; this module keeps the RapidFuzz baseline for QA
+comparisons. Only call sites that set ``is_match`` from ``is_match(...)``
+should assign a company to a discovered shop.
 """
 
 from __future__ import annotations
@@ -161,7 +165,7 @@ def _shop_signals(shop_name: str) -> tuple[list[str], str]:
     return tokens, compact
 
 
-class ShopMatcher:
+class FuzzyShopMatcher:
     """Heuristic fuzzy matcher: company legal name ↔ marketplace shop handle."""
 
     def __init__(self, threshold: float = DEFAULT_THRESHOLD):
@@ -261,6 +265,8 @@ class ShopMatcher:
         """Persist labeled seed pairs + load brand aliases from seed shops.
 
         ``db`` is accepted for pipeline compatibility; training uses seed JSON.
+        Writes a v1-compatible payload (aliases only). Hybrid training lives in
+        ``HybridShopMatcher.train``.
         """
         del db  # unused — seed file is source of truth for aliases
         import joblib
@@ -270,7 +276,7 @@ class ShopMatcher:
         self._seed_aliases = {}
 
         if not SEED_FILE.exists():
-            logger.warning("ShopMatcher.train: seed file missing at %s", SEED_FILE)
+            logger.warning("FuzzyShopMatcher.train: seed file missing at %s", SEED_FILE)
             return
 
         with open(SEED_FILE, encoding="utf-8") as f:
@@ -313,6 +319,7 @@ class ShopMatcher:
                 "pairs": pairs,
                 "threshold": self.threshold,
                 "seed_aliases": self._seed_aliases,
+                "matcher": "fuzzy_v1",
             },
             self._model_path,
         )
@@ -330,8 +337,12 @@ class ShopMatcher:
                 self.threshold = float(payload["threshold"])
             return True
         except Exception as exc:  # noqa: BLE001 — optional artifact
-            logger.warning("ShopMatcher.load failed: %s", exc)
+            logger.warning("FuzzyShopMatcher.load failed: %s", exc)
             return False
+
+
+# Back-compat alias for imports that still expect ShopMatcher in this module.
+ShopMatcher = FuzzyShopMatcher
 
 
 def labeled_seed_pairs() -> list[dict]:
