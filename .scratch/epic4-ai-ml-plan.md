@@ -159,7 +159,8 @@ Quy ước branch mỗi task: `cursor/epic4-phaseP-taskT-slug`
   3. Không cài PaddleOCR ở task này.
   **Output:** service đọc PDF text + map field cơ bản (`operating_revenue`, `profit_before_tax`, `employees`, `total_assets`, `equity`) + test fixture nhỏ.
 
-- [ ] **Task #53 — OCR path for scanned reports**  
+- [x] **Task #53 — OCR path for scanned reports** ✅ DONE  
+  **Delivered:** OCR fallback via optional PaddleOCR (`requirements-ocr.txt`); router `extract_bctc` (`pdf_text` | `pdf_ocr` | `image_ocr`); shared `extract_fields_from_lines`; fixtures `sample_bctc_scan.png/.pdf`, `empty_bctc_scan.png`; tests `test_bctc_extract_ocr.py` (`pytest.mark.ocr` + importorskip). **Không** API/FE.  
   **Pre-flight (repo/lib):**
   1. Xác nhận Task #52 path text-PDF vẫn chạy.
   2. Cài **PaddleOCR** (VN): theo `docs/needGit.md` #16 — ưu tiên extra/optional deps (nặng); `pip install paddlepaddle paddleocr` (hoặc pin version đã chọn trong task notes).

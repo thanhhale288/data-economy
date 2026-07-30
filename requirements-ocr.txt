@@ -1,0 +1,17 @@
+# Optional OCR extra for DocAI Benchmark (Task #53+).
+# Heavy — do NOT add to default CI install unless OCR tests are required.
+#
+# Install (macOS arm64 / Linux CPU, Python 3.9–3.13):
+#   pip install paddlepaddle==3.3.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+#   pip install paddleocr==3.7.0
+#
+# Smoke:
+#   python -c "from paddleocr import PaddleOCR; print('ok')"
+#
+# First engine init downloads models into ~/.paddlex/ (not committed).
+# Skip OCR tests in CI without this extra:
+#   pytest -m "not ocr"
+#   # or rely on pytest.importorskip("paddleocr")
+
+paddlepaddle==3.3.0
+paddleocr==3.7.0

@@ -85,8 +85,8 @@ One-shot labels/milestones/releases/protection: `bash scripts/github-bootstrap.s
 
 ### Lazy-to-complete (phase/task loop)
 
-One chat → one task → one branch → waves → PR; handoff + review + testing + next prompt then stop:  
-`.cursor/skills/lazy-to-complete-workflow/SKILL.md`. Trigger: paste handoff / next-task prompt.
+One chat → many related tasks via waves/subagents; keep branch/PR per task; close with plain-language summary + testing per task (no auto next-task prompt):  
+`.cursor/skills/lazy-to-complete-workflow/SKILL.md`. Trigger: continue phase work / run related tasks in parallel.
 
 ### Catch-up (“những gì tôi chưa biết”)
 

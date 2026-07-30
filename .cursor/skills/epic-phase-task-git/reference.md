@@ -36,7 +36,7 @@ gh pr create --base main --head cursor/epic3-phase2-integrate
 
 | lazy-to-complete | epic-phase-task-git |
 |------------------|---------------------|
-| 1 chat = 1 task | 1 branch + 1 PR = 1 task |
+| 1 chat = many related tasks | still 1 branch + 1 PR per task (default) |
 | `cursor/phaseN-taskM-slug` | Prefer `cursor/epicE-phaseP-taskT-slug` |
 | Push+PR cuối task | Push sớm + PR khi sẵn sàng review |
 
