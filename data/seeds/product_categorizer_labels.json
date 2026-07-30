@@ -1,0 +1,866 @@
+[
+  {
+    "product_name": "Bóng LED Rạng Đông 9W",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "seed:RAL"
+  },
+  {
+    "product_name": "Đèn LED Panel 600x600",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "seed:RAL"
+  },
+  {
+    "product_name": "Bộ đèn downlight âm trần",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "seed:RAL"
+  },
+  {
+    "product_name": "Đèn LED Bulb Điện Quang ĐQ LEDBU11 (40W/30W, chụp cầu mờ)",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "seed:DQC"
+  },
+  {
+    "product_name": "Đèn LED bulb công suất lớn Điện Quang ĐQ LEDBU09 nguồn tích hợp",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "seed:DQC"
+  },
+  {
+    "product_name": "Bóng đèn LED 12W ánh sáng trắng",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Đèn tuýp LED T8 chiếu sáng nhà xưởng",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Đèn LED âm trần 9W",
+    "vsic_code": "2740",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Bóng LED bulb 15W",
+    "vsic_code": "2740",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Sữa tươi Vinamilk 1L",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "seed:VNM"
+  },
+  {
+    "product_name": "Sữa chua uống probiotic",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "seed:VNM"
+  },
+  {
+    "product_name": "Sữa đặc có đường ông thọ",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Yaourt uống trái cây hộp 100ml",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Phô mai lát Dutch Lady",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Sữa tươi tiệt trùng 180ml",
+    "vsic_code": "1050",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Sữa chua ăn có đường",
+    "vsic_code": "1050",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Laptop FPT",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "seed:FPT"
+  },
+  {
+    "product_name": "Máy tính xách tay 15 inch",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Notebook gaming CPU i7",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Máy tính để bàn PC all-in-one",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Chuột máy tính không dây",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Laptop văn phòng 14 inch",
+    "vsic_code": "2620",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Nước mắm Chin-su",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "seed:MSN+semantic"
+  },
+  {
+    "product_name": "Nước mắm nhĩ cá cơm chai 500ml",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Cá basa phi lê đông lạnh",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Tôm sú đông lạnh size 30",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Chả cá thác lát đóng hộp",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Cá hộp sốt cà",
+    "vsic_code": "1020",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Nước mắm truyền thống 40 độ đạm",
+    "vsic_code": "1020",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Nhẫn vàng PNJ",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "seed:PNJ"
+  },
+  {
+    "product_name": "Dây chuyền vàng 18K",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Bông tai bạc đá quý",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Lắc tay vàng trắng",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Nhẫn cưới vàng 24K",
+    "vsic_code": "3211",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Vòng cổ bạc nữ",
+    "vsic_code": "3211",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Bánh mì sandwich đóng gói",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Bánh quy bơ hộp thiếc",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Ngũ cốc ăn sáng granola",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Bánh ngọt kem bơ",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Bánh cracker lúa mì",
+    "vsic_code": "1071",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Đường tinh luyện bao 50kg",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Đường cát trắng tinh khiết",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Đường vàng nguyên liệu",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Đường RE đóng túi 1kg",
+    "vsic_code": "1072",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Hóa chất NaOH công nghiệp",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Axit sulfuric đậm đặc",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Hóa chất cơ bản dung môi",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Xút lỏng công nghiệp",
+    "vsic_code": "2011",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Phân bón NPK 16-16-8",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Urê hạt đạm cao",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Phân đạm urea bao 50kg",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Phân bón DAP nông nghiệp",
+    "vsic_code": "2012",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Lốp xe tải radial",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Ống cao su thủy lực",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Vỏ xe máy không săm",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Lốp ô tô du lịch",
+    "vsic_code": "2211",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Ống nhựa PVC Bình Minh",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Túi nilon PE đóng gói",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Chai nhựa PET 500ml",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Ống nhựa HDPE cấp thoát nước",
+    "vsic_code": "2220",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Thép cuộn cán nóng",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Thép xây dựng Hòa Phát",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Gang thỏi công nghiệp",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Thép thanh vằn D10",
+    "vsic_code": "2410",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Máy biến áp dầu 1000kVA",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Động cơ điện 3 pha 15kW",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Tủ điện phân phối hạ thế",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Máy phát điện công nghiệp",
+    "vsic_code": "2710",
+    "split": "test",
+    "source": "paraphrase"
+  },
+  {
+    "product_name": "Dịch vụ tư vấn thuế doanh nghiệp",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-neg"
+  },
+  {
+    "product_name": "Khóa học tiếng Anh online",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-neg"
+  },
+  {
+    "product_name": "Vé máy bay nội địa",
+    "vsic_code": null,
+    "split": "test",
+    "source": "unknown-oov"
+  },
+  {
+    "product_name": "Thuê căn hộ chung cư 2PN",
+    "vsic_code": null,
+    "split": "test",
+    "source": "unknown-oov"
+  },
+  {
+    "product_name": "Gói data 4G tháng",
+    "vsic_code": null,
+    "split": "test",
+    "source": "unknown-oov"
+  },
+  {
+    "product_name": "xyzqwerty 999 unrelated junk",
+    "vsic_code": null,
+    "split": "test",
+    "source": "unknown-oov"
+  },
+  {
+    "product_name": "Tour du lịch Đà Nẵng 3 ngày",
+    "vsic_code": null,
+    "split": "test",
+    "source": "unknown-oov"
+  },
+  {
+    "product_name": "Đèn LED panel văn phòng",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bóng đèn compact LED",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Đèn downlight LED 7W",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bóng LED chiếu sáng",
+    "vsic_code": "2740",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Sữa tươi thanh trùng hộp giấy",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Sữa chua uống men sống",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Sữa bột dinh dưỡng trẻ em",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Phô mai mozzarella",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Laptop sinh viên 15.6 inch",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Máy tính xách tay văn phòng",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bàn phím máy tính USB",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "PC desktop CPU i5",
+    "vsic_code": "2620",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Nước mắm Phú Quốc",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Cá tra phi lê xuất khẩu",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Tôm đông lạnh xuất khẩu",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Mực khô hải sản",
+    "vsic_code": "1020",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Nhẫn vàng 18K đính đá",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Dây chuyền bạc 925",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bông tai vàng PNJ",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Trang sức vàng đá quý",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Vòng tay bạc nữ",
+    "vsic_code": "3211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bánh mì sandwich lúa mì",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bánh quy giòn hộp",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Bánh cracker mặn",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Ngũ cốc yến mạch",
+    "vsic_code": "1071",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Đường tinh luyện Biên Hòa",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Đường cát trắng đóng túi",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Đường vàng nấu ăn",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Đường RE tinh khiết 1kg",
+    "vsic_code": "1072",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Hóa chất kiềm xút NaOH",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Axit HCl công nghiệp",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Dung môi hóa chất cơ bản",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Xút vảy công nghiệp",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Hóa chất NaOH lỏng",
+    "vsic_code": "2011",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Phân bón DAP hạt",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Phân NPK nông nghiệp",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Urê phân đạm",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Phân bón hỗn hợp DAP",
+    "vsic_code": "2012",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Lốp ô tô Bridgestone",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Vỏ xe máy Michelin",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Ống cao su công nghiệp",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Lốp xe du lịch",
+    "vsic_code": "2211",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Ống nhựa PVC thoát nước",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Ống HDPE cấp nước",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Túi nhựa PE",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Chai nhựa đóng chai",
+    "vsic_code": "2220",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Thép thanh vằn xây dựng",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Thép cuộn cán nguội",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Sắt thép Hòa Phát",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Thép hình I xây dựng",
+    "vsic_code": "2410",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Máy phát điện diesel",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Máy biến áp khô",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Động cơ điện 1 pha",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Tủ điện điều khiển",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Máy phát điện công suất lớn",
+    "vsic_code": "2710",
+    "split": "train",
+    "source": "augment"
+  },
+  {
+    "product_name": "Vé máy bay Hà Nội Sài Gòn",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Vé máy bay nội địa Vietnam Airlines",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Tour du lịch Phú Quốc",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Tour du lịch Đà Lạt",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Thuê nhà nguyên căn",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Thuê căn hộ chung cư",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Gói cước data 4G",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Sim 4G data tháng",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Dịch vụ kế toán thuế",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Khóa học tiếng Nhật",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Bảo hiểm nhân thọ",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "Chuyển phát nhanh",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "xyzqwerty junk token aaa",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  },
+  {
+    "product_name": "unrelated junk product zzz",
+    "vsic_code": null,
+    "split": "train",
+    "source": "unknown-augment"
+  }
+]
