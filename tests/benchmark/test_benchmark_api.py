@@ -2,12 +2,16 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 from fastapi.testclient import TestClient
 
 from backend.app.database import get_db
 from backend.app.main import app
 from backend.app.schemas import BenchmarkInput
 from backend.app.services import benchmark_service as svc
+
+FIXTURES = Path(__file__).resolve().parent / "fixtures"
 
 
 def _client(db_session):
@@ -113,3 +117,36 @@ def test_run_benchmark_matches_schema(peers_division_27):
     assert "peer_count" in dumped
     assert "warnings" in dumped
     assert dumped["percentiles"]["equity_ratio"] is not None
+
+
+def test_extract_api_contract_text_pdf(db_session):
+    client = _client(db_session)
+    try:
+        with (FIXTURES / "sample_bctc_text.pdf").open("rb") as f:
+            res = client.post(
+                "/api/benchmark/extract",
+                files={"file": ("sample_bctc_text.pdf", f, "application/pdf")},
+            )
+        assert res.status_code == 200
+        body = res.json()
+        assert set(body.keys()) == {"fields", "confidence", "warnings", "source_type"}
+        assert body["source_type"] == "pdf_text"
+        assert body["fields"]["operating_revenue"] == 5_200_000_000_000.0
+        assert body["fields"]["profit_before_tax"] == 420_000_000_000.0
+        assert body["fields"]["employees"] == 3200
+        assert body["confidence"]["operating_revenue"] > 0.0
+    finally:
+        app.dependency_overrides.clear()
+
+
+def test_extract_api_rejects_empty_file(db_session):
+    client = _client(db_session)
+    try:
+        res = client.post(
+            "/api/benchmark/extract",
+            files={"file": ("empty.pdf", b"", "application/pdf")},
+        )
+        assert res.status_code == 400
+        assert "empty" in res.json()["detail"].lower()
+    finally:
+        app.dependency_overrides.clear()
