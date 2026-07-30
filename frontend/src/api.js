@@ -64,6 +64,7 @@ export const api = {
   getPipelineJobs: () => request('/pipeline/jobs'),
   getPipelineStatus: () => request('/pipeline/status'),
   getPipelineQuality: () => request('/pipeline/quality'),
+  getMlMonitoring: () => request('/ml/monitoring'),
   triggerCrawl: (crawler, tickers) =>
     request('/pipeline/trigger', {
       method: 'POST',
@@ -93,6 +94,12 @@ export const api = {
       body: form,
     })
   },
+  /** Task #61 — Vietnamese narrative from BenchmarkResult numbers only. */
+  benchmarkNarrative: (result) =>
+    request('/benchmark/narrative', {
+      method: 'POST',
+      body: JSON.stringify(result),
+    }),
   /** ADR-0003 / Task #50 — honesty label; empty universe stub is valid. */
   getUniverseCoverage: () => request('/universe/coverage'),
 }

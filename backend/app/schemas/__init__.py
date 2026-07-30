@@ -324,6 +324,24 @@ class BenchmarkResult(BaseModel):
     digital: DigitalBenchmark | None = None
 
 
+class BenchmarkNarrativeCitation(BaseModel):
+    field: str
+    value: float | int
+    label: str
+
+
+class BenchmarkNarrativeResponse(BaseModel):
+    """Vietnamese narrative built from BenchmarkResult numbers only (Task #61)."""
+
+    narrative: str
+    paragraphs: list[str] = []
+    method: str = "rules"  # rules | llm
+    citations: list[BenchmarkNarrativeCitation] = []
+    omitted: list[str] = []
+    warnings: list[str] = []
+    message: str | None = None
+
+
 class DashboardSummary(BaseModel):
     iip_latest: float | None = None
     iip_growth_pct: float | None = None
