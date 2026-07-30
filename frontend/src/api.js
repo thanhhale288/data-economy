@@ -76,11 +76,29 @@ export const api = {
   getPredictions: (model) => request(`/ml/predictions${model ? `?model_name=${model}` : ''}`),
   getFeatureImportance: (model = 'xgboost') =>
     request(`/ml/feature-importance?model_name=${encodeURIComponent(model)}`),
+  /** Task #58 — LightGBM importance helper (same endpoint, explicit model). */
+  getLightgbmFeatureImportance: () =>
+    request('/ml/feature-importance?model_name=lightgbm'),
+  /** Task #57/#58 — Isolation Forest anomaly scores for IIP (+ optional VA). */
+  getAnomalies: ({ vsic = 'C', includeVa = true, contamination } = {}) => {
+    const params = new URLSearchParams({
+      vsic_code: vsic,
+      include_va: String(includeVa),
+    })
+    if (contamination != null) params.set('contamination', String(contamination))
+    return request(`/ml/anomaly?${params.toString()}`)
+  },
   trainModels: () => request('/ml/train', { method: 'POST' }),
   forecast: (model, horizon) => request('/ml/forecast', {
     method: 'POST',
     body: JSON.stringify({ model_name: model, horizon_months: horizon }),
   }),
+  /** Task #58 — explicit LightGBM forecast helper. */
+  forecastLightgbm: (horizon = 6) =>
+    request('/ml/forecast', {
+      method: 'POST',
+      body: JSON.stringify({ model_name: 'lightgbm', horizon_months: horizon }),
+    }),
   benchmark: (data) => request('/benchmark/compare', {
     method: 'POST',
     body: JSON.stringify(data),
