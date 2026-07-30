@@ -151,7 +151,8 @@ Quy ước branch mỗi task: `cursor/epic4-phaseP-taskT-slug`
 
 ### Phase 4.1 — DocAI Benchmark (P0)
 
-- [ ] **Task #52 — Extract spike (text PDF first)**  
+- [x] **Task #52 — Extract spike (text PDF first)** ✅ DONE  
+  **Delivered:** `backend/app/services/bctc_extract.py` (pdfplumber rules-first; `source_type=pdf_text`; null+warnings khi thiếu; map `total_equity`). Fixtures `tests/benchmark/fixtures/*.pdf` + `tests/benchmark/test_bctc_extract.py`. **Không** camelot / PaddleOCR / API / FE.  
   **Pre-flight (repo/lib):**
   1. `python -c "import pdfplumber; print(pdfplumber.__version__)"` — phải OK (`pdfplumber` đã trong `requirements.txt`).
   2. Nếu bảng PDF sample fail với pdfplumber: cân nhắc cài **camelot** (`pip install camelot-py[cv]`) hoặc **tabula-py** — ghi optional; chỉ khi fixture cần.
