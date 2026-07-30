@@ -124,6 +124,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(result),
     }),
+  /** Task #64 — safe edit→confirm training signal (no raw PDF/bytes). */
+  benchmarkFeedback: (payload) =>
+    request('/benchmark/feedback', {
+      method: 'POST',
+      body: JSON.stringify(payload),
+    }),
   /** ADR-0003 / Task #50 — honesty label; empty universe stub is valid. */
   getUniverseCoverage: () => request('/universe/coverage'),
 }
