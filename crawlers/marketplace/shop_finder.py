@@ -1,6 +1,7 @@
 """Marketplace shop finder and product scraper orchestration.
 
-ShopMatcher lives in ``ml.shop_matcher``. This module only calls it.
+ShopMatcher lives in ``ml.shop_matcher`` (Task #60 hybrid: RapidFuzz +
+vector/rerank). This module only calls it — scrapers untouched.
 Seed and discovered shops both must pass ``is_match`` at threshold 0.65
 before linking to a company (CONTEXT). Seed rows still tagged
 ``match_source=seed_known_url`` for provenance when they pass.
@@ -187,7 +188,7 @@ def evaluate_discovered_shop(
         "has_checkout": has_checkout,
         "match_confidence": round(float(result["score"]), 3),
         "is_match": True,
-        "match_source": "fuzzy_threshold",
+        "match_source": "hybrid_threshold",
     }
 
 
