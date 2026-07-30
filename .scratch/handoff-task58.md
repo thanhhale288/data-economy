@@ -5,7 +5,8 @@
 **Date:** 2026-07-30  
 **Phase:** Epic 4 Phase 4.2 (Forecast & anomaly)  
 **Base:** `origin/main` (post-#57 / #63)  
-**PR:** _(filled after open)_  
+**PR:** https://github.com/thanhhale288/data-economy/pull/49  
+**Commit:** `f6fe717` 
 
 ---
 
