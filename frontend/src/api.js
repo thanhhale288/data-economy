@@ -64,6 +64,7 @@ export const api = {
   getPipelineJobs: () => request('/pipeline/jobs'),
   getPipelineStatus: () => request('/pipeline/status'),
   getPipelineQuality: () => request('/pipeline/quality'),
+  getMlMonitoring: () => request('/ml/monitoring'),
   triggerCrawl: (crawler, tickers) =>
     request('/pipeline/trigger', {
       method: 'POST',
