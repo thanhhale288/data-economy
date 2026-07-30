@@ -1,7 +1,13 @@
-"""BCTC digital-text PDF extract → BenchmarkInput-compatible fields (Task #52).
+"""BCTC extract → BenchmarkInput-compatible fields (Tasks #52/#53).
 
-Rules-first mapper over pdfplumber text/tables. Missing / ambiguous values stay
-``null`` with warnings — never invent numbers. No DB writes, no OCR, no API.
+Rules-first mapper over digital-text PDF (pdfplumber) with OCR fallback for
+scan/image inputs (PaddleOCR, optional). Missing / ambiguous values stay
+``null`` with warnings — never invent numbers. No DB writes, no API.
+
+Number conventions (same as #52):
+- VN thousands: ``.`` (e.g. ``5.200.000``); western ``,`` also accepted
+- Unit markers ``nghìn`` / ``1.000 VND`` → ×1_000; ``triệu`` → ×1_000_000
+- Default: full VND (CafeF prefill parity); ``employees`` never scaled
 """
 
 from __future__ import annotations
@@ -57,6 +63,12 @@ _AMOUNT_RE = re.compile(
     r"(\(?-?(?:\d{1,3}(?:[.,]\d{3})+|\d+)(?:[.,]\d+)?\)?)"
     r"(?![\w.])"
 )
+
+# PDF text below this → treat as scan and fall back to OCR (router only).
+MIN_PDF_TEXT_CHARS = 50
+
+_IMAGE_SUFFIXES = {".png", ".jpg", ".jpeg", ".webp", ".tif", ".tiff", ".bmp"}
+_PDF_SUFFIXES = {".pdf"}
 
 
 @dataclass
@@ -189,40 +201,38 @@ def _apply_scale(value: float, field_name: str, scale: int) -> float | int:
     return float(value * scale)
 
 
-def extract_bctc_pdf(
-    source: str | Path | bytes | BinaryIO,
+def extract_fields_from_lines(
+    lines: list[str],
+    full_text: str,
+    *,
+    source_type: str = "pdf_text",
+    confidence_scale: float = 1.0,
+    empty_text_warning: str | None = "pdf_text_empty",
 ) -> BctcExtractResult:
-    """Extract BenchmarkInput subset from a digital-text PDF.
+    """Shared rules-first mapper over label+amount lines (text PDF or OCR).
 
-    ``source`` may be a filesystem path, raw bytes, or a binary file object.
+    ``confidence_scale`` down-weights OCR-derived fields (e.g. 0.85). Ambiguous
+    or missing values stay ``null`` — never invent.
     """
     warnings: list[str] = []
     fields: dict[str, float | int | None] = {k: None for k in EXTRACT_FIELDS}
     confidence: dict[str, float] = {k: 0.0 for k in EXTRACT_FIELDS}
 
-    if isinstance(source, (str, Path)):
-        opener = pdfplumber.open(str(source))
-    elif isinstance(source, (bytes, bytearray)):
-        opener = pdfplumber.open(io.BytesIO(source))
-    else:
-        opener = pdfplumber.open(source)
-
-    with opener as pdf:
-        if not pdf.pages:
-            warnings.append("pdf_has_no_pages")
-            return BctcExtractResult(fields=fields, confidence=confidence, warnings=warnings)
-        lines, full_text = _lines_from_pdf(pdf)
-
     if not _norm_ws(full_text):
-        warnings.append("pdf_text_empty")
+        if empty_text_warning:
+            warnings.append(empty_text_warning)
         warnings.append("no_extractable_fields")
-        return BctcExtractResult(fields=fields, confidence=confidence, warnings=warnings)
+        return BctcExtractResult(
+            fields=fields,
+            confidence=confidence,
+            warnings=warnings,
+            source_type=source_type,
+        )
 
     scale, unit_warning = _detect_unit_scale(full_text)
     if unit_warning:
         warnings.append(unit_warning)
 
-    # field → list of (value, confidence, evidence_line)
     hits: dict[str, list[tuple[float | int, float, str]]] = {k: [] for k in EXTRACT_FIELDS}
 
     for line in lines:
@@ -234,12 +244,12 @@ def extract_bctc_pdf(
             warnings.append(f"label_without_amount:{mapped}")
             continue
         if mapped == "employees" and (raw_val < 0 or raw_val != int(raw_val)):
-            # Allow non-int headcount only if close; else skip (no invent).
             if raw_val < 0 or abs(raw_val - round(raw_val)) > 0.01:
                 warnings.append(f"employees_unparseable:{line[:80]}")
                 continue
         value = _apply_scale(raw_val, mapped, scale if mapped != "employees" else 1)
-        conf = 0.9 if abs(float(raw_val)) >= 100 or mapped == "employees" else 0.7
+        base_conf = 0.9 if abs(float(raw_val)) >= 100 or mapped == "employees" else 0.7
+        conf = max(0.0, min(1.0, base_conf * confidence_scale))
         hits[mapped].append((value, conf, line))
 
     for key in EXTRACT_FIELDS:
@@ -250,7 +260,6 @@ def extract_bctc_pdf(
         values = {v for v, _, _ in found}
         if len(values) > 1:
             warnings.append(f"ambiguous_field:{key}")
-            # Do not invent: leave null when conflicting amounts.
             fields[key] = None
             confidence[key] = 0.0
             continue
@@ -262,9 +271,149 @@ def extract_bctc_pdf(
         if "no_extractable_fields" not in warnings:
             warnings.append("no_extractable_fields")
 
-    return BctcExtractResult(fields=fields, confidence=confidence, warnings=warnings)
+    return BctcExtractResult(
+        fields=fields,
+        confidence=confidence,
+        warnings=warnings,
+        source_type=source_type,
+    )
+
+
+def _open_pdf(source: str | Path | bytes | BinaryIO):
+    if isinstance(source, (str, Path)):
+        return pdfplumber.open(str(source))
+    if isinstance(source, (bytes, bytearray)):
+        return pdfplumber.open(io.BytesIO(source))
+    return pdfplumber.open(source)
+
+
+def extract_bctc_pdf(
+    source: str | Path | bytes | BinaryIO,
+) -> BctcExtractResult:
+    """Extract BenchmarkInput subset from a digital-text PDF.
+
+    ``source`` may be a filesystem path, raw bytes, or a binary file object.
+    Does **not** run OCR — use :func:`extract_bctc` for scan fallback.
+    """
+    with _open_pdf(source) as pdf:
+        if not pdf.pages:
+            return BctcExtractResult(
+                fields={k: None for k in EXTRACT_FIELDS},
+                confidence={k: 0.0 for k in EXTRACT_FIELDS},
+                warnings=["pdf_has_no_pages"],
+                source_type="pdf_text",
+            )
+        lines, full_text = _lines_from_pdf(pdf)
+
+    return extract_fields_from_lines(lines, full_text, source_type="pdf_text")
 
 
 def extract_bctc_pdf_dict(source: str | Path | bytes | BinaryIO) -> dict[str, Any]:
     """Dict form of :func:`extract_bctc_pdf` (API-ready)."""
     return extract_bctc_pdf(source).to_dict()
+
+
+def _sniff_kind(
+    source: str | Path | bytes | BinaryIO,
+    *,
+    filename: str | None = None,
+) -> str:
+    """Return ``image``, ``pdf``, or ``unknown``."""
+    name = filename or ""
+    if isinstance(source, (str, Path)):
+        name = name or str(source)
+    suffix = Path(name).suffix.lower()
+    if suffix in _IMAGE_SUFFIXES:
+        return "image"
+    if suffix in _PDF_SUFFIXES:
+        return "pdf"
+
+    head = b""
+    if isinstance(source, (bytes, bytearray)):
+        head = bytes(source[:16])
+    elif hasattr(source, "read") and hasattr(source, "seek"):
+        pos = source.tell()
+        head = source.read(16) or b""
+        source.seek(pos)
+    if head.startswith(b"%PDF"):
+        return "pdf"
+    if head.startswith(b"\x89PNG") or head[:2] == b"\xff\xd8":
+        return "image"
+    if suffix:
+        return "unknown"
+    return "pdf"  # legacy default for pathless bytes used as PDF in #52
+
+
+def _pdf_text_sufficient(full_text: str) -> bool:
+    return len(_norm_ws(full_text)) >= MIN_PDF_TEXT_CHARS
+
+
+def extract_bctc(
+    source: str | Path | bytes | BinaryIO,
+    *,
+    filename: str | None = None,
+) -> BctcExtractResult:
+    """Route digital-text PDF vs OCR fallback (scan PDF / image).
+
+    - Image → ``source_type=image_ocr``
+    - PDF with enough extractable text → ``pdf_text`` (pdfplumber, no OCR)
+    - PDF with little/no text → rasterize + OCR → ``pdf_ocr``
+    """
+    kind = _sniff_kind(source, filename=filename)
+
+    if kind == "image":
+        from backend.app.services.bctc_extract_ocr import extract_bctc_image_ocr
+
+        return extract_bctc_image_ocr(source)
+
+    # PDF (or unknown treated as PDF)
+    with _open_pdf(source) as pdf:
+        if not pdf.pages:
+            return BctcExtractResult(
+                fields={k: None for k in EXTRACT_FIELDS},
+                confidence={k: 0.0 for k in EXTRACT_FIELDS},
+                warnings=["pdf_has_no_pages"],
+                source_type="pdf_text",
+            )
+        lines, full_text = _lines_from_pdf(pdf)
+        page_count = len(pdf.pages)
+
+    if _pdf_text_sufficient(full_text):
+        return extract_fields_from_lines(lines, full_text, source_type="pdf_text")
+
+    # Sparse / empty text → OCR fallback (need bytes for rasterize).
+    from backend.app.services.bctc_extract_ocr import extract_bctc_pdf_ocr
+
+    if isinstance(source, (str, Path)):
+        pdf_bytes = Path(source).read_bytes()
+    elif isinstance(source, (bytes, bytearray)):
+        pdf_bytes = bytes(source)
+    else:
+        pos = source.tell()
+        pdf_bytes = source.read()
+        source.seek(pos)
+
+    if page_count == 0:
+        return BctcExtractResult(
+            fields={k: None for k in EXTRACT_FIELDS},
+            confidence={k: 0.0 for k in EXTRACT_FIELDS},
+            warnings=["pdf_has_no_pages"],
+            source_type="pdf_text",
+        )
+
+    result = extract_bctc_pdf_ocr(pdf_bytes)
+    # Preserve probe signal that digital text was insufficient.
+    if "pdf_text_sparse" not in result.warnings and not _norm_ws(full_text):
+        result.warnings.insert(0, "pdf_text_empty")
+    elif "pdf_text_sparse" not in result.warnings:
+        result.warnings.insert(0, "pdf_text_sparse")
+    return result
+
+
+def extract_bctc_dict(
+    source: str | Path | bytes | BinaryIO,
+    *,
+    filename: str | None = None,
+) -> dict[str, Any]:
+    """Dict form of :func:`extract_bctc` (API-ready)."""
+    return extract_bctc(source, filename=filename).to_dict()
