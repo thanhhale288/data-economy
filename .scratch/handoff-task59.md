@@ -4,7 +4,9 @@
 **Branch:** `cursor/epic4-phase3-task59-product-categorizer`  
 **Date:** 2026-07-30  
 **Phase:** Epic 4 Phase 4.3 (Marketplace NLP)  
-**Base:** `origin/main`  
+**Base:** `origin/main` @ `7383bfc`  
+**Commit:** `7bb4b08`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/46  
 **Embedding path for #60:** **không ship** — TF-IDF + LogisticRegression đủ precision gate trên labeled sample; `sentence-transformers` chưa pin vào `requirements.txt`.
 
 ---
