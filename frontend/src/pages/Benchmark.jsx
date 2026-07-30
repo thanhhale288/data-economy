@@ -145,6 +145,7 @@ const MONEY_FIELDS = [
   'current_assets',
   'current_liabilities',
 ]
+const EXTRACT_LOW_CONFIDENCE = 0.75
 
 const DIGITAL_LABELS = {
   digital_adoption_score: 'Mức độ số hóa kênh bán',
@@ -404,6 +405,18 @@ function formFromPrefill(data) {
   }
 }
 
+function formFromExtract(fields, prevForm) {
+  const money = (v) => displayNum(v, { money: true })
+  return {
+    ...prevForm,
+    operating_revenue: money(fields?.operating_revenue),
+    profit_before_tax: money(fields?.profit_before_tax),
+    employees: displayNum(fields?.employees),
+    total_assets: money(fields?.total_assets),
+    total_equity: money(fields?.total_equity),
+  }
+}
+
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
@@ -603,6 +616,10 @@ export default function Benchmark() {
   const [result, setResult] = useState(null)
   const [loading, setLoading] = useState(false)
   const [error, setError] = useState(null)
+  const [extracting, setExtracting] = useState(false)
+  const [extractMeta, setExtractMeta] = useState(null)
+  const [requireConfirm, setRequireConfirm] = useState(false)
+  const [humanConfirmed, setHumanConfirmed] = useState(false)
 
   useEffect(() => {
     if (vsicFromUrl) {
@@ -613,6 +630,7 @@ export default function Benchmark() {
   const handleChange = (field, value) => {
     setForm((prev) => ({ ...prev, [field]: value }))
     setPrefillSource(null)
+    if (requireConfirm) setHumanConfirmed(false)
   }
 
   const handleMoneyBlur = (field) => {
@@ -649,10 +667,41 @@ export default function Benchmark() {
     }
   }
 
+  const handleUploadExtract = async (file) => {
+    if (!file) return
+    setExtracting(true)
+    setError(null)
+    setResult(null)
+    setPrefillSource(null)
+    try {
+      const extracted = await api.benchmarkExtract(file)
+      setForm((prev) => formFromExtract(extracted.fields, prev))
+      setExtractMeta({
+        confidence: extracted.confidence || {},
+        warnings: extracted.warnings || [],
+        source_type: extracted.source_type || 'unknown',
+        filename: file.name,
+      })
+      setRequireConfirm(true)
+      setHumanConfirmed(false)
+    } catch (err) {
+      console.error(err)
+      setExtractMeta(null)
+      setRequireConfirm(false)
+      setHumanConfirmed(false)
+      setError(err.message || 'Không trích xuất được BCTC.')
+    } finally {
+      setExtracting(false)
+    }
+  }
+
   const loadPrefill = async (stockCode) => {
     setLoading(true)
     setError(null)
     setResult(null)
+    setExtractMeta(null)
+    setRequireConfirm(false)
+    setHumanConfirmed(false)
     try {
       const data = await api.benchmarkPrefill(stockCode)
       setForm(formFromPrefill(data))
@@ -679,6 +728,9 @@ export default function Benchmark() {
     setPrefillSource(null)
     setResult(null)
     setError(null)
+    setExtractMeta(null)
+    setRequireConfirm(false)
+    setHumanConfirmed(false)
   }
 
   const insufficientPeers = (result?.warnings || []).includes('insufficient_peers')
@@ -701,12 +753,32 @@ export default function Benchmark() {
       }
     })
     .filter(Boolean)
+  const lowConfidenceFields = Object.entries(extractMeta?.confidence || {})
+    .filter(([, score]) => typeof score === 'number' && score > 0 && score < EXTRACT_LOW_CONFIDENCE)
+    .map(([key]) => key)
+  const isLowConfidence = (field) => lowConfidenceFields.includes(field)
+  const compareLockedByConfirm = requireConfirm && !humanConfirmed
 
   return (
     <div>
       <h2 className="page-title">So sánh hiệu quả doanh nghiệp</h2>
 
       <div className="toolbar" style={{ marginBottom: 16 }}>
+        <label className="btn" htmlFor="benchmark-upload-input" style={{ cursor: extracting ? 'wait' : 'pointer' }}>
+          {extracting ? 'Đang trích xuất...' : 'Upload BCTC để prefill'}
+        </label>
+        <input
+          id="benchmark-upload-input"
+          type="file"
+          accept=".pdf,.png,.jpg,.jpeg,.webp,.tif,.tiff,.bmp"
+          style={{ display: 'none' }}
+          disabled={extracting || loading}
+          onChange={(e) => {
+            const file = e.target.files?.[0]
+            if (file) handleUploadExtract(file)
+            e.target.value = ''
+          }}
+        />
         <button
           type="button"
           className="btn btn-primary"
@@ -729,6 +801,23 @@ export default function Benchmark() {
         </button>
       </div>
 
+      {extractMeta && (
+        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+          File <strong>{extractMeta.filename}</strong> đã được trích xuất ({extractMeta.source_type}).
+          {extractMeta.warnings?.length > 0 && (
+            <div style={{ marginTop: 6 }}>
+              Cảnh báo: {extractMeta.warnings.join(', ')}
+            </div>
+          )}
+          {lowConfidenceFields.length > 0 && (
+            <div style={{ marginTop: 6 }}>
+              Confidence thấp (&lt; {EXTRACT_LOW_CONFIDENCE}): {lowConfidenceFields.join(', ')}.
+              Hãy kiểm tra kỹ trước khi compare.
+            </div>
+          )}
+        </div>
+      )}
+
       {!prefillSource && !form.operating_revenue && (
         <div className="banner banner-warn" style={{ marginBottom: 16 }}>
           Form trống — bấm «Nạp RAL từ BCTC» hoặc nhập tay các chỉ tiêu.
@@ -748,6 +837,7 @@ export default function Benchmark() {
               value={form.operating_revenue}
               onChange={(e) => handleChange('operating_revenue', e.target.value)}
               onBlur={() => handleMoneyBlur('operating_revenue')}
+              style={isLowConfidence('operating_revenue') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
               required
             />
           </div>
@@ -758,6 +848,7 @@ export default function Benchmark() {
               value={form.profit_before_tax}
               onChange={(e) => handleChange('profit_before_tax', e.target.value)}
               onBlur={() => handleMoneyBlur('profit_before_tax')}
+              style={isLowConfidence('profit_before_tax') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
               required
             />
           </div>
@@ -768,6 +859,7 @@ export default function Benchmark() {
               value={form.employees}
               onChange={(e) => handleChange('employees', e.target.value)}
               onBlur={() => handleMoneyBlur('employees')}
+              style={isLowConfidence('employees') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
               required
             />
           </div>
@@ -823,6 +915,7 @@ export default function Benchmark() {
               value={form.total_assets}
               onChange={(e) => handleChange('total_assets', e.target.value)}
               onBlur={() => handleMoneyBlur('total_assets')}
+              style={isLowConfidence('total_assets') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
             />
           </div>
           <div className="form-group">
@@ -832,6 +925,7 @@ export default function Benchmark() {
               value={form.total_equity}
               onChange={(e) => handleChange('total_equity', e.target.value)}
               onBlur={() => handleMoneyBlur('total_equity')}
+              style={isLowConfidence('total_equity') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
             />
           </div>
           <div className="form-group">
@@ -853,7 +947,23 @@ export default function Benchmark() {
             />
           </div>
         </div>
-        <button type="submit" className="btn btn-primary" disabled={loading} style={{ marginTop: 16 }}>
+        {requireConfirm && (
+          <label style={{ display: 'block', marginTop: 16 }}>
+            <input
+              type="checkbox"
+              checked={humanConfirmed}
+              onChange={(e) => setHumanConfirmed(e.target.checked)}
+            />
+            {' '}
+            Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh
+          </label>
+        )}
+        {compareLockedByConfirm && (
+          <div className="banner banner-warn" style={{ marginTop: 10 }}>
+            Cần xác nhận dữ liệu prefill từ file trước khi bấm compare.
+          </div>
+        )}
+        <button type="submit" className="btn btn-primary" disabled={loading || compareLockedByConfirm} style={{ marginTop: 16 }}>
           {loading ? 'Đang so sánh...' : 'So sánh benchmark'}
         </button>
       </form>

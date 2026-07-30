@@ -273,6 +273,13 @@ class BenchmarkInput(BaseModel):
     current_liabilities: float | None = None
 
 
+class BenchmarkExtractResponse(BaseModel):
+    fields: dict[str, float | int | None]
+    confidence: dict[str, float]
+    warnings: list[str] = []
+    source_type: str
+
+
 class DigitalBenchmark(BaseModel):
     """Digital-adoption comparison against same-division listed peers.
 

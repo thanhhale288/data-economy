@@ -25,8 +25,13 @@ function formatApiError(status, detail) {
 }
 
 async function request(path, options = {}) {
+  const headers = { ...(options.headers || {}) }
+  const isFormData = typeof FormData !== 'undefined' && options.body instanceof FormData
+  if (!isFormData && !headers['Content-Type']) {
+    headers['Content-Type'] = 'application/json'
+  }
   const res = await fetch(`${API_URL}/api${path}`, {
-    headers: { 'Content-Type': 'application/json', ...options.headers },
+    headers,
     ...options,
   })
   if (!res.ok) {
@@ -80,6 +85,14 @@ export const api = {
     body: JSON.stringify(data),
   }),
   benchmarkPrefill: (stockCode) => request(`/benchmark/prefill/${encodeURIComponent(stockCode)}`),
+  benchmarkExtract: (file) => {
+    const form = new FormData()
+    form.append('file', file)
+    return request('/benchmark/extract', {
+      method: 'POST',
+      body: form,
+    })
+  },
   /** ADR-0003 / Task #50 — honesty label; empty universe stub is valid. */
   getUniverseCoverage: () => request('/universe/coverage'),
 }
