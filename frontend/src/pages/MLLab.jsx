@@ -207,18 +207,21 @@ export default function MLLab() {
   return (
     <div>
       <h2 className="page-title">ML Lab — So sánh model IIP</h2>
+      <p className="page-subtitle">
+        So sánh ARIMA / XGBoost / LSTM trên cùng chuỗi IIP. Metric trống hoặc artifact thiếu hiện N/A
+        / cảnh báo — không bịa MAE hay đường dự báo.
+      </p>
 
       {loadError && (
-        <div className="banner banner-warn" style={{ marginBottom: 16 }}>{loadError}</div>
+        <div className="banner banner-warn mb-md" role="alert">{loadError}</div>
       )}
 
       {noRegistry && (
-        <div className="empty-state" style={{ marginBottom: 16 }}>
+        <div className="empty-state mb-md">
           Chưa có model trong <code>model_registry</code> — chạy <code>make bootstrap</code> hoặc
           nút train bên dưới.
         </div>
       )}
-
       <div className="toolbar">
         <select
           value={selectedModel}
@@ -260,7 +263,7 @@ export default function MLLab() {
               </div>
               {m ? (
                 <>
-                  <div className="value" style={{ fontSize: 16 }}>
+                  <div className="value card-value-sm">
                     MAE: {m.metrics?.mae ?? '—'} | RMSE: {m.metrics?.rmse ?? '—'}
                   </div>
                   <div className="sub">
@@ -357,7 +360,7 @@ export default function MLLab() {
       <div className="chart-container">
         <h3>Forecast vs actual IIP — {selectedModel.toUpperCase()}</h3>
         {forecastError && (
-          <div className="banner banner-warn" style={{ marginBottom: 12 }}>{forecastError}</div>
+          <div className="banner banner-warn mb-sm" role="status">{forecastError}</div>
         )}
         {!forecast && !forecastError && (
           <div className="empty-state">
@@ -378,7 +381,7 @@ export default function MLLab() {
           </ResponsiveContainer>
         )}
         {!iip.length && (
-          <div className="banner banner-warn" style={{ marginTop: 12 }}>
+          <div className="banner banner-warn mt-sm" role="status">
             Chưa có chuỗi IIP trên API — cần dữ liệu IIP trước khi đối chiếu forecast.
           </div>
         )}
@@ -403,7 +406,7 @@ export default function MLLab() {
           </ResponsiveContainer>
         )}
         {selectedModel !== 'xgboost' && (
-          <div className="banner banner-warn" style={{ marginTop: 12 }}>
+          <div className="banner banner-warn mt-sm" role="status">
             Model «{selectedModel}» không có feature-importance artifact (ARIMA/LSTM) — chỉ XGBoost.
           </div>
         )}

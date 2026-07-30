@@ -45,6 +45,9 @@ export default function Companies() {
   return (
     <div>
       <h2 className="page-title">{title}</h2>
+      <p className="page-subtitle">
+        Mẫu DN niêm yết trong nền tảng — VSIC peer filter không bịa doanh nghiệp ngoài seed.
+      </p>
       {vsicFilter ? (
         <div className="page-nav-actions filter-actions" role="group" aria-label="Thao tác bộ lọc VSIC">
           <Link to="/companies" className="page-nav-chip">

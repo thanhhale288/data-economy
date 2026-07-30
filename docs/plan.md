@@ -12,9 +12,9 @@ Domain ngắn: `CONTEXT.md` · ADR: `docs/adr/` · Epic 4 chi tiết: [`.scratch
 | Phase 1–5 học kỳ | DONE (trừ #19b) | Checklist đầy đủ → archive §6 |
 | Epic 2 Product-first | DONE | #20–#24 |
 | Epic 3 Data-first Phase 1–2 | DONE | #25–#51 (trừ paused/deferred) |
-| **Epic 4 AI/ML/DL** | **In progress** | Phase 4.1 DocAI — Tasks #53/#54/#55/#56 DONE |
+| **Epic 4 AI/ML/DL** | **In progress** | Phase 4.1 DocAI — #53–#56 DONE; FE Hallmark pass on branch |
 
-**Handoff hiện tại:** `.scratch/handoff-task55.md`  
+**Handoff hiện tại:** `.scratch/handoff-epic4-fe-hallmark-pass.md`  
 **Không đọc:** `docs/knowledge.md` (human glossary; `.cursorignore`).
 
 ---
@@ -72,14 +72,16 @@ Epic 3 paused/deferred **giữ nguyên** — hạ ưu tiên khi xung đột Epic
 
 ## Design system FE
 
-**Đã merge:** PR #27 — palette, sidebar, mobile, Benchmark UX.
+**Đã merge:** PR #27 — palette, sidebar, mobile, Benchmark UX.  
+**FE Hallmark pass (2026-07-30):** branch `cursor/epic4-fe-hallmark-full-pass` — audit + in-place redesign toàn FE (flatten gradients, CTA hierarchy, states, honesty empty/loading/error). Handoff: `.scratch/handoff-epic4-fe-hallmark-pass.md`. Không đổi math/API/#54–#56 flow.
 
-**Không làm lại:** layout/nav, format tiền, KPI strip + MetricInfoTip, radar/quartile (honesty badge = #51).
+**Không làm lại:** layout/nav IA, format tiền, KPI strip + MetricInfoTip, radar/quartile (honesty badge = #51).
 
 | Ưu tiên | Việc | Status |
 |--------|------|--------|
 | P0–P1 honesty Epic 3 | Banner mẫu ~28, warnings, null≠0, CafeF links… | DONE #51 |
 | P1 | Chip URL fail / empty shop discovery | Backlog |
+| P1 | FE Hallmark full pass (anti-slop) | DONE (branch — commit/PR khi user yêu cầu) |
 | P2 | Xu hướng Benchmark theo năm; «Ngành nổi bật» IIP | Blocked data |
 
 ---

@@ -127,18 +127,22 @@ export default function Pipeline() {
   return (
     <div>
       <h2 className="page-title">Pipeline Monitor</h2>
+      <p className="page-subtitle">
+        Theo dõi health nguồn, lần chạy gần nhất và lịch sử job. Trạng thái fallback/unavailable
+        hiện rõ — không giả lập nguồn đã sẵn sàng.
+      </p>
 
       {error && (
-        <div className="empty-state" style={{ marginBottom: 16 }}>
+        <div className="banner banner-warn mb-md" role="alert">
           {error}
         </div>
       )}
 
-      <div className="toolbar">
+      <div className="toolbar pipeline-actions">
         {CRAWLERS.map((c) => (
           <button
             key={c.id}
-            className="btn btn-primary"
+            className={c.id === 'all' ? 'btn btn-primary' : 'btn'}
             disabled={triggering === c.id}
             onClick={() => handleTrigger(c.id)}
           >
@@ -147,9 +151,9 @@ export default function Pipeline() {
         ))}
       </div>
 
-      <div className="chart-container" style={{ marginBottom: 24 }}>
+      <div className="chart-container">
         <h3>Source health</h3>
-        <p className="chart-note" style={{ marginTop: 0 }}>
+        <p className="chart-note mt-0">
           Trạng thái nguồn từ DB + job gần nhất — fallback/unavailable hiện rõ.
           Card <strong>CafeF / BCTC</strong> cho biết có bao nhiêu báo cáo gắn URL CafeF
           so với seed/fallback.
@@ -171,15 +175,15 @@ export default function Pipeline() {
               return (
                 <div className="card" key={src.source}>
                   <div className="label">{src.label}</div>
-                  <div style={{ marginTop: 8 }}>
+                  <div className="mt-sm">
                     <span className={`badge ${badge}`}>{src.status}</span>
                     {src.records != null && (
-                      <span className="sub muted" style={{ marginLeft: 8 }}>
+                      <span className="sub muted gap-inline-sm">
                         {src.records} records
                       </span>
                     )}
                   </div>
-                  <div className="sub muted log-snip" style={{ marginTop: 8 }} title={src.detail || undefined}>
+                  <div className="sub muted log-snip mt-sm" title={src.detail || undefined}>
                     {shortenLog(src.detail) || '—'}
                   </div>
                   <div className="sub muted">
@@ -192,11 +196,11 @@ export default function Pipeline() {
         )}
       </div>
 
-      <div className="chart-container" style={{ marginBottom: 24 }}>
+      <div className="chart-container">
         <h3>Lần chạy cuối (crawl + cleaning)</h3>
         {status?.note && <p className="chart-note">{status.note}</p>}
         {status?.last_runs?.some((r) => r.family === 'data_cleaning' && !r.status) && (
-          <div className="banner banner-warn" style={{ marginBottom: 12 }}>
+          <div className="banner banner-warn mb-sm" role="status">
             Job <code>data_cleaning</code> chưa từng chạy — bấm «Data Cleaning» hoặc{' '}
             <code>make bootstrap</code>. Chưa có parquet sạch / cleaning_report.
           </div>
@@ -208,7 +212,7 @@ export default function Pipeline() {
             {status.last_runs.map((run) => (
               <div className="card" key={run.family}>
                 <div className="label">{FAMILY_LABELS[run.family] || run.family}</div>
-                <div className="value" style={{ fontSize: 18 }}>
+                <div className="value card-value-md">
                   {run.status ? (
                     <span className={`badge ${statusBadge(run.status)}`}>{run.status}</span>
                   ) : (
@@ -222,7 +226,7 @@ export default function Pipeline() {
                   <div className="sub">{run.records_processed} records</div>
                 )}
                 {run.error_message && (
-                  <div className="sub log-snip" style={{ color: 'var(--danger)', fontSize: 12 }} title={run.error_message}>
+                  <div className="sub log-snip text-danger" title={run.error_message}>
                     {shortenLog(run.error_message)}
                   </div>
                 )}
@@ -232,7 +236,7 @@ export default function Pipeline() {
         )}
       </div>
 
-      <div className="chart-container" style={{ marginBottom: 24 }}>
+      <div className="chart-container">
         <h3>Tóm tắt quality report</h3>
         {!quality?.available ? (
           <div className="empty-state">
@@ -241,7 +245,7 @@ export default function Pipeline() {
                 || 'Chưa có cleaning_report.json — chạy Data Cleaning / make bootstrap.'}
             </p>
             {quality?.report_path && (
-              <p className="chart-note" style={{ marginTop: 8 }}>
+              <p className="chart-note mt-sm">
                 Đường dẫn kỳ vọng: <code>{quality.report_path}</code>
               </p>
             )}
@@ -300,13 +304,8 @@ export default function Pipeline() {
                   <td>{formatTs(j.started_at)}</td>
                   <td>{formatTs(j.finished_at)}</td>
                   <td
-                    className="log-snip"
+                    className={`log-snip${j.error_message ? ' text-danger' : ''}`}
                     title={j.error_message || j.detail || undefined}
-                    style={{
-                      color: j.error_message ? 'var(--danger)' : undefined,
-                      fontSize: 12,
-                      maxWidth: 280,
-                    }}
                   >
                     {shortenLog(j.error_message || j.detail, 72) || '—'}
                   </td>

@@ -163,7 +163,7 @@ export default function CompanyDetail() {
     return (
       <div>
         <Link to="/companies">← Quay lại</Link>
-        <div className="empty-state" style={{ marginTop: 16 }}>
+        <div className="empty-state mt-md">
           {error || 'Không tìm thấy doanh nghiệp'}
         </div>
       </div>
@@ -231,11 +231,11 @@ export default function CompanyDetail() {
         )}
       </div>
 
-      <div className="company-header" style={{ marginTop: 16 }}>
+      <div className="company-header mt-md">
         <div>
           <h2>{company.name} ({company.stock_code})</h2>
-          <p style={{ color: 'var(--muted)', marginTop: 4 }}>{company.description || '—'}</p>
-          <div className="metric-strip" style={{ marginTop: 12, marginBottom: 0 }}>
+          <p className="muted-text mt-sm">{company.description || '—'}</p>
+          <div className="metric-strip mt-sm mb-0">
             <span className="metric-chip">
               <strong>Sàn</strong> {company.exchange}
             </span>
@@ -264,13 +264,13 @@ export default function CompanyDetail() {
       </div>
 
       <SampleHonestyBanner
-        style={{ marginTop: 16, marginBottom: 16 }}
+        className="mt-md mb-md"
         coverageNote={coverageNote}
       />
 
-      <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
+      <div className="chart-container story-panel">
         <h3>Câu chuyện số liệu</h3>
-        <ol style={{ margin: '8px 0 0', paddingLeft: 22, lineHeight: 1.65, fontSize: 14 }}>
+        <ol className="narrative-list">
           <li>
             <strong>Hiện diện số</strong> —{' '}
             {presence.length

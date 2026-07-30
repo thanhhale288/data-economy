@@ -762,9 +762,17 @@ export default function Benchmark() {
   return (
     <div>
       <h2 className="page-title">So sánh hiệu quả doanh nghiệp</h2>
+      <p className="page-subtitle">
+        Upload BCTC → trích xuất → kiểm tra/chỉnh sửa → xác nhận → so sánh phân vị với peers niêm yết
+        trong mẫu (không phải chuẩn ngành quốc gia). Thiếu số liệu luôn hiện N/A — không bịa phân vị.
+      </p>
 
-      <div className="toolbar" style={{ marginBottom: 16 }}>
-        <label className="btn" htmlFor="benchmark-upload-input" style={{ cursor: extracting ? 'wait' : 'pointer' }}>
+      <div className="toolbar mb-md">
+        <label
+          className="btn btn-primary"
+          htmlFor="benchmark-upload-input"
+          style={{ cursor: extracting ? 'wait' : 'pointer' }}
+        >
           {extracting ? 'Đang trích xuất...' : 'Upload BCTC để prefill'}
         </label>
         <input
@@ -781,7 +789,7 @@ export default function Benchmark() {
         />
         <button
           type="button"
-          className="btn btn-primary"
+          className="btn"
           onClick={() => loadPrefill('RAL')}
           disabled={loading}
         >
@@ -802,15 +810,15 @@ export default function Benchmark() {
       </div>
 
       {extractMeta && (
-        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+        <div className="banner banner-warn mb-md" role="status">
           File <strong>{extractMeta.filename}</strong> đã được trích xuất ({extractMeta.source_type}).
           {extractMeta.warnings?.length > 0 && (
-            <div style={{ marginTop: 6 }}>
+            <div className="extract-meta-detail">
               Cảnh báo: {extractMeta.warnings.join(', ')}
             </div>
           )}
           {lowConfidenceFields.length > 0 && (
-            <div style={{ marginTop: 6 }}>
+            <div className="extract-meta-detail">
               Confidence thấp (&lt; {EXTRACT_LOW_CONFIDENCE}): {lowConfidenceFields.join(', ')}.
               Hãy kiểm tra kỹ trước khi compare.
             </div>
@@ -818,9 +826,9 @@ export default function Benchmark() {
         </div>
       )}
 
-      {!prefillSource && !form.operating_revenue && (
-        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
-          Form trống — bấm «Nạp RAL từ BCTC» hoặc nhập tay các chỉ tiêu.
+      {!prefillSource && !form.operating_revenue && !extractMeta && (
+        <div className="banner banner-warn mb-md" role="status">
+          Form trống — upload BCTC, bấm «Nạp RAL từ BCTC», hoặc nhập tay các chỉ tiêu.
         </div>
       )}
 
@@ -837,7 +845,7 @@ export default function Benchmark() {
               value={form.operating_revenue}
               onChange={(e) => handleChange('operating_revenue', e.target.value)}
               onBlur={() => handleMoneyBlur('operating_revenue')}
-              style={isLowConfidence('operating_revenue') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
+              className={isLowConfidence('operating_revenue') ? 'field-low-confidence' : undefined}
               required
             />
           </div>
@@ -848,7 +856,7 @@ export default function Benchmark() {
               value={form.profit_before_tax}
               onChange={(e) => handleChange('profit_before_tax', e.target.value)}
               onBlur={() => handleMoneyBlur('profit_before_tax')}
-              style={isLowConfidence('profit_before_tax') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
+              className={isLowConfidence('profit_before_tax') ? 'field-low-confidence' : undefined}
               required
             />
           </div>
@@ -859,7 +867,7 @@ export default function Benchmark() {
               value={form.employees}
               onChange={(e) => handleChange('employees', e.target.value)}
               onBlur={() => handleMoneyBlur('employees')}
-              style={isLowConfidence('employees') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
+              className={isLowConfidence('employees') ? 'field-low-confidence' : undefined}
               required
             />
           </div>
@@ -907,7 +915,7 @@ export default function Benchmark() {
           </div>
         </div>
 
-        <div className="form-grid" style={{ marginTop: 8 }}>
+        <div className="form-grid mt-sm">
           <div className="form-group">
             <label>Tổng tài sản (VND)</label>
             <input
@@ -915,7 +923,7 @@ export default function Benchmark() {
               value={form.total_assets}
               onChange={(e) => handleChange('total_assets', e.target.value)}
               onBlur={() => handleMoneyBlur('total_assets')}
-              style={isLowConfidence('total_assets') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
+              className={isLowConfidence('total_assets') ? 'field-low-confidence' : undefined}
             />
           </div>
           <div className="form-group">
@@ -925,7 +933,7 @@ export default function Benchmark() {
               value={form.total_equity}
               onChange={(e) => handleChange('total_equity', e.target.value)}
               onBlur={() => handleMoneyBlur('total_equity')}
-              style={isLowConfidence('total_equity') ? { borderColor: '#d97706', background: '#fff7ed' } : undefined}
+              className={isLowConfidence('total_equity') ? 'field-low-confidence' : undefined}
             />
           </div>
           <div className="form-group">
@@ -948,41 +956,39 @@ export default function Benchmark() {
           </div>
         </div>
         {requireConfirm && (
-          <label style={{ display: 'block', marginTop: 16 }}>
+          <label className="confirm-check">
             <input
               type="checkbox"
               checked={humanConfirmed}
               onChange={(e) => setHumanConfirmed(e.target.checked)}
             />
-            {' '}
-            Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh
+            <span>Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh</span>
           </label>
         )}
         {compareLockedByConfirm && (
-          <div className="banner banner-warn" style={{ marginTop: 10 }}>
+          <div className="banner banner-warn mt-sm" role="status">
             Cần xác nhận dữ liệu prefill từ file trước khi bấm compare.
           </div>
         )}
-        <button type="submit" className="btn btn-primary" disabled={loading || compareLockedByConfirm} style={{ marginTop: 16 }}>
+        <button type="submit" className="btn btn-primary mt-md" disabled={loading || compareLockedByConfirm}>
           {loading ? 'Đang so sánh...' : 'So sánh benchmark'}
         </button>
       </form>
 
       {error && (
-        <div className="banner banner-warn" style={{ marginTop: 16 }}>
+        <div className="banner banner-warn mt-md" role="alert">
           {error}
         </div>
       )}
 
       {result && (
-        <div style={{ marginTop: 24 }}>
+        <div className="mt-lg">
           {resultWarnings.length > 0 && (
-            <div style={{ marginBottom: 16 }}>
+            <div className="banner-stack">
               {resultWarnings.map((code) => (
                 <div
                   key={code}
                   className="banner banner-warn"
-                  style={{ marginBottom: 8 }}
                   role="status"
                 >
                   <span className="badge badge-warning" style={{ marginRight: 8 }}>
@@ -993,8 +999,8 @@ export default function Benchmark() {
               ))}
             </div>
           )}
-          <div className="chart-container" style={{ marginBottom: 16 }}>
-            <p style={{ fontSize: 14, margin: 0, lineHeight: 1.5 }}>
+          <div className="chart-container mb-md">
+            <p className="chart-note mt-0" style={{ fontSize: 14, color: 'var(--ink-soft)' }}>
               {describePeerScope(result)}
               {insufficientPeers && (
                 <>

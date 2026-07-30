@@ -92,3 +92,8 @@ One chat → many related tasks via waves/subagents; keep branch/PR per task; cl
 
 Tour Task #13–#18 (what/how/gaps) + terms from `CONTEXT.md` (not `knowledge.md`):  
 `.cursor/skills/what-i-dont-know/SKILL.md`.
+
+### Frontend UI (Hallmark)
+
+When editing `frontend/**` UI/layout/styling: `.agents/skills/hallmark/SKILL.md`  
+Rule (globs): `.cursor/rules/frontend-hallmark.mdc`.

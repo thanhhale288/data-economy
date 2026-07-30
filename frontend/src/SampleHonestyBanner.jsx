@@ -53,9 +53,10 @@ function bannerText(coverageNote) {
   return coverageNote.detail || SAMPLE_HONESTY_TEXT
 }
 
-export default function SampleHonestyBanner({ style, coverageNote }) {
+export default function SampleHonestyBanner({ style, className, coverageNote }) {
+  const classes = ['banner', 'banner-warn', className].filter(Boolean).join(' ')
   return (
-    <div className="banner banner-warn" style={style} role="status">
+    <div className={classes} style={style} role="status">
       <span className="badge badge-warning" style={{ marginRight: 8 }}>
         {badgeLabel(coverageNote)}
       </span>
