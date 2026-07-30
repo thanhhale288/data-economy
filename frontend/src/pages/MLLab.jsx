@@ -109,6 +109,9 @@ export default function MLLab() {
   const [selectedModel, setSelectedModel] = useState('xgboost')
   const [forecast, setForecast] = useState(null)
   const [forecastError, setForecastError] = useState(null)
+  const [narrative, setNarrative] = useState(null)
+  const [narrativeLoading, setNarrativeLoading] = useState(false)
+  const [narrativeError, setNarrativeError] = useState(null)
   const [loadError, setLoadError] = useState(null)
   const [loading, setLoading] = useState(true)
   const [training, setTraining] = useState(false)
@@ -176,6 +179,8 @@ export default function MLLab() {
       await reloadCore()
       setForecast(null)
       setForecastError(null)
+      setNarrative(null)
+      setNarrativeError(null)
     } catch (e) {
       setLoadError(e.message || 'Train thất bại')
     } finally {
@@ -186,6 +191,8 @@ export default function MLLab() {
   const handleForecast = async () => {
     setForecastError(null)
     setForecast(null)
+    setNarrative(null)
+    setNarrativeError(null)
     try {
       const result = selectedModel === 'lightgbm'
         ? await api.forecastLightgbm(6)
@@ -200,6 +207,49 @@ export default function MLLab() {
       )
     }
   }
+
+  useEffect(() => {
+    if (!forecast) {
+      setNarrative(null)
+      setNarrativeError(null)
+      setNarrativeLoading(false)
+      return undefined
+    }
+    let cancelled = false
+    setNarrativeLoading(true)
+    setNarrativeError(null)
+    const reg = (models || []).find(
+      (m) => String(m.model_name || '').toLowerCase() === String(forecast.model || '').toLowerCase(),
+    )
+    const metrics = reg?.metrics
+      ? {
+          mae: metricOrNull(reg.metrics.mae),
+          rmse: metricOrNull(reg.metrics.rmse),
+          mape: metricOrNull(reg.metrics.mape),
+        }
+      : null
+    api
+      .forecastNarrative({
+        model: forecast.model,
+        horizon: forecast.horizon,
+        forecasts: forecast.forecasts || [],
+        metrics,
+        load_importance: true,
+      })
+      .then((body) => {
+        if (!cancelled) setNarrative(body)
+      })
+      .catch((err) => {
+        if (!cancelled) {
+          setNarrative(null)
+          setNarrativeError(err.message || 'Không tải được giải thích forecast')
+        }
+      })
+      .finally(() => {
+        if (!cancelled) setNarrativeLoading(false)
+      })
+    return () => { cancelled = true }
+  }, [forecast, models])
 
   const handleReloadAnomaly = async () => {
     setAnomalyError(null)
@@ -296,6 +346,8 @@ export default function MLLab() {
             setSelectedModel(e.target.value)
             setForecast(null)
             setForecastError(null)
+            setNarrative(null)
+            setNarrativeError(null)
           }}
         >
           {MODEL_OPTIONS.map((m) => (
@@ -530,6 +582,54 @@ export default function MLLab() {
           <div className="banner banner-warn mt-sm" role="status">
             Chưa có chuỗi IIP trên API — cần dữ liệu IIP trước khi đối chiếu forecast.
           </div>
+        )}
+      </div>
+
+      <div
+        id="forecast-narrative"
+        className="chart-container story-panel"
+        role="region"
+        aria-label="Giải thích dự báo IIP"
+      >
+        <h3>Giải thích dự báo (horizon / sai số / driver)</h3>
+        <p className="chart-note mt-0">
+          Chỉ trích dẫn số từ forecast API, registry MAE/RMSE/MAPE và artifact feature importance —
+          thiếu importance thì nói thiếu, không bịa nguyên nhân.
+        </p>
+        {!forecast && !narrativeLoading && (
+          <div className="empty-state">
+            Bấm «Dự báo 6 tháng» để xem tóm tắt cạnh đường forecast.
+          </div>
+        )}
+        {narrativeLoading && (
+          <p className="chart-note">Đang soạn giải thích dự báo…</p>
+        )}
+        {narrativeError && (
+          <div className="banner banner-warn" role="alert">
+            {narrativeError}
+          </div>
+        )}
+        {!narrativeLoading && narrative?.narrative && (
+          <>
+            <div className="narrative-list" style={{ listStyle: 'none', paddingLeft: 0 }}>
+              {(narrative.paragraphs?.length
+                ? narrative.paragraphs
+                : narrative.narrative.split(/\n\n+/)).map((para, idx) => (
+                <p key={`fc-narr-${idx}`} className="chart-note" style={{ marginTop: idx === 0 ? 0 : 8 }}>
+                  {para}
+                </p>
+              ))}
+            </div>
+            {narrative.omitted?.length > 0 && (
+              <p className="chart-note muted-text">
+                Bỏ qua (thiếu): {narrative.omitted.join(', ')}
+              </p>
+            )}
+            <p className="chart-note muted-text" style={{ fontSize: 12 }}>
+              Nguồn: {narrative.method === 'llm' ? 'LLM (đã kiểm tra số)' : 'mẫu rules-first'}
+              {narrative.importance_available ? ' · có feature importance' : ' · chưa có importance'}
+            </p>
+          </>
         )}
       </div>
 
