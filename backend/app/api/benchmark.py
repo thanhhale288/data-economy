@@ -2,8 +2,13 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
-from backend.app.schemas import BenchmarkExtractResponse, BenchmarkInput, BenchmarkResult
-from backend.app.services import benchmark_service
+from backend.app.schemas import (
+    BenchmarkExtractResponse,
+    BenchmarkInput,
+    BenchmarkNarrativeResponse,
+    BenchmarkResult,
+)
+from backend.app.services import benchmark_narrative, benchmark_service
 from backend.app.services.bctc_extract import extract_bctc_dict
 
 router = APIRouter()
@@ -17,6 +22,15 @@ def compare_benchmark(data: BenchmarkInput, db: Session = Depends(get_db)):
     warnings — never a fabricated 50th percentile.
     """
     return benchmark_service.run_benchmark(db, data)
+
+
+@router.post("/narrative", response_model=BenchmarkNarrativeResponse)
+def benchmark_narrative_explain(data: BenchmarkResult):
+    """Giải thích percentile/ROA/ROE tiếng Việt chỉ từ số trong BenchmarkResult.
+
+    Không chạy lại compare math; không ghi DB; thiếu metric → omitted / nói thiếu.
+    """
+    return benchmark_narrative.generate_benchmark_narrative(data)
 
 
 @router.post("/extract", response_model=BenchmarkExtractResponse)
