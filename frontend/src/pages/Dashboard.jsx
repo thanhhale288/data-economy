@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { api } from '../api'
-import { formatGrouped, formatMacroVa, formatMoney } from '../format'
+import { formatGrouped, formatMacroVa, formatMoney, formatIndex } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 import SampleHonestyBanner from '../SampleHonestyBanner'
 
@@ -553,9 +553,9 @@ export default function Dashboard() {
           {Object.entries(summary.model_metrics).map(([name, m]) => (
             <div className="metric-chip" key={name}>
               <strong>{name}</strong>
-              <span>MAE {m?.mae ?? '—'}</span>
-              <span>RMSE {m?.rmse ?? '—'}</span>
-              <span>MAPE {m?.mape != null ? `${m.mape}%` : '—'}</span>
+              <span>MAE {formatIndex(m?.mae)}</span>
+              <span>RMSE {formatIndex(m?.rmse)}</span>
+              <span>MAPE {formatIndex(m?.mape, { suffix: '%' })}</span>
             </div>
           ))}
         </div>
@@ -572,8 +572,8 @@ export default function Dashboard() {
             <LineChart data={iipChart}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={(v) => formatIndex(v)} />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Legend />
               <Line
                 type="monotone"
@@ -684,8 +684,8 @@ export default function Dashboard() {
                 <LineChart data={aligned}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tickFormatter={(v) => formatIndex(v)} />
+                  <Tooltip formatter={(value) => formatIndex(value)} />
                   <Legend />
                   <Line
                     type="monotone"
@@ -719,8 +719,8 @@ export default function Dashboard() {
               <LineChart data={aligned}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-                <YAxis />
-                <Tooltip />
+                <YAxis tickFormatter={(v) => formatIndex(v)} />
+                <Tooltip formatter={(value) => formatIndex(value)} />
                 <Legend />
                 <Line
                   type="monotone"

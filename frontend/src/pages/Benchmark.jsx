@@ -11,7 +11,7 @@ import {
   Legend,
 } from 'recharts'
 import { api } from '../api'
-import { formatGrouped, formatMoney, parseGrouped } from '../format'
+import { formatGrouped, formatMoney, parseGrouped, formatIndex } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 
 const METRIC_LABELS = {
@@ -217,8 +217,8 @@ function formatRatio(value, metricKey) {
   ) {
     return `${formatGrouped(value, { maxFractionDigits: 2 })}×`
   }
-  if (value < 10) return `${(value * 100).toFixed(1)}%`
-  return formatGrouped(value)
+  if (value < 10) return `${(value * 100).toFixed(2)}%`
+  return formatGrouped(value, { maxFractionDigits: 2 })
 }
 
 function comparisonLabel(metricKey, comp) {
@@ -378,7 +378,7 @@ function describePeerScope(result) {
 /** Share/ratio as percent string; null → null (caller renders N/A). */
 function formatSharePct(value) {
   if (value == null || typeof value !== 'number') return null
-  return `${(value * 100).toFixed(1)}%`
+  return `${(value * 100).toFixed(2)}%`
 }
 
 function shareToPct(value) {
@@ -480,7 +480,7 @@ function DigitalSection({ digital }) {
           const avg = digital.industry_averages?.[key]
           const comp = digital.comparison?.[key]
           const quartiles = digital.industry_quartiles?.[key]
-          const asPct = (v) => (v == null ? '—' : `${(v * 100).toFixed(1)}%`)
+          const asPct = (v) => (v == null ? '—' : `${(v * 100).toFixed(2)}%`)
           return (
             <div className="card" key={key}>
               <div className="label">{label}</div>
@@ -552,7 +552,7 @@ function ShareDonut({ label, value, tone }) {
         />
       </svg>
       <div className="singstat-donut-center">
-        <span className="singstat-donut-pct">{pct.toFixed(1)}%</span>
+        <span className="singstat-donut-pct">{pct.toFixed(2)}%</span>
       </div>
       <div className="singstat-donut-caption">{label}</div>
     </div>
@@ -580,7 +580,7 @@ function KeyExpenditureRow({ label, industry, firm }) {
                   style={{ width: `${(indPct / maxPct) * 100}%` }}
                 />
               </div>
-              <span className="singstat-key-bar-pct">{indPct.toFixed(1)}%</span>
+              <span className="singstat-key-bar-pct">{indPct.toFixed(2)}%</span>
             </>
           )}
         </div>
@@ -596,7 +596,7 @@ function KeyExpenditureRow({ label, industry, firm }) {
                   style={{ width: `${(firmPct / maxPct) * 100}%` }}
                 />
               </div>
-              <span className="singstat-key-bar-pct">{firmPct.toFixed(1)}%</span>
+              <span className="singstat-key-bar-pct">{firmPct.toFixed(2)}%</span>
             </>
           )}
         </div>
@@ -1066,7 +1066,7 @@ export default function Benchmark() {
                           strokeDasharray="4 4"
                         />
                         <Legend />
-                        <Tooltip />
+                        <Tooltip formatter={(value) => formatIndex(value)} />
                       </RadarChart>
                     </ResponsiveContainer>
 

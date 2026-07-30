@@ -5,6 +5,7 @@ import {
 } from 'recharts'
 import { api } from '../api'
 import MetricInfoTip from '../MetricInfoTip'
+import { formatIndex } from '../format'
 
 const MODEL_OPTIONS = [
   { id: 'arima', label: 'ARIMA', color: '#164654' },
@@ -264,10 +265,10 @@ export default function MLLab() {
               {m ? (
                 <>
                   <div className="value card-value-sm">
-                    MAE: {m.metrics?.mae ?? '—'} | RMSE: {m.metrics?.rmse ?? '—'}
+                    MAE: {formatIndex(m.metrics?.mae)} | RMSE: {formatIndex(m.metrics?.rmse)}
                   </div>
                   <div className="sub">
-                    MAPE: {m.metrics?.mape ?? '—'}%
+                    MAPE: {formatIndex(m.metrics?.mape, { suffix: '%' })}
                     {status ? ` · status: ${status}` : ''}
                     {!m.is_active ? ' · inactive' : ''}
                   </div>
@@ -291,8 +292,8 @@ export default function MLLab() {
             <BarChart data={metricsData}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="name" />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={(v) => formatIndex(v)} />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Legend />
               <Bar dataKey="mae" fill="#367ea2" name="MAE" />
               <Bar dataKey="rmse" fill="#164654" name="RMSE" />
@@ -314,8 +315,8 @@ export default function MLLab() {
             <LineChart data={holdoutCompare}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={(v) => formatIndex(v)} />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="Actual IIP" dot={false} connectNulls={false} />
               {MODEL_OPTIONS.map((opt) => (
@@ -347,8 +348,8 @@ export default function MLLab() {
             <LineChart data={selectedHoldout}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={(v) => formatIndex(v)} />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="Actual" connectNulls={false} />
               <Line type="monotone" dataKey="predicted" stroke="#367ea2" strokeWidth={2} strokeDasharray="5 5" name="Predicted" connectNulls={false} />
@@ -372,8 +373,8 @@ export default function MLLab() {
             <LineChart data={forecastVsActual}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={(v) => formatIndex(v)} />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Legend />
               <Line type="monotone" dataKey="actual" stroke="#164654" strokeWidth={2} name="IIP actual" connectNulls={false} dot={false} />
               <Line type="monotone" dataKey="forecast" stroke="#367ea2" strokeWidth={2} strokeDasharray="5 5" name="Forecast" connectNulls={false} dot={false} />
@@ -398,9 +399,9 @@ export default function MLLab() {
           <ResponsiveContainer width="100%" height={Math.max(280, importanceBars.length * 22)}>
             <BarChart data={importanceBars} layout="vertical" margin={{ left: 120 }}>
               <CartesianGrid strokeDasharray="3 3" />
-              <XAxis type="number" />
+              <XAxis type="number" tickFormatter={(v) => formatIndex(v)} />
               <YAxis type="category" dataKey="feature" width={110} tick={{ fontSize: 11 }} />
-              <Tooltip />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Bar dataKey="gain" fill="#367ea2" name="Gain" />
             </BarChart>
           </ResponsiveContainer>
