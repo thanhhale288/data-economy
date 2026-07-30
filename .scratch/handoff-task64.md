@@ -4,7 +4,9 @@
 **Branch:** `cursor/epic4-phase5-task64-feedback-training-loop`  
 **Date:** 2026-07-30  
 **Phase:** Epic 4 Phase 4.5 (Monitoring & feedback loop)  
-**Base:** `origin/main`  
+**Base:** `origin/main` @ `de96ff1`  
+**Commit:** `93050bc`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/52  
 **Next:** (phase 4.5 closed when #63+#64 merged) — optional Prefect only if OCR batch + retrain needs it later  
 **Prefect:** **không cài** (thin `schedule` hook đủ)
 
