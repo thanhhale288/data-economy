@@ -24,8 +24,9 @@ export function groupDigits(intStr) {
 /**
  * Format a finite number with space thousands separators on the integer part.
  * Keeps a short decimal part when present (no grouping on fraction).
+ * Default maxFractionDigits = 2 so indexes/ratios never dump long floats.
  */
-export function formatGrouped(n, { maxFractionDigits = 6 } = {}) {
+export function formatGrouped(n, { maxFractionDigits = 2 } = {}) {
   const parts = splitSignAndAbs(n)
   if (!parts) return '—'
 
@@ -46,6 +47,17 @@ export function formatGrouped(n, { maxFractionDigits = 6 } = {}) {
   return frac != null && frac.length > 0
     ? `${parts.sign}${grouped}.${frac}`
     : `${parts.sign}${grouped}`
+}
+
+/**
+ * Display helper for indexes / model metrics (MAE, RMSE, MAPE, ratios…).
+ * Caps at 2 decimal places; null/non-finite → '—'.
+ */
+export function formatIndex(n, { maxFractionDigits = 2, suffix = '' } = {}) {
+  if (n == null || n === '') return '—'
+  const formatted = formatGrouped(n, { maxFractionDigits })
+  if (formatted === '—') return '—'
+  return suffix ? `${formatted}${suffix}` : formatted
 }
 
 /** Parse user/API strings that may contain spaces or commas. */

@@ -2,7 +2,7 @@ import { useEffect, useState } from 'react'
 import { useParams, Link } from 'react-router-dom'
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts'
 import { api } from '../api'
-import { formatMoney, formatGrouped } from '../format'
+import { formatMoney, formatGrouped, formatIndex } from '../format'
 import SampleHonestyBanner from '../SampleHonestyBanner'
 
 function formatVND(n) {
@@ -163,7 +163,7 @@ export default function CompanyDetail() {
     return (
       <div>
         <Link to="/companies">← Quay lại</Link>
-        <div className="empty-state" style={{ marginTop: 16 }}>
+        <div className="empty-state mt-md">
           {error || 'Không tìm thấy doanh nghiệp'}
         </div>
       </div>
@@ -231,11 +231,11 @@ export default function CompanyDetail() {
         )}
       </div>
 
-      <div className="company-header" style={{ marginTop: 16 }}>
+      <div className="company-header mt-md">
         <div>
           <h2>{company.name} ({company.stock_code})</h2>
-          <p style={{ color: 'var(--muted)', marginTop: 4 }}>{company.description || '—'}</p>
-          <div className="metric-strip" style={{ marginTop: 12, marginBottom: 0 }}>
+          <p className="muted-text mt-sm">{company.description || '—'}</p>
+          <div className="metric-strip mt-sm mb-0">
             <span className="metric-chip">
               <strong>Sàn</strong> {company.exchange}
             </span>
@@ -264,13 +264,13 @@ export default function CompanyDetail() {
       </div>
 
       <SampleHonestyBanner
-        style={{ marginTop: 16, marginBottom: 16 }}
+        className="mt-md mb-md"
         coverageNote={coverageNote}
       />
 
-      <div className="chart-container" style={{ borderLeft: '4px solid var(--accent, #164654)' }}>
+      <div className="chart-container story-panel">
         <h3>Câu chuyện số liệu</h3>
-        <ol style={{ margin: '8px 0 0', paddingLeft: 22, lineHeight: 1.65, fontSize: 14 }}>
+        <ol className="narrative-list">
           <li>
             <strong>Hiện diện số</strong> —{' '}
             {presence.length
@@ -371,7 +371,7 @@ export default function CompanyDetail() {
           <div className="label">Đóng góp ngành (Digital VA)</div>
           <div className="value" style={{ fontSize: 20 }}>
             {latestMetric?.industry_share_pct != null
-              ? `${latestMetric.industry_share_pct.toFixed(1)}%`
+              ? formatIndex(latestMetric.industry_share_pct, { suffix: '%' })
               : '—'}
           </div>
           <div className="sub muted">Tỷ trọng trong nhóm VSIC cùng mẫu</div>
@@ -473,7 +473,7 @@ export default function CompanyDetail() {
                     <td>{ml.price != null ? formatVND(ml.price) : '—'}</td>
                     <td>{ml.units_sold_est != null ? formatGrouped(ml.units_sold_est) : '—'}</td>
                     <td>{formatVND(ml.revenue_est)}</td>
-                    <td>{ml.rating != null ? ml.rating.toFixed(1) : '—'}</td>
+                    <td>{ml.rating != null ? formatIndex(ml.rating) : '—'}</td>
                     <td>
                       <span className={`badge ${badgeClass}`}>{src}</span>
                     </td>
@@ -526,7 +526,7 @@ export default function CompanyDetail() {
             <div className="metric-strip">
               {Object.entries(quality.components || {}).map(([k, v]) => (
                 <span className="metric-chip" key={k}>
-                  <strong>{k}</strong> {Number(v).toFixed(1)}
+                  <strong>{k}</strong> {formatIndex(v)}
                 </span>
               ))}
             </div>

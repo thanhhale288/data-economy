@@ -4,7 +4,7 @@ import {
   LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer,
 } from 'recharts'
 import { api } from '../api'
-import { formatGrouped, formatMacroVa, formatMoney } from '../format'
+import { formatGrouped, formatMacroVa, formatMoney, formatIndex } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 import SampleHonestyBanner from '../SampleHonestyBanner'
 
@@ -156,12 +156,14 @@ export default function Dashboard() {
   const [forecastError, setForecastError] = useState(null)
   const [coverageNote, setCoverageNote] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [loadError, setLoadError] = useState(null)
 
   useEffect(() => {
     let cancelled = false
 
     async function load() {
       try {
+        setLoadError(null)
         const [s, i, va, van, h, og, cov] = await Promise.all([
           api.getSummary(),
           api.getIip(),
@@ -199,6 +201,9 @@ export default function Dashboard() {
         }
       } catch (err) {
         console.error(err)
+        if (!cancelled) {
+          setLoadError(err.message || 'Không tải được Dashboard')
+        }
       } finally {
         if (!cancelled) setLoading(false)
       }
@@ -209,6 +214,15 @@ export default function Dashboard() {
   }, [])
 
   if (loading) return <div className="loading">Đang tải dữ liệu...</div>
+
+  if (loadError && !summary) {
+    return (
+      <div>
+        <h2 className="page-title">Dashboard — Công nghiệp Chế biến, Chế tạo</h2>
+        <div className="empty-state" role="alert">{loadError}</div>
+      </div>
+    )
+  }
 
   const iipChart = [
     ...iip.map((row) => ({
@@ -304,21 +318,21 @@ export default function Dashboard() {
           : ''}
       </p>
 
-      <SampleHonestyBanner style={{ marginBottom: 16 }} coverageNote={coverageNote} />
+      <SampleHonestyBanner className="mb-md" coverageNote={coverageNote} />
 
       {summary?.iip_latest == null && (
-        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+        <div className="banner banner-warn mb-md" role="status">
           Chưa có IIP Section C trong DB — chạy <code>make bootstrap</code> (seed + crawl GSO).
         </div>
       )}
       {summary?.va_c_latest == null && (
-        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+        <div className="banner banner-warn mb-md" role="status">
           Chưa có VA ngành CBCT (<code>VA_C</code>) trong DB — chạy bootstrap / crawl GSO VA.
           Không ước từ IIP hay Digital VA mẫu.
         </div>
       )}
       {!summary?.preferred_forecast_model && summary?.iip_latest != null && (
-        <div className="banner banner-warn" style={{ marginBottom: 16 }}>
+        <div className="banner banner-warn mb-md" role="status">
           Chưa có model active trong registry — chạy bootstrap/train ML trước khi xem dự báo.
         </div>
       )}
@@ -539,9 +553,9 @@ export default function Dashboard() {
           {Object.entries(summary.model_metrics).map(([name, m]) => (
             <div className="metric-chip" key={name}>
               <strong>{name}</strong>
-              <span>MAE {m?.mae ?? '—'}</span>
-              <span>RMSE {m?.rmse ?? '—'}</span>
-              <span>MAPE {m?.mape != null ? `${m.mape}%` : '—'}</span>
+              <span>MAE {formatIndex(m?.mae)}</span>
+              <span>RMSE {formatIndex(m?.rmse)}</span>
+              <span>MAPE {formatIndex(m?.mape, { suffix: '%' })}</span>
             </div>
           ))}
         </div>
@@ -558,8 +572,8 @@ export default function Dashboard() {
             <LineChart data={iipChart}>
               <CartesianGrid strokeDasharray="3 3" />
               <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-              <YAxis />
-              <Tooltip />
+              <YAxis tickFormatter={(v) => formatIndex(v)} />
+              <Tooltip formatter={(value) => formatIndex(value)} />
               <Legend />
               <Line
                 type="monotone"
@@ -670,8 +684,8 @@ export default function Dashboard() {
                 <LineChart data={aligned}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-                  <YAxis />
-                  <Tooltip />
+                  <YAxis tickFormatter={(v) => formatIndex(v)} />
+                  <Tooltip formatter={(value) => formatIndex(value)} />
                   <Legend />
                   <Line
                     type="monotone"
@@ -705,8 +719,8 @@ export default function Dashboard() {
               <LineChart data={aligned}>
                 <CartesianGrid strokeDasharray="3 3" />
                 <XAxis dataKey="period" tick={{ fontSize: 11 }} minTickGap={24} />
-                <YAxis />
-                <Tooltip />
+                <YAxis tickFormatter={(v) => formatIndex(v)} />
+                <Tooltip formatter={(value) => formatIndex(value)} />
                 <Legend />
                 <Line
                   type="monotone"

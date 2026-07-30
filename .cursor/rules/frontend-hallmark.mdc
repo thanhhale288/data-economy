@@ -1,0 +1,16 @@
+---
+description: Auto-apply Hallmark for frontend UI/layout/styling work in this repo.
+globs: frontend/**/*.{js,jsx,ts,tsx,css,scss,html}
+alwaysApply: false
+---
+
+# Frontend → Hallmark
+
+Khi đang sửa file khớp `frontend/**` và việc liên quan **UI / layout / styling / visual redesign** (không chỉ wire API thuần):
+
+1. Đọc và làm theo `.agents/skills/hallmark/SKILL.md` (announce nếu đang chạy redesign/audit).
+2. Tôn trọng codebase hiện có: routes, component ownership, copy intent, brand dashboard — redesign trong ranh giới implementation trừ khi user xác nhận rebuild.
+3. Không invent GSO/OECD/CafeF/marketplace/forecast numbers để “đẹp chart”.
+4. Nếu chỉ đổi logic/data wiring không đụng visual: không bắt buộc Hallmark.
+
+Trigger phrases trong chat cũng đủ: `hallmark`, `audit`, `redesign`, `study`, polish UI, làm đẹp FE.
