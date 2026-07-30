@@ -5,6 +5,8 @@
 **Date:** 2026-07-30  
 **Phase:** Epic 4 Phase 4.3 (Marketplace NLP)  
 **Base:** `origin/main` @ `84ee06b`  
+**Commit:** `36915e7`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/50  
 **Embedding path from #59:** không reuse — Task #59 ship TF-IDF categorizer only; Task #60 pin `sentence-transformers==3.3.1` độc lập.
 
 ---
