@@ -1,9 +1,10 @@
-from fastapi import APIRouter, Depends, HTTPException
+from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
-from backend.app.schemas import BenchmarkInput, BenchmarkResult
+from backend.app.schemas import BenchmarkExtractResponse, BenchmarkInput, BenchmarkResult
 from backend.app.services import benchmark_service
+from backend.app.services.bctc_extract import extract_bctc_dict
 
 router = APIRouter()
 
@@ -16,6 +17,20 @@ def compare_benchmark(data: BenchmarkInput, db: Session = Depends(get_db)):
     warnings — never a fabricated 50th percentile.
     """
     return benchmark_service.run_benchmark(db, data)
+
+
+@router.post("/extract", response_model=BenchmarkExtractResponse)
+async def extract_benchmark_file(file: UploadFile = File(...)):
+    """Extract benchmark fields from uploaded BCTC file.
+
+    Reuses Task #52/#53 parser + OCR router (no DB writes, no compare side effects).
+    """
+    if not file.filename:
+        raise HTTPException(status_code=400, detail="Uploaded file must include a filename.")
+    content = await file.read()
+    if not content:
+        raise HTTPException(status_code=400, detail="Uploaded file is empty.")
+    return extract_bctc_dict(content, filename=file.filename)
 
 
 @router.get("/prefill/{stock_code}", response_model=BenchmarkInput)
