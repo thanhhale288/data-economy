@@ -417,6 +417,40 @@ function formFromExtract(fields, prevForm) {
   }
 }
 
+/** Snapshot of allowlisted numeric/string fields for Task #64 feedback diffs. */
+function snapshotFormFields(formLike) {
+  const keys = [
+    'stock_code',
+    'vsic_code',
+    'operating_revenue',
+    'profit_before_tax',
+    'employees',
+    'operating_expenses',
+    'cost_of_goods',
+    'rental_cost',
+    'remuneration',
+    'total_assets',
+    'total_equity',
+    'current_assets',
+    'current_liabilities',
+  ]
+  const out = {}
+  for (const key of keys) {
+    const raw = formLike?.[key]
+    if (raw === '' || raw == null) {
+      out[key] = null
+      continue
+    }
+    if (key === 'stock_code' || key === 'vsic_code') {
+      out[key] = String(raw)
+      continue
+    }
+    const n = typeof raw === 'number' ? raw : parseGrouped(raw)
+    out[key] = n == null ? String(raw) : n
+  }
+  return out
+}
+
 function scrollToId(id) {
   document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' })
 }
@@ -624,6 +658,11 @@ export default function Benchmark() {
   const [extractMeta, setExtractMeta] = useState(null)
   const [requireConfirm, setRequireConfirm] = useState(false)
   const [humanConfirmed, setHumanConfirmed] = useState(false)
+  /** Task #64 — prefill/extract snapshot for edit→confirm training signal. */
+  const [prefillSnapshot, setPrefillSnapshot] = useState(null)
+  const [narrative, setNarrative] = useState(null)
+  const [narrativeLoading, setNarrativeLoading] = useState(false)
+  const [narrativeError, setNarrativeError] = useState(null)
 
   useEffect(() => {
     if (vsicFromUrl) {
@@ -646,6 +685,26 @@ export default function Benchmark() {
     })
   }
 
+  const loadNarrative = async (compareResult) => {
+    if (!compareResult) {
+      setNarrative(null)
+      setNarrativeError(null)
+      return
+    }
+    setNarrativeLoading(true)
+    setNarrativeError(null)
+    try {
+      const payload = await api.benchmarkNarrative(compareResult)
+      setNarrative(payload)
+    } catch (err) {
+      console.error(err)
+      setNarrative(null)
+      setNarrativeError(err.message || 'Không tạo được giải thích benchmark.')
+    } finally {
+      setNarrativeLoading(false)
+    }
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault()
     setLoading(true)
@@ -662,9 +721,11 @@ export default function Benchmark() {
       payload.stock_code = payload.stock_code || null
       const res = await api.benchmark(payload)
       setResult(res)
+      await loadNarrative(res)
     } catch (err) {
       console.error(err)
       setResult(null)
+      setNarrative(null)
       setError(err.message || 'Không so sánh được benchmark.')
     } finally {
       setLoading(false)
@@ -676,10 +737,13 @@ export default function Benchmark() {
     setExtracting(true)
     setError(null)
     setResult(null)
+    setNarrative(null)
+    setNarrativeError(null)
     setPrefillSource(null)
     try {
       const extracted = await api.benchmarkExtract(file)
       setForm((prev) => formFromExtract(extracted.fields, prev))
+      setPrefillSnapshot(snapshotFormFields(extracted.fields || {}))
       setExtractMeta({
         confidence: extracted.confidence || {},
         warnings: extracted.warnings || [],
@@ -691,6 +755,7 @@ export default function Benchmark() {
     } catch (err) {
       console.error(err)
       setExtractMeta(null)
+      setPrefillSnapshot(null)
       setRequireConfirm(false)
       setHumanConfirmed(false)
       setError(err.message || 'Không trích xuất được BCTC.')
@@ -703,16 +768,21 @@ export default function Benchmark() {
     setLoading(true)
     setError(null)
     setResult(null)
+    setNarrative(null)
+    setNarrativeError(null)
     setExtractMeta(null)
     setRequireConfirm(false)
     setHumanConfirmed(false)
     try {
       const data = await api.benchmarkPrefill(stockCode)
-      setForm(formFromPrefill(data))
+      const next = formFromPrefill(data)
+      setForm(next)
+      setPrefillSnapshot(snapshotFormFields(next))
       setPrefillSource(data.stock_code || stockCode)
     } catch (err) {
       console.error(err)
       setPrefillSource(null)
+      setPrefillSnapshot(null)
       setError(
         err.message?.includes('404')
           ? `Không tìm thấy BCTC đủ trường để nạp «${stockCode}».`
@@ -720,6 +790,27 @@ export default function Benchmark() {
       )
     } finally {
       setLoading(false)
+    }
+  }
+
+  /** Task #64 — soft POST training signal on confirm (never send raw file). */
+  const postFeedbackSignal = (sourceType) => {
+    if (!prefillSnapshot) return
+    const after = snapshotFormFields(form)
+    api.benchmarkFeedback({
+      before: prefillSnapshot,
+      after,
+      ticker: form.stock_code || prefillSource || null,
+      source_type: sourceType || extractMeta?.source_type || 'docai_extract',
+    }).catch((err) => {
+      console.warn('feedback signal failed', err)
+    })
+  }
+
+  const handleConfirmChange = (checked) => {
+    setHumanConfirmed(checked)
+    if (checked) {
+      postFeedbackSignal(extractMeta?.source_type || 'docai_extract')
     }
   }
 
@@ -731,10 +822,13 @@ export default function Benchmark() {
     }))
     setPrefillSource(null)
     setResult(null)
+    setNarrative(null)
+    setNarrativeError(null)
     setError(null)
     setExtractMeta(null)
     setRequireConfirm(false)
     setHumanConfirmed(false)
+    setPrefillSnapshot(null)
   }
 
   const insufficientPeers = (result?.warnings || []).includes('insufficient_peers')
@@ -964,7 +1058,7 @@ export default function Benchmark() {
             <input
               type="checkbox"
               checked={humanConfirmed}
-              onChange={(e) => setHumanConfirmed(e.target.checked)}
+              onChange={(e) => handleConfirmChange(e.target.checked)}
             />
             <span>Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh</span>
           </label>
@@ -1029,6 +1123,50 @@ export default function Benchmark() {
                 So sánh hiệu quả theo phân vị
               </button>
             </div>
+          </div>
+
+          <div
+            id="benchmark-narrative"
+            className="chart-container story-panel mb-md"
+            role="region"
+            aria-label="Giải thích kết quả benchmark"
+          >
+            <h3>Giải thích ROA / ROE / phân vị</h3>
+            <p className="chart-note mt-0">
+              Chỉ trích dẫn số từ kết quả so sánh vừa nhận — thiếu chỉ số thì bỏ qua, không bịa.
+            </p>
+            {narrativeLoading && (
+              <p className="chart-note">Đang soạn giải thích…</p>
+            )}
+            {narrativeError && (
+              <div className="banner banner-warn" role="alert">
+                {narrativeError}
+              </div>
+            )}
+            {!narrativeLoading && narrative?.narrative && (
+              <>
+                <div className="narrative-list" style={{ listStyle: 'none', paddingLeft: 0 }}>
+                  {(narrative.paragraphs?.length
+                    ? narrative.paragraphs
+                    : narrative.narrative.split(/\n\n+/)).map((para, idx) => (
+                    <p key={`narr-${idx}`} className="chart-note" style={{ marginTop: idx === 0 ? 0 : 8 }}>
+                      {para}
+                    </p>
+                  ))}
+                </div>
+                {narrative.omitted?.length > 0 && (
+                  <p className="chart-note muted-text">
+                    Bỏ qua (thiếu trong kết quả): {narrative.omitted.join(', ')}
+                  </p>
+                )}
+                <p className="chart-note muted-text" style={{ fontSize: 12 }}>
+                  Nguồn: {narrative.method === 'llm' ? 'LLM (đã kiểm tra số)' : 'mẫu rules-first'}
+                </p>
+              </>
+            )}
+            {!narrativeLoading && !narrativeError && !narrative?.narrative && (
+              <div className="empty-state">Chưa có giải thích cho kết quả này.</div>
+            )}
           </div>
 
           <div id="singstat-kpi">

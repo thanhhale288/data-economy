@@ -2,8 +2,14 @@ from fastapi import APIRouter, Depends, File, HTTPException, UploadFile
 from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
-from backend.app.schemas import BenchmarkExtractResponse, BenchmarkInput, BenchmarkResult
-from backend.app.services import benchmark_service
+from backend.app.schemas import (
+    BenchmarkExtractResponse,
+    BenchmarkInput,
+    BenchmarkNarrativeResponse,
+    BenchmarkResult,
+)
+from backend.app.schemas.feedback_signal import FeedbackSignalIn, FeedbackSignalOut
+from backend.app.services import benchmark_narrative, benchmark_service, feedback_signal
 from backend.app.services.bctc_extract import extract_bctc_dict
 
 router = APIRouter()
@@ -19,6 +25,15 @@ def compare_benchmark(data: BenchmarkInput, db: Session = Depends(get_db)):
     return benchmark_service.run_benchmark(db, data)
 
 
+@router.post("/narrative", response_model=BenchmarkNarrativeResponse)
+def benchmark_narrative_explain(data: BenchmarkResult):
+    """Giải thích percentile/ROA/ROE tiếng Việt chỉ từ số trong BenchmarkResult.
+
+    Không chạy lại compare math; không ghi DB; thiếu metric → omitted / nói thiếu.
+    """
+    return benchmark_narrative.generate_benchmark_narrative(data)
+
+
 @router.post("/extract", response_model=BenchmarkExtractResponse)
 async def extract_benchmark_file(file: UploadFile = File(...)):
     """Extract benchmark fields from uploaded BCTC file.
@@ -31,6 +46,19 @@ async def extract_benchmark_file(file: UploadFile = File(...)):
     if not content:
         raise HTTPException(status_code=400, detail="Uploaded file is empty.")
     return extract_bctc_dict(content, filename=file.filename)
+
+
+@router.post("/feedback", response_model=FeedbackSignalOut)
+def benchmark_feedback(data: FeedbackSignalIn):
+    """Store DocAI/Benchmark edit→confirm as a safe training signal.
+
+    Persists field diffs + ticker + source_type + timestamp only.
+    Never stores raw PDF/bytes/API keys (Task #64).
+    """
+    try:
+        return feedback_signal.append_signal(data)
+    except ValueError as exc:
+        raise HTTPException(status_code=400, detail=str(exc)) from exc
 
 
 @router.get("/prefill/{stock_code}", response_model=BenchmarkInput)

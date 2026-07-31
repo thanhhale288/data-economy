@@ -201,7 +201,7 @@ def test_evaluate_discovered_shop_gates_on_threshold():
     )
     assert linked is not None
     assert linked["is_match"] is True
-    assert linked["match_source"] == "fuzzy_threshold"
+    assert linked["match_source"] == "hybrid_threshold"
     assert linked["match_confidence"] >= DEFAULT_THRESHOLD
 
 
@@ -357,9 +357,10 @@ def test_cross_matrix_includes_rubber_peers_after_hygiene(matcher: ShopMatcher):
 def test_train_skips_website_aliases_for_no_shop_tickers(tmp_path, monkeypatch):
     """Do not force website-host aliases onto the 22 no-shop tickers."""
     from ml.shop_matcher import matcher as matcher_mod
+    from ml.shop_matcher.matcher import FuzzyShopMatcher
 
     monkeypatch.setattr(matcher_mod, "MODEL_PATH", tmp_path / "shop_matcher.joblib")
-    m = ShopMatcher()
+    m = FuzzyShopMatcher()
     m.train()
     # HPG has website but no marketplace shop — no seed_aliases forced
     hpg_key = matcher_mod._normalize_text(COMPANIES["HPG"])

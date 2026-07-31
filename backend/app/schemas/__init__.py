@@ -327,6 +327,24 @@ class BenchmarkResult(BaseModel):
     digital: DigitalBenchmark | None = None
 
 
+class BenchmarkNarrativeCitation(BaseModel):
+    field: str
+    value: float | int
+    label: str
+
+
+class BenchmarkNarrativeResponse(BaseModel):
+    """Vietnamese narrative built from BenchmarkResult numbers only (Task #61)."""
+
+    narrative: str
+    paragraphs: list[str] = []
+    method: str = "rules"  # rules | llm
+    citations: list[BenchmarkNarrativeCitation] = []
+    omitted: list[str] = []
+    warnings: list[str] = []
+    message: str | None = None
+
+
 class DashboardSummary(BaseModel):
     iip_latest: float | None = None
     iip_growth_pct: float | None = None
@@ -355,6 +373,42 @@ class DashboardSummary(BaseModel):
 class ForecastRequest(BaseModel):
     model_name: str = "xgboost"
     horizon_months: int = 6
+
+
+class ForecastNarrativePoint(BaseModel):
+    period: date | str | None = None
+    predicted_value: float
+
+
+class ForecastNarrativeRequest(BaseModel):
+    """Payload for Task #62 — cite forecast API numbers (+ optional registry metrics)."""
+
+    model: str = "xgboost"
+    horizon: int
+    forecasts: list[ForecastNarrativePoint] = []
+    metrics: dict[str, float | None] | None = None
+    # When omitted, server loads tree-model importance from disk (xgboost|lightgbm).
+    importance: dict[str, Any] | None = None
+    load_importance: bool = True
+
+
+class ForecastNarrativeCitation(BaseModel):
+    field: str
+    value: float | int
+    label: str
+
+
+class ForecastNarrativeResponse(BaseModel):
+    """Vietnamese narrative from forecast + metrics + importance only (Task #62)."""
+
+    narrative: str
+    paragraphs: list[str] = []
+    method: str = "rules"  # rules | llm
+    citations: list[ForecastNarrativeCitation] = []
+    omitted: list[str] = []
+    warnings: list[str] = []
+    importance_available: bool = False
+    message: str | None = None
 
 
 class CrawlTriggerRequest(BaseModel):

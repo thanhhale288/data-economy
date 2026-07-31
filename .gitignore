@@ -21,6 +21,9 @@ data/raw/*
 !data/raw/company_universe/**
 data/models/*.pkl
 data/models/*.pt
+# Task #64 — local training signals (may contain firm figures; not secrets, but runtime)
+data/feedback/*.jsonl
+!data/feedback/.gitkeep
 *.log
 *.db
 *.db.bak

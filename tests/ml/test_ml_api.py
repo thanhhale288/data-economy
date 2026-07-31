@@ -80,3 +80,23 @@ def test_feature_importance_endpoint_arima_banner(client, tmp_path, monkeypatch)
     body = res.json()
     assert body["available"] is False
     assert "arima" in body["message"].lower()
+
+
+def test_feature_importance_endpoint_lightgbm(client, tmp_path, monkeypatch):
+    monkeypatch.setattr(svc, "MODELS_DIR", tmp_path)
+    (tmp_path / "lightgbm_importance.json").write_text(
+        json.dumps(
+            {
+                "gain": {"iip_lag1": 5.0, "indigo": 1.0},
+                "weight": {"iip_lag1": 2, "indigo": 1},
+                "feature_cols": ["iip_lag1", "indigo"],
+            }
+        ),
+        encoding="utf-8",
+    )
+    res = client.get("/api/ml/feature-importance?model_name=lightgbm")
+    assert res.status_code == 200
+    body = res.json()
+    assert body["available"] is True
+    assert body["model_name"] == "lightgbm"
+    assert body["features"][0]["feature"] == "iip_lag1"

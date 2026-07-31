@@ -9,9 +9,16 @@ from typing import Any
 MODELS_DIR = Path(__file__).resolve().parents[3] / "data" / "models"
 XGB_IMPORTANCE_NAME = "xgboost_importance.json"
 XGB_MODEL_NAME = "xgboost_model.joblib"
+LGBM_IMPORTANCE_NAME = "lightgbm_importance.json"
+LGBM_MODEL_NAME = "lightgbm_model.joblib"
 
 # Models that never produce tree/gain importance artifacts.
 _NO_IMPORTANCE_MODELS = frozenset({"arima", "lstm"})
+# Tree models that write gain/weight importance JSON (+ joblib fallback).
+_TREE_IMPORTANCE_MODELS = {
+    "xgboost": (XGB_IMPORTANCE_NAME, XGB_MODEL_NAME),
+    "lightgbm": (LGBM_IMPORTANCE_NAME, LGBM_MODEL_NAME),
+}
 
 
 def _resolve_dir(artifact_dir: Path | str | None) -> Path:
@@ -102,26 +109,28 @@ def get_feature_importance(
     if name in _NO_IMPORTANCE_MODELS:
         base["message"] = (
             f"Model «{name}» không có artifact feature importance "
-            "(chỉ XGBoost ghi gain/weight từ train #12 — không bịa số)."
+            "(chỉ XGBoost/LightGBM ghi gain/weight — không bịa số)."
         )
         return base
 
-    if name != "xgboost":
+    tree_paths = _TREE_IMPORTANCE_MODELS.get(name)
+    if tree_paths is None:
         base["message"] = (
             f"Không hỗ trợ feature importance cho «{name}» "
-            "(chỉ xgboost — không bịa số)."
+            "(chỉ xgboost|lightgbm — không bịa số)."
         )
         return base
 
-    json_path = out_dir / XGB_IMPORTANCE_NAME
+    json_name, model_name_file = tree_paths
+    json_path = out_dir / json_name
     loaded = _importance_from_json(json_path)
     if loaded is None:
-        loaded = _importance_from_joblib(out_dir / XGB_MODEL_NAME)
+        loaded = _importance_from_joblib(out_dir / model_name_file)
 
     if loaded is None:
         base["message"] = (
-            "Chưa có xgboost_importance.json (và joblib không chứa importance) — "
-            "chạy train ML (#12) trước; không bịa số."
+            f"Chưa có {json_name} (và joblib không chứa importance) — "
+            "chạy train ML trước; không bịa số."
         )
         return base
 

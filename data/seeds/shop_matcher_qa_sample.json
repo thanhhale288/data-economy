@@ -1,0 +1,156 @@
+[
+  {
+    "company": "Công ty Cổ phần Bóng đèn Rạng Đông",
+    "shop": "rangdong_official",
+    "ticker": "RAL",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Sữa Việt Nam",
+    "shop": "vinamilk_official",
+    "ticker": "VNM",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Sữa Việt Nam",
+    "shop": "@vinamilk",
+    "ticker": "VNM",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Tập đoàn FPT",
+    "shop": "fpt_official",
+    "ticker": "FPT",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Tập đoàn Masan",
+    "shop": "masan_consumer",
+    "ticker": "MSN",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+    "shop": "pnj_official",
+    "ticker": "PNJ",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+    "shop": "@pnj",
+    "ticker": "PNJ",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Điện Quang",
+    "shop": "dienquang_officialstore",
+    "ticker": "DQC",
+    "label": 1,
+    "bucket": "seed_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Bóng đèn Rạng Đông",
+    "shop": "rd_lighting_bulb_store",
+    "ticker": "RAL",
+    "label": 1,
+    "bucket": "hard_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Bóng đèn Rạng Đông",
+    "shop": "led_chieusang_congnghiep",
+    "ticker": "RAL",
+    "label": 1,
+    "bucket": "hard_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Điện Quang",
+    "shop": "dq_lighting_vn",
+    "ticker": "DQC",
+    "label": 1,
+    "bucket": "hard_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Sữa Việt Nam",
+    "shop": "sua_tuoi_official_store",
+    "ticker": "VNM",
+    "label": 1,
+    "bucket": "hard_positive"
+  },
+  {
+    "company": "Tập đoàn Hòa Phát",
+    "shop": "hpg_steel_official",
+    "ticker": "HPG",
+    "label": 1,
+    "bucket": "hard_positive"
+  },
+  {
+    "company": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+    "shop": "pnj_jewelry_gold",
+    "ticker": "PNJ",
+    "label": 1,
+    "bucket": "hard_positive"
+  },
+  {
+    "company": "Tập đoàn Hòa Phát",
+    "shop": "rd_lighting_bulb_store",
+    "ticker": "HPG",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Tập đoàn FPT",
+    "shop": "rd_lighting_bulb_store",
+    "ticker": "FPT",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Điện Quang",
+    "shop": "led_chieusang_congnghiep",
+    "ticker": "DQC",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Bóng đèn Rạng Đông",
+    "shop": "vinamilk_official",
+    "ticker": "RAL",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Sữa Việt Nam",
+    "shop": "rangdong_official",
+    "ticker": "VNM",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Tập đoàn Masan",
+    "shop": "pnj_jewelry_gold",
+    "ticker": "MSN",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Nhựa Bình Minh",
+    "shop": "dq_lighting_vn",
+    "ticker": "BMP",
+    "label": 0,
+    "bucket": "hard_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Cơ điện lạnh",
+    "shop": "fpt_official",
+    "ticker": "REE",
+    "label": 0,
+    "bucket": "hard_negative"
+  }
+]
