@@ -666,9 +666,27 @@ def fetch_gso_va(
 
 
 def save_gso_records(db: Session, records: list[dict[str, Any]]) -> int:
-    """Upsert GsoMacro rows on (vsic_code, indicator_code, period). Idempotent."""
-    inserted = 0
+    """Upsert GsoMacro rows on (vsic_code, indicator_code, period). Idempotent.
+
+    Dedupes within the incoming batch first so duplicate keys in one fetch
+    (e.g. overlapping VA expansions) do not hit UNIQUE on flush.
+    """
+    def _period_key(period: Any) -> Any:
+        # Normalize datetime → date so batch keys match the DB unique constraint.
+        if isinstance(period, datetime):
+            return period.date()
+        return period
+
+    # Last-wins within the batch — pending inserts are invisible to later SELECTs.
+    deduped: dict[tuple[str, str, Any], dict[str, Any]] = {}
     for r in records:
+        period = _period_key(r["period"])
+        key = (r["vsic_code"], r["indicator_code"], period)
+        deduped[key] = {**r, "period": period}
+
+    inserted = 0
+    pending: dict[tuple[str, str, Any], GsoMacro] = {}
+    for key, r in deduped.items():
         existing = (
             db.query(GsoMacro)
             .filter(
@@ -678,6 +696,8 @@ def save_gso_records(db: Session, records: list[dict[str, Any]]) -> int:
             )
             .first()
         )
+        if existing is None:
+            existing = pending.get(key)
         if existing:
             existing.value = r["value"]
             existing.unit = r.get("unit", existing.unit)
@@ -693,7 +713,9 @@ def save_gso_records(db: Session, records: list[dict[str, Any]]) -> int:
                 "unit": r.get("unit", "index"),
                 "source": r.get("source", LIVE_SOURCE),
             }
-            db.add(GsoMacro(**payload))
+            row = GsoMacro(**payload)
+            db.add(row)
+            pending[key] = row
             inserted += 1
     db.commit()
     return inserted
