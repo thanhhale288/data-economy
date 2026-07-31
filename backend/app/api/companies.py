@@ -15,8 +15,14 @@ def list_companies(
         default=None,
         description="Filter by VSIC code or 2-digit division (e.g. 27, 2740)",
     ),
+    contributors: bool = Query(
+        default=False,
+        description="If true, only firms with Digital VA > 0; attach contribution share",
+    ),
 ):
-    return company_service.list_companies(db, vsic=vsic)
+    return company_service.list_companies(
+        db, vsic=vsic, contributors_only=contributors
+    )
 
 
 @router.get("/{stock_code}", response_model=CompanyDetail)
