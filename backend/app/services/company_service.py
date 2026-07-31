@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from sqlalchemy.orm import Session, joinedload
 
-from backend.app.models import Company, DigitalPresence, MarketplaceListing
+from backend.app.models import Company, DigitalMetric, DigitalPresence, MarketplaceListing
 from backend.app.schemas import (
     CompanyCaseStudyOut,
     CompanyCrawlEventOut,
@@ -22,12 +22,36 @@ _MARKETPLACE_PLATFORMS = frozenset({"shopee", "tiktok", "lazada"})
 _RAL_CODE = "RAL"
 
 
+def _latest_digital_va_by_company(db: Session) -> dict[int, float]:
+    """Max digital_va_contribution per company (same proxy as heatmap)."""
+    from sqlalchemy import func
+
+    rows = (
+        db.query(
+            DigitalMetric.company_id,
+            func.max(DigitalMetric.digital_va_contribution).label("va"),
+        )
+        .group_by(DigitalMetric.company_id)
+        .all()
+    )
+    return {
+        int(r.company_id): float(r.va)
+        for r in rows
+        if r.va is not None and float(r.va) > 0
+    }
+
+
 def list_companies(
     db: Session,
     *,
     vsic: str | None = None,
+    contributors_only: bool = False,
 ) -> list[CompanyOut]:
-    """List companies; optional ``vsic`` filters by code or 2-digit division prefix."""
+    """List companies; optional ``vsic`` filters by code or 2-digit division prefix.
+
+    When ``contributors_only`` is true, keep only firms with Digital VA > 0
+    (heatmap drill-down) and attach contribution + share within the result set.
+    """
     q = db.query(Company)
     if vsic:
         prefix = vsic.strip()
@@ -35,7 +59,32 @@ def list_companies(
             q = q.filter(Company.vsic_code.startswith(prefix))
         else:
             q = q.filter(Company.vsic_code == prefix)
-    return q.order_by(Company.stock_code).all()
+    companies = q.order_by(Company.stock_code).all()
+
+    if not contributors_only:
+        return [CompanyOut.model_validate(c) for c in companies]
+
+    va_by_id = _latest_digital_va_by_company(db)
+    contributors = [c for c in companies if c.id in va_by_id]
+    total_va = sum(va_by_id[c.id] for c in contributors)
+    out: list[CompanyOut] = []
+    for c in contributors:
+        va = va_by_id[c.id]
+        share = round((va / total_va) * 100, 2) if total_va > 0 else None
+        row = CompanyOut.model_validate(c)
+        out.append(
+            row.model_copy(
+                update={
+                    "digital_va_contribution": round(va, 2),
+                    "digital_va_share_pct": share,
+                }
+            )
+        )
+    out.sort(
+        key=lambda r: (r.digital_va_contribution is not None, r.digital_va_contribution or 0.0),
+        reverse=True,
+    )
+    return out
 
 
 def peer_companies(db: Session, stock_code: str, *, limit: int = 12) -> list[Company]:

@@ -641,6 +641,21 @@ td.num,
   color: var(--ink);
 }
 
+/* Digital benchmark: only 2 cards, keep balanced on wide screens */
+.digital-benchmark .chart-note,
+.digital-benchmark .quartile-legend {
+  max-width: 920px;
+}
+
+.digital-benchmark-cards {
+  grid-template-columns: repeat(2, minmax(280px, 360px));
+  justify-content: center;
+  gap: 16px;
+  max-width: 920px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
 .table-scroll {
   width: 100%;
   max-width: 100%;
@@ -1859,6 +1874,11 @@ tr:hover {
     margin-bottom: 12px;
   }
 
+  .digital-benchmark-cards {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    max-width: none;
+  }
+
   .form-grid {
     grid-template-columns: 1fr;
     gap: 12px;
@@ -1922,6 +1942,10 @@ tr:hover {
   .singstat-donut-row {
     max-width: none;
     gap: 16px;
+  }
+
+  .digital-benchmark-cards {
+    grid-template-columns: 1fr;
   }
 
   .singstat-key-row {
