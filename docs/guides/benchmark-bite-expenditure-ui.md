@@ -27,8 +27,9 @@ Computed in `compute_benchmark_ratios` / `_ratios_from_report` via `_safe_div` (
 |----------------|---------|------------------|
 | `expenditure_related_ratio` | `operating_expenses / operating_revenue` | Cost intensity vs revenue |
 | `purchase_goods_share` | `cost_of_goods / operating_expenses` | COGS share of opex (“Of which” purchases) |
-| `rental_cost_share` | `rental_cost / operating_expenses` | Rental share of opex |
 | `remuneration_share` | `remuneration / operating_expenses` | Labour cost share of opex |
+
+`rental_cost` / `rental_cost_share` remain in the API schema for honesty/null peers but are **hidden from Benchmark UX** (BCTC rarely isolates rent).
 
 **Peers:** same formulas on each peer’s latest annual `FinancialReport` (`revenue` stands in for `operating_revenue`). Null BCTC fields stay null — no fill.
 
@@ -48,8 +49,8 @@ Empty optional strings are sent as JSON `null` (see submit handler in `Benchmark
 | Số nhân viên | `employees` | `employees` | yes |
 | Chi phí hoạt động (VND) | `operating_expenses` | `operating_expenses` | no — needed for expenditure ratios |
 | Giá vốn hàng bán (VND) | `cost_of_goods` | `cost_of_goods` | no — `purchase_goods_share` |
-| Chi phí thuê (VND) | `rental_cost` | `rental_cost` | no — `rental_cost_share` |
-| Chi phí lương (VND) | `remuneration` | `remuneration` | no — `remuneration_share` |
+| Chi phí nhân công (thuyết minh) (VND) | `remuneration` | `remuneration` | no — `remuneration_share` |
+| ~~Chi phí thuê~~ | — | `rental_cost` | **hidden in UX** — API may still return null share |
 | Tổng tài sản / Vốn CSH / TSNH / Nợ NH | `total_assets`, `total_equity`, `current_assets`, `current_liabilities` | same | no — ROA/ROE/liquidity |
 
 **Prefill:** `GET /api/benchmark/prefill/{stock_code}` → `formFromPrefill` maps the same keys from latest BCTC (`revenue` → `operating_revenue`). 404 if revenue / PBT / employees missing — UI must not invent fill values.
@@ -80,7 +81,7 @@ Run API + FE locally (`uvicorn` :8000, Vite :5173). Prefer seeded Postgres/SQLit
 
 1. **Empty form** — banner “Form trống”; no invented defaults in inputs.
 2. **Prefill RAL** — fields fill from BCTC; note shows `/api/benchmark/prefill/RAL`.
-3. **Compare with peers (e.g. VSIC 27 / RAL)** — peer_count &gt; 0; core metrics + expenditure cards when opex/COGS/rental/remuneration present; percentiles numeric where peers have data.
+3. **Compare with peers (e.g. VSIC 27 / RAL)** — peer_count &gt; 0; core metrics + expenditure cards when opex/COGS/remuneration present; percentiles numeric where peers have data. No rental field in the form.
 4. **Expenditure null honesty** — clear `operating_expenses` (or COGS only); affected shares absent or N/A; other metrics still compute.
 5. **Demo thiếu peer (VSIC 1100)** — badge/`warnings` include `insufficient_peers`; Percentile: N/A; TB ngành: N/A; firm ratios still shown if inputs complete.
 6. **Prefill BMP** (or thin BCTC) — expect honest 404 / error copy, not fake employees.
