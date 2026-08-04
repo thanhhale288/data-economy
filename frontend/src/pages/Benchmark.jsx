@@ -129,8 +129,7 @@ const WARNING_LABELS = {
 
 const KEY_EXPENDITURE_ROWS = [
   { key: 'purchase_goods_share', label: 'Chi phí hàng hóa & nguyên vật liệu' },
-  { key: 'rental_cost_share', label: 'Chi phí thuê mặt bằng' },
-  { key: 'remuneration_share', label: 'Chi phí nhân công (thù lao)' },
+  { key: 'remuneration_share', label: 'Chi phí nhân công (thuyết minh)' },
 ]
 
 const MONEY_FIELDS = [
@@ -138,7 +137,6 @@ const MONEY_FIELDS = [
   'profit_before_tax',
   'operating_expenses',
   'cost_of_goods',
-  'rental_cost',
   'remuneration',
   'total_assets',
   'total_equity',
@@ -175,7 +173,6 @@ const EMPTY_FORM = {
   employees: '',
   operating_expenses: '',
   cost_of_goods: '',
-  rental_cost: '',
   remuneration: '',
   total_assets: '',
   total_equity: '',
@@ -396,7 +393,6 @@ function formFromPrefill(data) {
     employees: displayNum(data.employees),
     operating_expenses: money(data.operating_expenses),
     cost_of_goods: money(data.cost_of_goods),
-    rental_cost: money(data.rental_cost),
     remuneration: money(data.remuneration),
     total_assets: money(data.total_assets),
     total_equity: money(data.total_equity),
@@ -427,7 +423,6 @@ function snapshotFormFields(formLike) {
     'employees',
     'operating_expenses',
     'cost_of_goods',
-    'rental_cost',
     'remuneration',
     'total_assets',
     'total_equity',
@@ -993,16 +988,7 @@ export default function Benchmark() {
               />
             </div>
             <div className="form-group">
-              <label>Chi phí thuê mặt bằng (VND)</label>
-              <input
-                inputMode="numeric"
-                value={form.rental_cost}
-                onChange={(e) => handleChange('rental_cost', e.target.value)}
-                onBlur={() => handleMoneyBlur('rental_cost')}
-              />
-            </div>
-            <div className="form-group">
-              <label>Chi phí nhân công / thù lao (VND)</label>
+              <label>Chi phí nhân công (thuyết minh) (VND)</label>
               <input
                 inputMode="numeric"
                 value={form.remuneration}
