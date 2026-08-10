@@ -18,8 +18,10 @@ from PIL import Image
 
 from backend.app.services.bctc_extract import (
     EXTRACT_FIELDS,
+    MAX_BCTC_PAGES,
     BctcExtractResult,
     _norm_ws,
+    _pages_capped_warning,
     extract_fields_from_lines,
 )
 
@@ -102,20 +104,30 @@ def ocr_image_to_lines(image: str | Path | Image.Image | bytes) -> tuple[list[st
             os.unlink(tmp_path)
 
 
-def pdf_bytes_to_images(pdf_bytes: bytes, *, scale: float = _PDF_RENDER_SCALE) -> list[Image.Image]:
-    """Rasterize PDF pages with pypdfium2 (no poppler / pdf2image)."""
+def pdf_bytes_to_images(
+    pdf_bytes: bytes,
+    *,
+    scale: float = _PDF_RENDER_SCALE,
+    max_pages: int = MAX_BCTC_PAGES,
+) -> tuple[list[Image.Image], int]:
+    """Rasterize PDF pages with pypdfium2 (no poppler / pdf2image).
+
+    Returns ``(images, total_page_count)``. Only the first ``max_pages`` are
+    rendered; callers should surface ``pages_capped:N`` when total exceeds N.
+    """
     import pypdfium2 as pdfium
 
     doc = pdfium.PdfDocument(pdf_bytes)
     images: list[Image.Image] = []
     try:
-        for i in range(len(doc)):
+        total = len(doc)
+        for i in range(min(total, max_pages)):
             page = doc[i]
             bitmap = page.render(scale=scale)
             images.append(bitmap.to_pil())
     finally:
         doc.close()
-    return images
+    return images, total
 
 
 def _unavailable_result(source_type: str) -> BctcExtractResult:
@@ -190,7 +202,7 @@ def extract_bctc_pdf_ocr(source: str | Path | bytes | BinaryIO) -> BctcExtractRe
         pdf_bytes = source.read()
 
     try:
-        pages = pdf_bytes_to_images(pdf_bytes)
+        pages, total_pages = pdf_bytes_to_images(pdf_bytes)
     except Exception as exc:  # noqa: BLE001
         return BctcExtractResult(
             fields={k: None for k in EXTRACT_FIELDS},
@@ -222,4 +234,8 @@ def extract_bctc_pdf_ocr(source: str | Path | bytes | BinaryIO) -> BctcExtractRe
             source_type="pdf_ocr",
         )
 
-    return _result_from_ocr_lines(all_lines, all_scores, source_type="pdf_ocr")
+    result = _result_from_ocr_lines(all_lines, all_scores, source_type="pdf_ocr")
+    capped = _pages_capped_warning(total_pages)
+    if capped:
+        result.warnings.insert(0, capped)
+    return result

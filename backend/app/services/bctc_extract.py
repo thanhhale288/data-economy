@@ -30,6 +30,9 @@ EXTRACT_FIELDS: tuple[str, ...] = (
     "total_equity",
 )
 DEFAULT_FIELD_CONFIDENCE_THRESHOLD = 0.75
+# Hard cap for every PDF path (text + OCR): BS/P&L (+ early notes) fit here;
+# full audits are often 50+ pages and blow OCR latency.
+MAX_BCTC_PAGES = 15
 
 # Longer / more specific aliases first (substring match on folded labels).
 # Folded = lowercased + Vietnamese diacritics stripped.
@@ -175,10 +178,20 @@ def _extract_amount_from_line(line: str) -> float | None:
     return candidates[-1]
 
 
-def _lines_from_pdf(pdf: pdfplumber.PDF) -> tuple[list[str], str]:
+def _pages_capped_warning(total_pages: int, *, max_pages: int = MAX_BCTC_PAGES) -> str | None:
+    if total_pages > max_pages:
+        return f"pages_capped:{max_pages}"
+    return None
+
+
+def _lines_from_pdf(
+    pdf: pdfplumber.PDF,
+    *,
+    max_pages: int = MAX_BCTC_PAGES,
+) -> tuple[list[str], str]:
     lines: list[str] = []
     chunks: list[str] = []
-    for page in pdf.pages:
+    for page in pdf.pages[:max_pages]:
         text = page.extract_text() or ""
         chunks.append(text)
         for raw in text.splitlines():
@@ -312,9 +325,14 @@ def extract_bctc_pdf(
                 warnings=["pdf_has_no_pages"],
                 source_type="pdf_text",
             )
+        total_pages = len(pdf.pages)
         lines, full_text = _lines_from_pdf(pdf)
 
-    return extract_fields_from_lines(lines, full_text, source_type="pdf_text")
+    result = extract_fields_from_lines(lines, full_text, source_type="pdf_text")
+    capped = _pages_capped_warning(total_pages)
+    if capped:
+        result.warnings.insert(0, capped)
+    return result
 
 
 def extract_bctc_pdf_dict(source: str | Path | bytes | BinaryIO) -> dict[str, Any]:
@@ -384,11 +402,15 @@ def extract_bctc(
                 warnings=["pdf_has_no_pages"],
                 source_type="pdf_text",
             )
-        lines, full_text = _lines_from_pdf(pdf)
         page_count = len(pdf.pages)
+        lines, full_text = _lines_from_pdf(pdf)
 
     if _pdf_text_sufficient(full_text):
-        return extract_fields_from_lines(lines, full_text, source_type="pdf_text")
+        result = extract_fields_from_lines(lines, full_text, source_type="pdf_text")
+        capped = _pages_capped_warning(page_count)
+        if capped:
+            result.warnings.insert(0, capped)
+        return result
 
     # Sparse / empty text → OCR fallback (need bytes for rasterize).
     from backend.app.services.bctc_extract_ocr import extract_bctc_pdf_ocr
