@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import io
 
-from pypdf import PdfWriter
+import pypdfium2 as pdfium
 
 from backend.app.services.bctc_extract import (
     MAX_BCTC_PAGES,
@@ -15,12 +15,16 @@ from backend.app.services.bctc_extract_ocr import pdf_bytes_to_images
 
 
 def _blank_pdf_bytes(n_pages: int) -> bytes:
-    writer = PdfWriter()
-    for _ in range(n_pages):
-        writer.add_blank_page(width=200, height=200)
-    buf = io.BytesIO()
-    writer.write(buf)
-    return buf.getvalue()
+    """Build a blank multi-page PDF with pypdfium2 (already a project dep)."""
+    doc = pdfium.PdfDocument.new()
+    try:
+        for _ in range(n_pages):
+            doc.new_page(200, 200)
+        buf = io.BytesIO()
+        doc.save(buf)
+        return buf.getvalue()
+    finally:
+        doc.close()
 
 
 def test_max_bctc_pages_constant():
