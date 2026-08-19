@@ -32,12 +32,13 @@ MODELS_DIR = REPO_ROOT / "data" / "models"
 DEFAULT_BASELINE_PATH = MODELS_DIR / "ml_monitoring_baseline.json"
 
 # Canonical forecast models the monitor always reports (even if registry empty).
-CANONICAL_MODELS: tuple[str, ...] = ("arima", "xgboost", "lstm")
+CANONICAL_MODELS: tuple[str, ...] = ("arima", "xgboost", "lightgbm", "lstm")
 
 # Disk artifacts used to set artifact_present (honesty when file missing).
 ARTIFACT_CANDIDATES: dict[str, tuple[str, ...]] = {
     "arima": ("arima_model.joblib",),
     "xgboost": ("xgboost_model.joblib", "xgboost_importance.json"),
+    "lightgbm": ("lightgbm_model.joblib", "lightgbm_importance.json"),
     "lstm": ("lstm_model.pt", "lstm_meta.joblib"),
 }
 
