@@ -222,6 +222,65 @@ Nightly worker (`PYTHONPATH=. python -m pipeline.dags.scheduler`) runs `ml_train
 
 **Do not commit** `data/models/*.pt` or LightGBM/XGBoost `.joblib` binaries from a local train. Artifacts are machine-generated; gitignore covers `*.pt` and LightGBM joblib names.
 
+## PaddleOCR extra (Epic 5 Task #69)
+
+**Decision:** default is **lazy-load** PaddleOCR on first scanned PDF/image extract. The Docker image **does not** install `requirements-ocr.txt` (`backend/Dockerfile` copies only `requirements.txt`). Do **not** bake OCR into the image unless an operator explicitly asks in a later task.
+
+Code path: `backend/app/services/bctc_extract_ocr.py` — `paddleocr_available()` ImportError → warnings `ocr_unavailable` + `no_extractable_fields`; `_ocr_engine()` is an `lru_cache` singleton, models under `~/.paddlex`. Extract field formulas are unchanged.
+
+### Without the extra (default demo / CI)
+
+`POST /api/benchmark/extract` still accepts scan PDFs and images. The OCR path returns all fields `null` plus those warnings — it does **not** invent numbers.
+
+Frontend (Task #66, `frontend/src/extractWarningCopy.js`) maps `ocr_unavailable` to:
+
+> Máy chủ chưa có OCR. Dùng nạp CafeF (prefill) hoặc PDF chữ chọn được (selectable text) — bản scan sẽ để form trống.
+
+**Workaround:** nạp CafeF (prefill) on the Benchmark form, or upload a selectable-text PDF. Scan-only files stay empty.
+
+### Install extra (local operator only)
+
+```bash
+source .venv/bin/activate
+pip install -r requirements-ocr.txt
+```
+
+PaddlePaddle CPU wheels use the vendor index documented in `requirements-ocr.txt`:
+
+```bash
+pip install paddlepaddle==3.3.0 -i https://www.paddlepaddle.org.cn/packages/stable/cpu/
+pip install paddleocr==3.7.0
+```
+
+Not part of default CI (`pip install -r requirements.txt` only). Do not add this extra to `backend/Dockerfile`.
+
+Smoke after install:
+
+```bash
+python -c "from paddleocr import PaddleOCR; print('ok')"
+```
+
+### Env and first init
+
+- `PADDLE_PDX_DISABLE_MODEL_SOURCE_CHECK` — `_ocr_engine()` already `os.environ.setdefault(..., "True")`. Setting it in `.env` is optional.
+- First engine init is **slow** and needs network: models download to `~/.paddlex`. **Do not commit** that directory or model binaries.
+- Later extracts in the same process reuse the singleton.
+
+### pytest
+
+OCR integration tests are marked `ocr` (`pytest.ini`) and use `pytest.importorskip("paddleocr")`. Default CI `pytest -q` skips them when the extra is missing.
+
+```bash
+# Default CI / machines without PaddleOCR
+PYTHONPATH=. pytest -q
+PYTHONPATH=. pytest -q -m "not ocr"
+
+# Only after pip install -r requirements-ocr.txt (first run downloads ~/.paddlex)
+PYTHONPATH=. pytest -q -m ocr
+```
+
+Do **not** change extract formulas to work around a missing extra.
+
 
 ## Online vs offline
 
