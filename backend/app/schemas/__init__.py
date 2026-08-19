@@ -1,7 +1,7 @@
 from datetime import date, datetime
 from typing import Any
 
-from pydantic import BaseModel, ConfigDict
+from pydantic import BaseModel, ConfigDict, model_validator
 
 # Shallow Section C universe stub (ADR-0003) — re-export for convenience.
 from backend.app.schemas.universe import (  # noqa: E402
@@ -43,6 +43,24 @@ class CompanyOut(BaseModel):
     # Optional — filled when listing heatmap contributors (Digital VA > 0).
     digital_va_contribution: float | None = None
     digital_va_share_pct: float | None = None
+    # Seed / Task #40 audit provenance — not a live HTTP status code.
+    website_verify_status: str | None = None  # ok | fail | unknown
+    website_verify_reason: str | None = None  # e.g. ssl_unverified
+
+    @model_validator(mode="after")
+    def attach_website_verify(self):
+        if self.website_verify_status in {"ok", "fail", "unknown"}:
+            return self
+        from backend.app.services.website_verify import resolve_website_verify
+
+        rec = resolve_website_verify(
+            stock_code=self.stock_code,
+            website_url=self.website_url,
+            digital_channels=self.digital_channels,
+        )
+        self.website_verify_status = rec.status
+        self.website_verify_reason = rec.reason
+        return self
 
 
 class CompanyCrawlEventOut(BaseModel):

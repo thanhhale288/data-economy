@@ -15,6 +15,7 @@ from backend.app.models import (
     MarketplaceListing,
     VsicCode,
 )
+from backend.app.services.website_verify import merge_website_verify_into_channels
 
 DATA_DIR = Path(__file__).resolve().parents[2] / "data"
 
@@ -232,6 +233,7 @@ def load_companies(db) -> tuple[int, int]:
     inserted = 0
     updated = 0
     for c in companies:
+        channels = merge_website_verify_into_channels(c)
         existing = db.query(Company).filter(Company.stock_code == c["stock_code"]).first()
         if existing:
             for field in (
@@ -243,11 +245,13 @@ def load_companies(db) -> tuple[int, int]:
                 "digital_channels",
                 "description",
             ):
-                setattr(
-                    existing,
-                    field,
-                    c.get(field) if field != "has_ecommerce_site" else c.get(field, False),
-                )
+                if field == "has_ecommerce_site":
+                    value = c.get(field, False)
+                elif field == "digital_channels":
+                    value = channels
+                else:
+                    value = c.get(field)
+                setattr(existing, field, value)
             _upsert_financial(db, existing.id, c.get("financial", {}))
             _upsert_digital_presence(db, existing.id, c.get("digital_presence", []))
             _upsert_marketplace_listings(
@@ -263,7 +267,7 @@ def load_companies(db) -> tuple[int, int]:
             exchange=c["exchange"],
             website_url=c.get("website_url"),
             has_ecommerce_site=c.get("has_ecommerce_site", False),
-            digital_channels=c.get("digital_channels"),
+            digital_channels=channels,
             description=c.get("description"),
         )
         db.add(company)
