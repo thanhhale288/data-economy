@@ -4,6 +4,7 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContaine
 import { api } from '../api'
 import { formatMoney, formatGrouped, formatIndex } from '../format'
 import SampleHonestyBanner from '../SampleHonestyBanner'
+import { websiteVerifyChip } from '../websiteVerifyChip'
 
 function formatVND(n) {
   return formatMoney(n, 'VND')
@@ -93,6 +94,12 @@ function humanizeQualityNote(note) {
   }
   if (raw.includes('listing') && (raw.includes('Shopee') || raw.includes('online est'))) {
     return 'Chưa có sản phẩm nào trên Shopee, TikTok hay Lazada. Ước tính doanh thu online có thể bằng 0.'
+  }
+  if (raw.includes('ssl_unverified') || raw.includes('chưa verify được')) {
+    return 'Địa chỉ website trên hồ sơ chưa verify được (SSL/fetch). Không có nghĩa là doanh nghiệp không có thương mại điện tử.'
+  }
+  if (raw.includes('chưa được đo') && raw.includes('Website')) {
+    return 'Website chưa được đo. Không suy checkout hay thương mại điện tử từ trạng thái này.'
   }
   if (raw.includes('Website URL') || raw.includes('digital_presence.website')) {
     return 'Hồ sơ có địa chỉ website, nhưng chưa xác minh được kênh website đang hoạt động.'
@@ -249,6 +256,7 @@ export default function CompanyDetail() {
       : quality?.status === 'partial'
         ? 'badge-warning'
         : 'badge-warning'
+  const verifyChip = websiteVerifyChip(company)
 
   return (
     <div>
@@ -295,6 +303,11 @@ export default function CompanyDetail() {
               ) : (
                 '—'
               )}
+              {verifyChip ? (
+                <span className={`badge ${verifyChip.badgeClass}`} title={verifyChip.title}>
+                  {verifyChip.label}
+                </span>
+              ) : null}
             </span>
             <span className="metric-chip">
               <strong>TMĐT</strong>{' '}

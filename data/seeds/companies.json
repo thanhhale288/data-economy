@@ -923,12 +923,19 @@
     "vsic_code": "2710",
     "exchange": "HOSE",
     "website_url": "https://gelex-electric.com",
+    "website_verify_status": "fail",
+    "website_verify_reason": "ssl_unverified",
     "has_ecommerce_site": false,
     "description": "Thiết bị điện; peer VSIC 2710 với REE.",
     "digital_channels": {
       "website": true,
       "shopee": false,
-      "tiktok": false
+      "tiktok": false,
+      "website_verify": {
+        "status": "fail",
+        "reason": "ssl_unverified",
+        "source": "epic3_task40_audit"
+      }
     },
     "financial": {
       "period": "2024-12-31",

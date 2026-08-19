@@ -2,6 +2,7 @@ import { useEffect, useMemo, useState } from 'react'
 import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api'
 import { formatMoney } from '../format'
+import { digitalChannelNames, websiteVerifyChip } from '../websiteVerifyChip'
 
 export default function Companies() {
   const [searchParams] = useSearchParams()
@@ -102,12 +103,8 @@ export default function Companies() {
           </thead>
           <tbody>
             {companies.map((c) => {
-              const channels = c.digital_channels
-                ? Object.entries(c.digital_channels)
-                    .filter(([, v]) => v)
-                    .map(([k]) => k)
-                    .join(', ')
-                : ''
+              const channels = digitalChannelNames(c.digital_channels).join(', ')
+              const verifyChip = websiteVerifyChip(c)
               return (
                 <tr key={c.stock_code}>
                   <td>
@@ -141,6 +138,15 @@ export default function Companies() {
                     ) : (
                       '—'
                     )}
+                    {verifyChip ? (
+                      <span
+                        className={`badge ${verifyChip.badgeClass}`}
+                        title={verifyChip.title}
+                        style={{ marginLeft: 8 }}
+                      >
+                        {verifyChip.label}
+                      </span>
+                    ) : null}
                   </td>
                   <td>
                     <span className={`badge ${c.has_ecommerce_site ? 'badge-success' : 'badge-warning'}`}>

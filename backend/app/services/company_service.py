@@ -5,6 +5,13 @@ from __future__ import annotations
 from sqlalchemy.orm import Session, joinedload
 
 from backend.app.models import Company, DigitalMetric, DigitalPresence, MarketplaceListing
+from backend.app.services.website_verify import (
+    FAIL_NOTE,
+    UNKNOWN_NOTE,
+    WEBSITE_VERIFY_FAIL,
+    WEBSITE_VERIFY_UNKNOWN,
+    resolve_website_verify,
+)
 from backend.app.schemas import (
     CompanyCaseStudyOut,
     CompanyCrawlEventOut,
@@ -229,6 +236,16 @@ def compute_data_quality(
     components["website_presence"] = 20.0 if has_website else 0.0
     if not has_website:
         notes.append("Thiếu kênh website đã xác minh.")
+
+    verify = resolve_website_verify(
+        stock_code=company.stock_code,
+        website_url=company.website_url,
+        digital_channels=company.digital_channels,
+    )
+    if verify.status == WEBSITE_VERIFY_FAIL:
+        notes.append(FAIL_NOTE)
+    elif verify.status == WEBSITE_VERIFY_UNKNOWN:
+        notes.append(UNKNOWN_NOTE)
 
     # Marketplace channel (0–20)
     mkt_presence = [
