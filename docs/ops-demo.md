@@ -162,7 +162,18 @@ print(discover_shops_for_company(ral, enabled=True, allowlist=[{
 unset MARKETPLACE_DISCOVERY_ENABLED
 ```
 
+## Feedback alias harvest (Epic 5 Task #79)
+
+JSONL field diffs → markdown/JSON **proposals** only. Does **not** patch `_LABEL_ALIASES`. See `PYTHONPATH=. python scripts/harvest_feedback_aliases.py --help`.
+
+```bash
+PYTHONPATH=. python scripts/harvest_feedback_aliases.py \
+  --input tests/benchmark/fixtures/feedback_alias_harvest.jsonl \
+  --markdown-out /tmp/feedback-alias-harvest.md
+```
+
 ## Bootstrap (recommended)
+
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate
