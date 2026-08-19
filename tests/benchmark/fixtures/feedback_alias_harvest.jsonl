@@ -1,0 +1,5 @@
+{"id": "fix-1", "timestamp": "2026-08-01T00:00:00", "ticker": "RAL", "source_type": "docai_extract", "diff_count": 1, "field_diffs": [{"field": "operating_revenue", "before": 5200, "after": 5200000}]}
+{"id": "fix-2", "timestamp": "2026-08-02T00:00:00", "ticker": "RAL", "source_type": "docai_extract", "diff_count": 1, "field_diffs": [{"field": "operating_revenue", "before": 4800, "after": 4800000}]}
+{"id": "fix-3", "timestamp": "2026-08-03T00:00:00", "ticker": "HPG", "source_type": "docai_extract", "diff_count": 1, "field_diffs": [{"field": "operating_revenue", "before": 12000, "after": 12000000}]}
+{"id": "fix-4", "timestamp": "2026-08-04T00:00:00", "ticker": "VNM", "source_type": "cafef_prefill", "diff_count": 1, "field_diffs": [{"field": "employees", "before": 100, "after": 120}]}
+{"id": "fix-5", "timestamp": "2026-08-05T00:00:00", "ticker": "VNM", "source_type": "cafef_prefill", "diff_count": 1, "field_diffs": [{"field": "employees", "before": 90, "after": 95}]}
