@@ -5,7 +5,7 @@
 **Date:** 2026-08-19  
 **Phase:** Epic 5 Phase 5.1 (DocAI harden)  
 **Base:** `origin/main` @ `58d2bc2`  
-**Commit / PR:** (filled after `gh pr create`)
+**Commit / PR:** `3bbc230` — https://github.com/thanhhale288/data-economy/pull/62
 
 ---
 
