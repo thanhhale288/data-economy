@@ -208,3 +208,111 @@ def test_llm_missing_key_uses_rules(monkeypatch):
         load_importance=False,
     )
     assert out["method"] == "rules"
+
+
+def _honest_forecast_llm_text() -> str:
+    """Numbers citeable from the default forecast + mae 1.0 payload."""
+    return "Horizon 6 tháng. Giá trị dự báo 98.12. MAE 1.0."
+
+
+def _patch_httpx_post(monkeypatch, captured: dict):
+    import httpx
+
+    class _Resp:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict:
+            return {
+                "choices": [
+                    {"message": {"content": captured.get("content", _honest_forecast_llm_text())}}
+                ]
+            }
+
+    def fake_post(url, *args, **kwargs):
+        captured["url"] = url
+        captured["json"] = kwargs.get("json")
+        return _Resp()
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+
+
+def _generate_with_key():
+    return generate_forecast_narrative(
+        _forecast_payload(),
+        metrics={"mae": 1.0},
+        importance={"available": False, "message": "Thiếu importance"},
+        load_importance=False,
+    )
+
+
+def test_llm_posts_default_openai_url(monkeypatch):
+    monkeypatch.setenv("FORECAST_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("FORECAST_NARRATIVE_LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("NARRATIVE_LLM_BASE_URL", raising=False)
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    out = _generate_with_key()
+    assert captured["url"] == "https://api.openai.com/v1/chat/completions"
+    assert captured["json"]["model"] == "gpt-4o-mini"
+    assert out["method"] == "llm"
+
+
+def test_llm_posts_gemini_openai_compatible_url(monkeypatch):
+    monkeypatch.setenv("FORECAST_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv(
+        "FORECAST_NARRATIVE_LLM_BASE_URL",
+        "https://generativelanguage.googleapis.com/v1beta/openai",
+    )
+    monkeypatch.setenv("NARRATIVE_LLM_BASE_URL", "https://api.openai.com/v1")
+    monkeypatch.setenv("FORECAST_NARRATIVE_LLM_MODEL", "gemini-2.0-flash")
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    out = _generate_with_key()
+    assert captured["url"] == (
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+    )
+    assert captured["json"]["model"] == "gemini-2.0-flash"
+    assert out["method"] == "llm"
+
+
+def test_llm_full_endpoint_kept_as_is(monkeypatch):
+    monkeypatch.setenv("FORECAST_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv(
+        "FORECAST_NARRATIVE_LLM_BASE_URL",
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions/",
+    )
+    monkeypatch.delenv("NARRATIVE_LLM_BASE_URL", raising=False)
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    _generate_with_key()
+    assert captured["url"] == (
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+    )
+
+
+def test_llm_shared_base_url_fallback(monkeypatch):
+    monkeypatch.setenv("FORECAST_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("FORECAST_NARRATIVE_LLM_BASE_URL", raising=False)
+    monkeypatch.setenv("NARRATIVE_LLM_BASE_URL", "https://api.openai.com/v1")
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    _generate_with_key()
+    assert captured["url"] == "https://api.openai.com/v1/chat/completions"
+
+
+def test_llm_invented_number_falls_back_to_rules(monkeypatch):
+    monkeypatch.setenv("FORECAST_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("FORECAST_NARRATIVE_LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("NARRATIVE_LLM_BASE_URL", raising=False)
+    captured: dict = {"content": "IIP sẽ tăng 99.99 điểm vì một nguyên nhân bịa."}
+    _patch_httpx_post(monkeypatch, captured)
+    out = _generate_with_key()
+    assert out["method"] == "rules"
+    assert "99.99" not in out["narrative"]
+    assert "llm_fallback_rules" in out["warnings"]
