@@ -12,6 +12,7 @@ import {
 } from 'recharts'
 import { api } from '../api'
 import { formatGrouped, formatMoney, parseGrouped, formatIndex } from '../format'
+import { extractWarningCopy } from '../extractWarningCopy'
 import MetricInfoTip from '../MetricInfoTip'
 
 const METRIC_LABELS = {
@@ -906,9 +907,11 @@ export default function Benchmark() {
         <div className="banner banner-warn mb-md" role="status">
           File <strong>{extractMeta.filename}</strong> đã được trích xuất ({extractMeta.source_type}).
           {extractMeta.warnings?.length > 0 && (
-            <div className="extract-meta-detail">
-              Cảnh báo: {extractMeta.warnings.join(', ')}
-            </div>
+            <ul className="extract-meta-detail extract-warning-list">
+              {extractMeta.warnings.map((token, i) => (
+                <li key={`${i}-${token}`}>{extractWarningCopy(token)}</li>
+              ))}
+            </ul>
           )}
           {lowConfidenceFields.length > 0 && (
             <div className="extract-meta-detail">
