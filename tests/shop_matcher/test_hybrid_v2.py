@@ -6,7 +6,15 @@ import json
 
 import pytest
 
-from ml.shop_matcher import DEFAULT_THRESHOLD, FuzzyShopMatcher, HybridShopMatcher, ShopMatcher
+from ml.shop_matcher import (
+    BACKEND_ENV,
+    DEFAULT_EMBEDDER_BACKEND,
+    DEFAULT_THRESHOLD,
+    FuzzyShopMatcher,
+    HybridShopMatcher,
+    ShopMatcher,
+    resolve_embedder_backend,
+)
 from ml.shop_matcher.evaluate import (
     build_default_qa_rows,
     ensure_qa_sample_file,
@@ -19,6 +27,7 @@ def test_default_shop_matcher_is_hybrid():
     assert ShopMatcher is HybridShopMatcher
     m = ShopMatcher(embedder_backend="tfidf")
     assert isinstance(m, HybridShopMatcher)
+    assert m._embedder_backend_pref == "tfidf"
 
 
 def test_sentence_transformers_importable():
@@ -143,3 +152,34 @@ def test_hybrid_train_persists_artifact(tmp_path, monkeypatch):
     assert m2.is_match(
         "Công ty Cổ phần Bóng đèn Rạng Đông", "rangdong_official"
     )
+
+
+def test_runtime_backend_env_defaults_to_tfidf(monkeypatch):
+    """CI / production: unset env must stay tfidf (no Hub download)."""
+    monkeypatch.delenv(BACKEND_ENV, raising=False)
+    assert DEFAULT_EMBEDDER_BACKEND == "tfidf"
+    assert resolve_embedder_backend() == "tfidf"
+    m = ShopMatcher()
+    assert m._embedder_backend_pref == "tfidf"
+    assert m._embedder.backend_requested == "tfidf"
+
+
+def test_runtime_backend_env_invalid_falls_back_to_tfidf(monkeypatch):
+    monkeypatch.setenv(BACKEND_ENV, "not-a-backend")
+    assert resolve_embedder_backend() == "tfidf"
+    m = ShopMatcher()
+    assert m._embedder_backend_pref == "tfidf"
+
+
+def test_explicit_backend_wins_over_env(monkeypatch):
+    monkeypatch.setenv(BACKEND_ENV, "sentence_transformers")
+    assert resolve_embedder_backend("tfidf") == "tfidf"
+    m = HybridShopMatcher(embedder_backend="tfidf")
+    assert m._embedder_backend_pref == "tfidf"
+
+
+def test_runtime_backend_env_reads_sentence_transformers_without_loading(monkeypatch):
+    """Env is honored, but tests must not construct ST (would hit Hub)."""
+    monkeypatch.setenv(BACKEND_ENV, "sentence_transformers")
+    assert resolve_embedder_backend() == "sentence_transformers"
+    # Skip constructing HybridShopMatcher here — CI must not download Hub.
