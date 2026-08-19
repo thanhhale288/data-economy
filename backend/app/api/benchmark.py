@@ -3,6 +3,8 @@ from sqlalchemy.orm import Session
 
 from backend.app.database import get_db
 from backend.app.schemas import (
+    BctcConsistencyIn,
+    BctcConsistencyOut,
     BenchmarkExtractResponse,
     BenchmarkInput,
     BenchmarkNarrativeResponse,
@@ -10,6 +12,7 @@ from backend.app.schemas import (
 )
 from backend.app.schemas.feedback_signal import FeedbackSignalIn, FeedbackSignalOut
 from backend.app.services import benchmark_narrative, benchmark_service, feedback_signal
+from backend.app.services.bctc_consistency import check_consistency
 from backend.app.services.bctc_extract import extract_bctc_dict
 
 router = APIRouter()
@@ -59,6 +62,36 @@ def benchmark_feedback(data: FeedbackSignalIn):
         return feedback_signal.append_signal(data)
     except ValueError as exc:
         raise HTTPException(status_code=400, detail=str(exc)) from exc
+
+
+@router.post("/consistency", response_model=BctcConsistencyOut)
+def check_bctc_consistency(data: BctcConsistencyIn, db: Session = Depends(get_db)):
+    """So sánh các trường extract/nhập tay với BCTC lịch sử trong DB cho cùng ticker.
+
+    Flags các trường lệch ≥ 10% so với kỳ annual gần nhất.
+    Không overwrite DB — chỉ đọc và báo cáo.
+    Trả có_db_record=false nếu ticker không tìm thấy — không invent.
+    """
+    report = check_consistency(db, data.ticker, data.fields)
+    return BctcConsistencyOut(
+        ticker=report.ticker,
+        period=report.period,
+        report_type=report.report_type,
+        flags=[
+            {
+                "extract_field": f.extract_field,
+                "db_column": f.db_column,
+                "extract_value": f.extract_value,
+                "db_value": f.db_value,
+                "rel_deviation": f.rel_deviation,
+                "severity": f.severity,
+                "note": f.note,
+            }
+            for f in report.flags
+        ],
+        has_db_record=report.has_db_record,
+        summary=report.summary,
+    )
 
 
 @router.get("/prefill/{stock_code}", response_model=BenchmarkInput)
