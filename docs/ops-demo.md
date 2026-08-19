@@ -193,6 +193,36 @@ Redis is started by compose but **not required** for seed, cleaning, features, o
 
 Do **not** skip cleaning/features before train. Do **not** invent GSO/OECD/CafeF numbers when crawl fails — use explicit fallback and surface status in the UI.
 
+## LightGBM train + monitoring (Epic 5 Task #71)
+
+`train_all_models` already fits LightGBM on the same IIP feature frame as XGBoost (target stays `iip`; never switched to VA). `GET /api/ml/monitoring` always lists **lightgbm** with arima / xgboost / lstm. Untrained → metrics `null` + `registry_missing` / `artifact_missing` — no invented MAPE.
+
+Soft-fail if the `lightgbm` package is missing (`status=unavailable`); do not install darts.
+
+**Train on local DB** (API up, or script; after seed + clean + features):
+
+```bash
+# HTTP — same trainer as the Pipeline job `ml_training`
+curl -sS -X POST http://localhost:8000/api/ml/train
+
+# CLI wrapper
+./run.sh train
+
+# Direct trainer (writes data/models/lightgbm_model.joblib + lightgbm_importance.json)
+PYTHONPATH=. python -c "
+from backend.app.database import SessionLocal
+from ml.models.trainer import train_all_models
+db = SessionLocal()
+print(train_all_models(db))
+db.close()
+"
+```
+
+Nightly worker (`PYTHONPATH=. python -m pipeline.dags.scheduler`) runs `ml_training` → `train_all_models` after `feature_engineering`.
+
+**Do not commit** `data/models/*.pt` or LightGBM/XGBoost `.joblib` binaries from a local train. Artifacts are machine-generated; gitignore covers `*.pt` and LightGBM joblib names.
+
+
 ## Online vs offline
 
 | Mode | What happens |

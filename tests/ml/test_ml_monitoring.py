@@ -39,15 +39,19 @@ def test_missing_registry_metrics_are_null_with_warning(db_session, tmp_path):
         models_dir=models_dir,
     )
 
-    assert status.counters.models_tracked == 3
+    assert status.counters.models_tracked == 4
     assert status.counters.models_with_metrics == 0
-    assert status.counters.models_missing_metrics == 3
+    assert status.counters.models_missing_metrics == 4
     assert status.counters.baseline_available is False
     assert status.counters.models_with_drift == 0
     assert any("drift_unavailable" in w for w in status.warnings)
 
+    names = {snap.model_name for snap in status.models}
+    assert names == set(svc.CANONICAL_MODELS)
+    assert "lightgbm" in names
+
     for snap in status.models:
-        assert snap.model_name in ("arima", "xgboost", "lstm")
+        assert snap.model_name in ("arima", "xgboost", "lightgbm", "lstm")
         assert snap.metrics.get("mae") is None
         assert snap.metrics.get("rmse") is None
         assert snap.metrics.get("mape") is None
@@ -125,7 +129,7 @@ def test_present_metrics_and_baseline_compute_drift(db_session, tmp_path):
 
     assert status.counters.baseline_available is True
     assert status.counters.models_with_metrics == 2
-    assert status.counters.models_missing_metrics == 1  # lstm still missing
+    assert status.counters.models_missing_metrics == 2  # lstm + lightgbm still missing
     assert status.counters.artifacts_on_disk >= 2
 
     by_name = {s.model_name: s for s in status.models}
@@ -147,6 +151,15 @@ def test_present_metrics_and_baseline_compute_drift(db_session, tmp_path):
     assert "metrics_missing" in (lstm.warning or "") or "registry_missing" in (
         lstm.warning or ""
     )
+
+    lgbm = by_name["lightgbm"]
+    assert lgbm.metrics.get("mae") is None
+    assert lgbm.metrics.get("rmse") is None
+    assert lgbm.metrics.get("mape") is None
+    assert lgbm.drift_flag is None
+    assert lgbm.drift_score is None
+    assert "registry_missing" in (lgbm.warning or "")
+    assert lgbm.artifact_present is False
 
 
 def test_no_fake_drift_without_baseline_even_with_metrics(db_session, tmp_path):
@@ -196,8 +209,30 @@ def test_api_ml_monitoring_endpoint(db_session, monkeypatch):
         assert "models" in body
         assert body["backend"] == "sqlalchemy_registry"
         assert body["great_expectations"] is False
-        assert body["counters"]["models_tracked"] >= 3
+        assert body["counters"]["models_tracked"] >= 4
         # Empty DB → honesty warnings, no invented drift
         assert any(m["drift_flag"] is None for m in body["models"])
     finally:
         app.dependency_overrides.clear()
+
+def test_lightgbm_artifact_candidates_honesty(db_session, tmp_path):
+    """Untrained LightGBM stays in the monitor with null metrics; disk files flip artifact_present."""
+    models_dir = tmp_path / "models"
+    models_dir.mkdir()
+
+    status = svc.get_monitoring_status(
+        db_session,
+        baseline_path=tmp_path / "no_baseline.json",
+        models_dir=models_dir,
+    )
+    by_name = {s.model_name: s for s in status.models}
+    snap = by_name["lightgbm"]
+    assert snap.metrics["mape"] is None
+    assert snap.warning is not None
+    assert "registry_missing" in snap.warning
+    assert snap.artifact_present is False
+
+    (models_dir / "lightgbm_model.joblib").write_bytes(b"fake")
+    (models_dir / "lightgbm_importance.json").write_text("{}", encoding="utf-8")
+    assert svc.artifact_present("lightgbm", models_dir=models_dir) is True
+

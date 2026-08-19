@@ -21,6 +21,9 @@ data/raw/*
 !data/raw/company_universe/**
 data/models/*.pkl
 data/models/*.pt
+# LightGBM train artifacts (Task #71) — regenerate locally; do not commit binaries
+data/models/lightgbm_model.joblib
+data/models/lightgbm_features.joblib
 # Task #64 — local training signals (may contain firm figures; not secrets, but runtime)
 data/feedback/*.jsonl
 !data/feedback/.gitkeep
