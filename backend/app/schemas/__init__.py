@@ -301,6 +301,30 @@ class BenchmarkExtractResponse(BaseModel):
     source_type: str
 
 
+class BctcConsistencyFlagOut(BaseModel):
+    extract_field: str
+    db_column: str
+    extract_value: float | int | None
+    db_value: float | int | None
+    rel_deviation: float | None
+    severity: str
+    note: str
+
+
+class BctcConsistencyIn(BaseModel):
+    ticker: str
+    fields: dict[str, float | int | None]
+
+
+class BctcConsistencyOut(BaseModel):
+    ticker: str
+    period: str | None
+    report_type: str | None
+    flags: list[BctcConsistencyFlagOut]
+    has_db_record: bool
+    summary: str
+
+
 class DigitalBenchmark(BaseModel):
     """Digital-adoption comparison against same-division listed peers.
 

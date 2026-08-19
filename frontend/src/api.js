@@ -135,6 +135,12 @@ export const api = {
       method: 'POST',
       body: JSON.stringify(payload),
     }),
+  /** Task #94 — BCTC consistency check: extract fields vs DB history for ticker. */
+  benchmarkConsistency: (ticker, fields) =>
+    request('/benchmark/consistency', {
+      method: 'POST',
+      body: JSON.stringify({ ticker, fields }),
+    }),
   /** Task #74 — product name → VSIC 4-digit (null + reason when abstain). */
   categorizeProduct: (productName, options = {}) =>
     request('/ml/categorize', {

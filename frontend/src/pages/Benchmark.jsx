@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import { api } from '../api'
 import { INSUFFICIENT_PEERS_DEMO_VSIC } from '../benchmarkIndustryContext'
+import BenchmarkConsistencyBanner from '../components/benchmark/BenchmarkConsistencyBanner'
 import BenchmarkForm from '../components/benchmark/BenchmarkForm'
 import BenchmarkHeader from '../components/benchmark/BenchmarkHeader'
 import BenchmarkResults from '../components/benchmark/BenchmarkResults'
@@ -39,6 +40,7 @@ export default function Benchmark() {
   const [narrativeError, setNarrativeError] = useState(null)
   const [feedbackOrigin, setFeedbackOrigin] = useState(null)
   const feedbackPostedRef = useRef(false)
+  const [consistencyReport, setConsistencyReport] = useState(null)
 
   useEffect(() => {
     if (vsicFromUrl) {
@@ -95,6 +97,7 @@ export default function Benchmark() {
     postFeedbackSignal()
     setLoading(true)
     setError(null)
+    setConsistencyReport(null)
     try {
       const res = await api.benchmark(coerceComparePayload(form))
       setResult(res)
@@ -154,16 +157,18 @@ export default function Benchmark() {
     setExtractMeta(null)
     setRequireConfirm(false)
     setHumanConfirmed(false)
-    setFeedbackOrigin('cafef_prefill')
-    feedbackPostedRef.current = false
-    try {
-      const data = await api.benchmarkPrefill(stockCode)
-      const next = formFromPrefill(data)
-      setForm(next)
-      setPrefillSnapshot(snapshotFormFields(next))
-      setPrefillSource(data.stock_code || stockCode)
-      setRequireConfirm(true)
-    } catch (err) {
+      setFeedbackOrigin('cafef_prefill')
+      feedbackPostedRef.current = false
+      setConsistencyReport(null)
+      try {
+        const data = await api.benchmarkPrefill(stockCode)
+        const next = formFromPrefill(data)
+        setForm(next)
+        setPrefillSnapshot(snapshotFormFields(next))
+        setPrefillSource(data.stock_code || stockCode)
+        setRequireConfirm(true)
+        runConsistencyCheck(data.stock_code || stockCode, next)
+      } catch (err) {
       console.error(err)
       setPrefillSource(null)
       setPrefillSnapshot(null)
@@ -177,6 +182,15 @@ export default function Benchmark() {
     } finally {
       setLoading(false)
     }
+  }
+
+  const runConsistencyCheck = (ticker, fields) => {
+    if (!ticker) return
+    api.benchmarkConsistency(ticker, fields).then((report) => {
+      setConsistencyReport(report)
+    }).catch(() => {
+      // Consistency check is informational — never block the flow on failure.
+    })
   }
 
   const postFeedbackSignal = (sourceType) => {
@@ -252,6 +266,7 @@ export default function Benchmark() {
         onInsufficientDemo={setInsufficientPeerDemo}
         onConfirmChange={handleConfirmChange}
       />
+      <BenchmarkConsistencyBanner report={consistencyReport} />
       {error && (
         <div className="banner banner-warn mt-md" role="alert">
           {error}
