@@ -119,3 +119,98 @@ def test_llm_missing_key_uses_rules(monkeypatch):
     monkeypatch.delenv("BENCHMARK_NARRATIVE_LLM_KEY", raising=False)
     out = generate_benchmark_narrative(_full_result())
     assert out["method"] == "rules"
+
+
+def _honest_benchmark_llm_text() -> str:
+    """Numbers already citeable from _full_result() — honesty gate must still pass."""
+    return "ROA của doanh nghiệp là 6.17%. ROE là 13.12%. Phân vị 72. Peer 2."
+
+
+def _patch_httpx_post(monkeypatch, captured: dict):
+    import httpx
+
+    class _Resp:
+        def raise_for_status(self) -> None:
+            return None
+
+        def json(self) -> dict:
+            return {"choices": [{"message": {"content": captured.get("content", _honest_benchmark_llm_text())}}]}
+
+    def fake_post(url, *args, **kwargs):
+        captured["url"] = url
+        captured["json"] = kwargs.get("json")
+        return _Resp()
+
+    monkeypatch.setattr(httpx, "post", fake_post)
+
+
+def test_llm_posts_default_openai_url(monkeypatch):
+    monkeypatch.setenv("BENCHMARK_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("BENCHMARK_NARRATIVE_LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("NARRATIVE_LLM_BASE_URL", raising=False)
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    out = generate_benchmark_narrative(_full_result())
+    assert captured["url"] == "https://api.openai.com/v1/chat/completions"
+    assert captured["json"]["model"] == "gpt-4o-mini"
+    assert out["method"] == "llm"
+
+
+def test_llm_posts_gemini_openai_compatible_url(monkeypatch):
+    monkeypatch.setenv("BENCHMARK_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv(
+        "BENCHMARK_NARRATIVE_LLM_BASE_URL",
+        "https://generativelanguage.googleapis.com/v1beta/openai",
+    )
+    monkeypatch.setenv("NARRATIVE_LLM_BASE_URL", "https://api.openai.com/v1")
+    monkeypatch.setenv("BENCHMARK_NARRATIVE_LLM_MODEL", "gemini-2.0-flash")
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    out = generate_benchmark_narrative(_full_result())
+    assert captured["url"] == (
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+    )
+    assert captured["json"]["model"] == "gemini-2.0-flash"
+    assert out["method"] == "llm"
+
+
+def test_llm_full_endpoint_kept_as_is(monkeypatch):
+    monkeypatch.setenv("BENCHMARK_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.setenv(
+        "BENCHMARK_NARRATIVE_LLM_BASE_URL",
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions/",
+    )
+    monkeypatch.delenv("NARRATIVE_LLM_BASE_URL", raising=False)
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    generate_benchmark_narrative(_full_result())
+    assert captured["url"] == (
+        "https://generativelanguage.googleapis.com/v1beta/openai/chat/completions"
+    )
+
+
+def test_llm_shared_base_url_fallback(monkeypatch):
+    monkeypatch.setenv("BENCHMARK_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("BENCHMARK_NARRATIVE_LLM_BASE_URL", raising=False)
+    monkeypatch.setenv("NARRATIVE_LLM_BASE_URL", "https://api.openai.com/v1")
+    captured: dict = {}
+    _patch_httpx_post(monkeypatch, captured)
+    generate_benchmark_narrative(_full_result())
+    assert captured["url"] == "https://api.openai.com/v1/chat/completions"
+
+
+def test_llm_invented_number_falls_back_to_rules(monkeypatch):
+    monkeypatch.setenv("BENCHMARK_NARRATIVE_LLM_KEY", "test-key")
+    monkeypatch.delenv("OPENAI_API_KEY", raising=False)
+    monkeypatch.delenv("BENCHMARK_NARRATIVE_LLM_BASE_URL", raising=False)
+    monkeypatch.delenv("NARRATIVE_LLM_BASE_URL", raising=False)
+    captured: dict = {"content": "ROA nhảy lên 99.99% so với peer."}
+    _patch_httpx_post(monkeypatch, captured)
+    out = generate_benchmark_narrative(_full_result())
+    assert out["method"] == "rules"
+    assert "99.99" not in out["narrative"]
+    assert "llm_fallback_rules" in out["warnings"]

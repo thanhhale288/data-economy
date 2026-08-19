@@ -14,6 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from backend.app.services import ml_lab_service
+from backend.app.services.narrative_llm import resolve_narrative_llm_completions_url
 
 _METRIC_KEYS: tuple[tuple[str, str], ...] = (
     ("mae", "MAE"),
@@ -23,6 +24,8 @@ _METRIC_KEYS: tuple[tuple[str, str], ...] = (
 
 _TREE_MODELS = frozenset({"xgboost", "lightgbm"})
 _LLM_ENV_KEYS = ("FORECAST_NARRATIVE_LLM_KEY", "OPENAI_API_KEY")
+_LLM_BASE_URL_ENV = "FORECAST_NARRATIVE_LLM_BASE_URL"
+_LLM_MODEL_ENV = "FORECAST_NARRATIVE_LLM_MODEL"
 _TOP_DRIVERS = 3
 
 _NUMBER_TOKEN_RE = re.compile(r"(?<![A-Za-z_])\d+(?:[.,]\d+)?%?")
@@ -34,6 +37,14 @@ def _llm_api_key() -> str | None:
         if raw:
             return raw
     return None
+
+
+def _llm_completions_url() -> str:
+    return resolve_narrative_llm_completions_url(_LLM_BASE_URL_ENV)
+
+
+def _llm_model() -> str:
+    return (os.environ.get(_LLM_MODEL_ENV) or "gpt-4o-mini").strip() or "gpt-4o-mini"
 
 
 def _fmt_number(value: float, *, digits: int = 2) -> str:
@@ -419,10 +430,10 @@ def _try_llm_polish(
     )
     try:
         response = httpx.post(
-            "https://api.openai.com/v1/chat/completions",
+            _llm_completions_url(),
             headers={"Authorization": f"Bearer {api_key}"},
             json={
-                "model": os.environ.get("FORECAST_NARRATIVE_LLM_MODEL", "gpt-4o-mini"),
+                "model": _llm_model(),
                 "temperature": 0,
                 "messages": [
                     {

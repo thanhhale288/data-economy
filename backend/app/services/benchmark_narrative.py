@@ -12,6 +12,7 @@ import re
 from typing import Any
 
 from backend.app.schemas import BenchmarkResult
+from backend.app.services.narrative_llm import resolve_narrative_llm_completions_url
 
 # Core ratios the assistant explains (percentile / ROA / ROE focus).
 _FOCUS_METRICS: tuple[tuple[str, str], ...] = (
@@ -27,6 +28,8 @@ _COMPARISON_VI = {
 }
 
 _LLM_ENV_KEYS = ("BENCHMARK_NARRATIVE_LLM_KEY", "OPENAI_API_KEY")
+_LLM_BASE_URL_ENV = "BENCHMARK_NARRATIVE_LLM_BASE_URL"
+_LLM_MODEL_ENV = "BENCHMARK_NARRATIVE_LLM_MODEL"
 
 
 def _llm_api_key() -> str | None:
@@ -35,6 +38,14 @@ def _llm_api_key() -> str | None:
         if raw:
             return raw
     return None
+
+
+def _llm_completions_url() -> str:
+    return resolve_narrative_llm_completions_url(_LLM_BASE_URL_ENV)
+
+
+def _llm_model() -> str:
+    return (os.environ.get(_LLM_MODEL_ENV) or "gpt-4o-mini").strip() or "gpt-4o-mini"
 
 
 def _as_dict(result: BenchmarkResult | dict[str, Any]) -> dict[str, Any]:
@@ -282,10 +293,10 @@ def _try_llm_polish(paragraphs: list[str], data: dict[str, Any]) -> str | None:
     )
     try:
         response = httpx.post(
-            "https://api.openai.com/v1/chat/completions",
+            _llm_completions_url(),
             headers={"Authorization": f"Bearer {api_key}"},
             json={
-                "model": os.environ.get("BENCHMARK_NARRATIVE_LLM_MODEL", "gpt-4o-mini"),
+                "model": _llm_model(),
                 "temperature": 0,
                 "messages": [
                     {
