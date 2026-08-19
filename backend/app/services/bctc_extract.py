@@ -6,7 +6,8 @@ scan/image inputs (PaddleOCR, optional). Missing / ambiguous values stay
 
 Number conventions (same as #52):
 - VN thousands: ``.`` (e.g. ``5.200.000``); western ``,`` also accepted
-- Unit markers ``nghìn`` / ``1.000 VND`` → ×1_000; ``triệu`` → ×1_000_000
+- Unit markers ``nghìn`` / ``1.000 VND`` / English ``in thousands`` → ×1_000;
+  ``triệu`` / ``VND million`` / ``in millions of VND|dong`` → ×1_000_000
 - Default: full VND (CafeF prefill parity); ``employees`` never scaled
 """
 
@@ -39,20 +40,32 @@ MAX_BCTC_PAGES = 15
 _LABEL_ALIASES: tuple[tuple[str, str], ...] = (
     ("tong loi nhuan truoc thue", "profit_before_tax"),
     ("loi nhuan truoc thue", "profit_before_tax"),
+    ("profit before tax", "profit_before_tax"),
     ("doanh thu ban hang va cung cap dich vu", "operating_revenue"),
     ("doanh thu ban hang va ccdv", "operating_revenue"),
+    ("revenue from sales", "operating_revenue"),
     ("doanh thu ban hang", "operating_revenue"),
     ("doanh thu thuan", "operating_revenue"),
     ("doanh thu hoat dong", "operating_revenue"),
+    ("net revenue", "operating_revenue"),
     ("tong tai san luu dong ngan han", "current_assets"),  # avoid stealing total_assets
+    ("total current assets", "current_assets"),
     ("tai san ngan han", "current_assets"),
+    ("current assets", "current_assets"),
     ("tong tai san", "total_assets"),
+    ("total assets", "total_assets"),
     ("von chu so huu", "total_equity"),
+    ("owner's equity", "total_equity"),
+    ("owners' equity", "total_equity"),
+    ("owners equity", "total_equity"),
+    ("total equity", "total_equity"),
     ("so lao dong binh quan", "employees"),
+    ("number of employees", "employees"),
     ("lao dong binh quan", "employees"),
     ("so lao dong", "employees"),
     ("so nhan vien", "employees"),
     ("nhan vien", "employees"),
+    ("employees", "employees"),
 )
 
 _UNIT_NGHIN_RE = re.compile(
@@ -60,6 +73,35 @@ _UNIT_NGHIN_RE = re.compile(
     re.IGNORECASE,
 )
 _UNIT_TRIEU_RE = re.compile(r"tri[eệ]u\s*(vn[đd]|dong)", re.IGNORECASE)
+
+# English unit phrases on folded text. Longer forms first; million before thousand at use site.
+_UNIT_MILLION_EN_PHRASES: tuple[str, ...] = (
+    "in millions of dong",
+    "in millions of vnd",
+    "millions of dong",
+    "millions of vnd",
+    "in million of dong",
+    "in million of vnd",
+    "in million dong",
+    "in million vnd",
+    "vnd million",
+    "dong million",
+    "million vnd",
+    "million dong",
+)
+_UNIT_THOUSAND_EN_PHRASES: tuple[str, ...] = (
+    "in thousands of dong",
+    "in thousands of vnd",
+    "thousands of dong",
+    "thousands of vnd",
+    "in thousand dong",
+    "in thousand vnd",
+    "vnd thousand",
+    "dong thousand",
+    "thousand vnd",
+    "thousand dong",
+    "in thousands",
+)
 
 # Trailing amount on a line: VN dots, western commas, plain digits, optional parens.
 _AMOUNT_RE = re.compile(
@@ -93,9 +135,24 @@ class BctcExtractResult:
         }
 
 
+_APOSTROPHE_TRANS = str.maketrans(
+    {
+        "’": "'",  # right single quotation (Helvetica / pdfminer)
+        "‘": "'",
+        "‛": "'",
+        "`": "'",
+    }
+)
+
+
 def _fold(text: str) -> str:
-    """Lowercase + strip Vietnamese diacritics for alias matching."""
-    norm = unicodedata.normalize("NFD", (text or "").strip().lower())
+    """Lowercase + strip Vietnamese diacritics for alias matching.
+
+    Typographic apostrophes become ASCII ``'`` so English ``owner's equity``
+    still matches after pdfplumber extracts Helvetica text.
+    """
+    lowered = (text or "").strip().lower().translate(_APOSTROPHE_TRANS)
+    norm = unicodedata.normalize("NFD", lowered)
     return "".join(c for c in norm if unicodedata.category(c) != "Mn")
 
 
@@ -151,9 +208,18 @@ def _map_label(label: str) -> str | None:
 def _detect_unit_scale(full_text: str) -> tuple[int, str | None]:
     """Return (scale_to_vnd, warning_or_none). Default 1 = already VND."""
     folded = _fold(full_text)
-    if _UNIT_TRIEU_RE.search(full_text) or "trieu vnd" in folded or "trieu dong" in folded:
+    if (
+        _UNIT_TRIEU_RE.search(full_text)
+        or "trieu vnd" in folded
+        or "trieu dong" in folded
+        or any(p in folded for p in _UNIT_MILLION_EN_PHRASES)
+    ):
         return 1_000_000, "unit_detected_million_vnd"
-    if _UNIT_NGHIN_RE.search(full_text) or "1.000 vnd" in folded:
+    if (
+        _UNIT_NGHIN_RE.search(full_text)
+        or "1.000 vnd" in folded
+        or any(p in folded for p in _UNIT_THOUSAND_EN_PHRASES)
+    ):
         return 1_000, "unit_detected_thousand_vnd"
     return 1, None
 
