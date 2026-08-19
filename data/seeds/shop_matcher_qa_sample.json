@@ -152,5 +152,61 @@
     "ticker": "REE",
     "label": 0,
     "bucket": "hard_negative"
+  },
+  {
+    "company": "Tập đoàn Hòa Phát",
+    "shop": "rangdong_official",
+    "ticker": "HPG",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Tập đoàn FPT",
+    "shop": "vinamilk_official",
+    "ticker": "FPT",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Nhựa Bình Minh",
+    "shop": "masan_consumer",
+    "ticker": "BMP",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Tập đoàn Công nghiệp Cao su Việt Nam",
+    "shop": "pnj_official",
+    "ticker": "GVR",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Điện Quang",
+    "shop": "fpt_official",
+    "ticker": "DQC",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Tập đoàn Masan",
+    "shop": "dienquang_officialstore",
+    "ticker": "MSN",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Tập đoàn Hòa Phát",
+    "shop": "@vinamilk",
+    "ticker": "HPG",
+    "label": 0,
+    "bucket": "seed_negative"
+  },
+  {
+    "company": "Công ty Cổ phần Nhựa Bình Minh",
+    "shop": "@pnj",
+    "ticker": "BMP",
+    "label": 0,
+    "bucket": "seed_negative"
   }
 ]

@@ -39,6 +39,17 @@ def test_labels_file_exists_and_has_splits():
             assert len(str(code)) == 4
 
 
+def test_labels_include_live_cache_listings_not_duplicates():
+    """Task #75: extra rows come from live cache names, not invented titles."""
+    rows = load_labels(LABELS_PATH)
+    live = [r for r in rows if str(r.get("source") or "").startswith("live_cache:")]
+    names = {r["product_name"] for r in live}
+    assert "Đèn bàn học LED (price only)" in names
+    assert "Sữa tươi Vinamilk 1L (TikTok)" in names
+    assert "Sữa chua uống probiotic (TikTok)" in names
+    assert any(r.get("split") == "test" for r in live)
+
+
 def test_whitelist_is_section_c_four_digit():
     codes = section_c_vsic_4digit()
     assert "2740" in codes
