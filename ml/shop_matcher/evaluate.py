@@ -81,6 +81,28 @@ def build_default_qa_rows() -> list[dict[str, Any]]:
                 "bucket": "hard_negative",
             }
         )
+
+    # Task #75: extra negatives using shop handles already in seed digital_presence.
+    seed_negatives = [
+        ("HPG", "Tập đoàn Hòa Phát", "rangdong_official"),
+        ("FPT", "Tập đoàn FPT", "vinamilk_official"),
+        ("BMP", "Công ty Cổ phần Nhựa Bình Minh", "masan_consumer"),
+        ("GVR", "Tập đoàn Công nghiệp Cao su Việt Nam", "pnj_official"),
+        ("DQC", "Công ty Cổ phần Điện Quang", "fpt_official"),
+        ("MSN", "Tập đoàn Masan", "dienquang_officialstore"),
+        ("HPG", "Tập đoàn Hòa Phát", "@vinamilk"),
+        ("BMP", "Công ty Cổ phần Nhựa Bình Minh", "@pnj"),
+    ]
+    for ticker, company, shop in seed_negatives:
+        rows.append(
+            {
+                "company": company,
+                "shop": shop,
+                "ticker": ticker,
+                "label": 0,
+                "bucket": "seed_negative",
+            }
+        )
     return rows
 
 
