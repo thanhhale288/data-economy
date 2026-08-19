@@ -7,6 +7,7 @@ import { api } from '../api'
 import { formatGrouped, formatMacroVa, formatMoney, formatIndex } from '../format'
 import MetricInfoTip from '../MetricInfoTip'
 import SampleHonestyBanner from '../SampleHonestyBanner'
+import { latestIipAnomalyPoint, periodKey } from '../iipAnomalyChip'
 
 /** KPI help copy — formulas match CONTEXT.md / proposal-v2 (do not invent). */
 const KPI_TIPS = {
@@ -155,6 +156,7 @@ export default function Dashboard() {
   const [forecast, setForecast] = useState(null)
   const [forecastError, setForecastError] = useState(null)
   const [coverageNote, setCoverageNote] = useState(null)
+  const [anomaly, setAnomaly] = useState(null)
   const [loading, setLoading] = useState(true)
   const [loadError, setLoadError] = useState(null)
 
@@ -164,7 +166,7 @@ export default function Dashboard() {
     async function load() {
       try {
         setLoadError(null)
-        const [s, i, va, van, h, og, cov] = await Promise.all([
+        const [s, i, va, van, h, og, cov, anom] = await Promise.all([
           api.getSummary(),
           api.getIip(),
           api.getVa('VA_C'),
@@ -172,6 +174,7 @@ export default function Dashboard() {
           api.getHeatmap(),
           api.getOecdVsGso(),
           api.getUniverseCoverage().catch(() => null),
+          api.getAnomalies().catch(() => null),
         ])
         if (cancelled) return
         setSummary(s)
@@ -181,6 +184,7 @@ export default function Dashboard() {
         setHeatmap(h)
         setOecdGso(og)
         setCoverageNote(cov)
+        setAnomaly(anom)
 
         const model = s?.preferred_forecast_model || 'xgboost'
         try {
@@ -307,6 +311,12 @@ export default function Dashboard() {
   const withMetrics = summary?.companies_with_metrics ?? 0
   const coveragePct =
     totalCompanies > 0 ? (withMetrics / totalCompanies) * 100 : null
+
+  // Latest IIP period: summary.latest_period (kỳ of iip_latest), else last IIP row.
+  const latestIipPeriod =
+    summary?.latest_period
+    ?? (iip.length ? iip[iip.length - 1].period : null)
+  const flaggedIipAnomaly = latestIipAnomalyPoint(anomaly, latestIipPeriod)
 
   return (
     <div>
@@ -563,6 +573,16 @@ export default function Dashboard() {
 
       <div className="chart-container">
         <h3>Chỉ số SXCN (IIP) Section C + dự báo</h3>
+        {flaggedIipAnomaly && (
+          <div className="banner banner-warn" role="status">
+            <span className="badge badge-warning">IIP bất thường</span>
+            {' '}
+            Kỳ IIP mới nhất ({periodKey(flaggedIipAnomaly.period)}) được Isolation Forest
+            gắn cờ trên chuỗi GSO Section C. Đây không phải cảnh báo khủng hoảng —
+            xem điểm và ngưỡng tại{' '}
+            <Link to="/ml">ML Lab</Link>.
+          </div>
+        )}
         {iip.length === 0 ? (
           <div className="empty-state">
             Chưa có chuỗi IIP_C trong DB. Chạy <code>make bootstrap</code> (seed + crawl GSO).
