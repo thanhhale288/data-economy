@@ -2,6 +2,8 @@
 
 **Status:** DONE  
 **Branch:** `cursor/epic5-phase1-task69-ocr-ops-note`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/63  
+**Commit:** `c85e4d8`  
 **Date:** 2026-08-19  
 **Phase:** Epic 5 / Phase 5.1 / Task #69  
 **Base:** `origin/main` @ `3772afe`
