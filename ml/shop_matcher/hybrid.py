@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import json
 import logging
+import os
 from pathlib import Path
 from typing import Any
 
@@ -30,6 +31,35 @@ from ml.shop_matcher.matcher import (
 logger = logging.getLogger(__name__)
 
 ARTIFACT_VERSION = 2
+BACKEND_ENV = "SHOP_MATCHER_BACKEND"
+DEFAULT_EMBEDDER_BACKEND = "tfidf"
+_VALID_BACKENDS = frozenset({"auto", "sentence_transformers", "tfidf"})
+
+
+def resolve_embedder_backend(explicit: str | None = None) -> str:
+    """Runtime vector backend: explicit arg, else ``SHOP_MATCHER_BACKEND``, else tfidf.
+
+    Unset / blank / invalid env values fall back to tfidf so CI never downloads
+    HuggingFace Hub. Production default stays tfidf unless an operator sets the env.
+    """
+    if explicit is not None and str(explicit).strip():
+        raw = str(explicit).strip().lower()
+        if raw not in _VALID_BACKENDS:
+            raise ValueError(f"Unknown embedder backend: {explicit!r}")
+        return raw
+    raw = (os.environ.get(BACKEND_ENV) or "").strip().lower()
+    if not raw:
+        return DEFAULT_EMBEDDER_BACKEND
+    if raw not in _VALID_BACKENDS:
+        logger.warning(
+            "Invalid %s=%r — using %s",
+            BACKEND_ENV,
+            raw,
+            DEFAULT_EMBEDDER_BACKEND,
+        )
+        return DEFAULT_EMBEDDER_BACKEND
+    return raw
+
 
 # Short marketplace handle prefixes → brand aliases (hybrid rescue only).
 _SHORT_PREFIX_BRANDS: dict[str, tuple[str, ...]] = {
@@ -83,22 +113,24 @@ class HybridShopMatcher:
         self,
         threshold: float = DEFAULT_THRESHOLD,
         *,
-        embedder_backend: str = "tfidf",
+        embedder_backend: str | None = None,
         model_name: str = DEFAULT_ST_MODEL,
         model_path: Path | None = None,
     ) -> None:
         """Create matcher.
 
-        Default vector backend is TF-IDF (fast, offline). Use
-        ``embedder_backend="auto"`` or ``"sentence_transformers"`` when
-        training / evaluating with Hub models (Task #60).
+        Default vector backend is TF-IDF (fast, offline). Optional env
+        ``SHOP_MATCHER_BACKEND`` can select ``sentence_transformers`` /
+        ``auto`` at runtime; it is not enabled unless set. CLI/eval still
+        pass ``embedder_backend`` explicitly (Task #76).
         """
+        backend = resolve_embedder_backend(embedder_backend)
         self.threshold = threshold
         self._model_path = Path(model_path) if model_path else MODEL_PATH
         self._fuzzy = FuzzyShopMatcher(threshold=threshold)
         self._fuzzy._model_path = self._model_path
-        self._embedder = ShopEmbedder(backend=embedder_backend, model_name=model_name)
-        self._embedder_backend_pref = embedder_backend
+        self._embedder = ShopEmbedder(backend=backend, model_name=model_name)
+        self._embedder_backend_pref = backend
         self._model_name = model_name
 
     # --- seed alias passthrough (tests / train) ---
