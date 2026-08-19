@@ -306,6 +306,36 @@ PYTHONPATH=. pytest -q -m ocr
 Do **not** change extract formulas to work around a missing extra.
 
 
+## DocAI extract smoke (Epic 5 Task #68)
+
+Repeatable upload → extract → confirm path. Extract is API-only here; **confirm-before-compare** is a frontend gate (`requireConfirm` checkbox in `frontend/src/pages/Benchmark.jsx`). This smoke does **not** require a full peer DB for compare and does **not** invent GSO/OECD/CafeF numbers.
+
+Playwright is **not** in this path. Default CI is `pytest -q` with **no** marker filter (`pytest.ini` only defines `ocr`). Existing `tests/e2e/` are FastAPI TestClient API tests and must keep running. Do **not** add `addopts = -m "not e2e"`. Optional browser UI remains a manual pass below.
+
+### Text PDF (must pass without PaddleOCR)
+
+```bash
+PYTHONPATH=. pytest -q tests/benchmark/test_docai_extract_smoke.py
+PYTHONPATH=. pytest -q tests/benchmark/ -k extract
+```
+
+Fixture: `tests/benchmark/fixtures/sample_bctc_text.pdf` → `POST /api/benchmark/extract` → `source_type=pdf_text`, benchmark fields populated.
+
+### Scan skip / honesty (no PaddleOCR required)
+
+Fixtures: `sample_bctc_scan.png` / `sample_bctc_scan.pdf`. Without the OCR extra, extract returns `ocr_unavailable` (and empty fields) — never invented numbers. Tests marked `ocr` use `pytest.importorskip("paddleocr")` so default CI skips the extra when PaddleOCR is missing. See [PaddleOCR extra](#paddleocr-extra-epic-5-task-69) above to install.
+
+### FE confirm checkbox before Compare
+
+After extract, Benchmark shows checkbox **«Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh»**. Submit **«So sánh benchmark»** stays disabled (`compareLockedByConfirm`) until the box is ticked. Upload input: `#benchmark-upload-input`.
+
+Manual UI (API + `npm run dev`):
+
+1. Open Benchmark → Upload `sample_bctc_text.pdf`.
+2. Confirm fields filled; tick the confirm checkbox.
+3. Then click **So sánh benchmark** (peers depend on seeded DB — empty peers → `insufficient_peers`, not invented percentiles).
+4. Upload a scan fixture without OCR extra → form stays empty / `ocr_unavailable` copy, not fake numbers.
+
 ## Online vs offline
 
 | Mode | What happens |
