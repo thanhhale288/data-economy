@@ -10,18 +10,85 @@ Epic 4 (#52–#64) **đã ship**. Epic 5 không làm lại DocAI/anomaly/NLP/nar
 
 ---
 
-## Cách chạy agent (mỗi task = 1 chat = 1 branch = 1 PR)
+## Bạn chỉ cần nói (điều khiển)
 
-1. Copy khối **Prompt agent** của đúng một task (cuối mỗi card).
-2. Chat mới → dán prompt.
-3. Agent tạo branch `cursor/epic5-phase<P>-task<T>-<slug>` từ `origin/main` (hoặc tip ghi trong *Blocked by* nếu task trước chưa merge).
-4. Không làm task khác trong cùng chat. Không gộp PR.
+Không cần nhớ worktree / phase / conflict. Nói **một** trong các câu:
 
-**Luôn đọc trước khi code:** `CONTEXT.md`, `AGENTS.md`, card task này.  
-**Cấm:** invent số GSO/OECD/CafeF/marketplace; đổi Digital VA / VDEI; đọc `docs/knowledge.md`; commit `.env` / PDF PII / model binaries lớn.  
-**FE:** nếu sửa `frontend/**` UI → `.agents/skills/hallmark/SKILL.md` (giữ palette hiện tại; không gradient/slop).  
-**Verify mặc định:** `PYTHONPATH=. pytest -q` (scope trong AC) · nếu đụng FE: `cd frontend && npm run build`.  
-**Đóng task:** `.scratch/handoff-task<N>.md` + tick `[x]` trong file này + 1 dòng ở `docs/plan.md`.
+| Bạn nói | Agent làm |
+|---------|-----------|
+| `chạy task #66` (hoặc bất kỳ #66–#81) | Đúng **một** task: worktree + branch + code + test + PR |
+| `chạy wave 1` | Tối đa 4 task **song song** của wave đó (xem bảng wave dưới) |
+| `chạy tiếp` | Wave kế chưa xong; nếu wave đang dở thì hoàn thành nốt |
+| `chạy task #82` … `#94` | Chỉ khi bạn **ghi đúng số gated** |
+
+**Không nói:** “làm hết phase 5.1” — agent phải từ chối và hỏi lại số task hoặc số wave.
+
+Chạy **theo task**, không theo phase. Phase chỉ là nhóm trong file này.
+
+---
+
+## Wave (tối ưu thời gian, tránh conflict)
+
+Mỗi wave ≤ 4 agent. **Merge hết PR wave vào `main` rồi mới mở wave sau.**
+
+| Wave | Task (song song) | Ghi chú |
+|------|------------------|---------|
+| **1** | **#66** #67 #71 #73 | Bắt đầu ngay (sau `main` có playbook Epic 5) |
+| **2** | #77 #74 #72 #69 | #72 sau khi #71 đã merge |
+| **3** | #78 #80 #70 #76 | #78 sau #66; #80 sau #74; #70 sau #67 |
+| **4** | #68 #75 #79 #81 | #68/#81 sau #66+#78 (cùng `Benchmark.jsx`) |
+
+Gated #82–#94: ngoài wave. Không tự mở.
+
+### File nóng — không song song
+
+| File | Chỉ 1 task tại một thời điểm |
+|------|------------------------------|
+| `frontend/src/pages/Benchmark.jsx` | #66 → #78 → #68 → #81 |
+| `frontend/src/pages/CompanyDetail.jsx` | #74 → #80 |
+| `backend/app/services/ml_monitoring.py` | #71 → #72 |
+| `backend/app/services/bctc_extract.py` + golden | #67 → #70 |
+| `docs/plan.md` + checklist file này | **Không** sửa trong PR feature. Tick `[x]` bằng 1 commit docs nhỏ **sau khi wave merge** (agent hoặc user bảo `tick epic5`) |
+
+Lane độc lập (được song song): #67 · #69 · #71 · #73 · #74 · #76 · #77.
+
+---
+
+## Agent bắt buộc khi user nói `chạy task #N`
+
+1. Đọc card Task #N trong **file này** (toàn bộ) + `CONTEXT.md` + `AGENTS.md`. FE → Hallmark skill.
+2. **Không** implement trên `remain-1908` hay `main` checkout sẵn. Tạo worktree từ `origin/main`:
+
+```bash
+cd "/Users/hale/Code/AI in Data Economy"
+git fetch origin
+git worktree add ".worktrees/t<N>" -b cursor/epic5-phase<P>-task<N>-<slug> origin/main
+```
+
+`<P>` và `<slug>` lấy từ card task. Thư mục `.worktrees/` đã gitignore.
+
+3. Làm việc **trong** `.worktrees/t<N>` (venv: `source` `.venv` của repo gốc; **không** copy `.env`).
+4. Một task = một branch = một PR → `main`. Không làm task khác. Không gộp phase.
+5. Test theo AC card. Handoff `.scratch/handoff-task<N>.md`. **Không** tick checklist file này / `docs/plan.md` trong cùng PR (tránh conflict 4 PR).
+6. Xong: `git worktree remove .worktrees/t<N>` sau khi PR merge (nếu user không giữ).
+
+**Cấm:** invent số GSO/OECD/CafeF; đổi Digital VA/VDEI; đọc `docs/knowledge.md`; commit `.env` / PDF PII / model binary.
+
+Khi user nói `chạy wave K`: mở đúng các task của wave K, **mỗi task một worktree**, không mở task file nóng trùng bảng trên.
+
+---
+
+## Prompt khung (khi user không dán card, agent tự lấy)
+
+User nói `chạy task #N` = đủ. Agent **tự** làm theo card #N (không bắt user copy prompt cuối card).
+
+```
+Repo: /Users/hale/Code/AI in Data Economy
+User: chạy task #<N>
+Đọc card #<N> trong .scratch/epic5-remain-plan.md + CONTEXT.md + AGENTS.md.
+Worktree: .worktrees/t<N> từ origin/main, branch cursor/epic5-phase<P>-task<N>-<slug>
+Một task = một PR. Không sửa docs/plan.md. Không invent số.
+```
 
 ---
 
@@ -55,27 +122,7 @@ Epic 4 (#52–#64) **đã ship**. Epic 5 không làm lại DocAI/anomaly/NLP/nar
 | **5.5** | FE leftover | #80–#81 |
 | **5.6** | Gated — chỉ khi user gọi đúng số task | #82–#94 |
 
-**Thứ tự gợi ý (runnable):** #66 → #67 → #71 → #72 → #73 → #77 → #78 → #80 → #74 → #81 → #68 → #69 → #70 → #75 → #76 → #79.
-
----
-
-## Prompt khung (agent tự điền số task)
-
-Dùng nguyên khối trong card. Không viết prompt “task kế tiếp” khi đóng chat.
-
-```
-Repo: /Users/hale/Code/AI in Data Economy
-Một chat = một task. Không đọc docs/knowledge.md.
-
-Làm đúng Task #<N> Epic 5.
-Đọc: CONTEXT.md, AGENTS.md, rồi toàn bộ card Task #<N> trong .scratch/epic5-remain-plan.md.
-
-Branch: git fetch origin && git checkout main && git pull --ff-only origin main
-git checkout -b cursor/epic5-phase<P>-task<N>-<slug>
-PR base = main. Không làm task khác. Không đổi Digital VA/VDEI. Không invent số.
-
-Khi xong: test theo AC card; handoff .scratch/handoff-task<N>.md; tick [x] task trong epic5-remain-plan.md.
-```
+**Thứ tự:** dùng bảng **Wave** ở trên (không chạy tuần tự 16 task một file). User nói `chạy wave 1` hoặc `chạy task #66`.
 
 ---
 

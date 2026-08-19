@@ -62,7 +62,7 @@ Chi tiết lịch sử: [`.scratch/epic4-ai-ml-plan.md`](../.scratch/epic4-ai-ml
 
 Playbook từng task (đã có gì / làm gì / prompt agent): [`.scratch/epic5-remain-plan.md`](../.scratch/epic5-remain-plan.md).
 
-**Cách chạy:** chat mới → dán **Prompt agent** của đúng 1 task → branch `cursor/epic5-phaseP-taskT-slug` từ `main`. Một chat = một task = một PR. Gated #82–#94 chỉ khi user gọi đúng số.
+**Cách chạy (bạn chỉ nói):** `chạy task #66` hoặc `chạy wave 1` — agent đọc wave/worktree trong [`.scratch/epic5-remain-plan.md`](../.scratch/epic5-remain-plan.md) § *Bạn chỉ cần nói*. Không chạy cả phase một branch. Gated #82–#94 chỉ khi gọi đúng số.
 
 | Phase | Task | Status |
 |-------|------|--------|
@@ -74,7 +74,7 @@ Playbook từng task (đã có gì / làm gì / prompt agent): [`.scratch/epic5-
 | 5.5 FE leftover | #80–#81 | Chưa |
 | 5.6 Gated | #82–#94 | Đóng băng |
 
-Gợi ý bắt đầu: **#66** FE honesty OCR. Epic 3 paused/deferred **giữ nguyên**.
+Gợi ý: `chạy wave 1` (#66 #67 #71 #73) hoặc `chạy task #66`. Epic 3 paused/deferred **giữ nguyên**.
 
 ---
 
