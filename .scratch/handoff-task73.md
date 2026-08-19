@@ -5,7 +5,7 @@
 **Date:** 2026-08-19  
 **Phase:** Epic 5 Phase 5.2 (Forecast / anomaly productize)  
 **Base:** `origin/main` @ `58d2bc2`  
-**PR:** (filled after `gh pr create`)
+**PR:** https://github.com/thanhhale288/data-economy/pull/59
 
 ---
 
