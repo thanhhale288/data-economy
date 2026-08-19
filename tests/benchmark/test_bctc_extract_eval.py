@@ -15,13 +15,13 @@ def test_eval_baseline_metrics_from_golden_set():
     cases = load_golden_cases(GOLDEN_PATH)
     report = evaluate_extract_cases(cases, base_dir=REPO_ROOT)
 
-    assert report["cases"] == 3
-    assert report["overall"]["total"] == 15
-    assert report["overall"]["expected_present"] == 6
-    assert report["overall"]["correct"] == 15
+    assert report["cases"] == 4
+    assert report["overall"]["total"] == 20
+    assert report["overall"]["expected_present"] == 11
+    assert report["overall"]["correct"] == 20
     assert report["overall"]["accuracy"] == 1.0
     assert report["overall"]["coverage_against_expected"] == 1.0
-    assert report["overall"]["coverage_all_slots"] == 0.4
+    assert report["overall"]["coverage_all_slots"] == 0.55
 
 
 def test_confidence_threshold_guardrail_nulls_low_confidence_field():
