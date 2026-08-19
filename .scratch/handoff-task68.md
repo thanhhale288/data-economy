@@ -4,7 +4,9 @@
 **Branch:** `cursor/epic5-phase1-task68-docai-extract-smoke`  
 **Date:** 2026-08-19  
 **Phase:** Epic 5 Phase 1 (DocAI harden)  
-**Base:** `origin/main` @ `f17bf4c`
+**Base:** `origin/main` @ `f17bf4c`  
+**Commit:** `bf4fe06`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/71
 
 ---
 
