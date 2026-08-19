@@ -411,6 +411,21 @@ class ForecastNarrativeResponse(BaseModel):
     message: str | None = None
 
 
+class CategorizeRequest(BaseModel):
+    """Task #74 — product name → VSIC 4-digit (Section C whitelist)."""
+
+    product_name: str
+
+
+class CategorizeResponse(BaseModel):
+    """Classifier outcome. Abstain → vsic_code=None + reason (never invent)."""
+
+    product_name: str
+    vsic_code: str | None = None
+    confidence: float
+    reason: str | None = None
+
+
 class CrawlTriggerRequest(BaseModel):
     crawler: str  # gso, oecd, companies, marketplace, metrics, features, ml, cleaning, all
     tickers: list[str] | None = None  # optional batch for companies crawl
