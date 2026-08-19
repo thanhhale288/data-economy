@@ -5,7 +5,7 @@
 **Date:** 2026-08-19  
 **Phase:** Epic 5 Phase 5.5 (FE leftover)  
 **Base:** `origin/main` @ `f17bf4c`  
-**PR:** (filled after `gh pr create`)
+**PR:** https://github.com/thanhhale288/data-economy/pull/73
 
 ---
 
