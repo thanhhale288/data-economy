@@ -862,5 +862,23 @@
     "vsic_code": null,
     "split": "train",
     "source": "unknown-augment"
+  },
+  {
+    "product_name": "Đèn bàn học LED (price only)",
+    "vsic_code": "2740",
+    "split": "test",
+    "source": "live_cache:RAL.shopee"
+  },
+  {
+    "product_name": "Sữa tươi Vinamilk 1L (TikTok)",
+    "vsic_code": "1050",
+    "split": "test",
+    "source": "live_cache:VNM.tiktok"
+  },
+  {
+    "product_name": "Sữa chua uống probiotic (TikTok)",
+    "vsic_code": "1050",
+    "split": "train",
+    "source": "live_cache:VNM.tiktok"
   }
 ]
