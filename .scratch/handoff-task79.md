@@ -5,6 +5,8 @@
 **Date:** 2026-08-19  
 **Phase:** Epic 5 Phase 5.4 (Narrative + feedback)  
 **Base:** `origin/main` @ `f17bf4c`  
+**Commit:** `266ef2d`  
+**PR:** https://github.com/thanhhale288/data-economy/pull/72  
 **Prefect:** **không cài** (không gọi Prefect; không retrain sklearn/OCR)
 
 ---
