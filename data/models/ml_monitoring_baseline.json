@@ -1,0 +1,21 @@
+{
+  "models": {
+    "arima": {
+      "mape": 31.7036,
+      "trained_at": "2026-07-28T03:38:13.243398",
+      "version": "1.0"
+    },
+    "xgboost": {
+      "mape": 6.4405,
+      "trained_at": "2026-07-28T03:38:13.328289",
+      "version": "1.0"
+    },
+    "lstm": {
+      "mape": 10.0786,
+      "trained_at": "2026-07-28T03:38:14.244912",
+      "version": "1.0"
+    }
+  },
+  "mape_drift_threshold": 5.0,
+  "source": "ModelRegistry"
+}
