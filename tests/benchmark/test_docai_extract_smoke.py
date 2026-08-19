@@ -21,8 +21,11 @@ from backend.app.main import app
 from backend.app.services.bctc_extract import EXTRACT_FIELDS
 
 FIXTURES = Path(__file__).resolve().parent / "fixtures"
-FRONTEND_BENCHMARK = (
-    Path(__file__).resolve().parents[2] / "frontend" / "src" / "pages" / "Benchmark.jsx"
+FRONTEND_SRC = Path(__file__).resolve().parents[2] / "frontend" / "src"
+# Wave B (#92): upload + confirm gate live in BenchmarkForm; state in pages/Benchmark.jsx.
+BENCHMARK_UI_SOURCES = (
+    FRONTEND_SRC / "pages" / "Benchmark.jsx",
+    FRONTEND_SRC / "components" / "benchmark" / "BenchmarkForm.jsx",
 )
 
 GOLDEN_SAMPLE = {
@@ -133,13 +136,17 @@ def test_scan_png_ocr_extra_maps_fields_when_paddleocr_installed(db_session):
         app.dependency_overrides.clear()
 
 
-def test_confirm_before_compare_is_frontend_gate():
-    """Extract does not compare; Benchmark.jsx locks submit until the confirm checkbox.
+def _benchmark_ui_source() -> str:
+    return "\n".join(path.read_text(encoding="utf-8") for path in BENCHMARK_UI_SOURCES)
 
-    Task #81 owns ``Benchmark.jsx`` — this smoke only documents the existing gate
-    (``requireConfirm`` / ``#benchmark-upload-input`` / submit label).
+
+def test_confirm_before_compare_is_frontend_gate():
+    """Extract does not compare; Benchmark UI locks submit until the confirm checkbox.
+
+    Wave B split: orchestration in ``pages/Benchmark.jsx``; upload/confirm markup in
+    ``components/benchmark/BenchmarkForm.jsx``.
     """
-    src = FRONTEND_BENCHMARK.read_text(encoding="utf-8")
+    src = _benchmark_ui_source()
     assert 'id="benchmark-upload-input"' in src
     assert "requireConfirm" in src
     assert "compareLockedByConfirm" in src
