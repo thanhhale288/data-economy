@@ -4,12 +4,14 @@ from sqlalchemy.orm import Session
 from backend.app.database import get_db
 from backend.app.models import ModelPrediction, ModelRegistry
 from backend.app.schemas import (
+    CategorizeRequest,
+    CategorizeResponse,
     ForecastNarrativeRequest,
     ForecastNarrativeResponse,
     ForecastRequest,
     ModelPredictionOut,
 )
-from backend.app.services import forecast_narrative, ml_lab_service
+from backend.app.services import forecast_narrative, ml_lab_service, product_categorizer_service
 
 router = APIRouter()
 
@@ -57,6 +59,22 @@ def forecast_narrative_explain(data: ForecastNarrativeRequest):
         metrics=data.metrics,
         importance=data.importance,
         load_importance=data.load_importance,
+    )
+
+
+@router.post("/categorize", response_model=CategorizeResponse)
+def categorize_product(data: CategorizeRequest) -> CategorizeResponse:
+    """Classify a marketplace product name into VSIC Section C (4-digit).
+
+    Loads the offline TF-IDF artifact once; never trains in-request.
+    Uncertain / OOV / short input → vsic_code=null + reason (no invented code).
+    """
+    result = product_categorizer_service.categorize_product(data.product_name)
+    return CategorizeResponse(
+        product_name=result.product_name,
+        vsic_code=result.vsic_code,
+        confidence=result.confidence,
+        reason=result.reason,
     )
 
 
