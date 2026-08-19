@@ -2052,6 +2052,15 @@ tr:hover {
   margin-top: 6px;
 }
 
+.extract-warning-list {
+  margin: var(--space-2) 0 0;
+  padding-left: 1.15em;
+}
+
+.extract-warning-list li + li {
+  margin-top: var(--space-1);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,
