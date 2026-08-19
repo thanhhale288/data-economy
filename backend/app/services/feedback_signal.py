@@ -1,7 +1,9 @@
-"""Feedback-to-training loop (Task #64).
+"""Feedback-to-training loop (Task #64 / #78).
 
-Persist user edits after DocAI / Benchmark prefill as safe training signals:
-field diffs + optional ticker + source_type + timestamp.
+Persist user edits after DocAI extract, CafeF prefill, or manual Benchmark
+entry as safe training signals: field diffs + optional ticker + source_type
++ timestamp. ``source_type`` is caller-chosen (``docai_extract`` /
+``cafef_prefill`` / ``manual``); this service does not classify origin.
 
 Never persists raw PDF/bytes, filenames with binary payloads, or API keys.
 Default store: ``data/feedback/training_signals.jsonl`` (JSONL append).

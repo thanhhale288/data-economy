@@ -190,3 +190,81 @@ def test_scheduler_ingest_hook_counts(store_path: Path):
     count, detail = svc.ingest_feedback_for_scheduler(store_path=store_path)
     assert count == 1
     assert "feedback_signals=1" in detail
+
+@pytest.mark.parametrize("source_type", ["cafef_prefill", "manual"])
+def test_cafef_prefill_and_manual_source_types_store_diffs_not_pdf(source_type, store_path: Path):
+    """Task #78 — CafeF prefill and typed forms use existing source_type values; never raw PDF."""
+    payload = FeedbackSignalIn.model_validate(
+        {
+            "source_type": source_type,
+            "ticker": "RAL",
+            "before": {"operating_revenue": 100, "employees": 8, "vsic_code": "2750"},
+            "after": {"operating_revenue": 150, "employees": 8, "vsic_code": "2750"},
+            "raw_pdf": b"%PDF-1.4 should-never-store",
+            "file_bytes": "AQID",
+            "api_key": "sk-secret-should-never-store",
+            "filename": "/tmp/bctc.pdf",
+        }
+    )
+    out = svc.append_signal(payload, store_path=store_path)
+
+    assert out.stored is True
+    assert out.signal.source_type == source_type
+    assert out.signal.diff_count == 1
+    assert out.signal.field_diffs[0].field == "operating_revenue"
+    assert out.signal.field_diffs[0].before == 100
+    assert out.signal.field_diffs[0].after == 150
+
+    blob = store_path.read_text(encoding="utf-8").lower()
+    record = json.loads(store_path.read_text(encoding="utf-8").strip())
+    assert "raw_pdf" not in blob
+    assert "file_bytes" not in blob
+    assert "api_key" not in blob
+    assert "sk-secret" not in blob
+    assert "%pdf" not in blob
+    assert "bctc.pdf" not in blob
+    assert "filename" not in record
+    assert list(record["field_diffs"][0].keys()) == ["field", "before", "after"]
+
+
+def test_benchmark_feedback_api_accepts_cafef_and_manual(store_path: Path, monkeypatch, db_session):
+    monkeypatch.setattr(svc, "DEFAULT_STORE_PATH", store_path)
+
+    def override_get_db():
+        try:
+            yield db_session
+        finally:
+            pass
+
+    app.dependency_overrides[get_db] = override_get_db
+    client = TestClient(app)
+    try:
+        for source_type in ("cafef_prefill", "manual"):
+            res = client.post(
+                "/api/benchmark/feedback",
+                json={
+                    "source_type": source_type,
+                    "ticker": "vnm",
+                    "before": {"profit_before_tax": 10},
+                    "after": {"profit_before_tax": 20},
+                    "raw_pdf": "SHOULD_BE_IGNORED",
+                    "api_key": "SHOULD_BE_IGNORED",
+                },
+            )
+            assert res.status_code == 200, res.text
+            body = res.json()
+            assert body["stored"] is True
+            assert body["signal"]["source_type"] == source_type
+            assert body["signal"]["ticker"] == "VNM"
+            assert body["signal"]["diff_count"] == 1
+        blob = store_path.read_text(encoding="utf-8").lower()
+        assert "should_be_ignored" not in blob
+        assert "raw_pdf" not in blob
+        assert "api_key" not in blob
+        lines = [ln for ln in store_path.read_text(encoding="utf-8").splitlines() if ln.strip()]
+        assert len(lines) == 2
+        types = {json.loads(ln)["source_type"] for ln in lines}
+        assert types == {"cafef_prefill", "manual"}
+    finally:
+        app.dependency_overrides.clear()
+
