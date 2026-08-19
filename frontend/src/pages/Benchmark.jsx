@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useSearchParams } from 'react-router-dom'
 import {
   PolarAngleAxis,
@@ -414,7 +414,7 @@ function formFromExtract(fields, prevForm) {
   }
 }
 
-/** Snapshot of allowlisted numeric/string fields for Task #64 feedback diffs. */
+/** Snapshot of allowlisted numeric/string fields for Task #64/#78 feedback diffs. */
 function snapshotFormFields(formLike) {
   const keys = [
     'stock_code',
@@ -445,6 +445,14 @@ function snapshotFormFields(formLike) {
     out[key] = n == null ? String(raw) : n
   }
   return out
+}
+
+
+/** Task #78 — classify confirm source without using cleared prefillSource after edits. */
+function resolveFeedbackSourceType({ extractMeta, feedbackOrigin, prefillSource }) {
+  if (extractMeta) return extractMeta.source_type || 'docai_extract'
+  if (feedbackOrigin === 'cafef_prefill' || prefillSource) return 'cafef_prefill'
+  return 'manual'
 }
 
 function scrollToId(id) {
@@ -654,8 +662,12 @@ export default function Benchmark() {
   const [extractMeta, setExtractMeta] = useState(null)
   const [requireConfirm, setRequireConfirm] = useState(false)
   const [humanConfirmed, setHumanConfirmed] = useState(false)
-  /** Task #64 — prefill/extract snapshot for edit→confirm training signal. */
+  /** Task #64/#78 — prefill/extract/manual snapshot for edit→confirm training signal. */
   const [prefillSnapshot, setPrefillSnapshot] = useState(null)
+  /** Survives field edits (prefillSource is cleared on change). */
+  const [feedbackOrigin, setFeedbackOrigin] = useState(null)
+  /** One POST per confirm cycle: checkbox wins; Compare does not double-count. */
+  const feedbackPostedRef = useRef(false)
   const [narrative, setNarrative] = useState(null)
   const [narrativeLoading, setNarrativeLoading] = useState(false)
   const [narrativeError, setNarrativeError] = useState(null)
@@ -667,9 +679,20 @@ export default function Benchmark() {
   }, [vsicFromUrl])
 
   const handleChange = (field, value) => {
+    const originIsPrefillOrExtract = (
+      Boolean(extractMeta)
+      || feedbackOrigin === 'cafef_prefill'
+      || feedbackOrigin === 'docai_extract'
+    )
+    if (!originIsPrefillOrExtract && !prefillSnapshot) {
+      setPrefillSnapshot(snapshotFormFields(form))
+      setFeedbackOrigin('manual')
+    }
     setForm((prev) => ({ ...prev, [field]: value }))
     setPrefillSource(null)
     if (requireConfirm) setHumanConfirmed(false)
+    // Field edits start a new confirm cycle so Compare/checkbox can post updated diffs once.
+    feedbackPostedRef.current = false
   }
 
   const handleMoneyBlur = (field) => {
@@ -703,6 +726,7 @@ export default function Benchmark() {
 
   const handleSubmit = async (e) => {
     e.preventDefault()
+    postFeedbackSignal()
     setLoading(true)
     setError(null)
     try {
@@ -746,12 +770,16 @@ export default function Benchmark() {
         source_type: extracted.source_type || 'unknown',
         filename: file.name,
       })
+      setFeedbackOrigin('docai_extract')
+      feedbackPostedRef.current = false
       setRequireConfirm(true)
       setHumanConfirmed(false)
     } catch (err) {
       console.error(err)
       setExtractMeta(null)
       setPrefillSnapshot(null)
+      setFeedbackOrigin(null)
+      feedbackPostedRef.current = false
       setRequireConfirm(false)
       setHumanConfirmed(false)
       setError(err.message || 'Không trích xuất được BCTC.')
@@ -769,16 +797,21 @@ export default function Benchmark() {
     setExtractMeta(null)
     setRequireConfirm(false)
     setHumanConfirmed(false)
+    setFeedbackOrigin('cafef_prefill')
+    feedbackPostedRef.current = false
     try {
       const data = await api.benchmarkPrefill(stockCode)
       const next = formFromPrefill(data)
       setForm(next)
       setPrefillSnapshot(snapshotFormFields(next))
       setPrefillSource(data.stock_code || stockCode)
+      setRequireConfirm(true)
     } catch (err) {
       console.error(err)
       setPrefillSource(null)
       setPrefillSnapshot(null)
+      setFeedbackOrigin(null)
+      setRequireConfirm(false)
       setError(
         err.message?.includes('404')
           ? `Không tìm thấy BCTC đủ trường để nạp «${stockCode}».`
@@ -789,15 +822,22 @@ export default function Benchmark() {
     }
   }
 
-  /** Task #64 — soft POST training signal on confirm (never send raw file). */
+  /** Task #64/#78 — soft POST training signal on confirm (never send raw file). */
   const postFeedbackSignal = (sourceType) => {
+    if (feedbackPostedRef.current) return
     if (!prefillSnapshot) return
+    feedbackPostedRef.current = true
     const after = snapshotFormFields(form)
+    const resolved = sourceType || resolveFeedbackSourceType({
+      extractMeta,
+      feedbackOrigin,
+      prefillSource,
+    })
     api.benchmarkFeedback({
       before: prefillSnapshot,
       after,
       ticker: form.stock_code || prefillSource || null,
-      source_type: sourceType || extractMeta?.source_type || 'docai_extract',
+      source_type: resolved,
     }).catch((err) => {
       console.warn('feedback signal failed', err)
     })
@@ -806,7 +846,7 @@ export default function Benchmark() {
   const handleConfirmChange = (checked) => {
     setHumanConfirmed(checked)
     if (checked) {
-      postFeedbackSignal(extractMeta?.source_type || 'docai_extract')
+      postFeedbackSignal()
     }
   }
 
@@ -825,6 +865,8 @@ export default function Benchmark() {
     setRequireConfirm(false)
     setHumanConfirmed(false)
     setPrefillSnapshot(null)
+    setFeedbackOrigin(null)
+    feedbackPostedRef.current = false
   }
 
   const insufficientPeers = (result?.warnings || []).includes('insufficient_peers')
@@ -1049,12 +1091,18 @@ export default function Benchmark() {
               checked={humanConfirmed}
               onChange={(e) => handleConfirmChange(e.target.checked)}
             />
-            <span>Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh</span>
+            <span>
+              {extractMeta
+                ? 'Tôi đã kiểm tra/chỉnh sửa dữ liệu prefill từ file trước khi so sánh'
+                : 'Tôi đã kiểm tra/chỉnh sửa dữ liệu nạp từ CafeF trước khi so sánh'}
+            </span>
           </label>
         )}
         {compareLockedByConfirm && (
           <div className="banner banner-warn mt-sm" role="status">
-            Cần xác nhận dữ liệu prefill từ file trước khi bấm compare.
+            {extractMeta
+              ? 'Cần xác nhận dữ liệu prefill từ file trước khi bấm compare.'
+              : 'Cần xác nhận dữ liệu nạp từ CafeF trước khi bấm compare.'}
           </div>
         )}
         <button type="submit" className="btn btn-primary mt-md" disabled={loading || compareLockedByConfirm}>
