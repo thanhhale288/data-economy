@@ -42,5 +42,65 @@
       "total_assets": 6800000000000.0,
       "total_equity": 3200000000000.0
     }
+  },
+  {
+    "id": "hose_like_trieu",
+    "source": "tests/benchmark/fixtures/hose_like_trieu.pdf",
+    "notes": "Synthetic HOSE-like table; issuer Cong ty Co phan Mau Sang Che; unit Trieu dong; fake ticker MSC. Not a filing.",
+    "expected_fields": {
+      "operating_revenue": 12500000000.0,
+      "profit_before_tax": 1800000000.0,
+      "employees": 1250,
+      "total_assets": 45000000000.0,
+      "total_equity": 22000000000.0
+    }
+  },
+  {
+    "id": "en_sales_layout",
+    "source": "tests/benchmark/fixtures/en_sales_layout.pdf",
+    "notes": "Synthetic English layout using revenue from sales / total equity aliases. Issuer Mau Den Che Limited. Unit VND (not millions).",
+    "expected_fields": {
+      "operating_revenue": 8800000000.0,
+      "profit_before_tax": 440000000.0,
+      "employees": 880,
+      "total_assets": 15000000000.0,
+      "total_equity": 7200000000.0
+    }
+  },
+  {
+    "id": "partial_revenue_assets",
+    "source": "tests/benchmark/fixtures/partial_revenue_assets.pdf",
+    "notes": "Synthetic partial: revenue + assets only. Missing PBT / equity / employees stay null (missing_field).",
+    "expected_fields": {
+      "operating_revenue": 2000000000.0,
+      "profit_before_tax": null,
+      "employees": null,
+      "total_assets": 9000000000.0,
+      "total_equity": null
+    }
+  },
+  {
+    "id": "hose_notes_noise",
+    "source": "tests/benchmark/fixtures/hose_notes_noise.pdf",
+    "notes": "Synthetic two-page: statement lines on p1; notes-page amounts must not be invented as EXTRACT_FIELDS.",
+    "expected_fields": {
+      "operating_revenue": 3000000000.0,
+      "profit_before_tax": 300000000.0,
+      "employees": 400,
+      "total_assets": 8000000000.0,
+      "total_equity": 4000000000.0
+    }
+  },
+  {
+    "id": "hose_nghin_dong",
+    "source": "tests/benchmark/fixtures/hose_nghin_dong.pdf",
+    "notes": "Synthetic unit Nghin dong (x1000 to VND). Issuer Cong ty Co phan Mau Tim Che. Employees unscaled.",
+    "expected_fields": {
+      "operating_revenue": 4200000000.0,
+      "profit_before_tax": 210000000.0,
+      "employees": 210,
+      "total_assets": 9900000000.0,
+      "total_equity": 5100000000.0
+    }
   }
 ]
