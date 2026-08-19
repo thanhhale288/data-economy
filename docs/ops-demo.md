@@ -222,6 +222,30 @@ Nightly worker (`PYTHONPATH=. python -m pipeline.dags.scheduler`) runs `ml_train
 
 **Do not commit** `data/models/*.pt` or LightGBM/XGBoost `.joblib` binaries from a local train. Artifacts are machine-generated; gitignore covers `*.pt` and LightGBM joblib names.
 
+## Refresh ML drift baseline (Epic 5 Task #72)
+
+`GET /api/ml/monitoring` computes drift only when `data/models/ml_monitoring_baseline.json` exists. Missing file → `drift_flag` / `drift_score` stay **null** (no invented drift).
+
+After a retrain that meets the quality bar, refresh the baseline from **ModelRegistry MAPE** (never type numbers by hand):
+
+```bash
+# Preview — does not write
+PYTHONPATH=. python scripts/write_ml_monitoring_baseline.py --dry-run
+
+# Write data/models/ml_monitoring_baseline.json from the latest registry row per canonical model
+PYTHONPATH=. python scripts/write_ml_monitoring_baseline.py
+```
+
+The writer includes only models whose latest registry row has a real numeric `mape`. Untrained models (for example LightGBM with `registry_missing`) are omitted. If the registry is empty or unreachable, the script prints a warning, exits non-zero, and does **not** write a file — so you cannot overwrite a good baseline with zeros.
+
+Point it at a specific DB without copying `.env` into a worktree:
+
+```bash
+PYTHONPATH=. python scripts/write_ml_monitoring_baseline.py --database-url "$DATABASE_URL"
+```
+
+JSON baseline is committable **only** when values came from the registry. Do not invent MAPE in the file or in this doc.
+
 ## PaddleOCR extra (Epic 5 Task #69)
 
 **Decision:** default is **lazy-load** PaddleOCR on first scanned PDF/image extract. The Docker image **does not** install `requirements-ocr.txt` (`backend/Dockerfile` copies only `requirements.txt`). Do **not** bake OCR into the image unless an operator explicitly asks in a later task.
