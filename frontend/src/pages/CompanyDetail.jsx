@@ -131,11 +131,13 @@ export default function CompanyDetail() {
   const [coverageNote, setCoverageNote] = useState(null)
   const [error, setError] = useState(null)
   const [loading, setLoading] = useState(true)
+  const [listingVsic, setListingVsic] = useState({})
 
   useEffect(() => {
     let cancelled = false
     setLoading(true)
     setError(null)
+    setListingVsic({})
     Promise.all([
       api.getCompany(code),
       api.getUniverseCoverage().catch(() => null),
@@ -157,6 +159,47 @@ export default function CompanyDetail() {
       })
     return () => { cancelled = true }
   }, [code])
+
+  useEffect(() => {
+    if (!company) {
+      setListingVsic({})
+      return
+    }
+    const listings = (company.marketplace_listings || []).filter((ml) =>
+      ['shopee', 'tiktok', 'lazada'].includes(String(ml.platform || '').toLowerCase()),
+    )
+    const ac = new AbortController()
+    let cancelled = false
+    setListingVsic({})
+
+    Promise.all(
+      listings.map(async (ml) => {
+        const name = String(ml.product_name || '').trim()
+        if (!name) {
+          return [ml.id, { vsic_code: null, reason: 'chưa phân loại' }]
+        }
+        try {
+          const res = await api.categorizeProduct(name, { signal: ac.signal })
+          return [ml.id, res]
+        } catch {
+          if (ac.signal.aborted) return null
+          return [ml.id, { vsic_code: null, reason: 'chưa phân loại' }]
+        }
+      }),
+    ).then((rows) => {
+      if (cancelled) return
+      const next = {}
+      for (const row of rows) {
+        if (row) next[row[0]] = row[1]
+      }
+      setListingVsic(next)
+    })
+
+    return () => {
+      cancelled = true
+      ac.abort()
+    }
+  }, [company])
 
   if (loading) return <div className="loading">Đang tải...</div>
   if (error || !company) {
@@ -441,6 +484,7 @@ export default function CompanyDetail() {
                 <tr>
                   <th>Nền tảng</th>
                   <th>Sản phẩm</th>
+                  <th>VSIC dự đoán</th>
                   <th>Giá</th>
                   <th>Units est.</th>
                   <th>Revenue est.</th>
@@ -468,6 +512,18 @@ export default function CompanyDetail() {
                         </a>
                       ) : (
                         ml.product_name
+                      )}
+                    </td>
+                    <td>
+                      {listingVsic[ml.id]?.vsic_code ? (
+                        listingVsic[ml.id].vsic_code
+                      ) : (
+                        <span
+                          className="muted-text"
+                          title={listingVsic[ml.id]?.reason || 'chưa phân loại'}
+                        >
+                          —
+                        </span>
                       )}
                     </td>
                     <td>{ml.price != null ? formatVND(ml.price) : '—'}</td>
