@@ -185,31 +185,34 @@ export default function Dashboard() {
         setOecdGso(og)
         setCoverageNote(cov)
         setAnomaly(anom)
+        // Unblock the page after core dashboard data is ready.
+        setLoading(false)
 
         const model = s?.preferred_forecast_model || 'xgboost'
-        try {
-          const fc = await api.forecast(model, 6)
-          if (!cancelled) {
-            setForecast(fc)
-            setForecastError(null)
-          }
-        } catch (err) {
-          if (!cancelled) {
-            setForecast(null)
-            setForecastError(
-              err?.message?.includes('404')
-                ? `Chưa có artifact forecast cho model «${model}» — chạy make bootstrap / train ML.`
-                : `Không tải được forecast (${model}): ${err.message}`
-            )
-          }
-        }
+        // Keep forecast optional so a stuck/slow model endpoint cannot freeze the whole page.
+        api.forecast(model, 6)
+          .then((fc) => {
+            if (!cancelled) {
+              setForecast(fc)
+              setForecastError(null)
+            }
+          })
+          .catch((err) => {
+            if (!cancelled) {
+              setForecast(null)
+              setForecastError(
+                err?.message?.includes('404')
+                  ? `Chưa có artifact forecast cho model «${model}» — chạy make bootstrap / train ML.`
+                  : `Không tải được forecast (${model}): ${err.message}`
+              )
+            }
+          })
       } catch (err) {
         console.error(err)
         if (!cancelled) {
           setLoadError(err.message || 'Không tải được Dashboard')
+          setLoading(false)
         }
-      } finally {
-        if (!cancelled) setLoading(false)
       }
     }
 
