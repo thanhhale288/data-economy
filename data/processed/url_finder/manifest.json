@@ -1,0 +1,16 @@
+{
+  "task": "evol1-t03-url-finder-v0",
+  "n_identity": 28,
+  "n_scored": 28,
+  "hits": 12,
+  "abstain": 10,
+  "wrong": 6,
+  "hit_rate": 0.4286,
+  "precision_among_decided": 0.6667,
+  "mode": "domain_hypothesis + on-page evidence (search blocked: HTTP 202 duckduckgo_html)",
+  "identity_sha256": "addd5e730b43831fd0e6723fb281762d273ecb85099f80ee7d49054bc6ba7f79",
+  "labels_sha256": "f2ed3eed39547ec3a5918b6b8201d8beaa75c43f379b389ee7c6cf3f80908ba7",
+  "predictions": "data/processed/url_finder/predictions.json",
+  "metrics": "data/processed/url_finder/metrics.json",
+  "error_analysis": "data/processed/url_finder/error_analysis.md"
+}

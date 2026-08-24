@@ -1,0 +1,420 @@
+[
+  {
+    "ticker": "RAL",
+    "legal_name": "Công ty Cổ phần Bóng đèn Rạng Đông",
+    "tax_id": "0101526991",
+    "address": "87 - 89 phố Hạ Đình, Phường Thanh Xuân Trung, Quận Thanh Xuân, Thành phố Hà Nội, Việt Nam",
+    "province": "Hà Nội",
+    "aliases": [
+      "RALACO",
+      "RANG DONG LIGHT SOURCE AND VACUUM FLASK JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0101526991-cong-ty-co-phan-bong-den-phich-nuoc-rang-dong",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:42Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "HPG",
+    "legal_name": "Tập đoàn Hòa Phát",
+    "tax_id": "0900189284",
+    "address": "Khu công nghiệp Phố Nối A, Xã Nguyễn Văn Linh, Tỉnh Hưng Yên, Việt Nam",
+    "province": "Hưng Yên",
+    "aliases": [
+      "HOA PHAT GROUP",
+      "HOA PHAT  GROUP JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0900189284-cong-ty-co-phan-tap-doan-hoa-phat",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:43Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "VNM",
+    "legal_name": "Công ty Cổ phần Sữa Việt Nam",
+    "tax_id": "0300588569",
+    "address": "10 Tân Trào, Phường Tân Mỹ, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "VINAMILK",
+      "VIETNAM DAIRY PRODUCTS JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0300588569-cong-ty-co-phan-sua-viet-nam",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:44Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "FPT",
+    "legal_name": "Tập đoàn FPT",
+    "tax_id": "0101248141",
+    "address": "Số 10 phố Phạm Văn Bạch, Phường Cầu Giấy, Thành phố Hà Nội, Việt Nam",
+    "province": "Hà Nội",
+    "aliases": [
+      "FPT CORP",
+      "FPT CORPORATION"
+    ],
+    "source_url": "https://masothue.com/0101248141-cong-ty-co-phan-fpt",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:45Z",
+    "name_match_ratio": 58.1
+  },
+  {
+    "ticker": "GVR",
+    "legal_name": "Tập đoàn Công nghiệp Cao su Việt Nam",
+    "tax_id": "0301266564",
+    "address": "236 Nam Kỳ Khởi Nghĩa, Phường Xuân Hòa, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "VRG",
+      "VIET NAM RUBBER GROUP  - JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0301266564-tap-doan-cong-nghiep-cao-su-viet-nam-cong-ty-co-phan",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:45Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "DGC",
+    "legal_name": "Công ty Cổ phần Hóa chất Đức Giang",
+    "tax_id": "0101452588",
+    "address": "Số 18 ngõ 44, phố Đức Giang, Phường Việt Hưng, Thành phố Hà Nội, Việt Nam",
+    "province": "Hà Nội",
+    "aliases": [
+      "DUCGIANG CHEMICALS GROUP",
+      "DUCGIANG CHEMICALS GROUP JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0101452588-cong-ty-co-phan-tap-doan-hoa-chat-duc-giang",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:46Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "MSN",
+    "legal_name": "Tập đoàn Masan",
+    "tax_id": "0303576603",
+    "address": "Số 23 Lê Duẩn, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "MASAN GROUP",
+      "MASAN GROUP CORPORATION"
+    ],
+    "source_url": "https://masothue.com/0303576603-cong-ty-co-phan-tap-doan-masan",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:47Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "PNJ",
+    "legal_name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+    "tax_id": "0300521758",
+    "address": "170E Phan Đăng Lưu, Phường Đức Nhuận, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "PNJ.,JSC",
+      "PHU NHUAN JEWELRY JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0300521758-cong-ty-co-phan-vang-bac-da-quy-phu-nhuan",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:48Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "REE",
+    "legal_name": "Công ty Cổ phần Cơ điện lạnh",
+    "tax_id": "0300741143",
+    "address": "364 Cộng Hòa, Phường Tân Bình, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "REE CORP."
+    ],
+    "source_url": "https://masothue.com/0300741143-cong-ty-co-phan-co-dien-lanh",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:48Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "BMP",
+    "legal_name": "Công ty Cổ phần Nhựa Bình Minh",
+    "tax_id": "0301464823",
+    "address": "240 Hậu Giang, Phường 09, Quận 6, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "BM PLASCO.",
+      "BINH MINH PLASTICS JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0301464823-cong-ty-co-phan-nhua-binh-minh",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:49Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "VHC",
+    "legal_name": "Công ty Cổ phần Vĩnh Hoàn",
+    "tax_id": "1400112623",
+    "address": "Quốc lộ 30, Phường Mỹ Ngãi, Tỉnh Đồng Tháp, Việt Nam",
+    "province": "Đồng Tháp",
+    "aliases": [
+      "VINH HOAN CORP",
+      "VINH HOAN CORPORATION"
+    ],
+    "source_url": "https://masothue.com/1400112623-cong-ty-co-phan-vinh-hoan",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:50Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "ANV",
+    "legal_name": "Công ty Cổ phần Nam Việt",
+    "tax_id": "1600168736",
+    "address": "Số 19D Trần Hưng Đạo, Phường Long Xuyên, Tỉnh An Giang, Việt Nam",
+    "province": "An Giang",
+    "aliases": [
+      "NAVICO",
+      "NAM VIET CORPORATION"
+    ],
+    "source_url": "https://masothue.com/1600168736-cong-ty-cp-nam-viet",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:51Z",
+    "name_match_ratio": 91.4
+  },
+  {
+    "ticker": "IDI",
+    "legal_name": "Công ty Cổ phần Đầu tư và Phát triển Đa Quốc Gia I.D.I",
+    "tax_id": "0303141296",
+    "address": "Quốc lộ 80, Cụm công nghiệp Vàm Cống, ấp An Thạnh, Xã Lấp Vò, Tỉnh Đồng Tháp, Việt Nam",
+    "province": "Đồng Tháp",
+    "aliases": [
+      "CÔNG TY  CỔ PHẦN I.D.I",
+      "I.D.I INTERNATIONAL DEVELOPMENT AND INVESTMENT CORPORATION"
+    ],
+    "source_url": "https://masothue.com/0303141296-cong-ty-co-phan-dau-tu-va-phat-trien-da-quoc-gia-i-d-i",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:51Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "SBT",
+    "legal_name": "Công ty Cổ phần Thành Thành Công — Biên Hòa",
+    "tax_id": "3900244389",
+    "address": "Ấp Tân Lợi, Xã Tân Phú, Tỉnh Tây Ninh, Việt Nam",
+    "province": "Tây Ninh",
+    "aliases": [
+      "TTC -BH",
+      "THANH THANH CONG - BIEN HOA  JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/3900244389-cong-ty-co-phan-thanh-thanh-cong-bien-hoa",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:52Z",
+    "name_match_ratio": 96.9
+  },
+  {
+    "ticker": "QNS",
+    "legal_name": "Công ty Cổ phần Đường Quảng Ngãi",
+    "tax_id": "4300205943",
+    "address": "Số: 02, đường Nguyễn Chí Thanh, Phường Nghĩa Lộ, Tỉnh Quảng Ngãi, Việt Nam",
+    "province": "Quảng Ngãi",
+    "aliases": [
+      "QNS",
+      "QUANG NGAI SUGAR  JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/4300205943-cong-ty-co-phan-duong-quang-ngai",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:53Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "HSG",
+    "legal_name": "Công ty Cổ phần Tập đoàn Hoa Sen",
+    "tax_id": "3700381324",
+    "address": "Số 9, Đại lộ Thống Nhất, Khu công nghiệp Sóng Thần II, Phường Dĩ An, Thành phố Dĩ An, Tỉnh Bình Dương, Việt Nam",
+    "province": "Bình Dương",
+    "aliases": [
+      "HOA SEN GROUP (HSG)",
+      "HOA SEN GROUP"
+    ],
+    "source_url": "https://masothue.com/3700381324-cong-ty-co-phan-tap-doan-hoa-sen",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:54Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "NKG",
+    "legal_name": "Công ty Cổ phần Thép Nam Kim",
+    "tax_id": "3700477019",
+    "address": "Lô A1, đường Đ2, Khu công nghiệp Đồng An 2, Phường Bình Dương, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "NAKISCO",
+      "NAM KIM STEEL JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/3700477019-cong-ty-co-phan-thep-nam-kim",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:55Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "POM",
+    "legal_name": "Công ty Cổ phần Thép Pomina",
+    "tax_id": "3700321364",
+    "address": "Số 1, đường số 27, KCN Sóng Thần 2, Phường Dĩ An, Thành phố Dĩ An, Tỉnh Bình Dương, Việt Nam",
+    "province": "Bình Dương",
+    "aliases": [
+      "CÔNG TY THÉP POMINA",
+      "POMINA STEEL CORPORATION"
+    ],
+    "source_url": "https://masothue.com/3700321364-cong-ty-co-phan-thep-pomina",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:55Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "TLH",
+    "legal_name": "Công ty Cổ phần Tập đoàn Thép Tiến Lên",
+    "tax_id": "3600512830",
+    "address": "G4A, Khu phố 14, Phường Tam Hiệp, Thành phố Đồng Nai, Việt Nam",
+    "province": "Đồng Nai",
+    "aliases": [
+      "T.L.C",
+      "TIEN LEN STEEL CORPORATION JOINT - STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/3600512830-cong-ty-co-phan-tap-doan-thep-tien-len",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:56Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "DQC",
+    "legal_name": "Công ty Cổ phần Điện Quang",
+    "tax_id": "0300363808",
+    "address": "121-123-125 Hàm Nghi, Phường Bến Thành, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "DIEN QUANG GROUP JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0300363808-cong-ty-co-phan-tap-doan-dien-quang",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:57Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "GEE",
+    "legal_name": "Công ty Cổ phần Điện Gia Dụng Gelex",
+    "tax_id": "0107547109",
+    "address": "Số 52 phố Lê Đại Hành, Phường Hai Bà Trưng, Thành phố Hà Nội, Việt Nam",
+    "province": "Hà Nội",
+    "aliases": [
+      "GELEX ELECTRIC., JSC",
+      "GELEX ELECTRICITY JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0107547109-cong-ty-co-phan-dien-luc-gelex",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:58Z",
+    "name_match_ratio": 92.9
+  },
+  {
+    "ticker": "TYA",
+    "legal_name": "Công ty Cổ phần Dây và Cáp điện Taya Việt Nam",
+    "tax_id": "3600241468",
+    "address": "Số 1, Đường 1A, KCN Biên Hòa 2, Phường Trấn Biên, Thành phố Đồng Nai, Việt Nam",
+    "province": "Đồng Nai",
+    "aliases": [
+      "TAYA VIETNAM",
+      "TAYA (VIETNAM) ELECTRIC WIRE AND CABLE JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/3600241468-cong-ty-co-phan-day-va-cap-dien-taya-viet-nam",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:58Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "DPR",
+    "legal_name": "Công ty Cổ phần Cao su Đồng Phú",
+    "tax_id": "3800100376",
+    "address": "Ấp Thuận Phú 1, Xã Thuận Lợi, Thành phố Đồng Nai, Việt Nam",
+    "province": "Đồng Nai",
+    "aliases": [
+      "DORUCO",
+      "DONG PHU RUBBER JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/3800100376-cong-ty-co-phan-cao-su-dong-phu",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:10:59Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "CSM",
+    "legal_name": "Công ty Cổ phần Công nghiệp Cao su Miền Nam",
+    "tax_id": "0300419930",
+    "address": "180 Nguyễn Thị Minh Khai , Phường Xuân Hòa, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "CASUMINA",
+      "THE SOUTHERN RUBBER INDUSTRY JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0300419930-cong-ty-co-phan-cong-nghiep-cao-su-mien-nam",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:11:00Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "AAA",
+    "legal_name": "Công ty Cổ phần Nhựa An Phát Xanh",
+    "tax_id": "0800373586",
+    "address": "Lô CN11+CN12, cụm Công nghiệp An Đồng, Xã Nam Sách, Thành phố Hải Phòng, Việt Nam",
+    "province": "Hải Phòng",
+    "aliases": [
+      "AN PHAT BIOPLASTICS., JSC",
+      "AN PHAT BIOPLASTICS JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0800373586-cong-ty-co-phan-nhua-an-phat-xanh",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:11:01Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "DCM",
+    "legal_name": "Công ty Cổ phần Đạm Cà Mau",
+    "tax_id": "2001012298",
+    "address": "Số 647 – 649, đường Ngô Quyền, Phường An Xuyên, Tỉnh Cà Mau, Việt Nam",
+    "province": "Cà Mau",
+    "aliases": [
+      "PVCFC",
+      "PETROVIETNAM CA MAU FERTILIZER CORPORATION"
+    ],
+    "source_url": "https://masothue.com/2001012298-cong-ty-co-phan-tong-cong-ty-phan-bon-dau-khi-ca-mau",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:11:01Z",
+    "name_match_ratio": 91.7
+  },
+  {
+    "ticker": "BFC",
+    "legal_name": "Công ty Cổ phần Phân bón Bình Điền",
+    "tax_id": "0302975517",
+    "address": "C12/21 đường Lê Khả Phiêu, Xã Tân Nhựt, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "BFC",
+      "BÌNH ĐIỀN FERTILIZER JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0302975517-cong-ty-co-phan-phan-bon-binh-dien",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:11:02Z",
+    "name_match_ratio": 100.0
+  },
+  {
+    "ticker": "CSV",
+    "legal_name": "Công ty Cổ phần Hóa chất Cơ bản miền Nam",
+    "tax_id": "0301446260",
+    "address": "22 Lý Tự Trọng, Phường Sài Gòn, Thành phố Hồ Chí Minh, Việt Nam",
+    "province": "Hồ Chí Minh",
+    "aliases": [
+      "HÓA CHẤT CƠ BẢN MIỀN NAM",
+      "SOUTH BASIC CHEMICALS JOINT STOCK COMPANY"
+    ],
+    "source_url": "https://masothue.com/0301446260-cong-ty-co-phan-hoa-chat-co-ban-mien-nam",
+    "source_dataset": "masothue.com",
+    "retrieved_at": "2026-08-24T10:11:03Z",
+    "name_match_ratio": 100.0
+  }
+]
