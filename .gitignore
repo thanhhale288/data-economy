@@ -21,6 +21,8 @@ data/raw/*
 !data/raw/company_universe/**
 !data/raw/frame_pilot/
 !data/raw/frame_pilot/**
+!data/raw/local_llm/
+!data/raw/local_llm/**
 data/models/*.pkl
 data/models/*.pt
 # LightGBM train artifacts (Task #71) — regenerate locally; do not commit binaries

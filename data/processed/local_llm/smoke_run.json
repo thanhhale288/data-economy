@@ -1,0 +1,554 @@
+{
+  "task": "evol1-t04-local-llm-smoke",
+  "created_at": "2026-08-24T11:01:25Z",
+  "model": "qwen3:8b",
+  "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "n_pages": 10,
+  "decisions": {
+    "ok": 10,
+    "retry_ok": 0,
+    "abstain": 0
+  },
+  "pages": [
+    {
+      "ticker": "RAL",
+      "url": "https://rangdong.com.vn",
+      "wall_s": 3.502,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang có danh mục sản phẩm rõ ràng với nhiều loại sản phẩm như đèn LED, công tắc thông minh, ổ cắm thông minh, v.v."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.8,
+          "abstain": false,
+          "reason": "Có mục 'Điểm mua hàng' và 'Gian hàng trực tuyến', nhưng không có cụ thể giỏ hàng hoặc checkout trực tiếp trên trang."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.5,
+          "abstain": false,
+          "reason": "Không thấy thông tin cụ thể về phương thức thanh toán, nhưng có thể có các phương thức như COD hoặc online."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội trong văn bản."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.5,
+          "abstain": false,
+          "reason": "Có đề cập đến 'Gian hàng trực tuyến' và 'Cửa hàng đại lý', nhưng không có URL cụ thể."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang web sử dụng tiếng Việt."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 2552,
+      "eval_count": 320,
+      "eval_duration_ns": 2849264874,
+      "total_duration_ns": 3475902535,
+      "load_duration_ns": 79092601,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "HPG",
+      "url": "https://www.hoaphat.com.vn",
+      "wall_s": 2.89,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 0.95,
+          "abstain": false,
+          "reason": "Trang có danh mục sản phẩm như Gang thép, Ống thép, Tôn mạ màu, Điện máy gia dụng, v.v."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về giỏ hàng hoặc checkout trên trang."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết đến gian hàng trên sàn."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang sử dụng tiếng Việt."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 2117,
+      "eval_count": 266,
+      "eval_duration_ns": 2346968469,
+      "total_duration_ns": 2868393799,
+      "load_duration_ns": 76155814,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "VNM",
+      "url": "https://vinamilk.com.vn",
+      "wall_s": 2.758,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang có danh mục sản phẩm với nhiều loại sản phẩm được liệt kê chi tiết."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.5,
+          "abstain": false,
+          "reason": "Không thấy cụ thể có giỏ hàng hoặc checkout trực tiếp trên trang."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội trong văn bản."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về gian hàng trên sàn thương mại điện tử."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang web sử dụng ngôn ngữ tiếng Việt."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 1706,
+      "eval_count": 257,
+      "eval_duration_ns": 2242292365,
+      "total_duration_ns": 2740201742,
+      "load_duration_ns": 76394885,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "FPT",
+      "url": "https://fpt.com.vn",
+      "wall_s": 2.819,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về danh mục sản phẩm cụ thể."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về giỏ hàng hoặc checkout."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.5,
+          "abstain": false,
+          "reason": "Có liên kết 'Theo dõi chúng tôi' nhưng không có URL cụ thể."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về gian hàng trên sàn."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang web sử dụng ngôn ngữ Việt Nam."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 2240,
+      "eval_count": 257,
+      "eval_duration_ns": 2268748581,
+      "total_duration_ns": 2800191334,
+      "load_duration_ns": 73538370,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "GVR",
+      "url": "https://vrg.vn",
+      "wall_s": 3.398,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 0.8,
+          "abstain": false,
+          "reason": "Trang có phần 'Sản phẩm công nghiệp cao su' với danh sách các sản phẩm như lốp xe, nệm gối, găng tay, bóng thể thao, v.v."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về giỏ hàng, đặt hàng, checkout hoặc mua ngay trên trang."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội cụ thể trong văn bản."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về gian hàng trên sàn thương mại điện tử."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 0.9,
+          "abstain": false,
+          "reason": "Trang có hỗ trợ tiếng Việt và tiếng Anh, nhưng nội dung chính là tiếng Việt."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 2632,
+      "eval_count": 311,
+      "eval_duration_ns": 2767401181,
+      "total_duration_ns": 3375021390,
+      "load_duration_ns": 73359936,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "DGC",
+      "url": "https://ducgiangchem.vn",
+      "wall_s": 3.093,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang có danh mục sản phẩm rõ ràng như 'Sản phẩm', 'Chất tẩy rửa', 'Bột Giặt', 'Nước Giặt', v.v."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về giỏ hàng, đặt hàng, checkout, hoặc mua ngay trên website."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội trong văn bản."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có liên kết đến gian hàng trên sàn thương mại điện tử."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang web hỗ trợ cả tiếng Việt và tiếng Anh."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 2359,
+      "eval_count": 284,
+      "eval_duration_ns": 2505252017,
+      "total_duration_ns": 3072373986,
+      "load_duration_ns": 73043096,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "MSN",
+      "url": "https://masangroup.com",
+      "wall_s": 2.697,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có bằng chứng về danh mục sản phẩm trong nội dung trang."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có bằng chứng về giỏ hàng hoặc checkout trên trang."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội trong nội dung."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết gian hàng sàn."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang có hỗ trợ ngôn ngữ tiếng Việt và tiếng Anh."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 563,
+      "eval_count": 260,
+      "eval_duration_ns": 2206277688,
+      "total_duration_ns": 2588854706,
+      "load_duration_ns": 73715201,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "PNJ",
+      "url": "https://pnj.com.vn",
+      "wall_s": 2.661,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có bằng chứng trực tiếp về danh mục sản phẩm trên trang."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có bằng chứng trực tiếp về giỏ hàng hoặc checkout trên trang."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội trong nội dung trang."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về gian hàng trên sàn."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang sử dụng ngôn ngữ Việt Nam."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 353,
+      "eval_count": 261,
+      "eval_duration_ns": 2203827544,
+      "total_duration_ns": 2536699291,
+      "load_duration_ns": 75177188,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "REE",
+      "url": "https://reecorp.com",
+      "wall_s": 2.719,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về danh mục sản phẩm"
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về giỏ hàng hoặc checkout"
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán"
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội"
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.1,
+          "abstain": true,
+          "reason": "Không có liên kết gian hàng sàn"
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang web hỗ trợ tiếng Việt và tiếng Anh"
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 1820,
+      "eval_count": 247,
+      "eval_duration_ns": 2164084989,
+      "total_duration_ns": 2699492754,
+      "load_duration_ns": 74713895,
+      "error": null,
+      "raw_content": null
+    },
+    {
+      "ticker": "BMP",
+      "url": "https://binhminhplastic.com.vn",
+      "wall_s": 3.193,
+      "decision": "ok",
+      "result": {
+        "has_product_catalog": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang có mục 'Sản phẩm' với danh sách các loại ống và phụ tùng nhựa, kèm theo thông tin kỹ thuật và chứng nhận chất lượng."
+        },
+        "has_order_cart": {
+          "value": null,
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về giỏ hàng, đặt hàng, checkout hoặc mua ngay trên trang web."
+        },
+        "payment_methods": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về phương thức thanh toán."
+        },
+        "social_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có liên kết mạng xã hội trong văn bản."
+        },
+        "marketplace_links": {
+          "value": [],
+          "confidence": 0.0,
+          "abstain": true,
+          "reason": "Không có thông tin về gian hàng trên sàn thương mại điện tử."
+        },
+        "website_language": {
+          "value": null,
+          "confidence": 1.0,
+          "abstain": false,
+          "reason": "Trang web sử dụng ngôn ngữ Việt Nam."
+        }
+      },
+      "model": "qwen3:8b",
+      "digest": null,
+      "attempts": 1,
+      "prompt_eval_count": 2701,
+      "eval_count": 279,
+      "eval_duration_ns": 2496100605,
+      "total_duration_ns": 3172407801,
+      "load_duration_ns": 73662731,
+      "error": null,
+      "raw_content": null
+    }
+  ]
+}

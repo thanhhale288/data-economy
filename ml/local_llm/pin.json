@@ -1,0 +1,12 @@
+{
+  "model": "qwen3:8b",
+  "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "quantization": "Q4_K_M",
+  "parameter_size": "8.2B",
+  "family": "qwen3",
+  "ollama_version_min": "0.17.4",
+  "default_base_url": "https://research.neu.edu.vn/ollama",
+  "temperature": 0,
+  "seed": 42,
+  "think": false
+}

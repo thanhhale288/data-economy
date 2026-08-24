@@ -1,0 +1,127 @@
+{
+  "retrieved_at": "2026-08-24T11:00:51Z",
+  "tickers": [
+    "RAL",
+    "HPG",
+    "VNM",
+    "FPT",
+    "GVR",
+    "DGC",
+    "MSN",
+    "PNJ",
+    "REE",
+    "BMP"
+  ],
+  "pages": [
+    {
+      "ticker": "RAL",
+      "name": "Công ty Cổ phần Bóng đèn Rạng Đông",
+      "url": "https://rangdong.com.vn",
+      "retrieved_at": "2026-08-24T11:00:37Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 7635,
+      "sha256": "fac828502d09e19ee25e667d46dadbfb363dc68f755e71fc1e02bc770581140b",
+      "path": "data/raw/local_llm/pages/RAL.txt"
+    },
+    {
+      "ticker": "HPG",
+      "name": "Tập đoàn Hòa Phát",
+      "url": "https://www.hoaphat.com.vn",
+      "retrieved_at": "2026-08-24T11:00:38Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 5473,
+      "sha256": "8228d4cada2c517165e76cc0b5a18c6ddafa6151887ccac8cacfed7b2bcf9a78",
+      "path": "data/raw/local_llm/pages/HPG.txt"
+    },
+    {
+      "ticker": "VNM",
+      "name": "Công ty Cổ phần Sữa Việt Nam",
+      "url": "https://vinamilk.com.vn",
+      "retrieved_at": "2026-08-24T11:00:39Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 3970,
+      "sha256": "4cfbe62a6f6be07c97be8abb0ba24c12589c43b7e0b5c7da7f46f4d57775dc79",
+      "path": "data/raw/local_llm/pages/VNM.txt"
+    },
+    {
+      "ticker": "FPT",
+      "name": "Tập đoàn FPT",
+      "url": "https://fpt.com.vn",
+      "retrieved_at": "2026-08-24T11:00:40Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 6517,
+      "sha256": "4527cb59d3b21c40019aa0d5e3d58b43e3f3b738d56d84d1bf0f270110e991fd",
+      "path": "data/raw/local_llm/pages/FPT.txt"
+    },
+    {
+      "ticker": "GVR",
+      "name": "Tập đoàn Công nghiệp Cao su Việt Nam",
+      "url": "https://vrg.vn",
+      "retrieved_at": "2026-08-24T11:00:41Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 8000,
+      "sha256": "2e16866103285d5940bfa1c02ba571ee96f222c854fa2939a4031580a1820636",
+      "path": "data/raw/local_llm/pages/GVR.txt"
+    },
+    {
+      "ticker": "DGC",
+      "name": "Công ty Cổ phần Hóa chất Đức Giang",
+      "url": "https://ducgiangchem.vn",
+      "retrieved_at": "2026-08-24T11:00:42Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 5016,
+      "sha256": "ac2453496e23c29c846b3a6277560483987872d8b55a57415de5250635a9fcbf",
+      "path": "data/raw/local_llm/pages/DGC.txt"
+    },
+    {
+      "ticker": "MSN",
+      "name": "Tập đoàn Masan",
+      "url": "https://masangroup.com",
+      "retrieved_at": "2026-08-24T11:00:42Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 1180,
+      "sha256": "f1db1f26d65515b987c047e82dda246214cc93c560ff3ec6ce4650b6bb0dfe8f",
+      "path": "data/raw/local_llm/pages/MSN.txt"
+    },
+    {
+      "ticker": "PNJ",
+      "name": "Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận",
+      "url": "https://pnj.com.vn",
+      "retrieved_at": "2026-08-24T11:00:47Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 61,
+      "sha256": "88b41e8a67ca9b7e667ce23e38364cc0c59a0b3c176632b98f1e875465ee848d",
+      "path": "data/raw/local_llm/pages/PNJ.txt"
+    },
+    {
+      "ticker": "REE",
+      "name": "Công ty Cổ phần Cơ điện lạnh",
+      "url": "https://reecorp.com",
+      "retrieved_at": "2026-08-24T11:00:48Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 4611,
+      "sha256": "62b4b25ddfd8b40a5aa63b2b21cef63d35697c6cf9f1fe4fd8839b3a65b60ae2",
+      "path": "data/raw/local_llm/pages/REE.txt"
+    },
+    {
+      "ticker": "BMP",
+      "name": "Công ty Cổ phần Nhựa Bình Minh",
+      "url": "https://binhminhplastic.com.vn",
+      "retrieved_at": "2026-08-24T11:00:51Z",
+      "ok": true,
+      "http_status": 200,
+      "char_count": 6981,
+      "sha256": "fa241c33d9e434dbb74f52ac9e121e4d21c07fa788a4e0f61d1bb130797d13a3",
+      "path": "data/raw/local_llm/pages/BMP.txt"
+    }
+  ]
+}
