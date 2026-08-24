@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
-import { SHOW_MODEL_METRICS_UI } from '../researchScope'
+import { SHOW_ML_MONITORING_UI, SHOW_MODEL_METRICS_UI } from '../researchScope'
 
 const CRAWLERS = [
   { id: 'all', label: 'Chạy tất cả' },
@@ -71,7 +71,7 @@ export default function Pipeline() {
         api.getPipelineJobs(),
         api.getPipelineStatus(),
         api.getPipelineQuality(),
-        api.getMlMonitoring(),
+        SHOW_ML_MONITORING_UI ? api.getMlMonitoring() : Promise.resolve(null),
       ])
       setJobs(jobList)
       setStatus(monitorStatus)
@@ -92,7 +92,7 @@ export default function Pipeline() {
       api.getPipelineJobs(),
       api.getPipelineStatus(),
       api.getPipelineQuality(),
-      api.getMlMonitoring(),
+      SHOW_ML_MONITORING_UI ? api.getMlMonitoring() : Promise.resolve(null),
     ])
       .then(([jobList, monitorStatus, qualityReport, monitoring]) => {
         if (cancelled) return
@@ -146,8 +146,11 @@ export default function Pipeline() {
     <div>
       <h2 className="page-title">Pipeline Monitor</h2>
       <p className="page-subtitle">
-        Theo dõi health nguồn, lần chạy gần nhất, ML quality/drift contract và lịch sử job.
-        Trạng thái fallback/unavailable hiện rõ — không giả lập nguồn hay drift khi thiếu artifact.
+        Theo dõi health nguồn, lần chạy gần nhất
+        {SHOW_ML_MONITORING_UI ? ', ML quality/drift contract' : ''}
+        {' '}và lịch sử job.
+        Trạng thái fallback/unavailable hiện rõ — không giả lập nguồn
+        {SHOW_ML_MONITORING_UI ? ' hay drift' : ''} khi thiếu artifact.
       </p>
 
       {error && (
@@ -292,6 +295,7 @@ export default function Pipeline() {
         )}
       </div>
 
+      {SHOW_ML_MONITORING_UI && (
       <div className="chart-container">
         <h3>ML monitoring (quality / drift)</h3>
         <p className="chart-note mt-0">
@@ -394,6 +398,7 @@ export default function Pipeline() {
           </>
         )}
       </div>
+      )}
 
       <div className="chart-container">
         <h3>Lịch sử job</h3>

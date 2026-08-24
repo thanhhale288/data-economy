@@ -88,6 +88,11 @@ One-shot labels/milestones/releases/protection: `bash scripts/github-bootstrap.s
 One chat → many related tasks via waves/subagents; keep branch/PR per task; close with plain-language summary + testing per task (no auto next-task prompt):  
 `.cursor/skills/lazy-to-complete-workflow/SKILL.md`. Trigger: continue phase work / run related tasks in parallel.
 
+### Plain task close (giải thích tự động sau task)
+
+**Mặc định** khi agent hoàn thành bất kỳ task nào — user không cần hỏi thêm. Plain-language summary (jargon explained, no generic bullets):  
+`.cursor/skills/plain-task-close/SKILL.md`. Rule: `.cursor/rules/plain-task-close.mdc` (`alwaysApply`). Lazy-to-complete W4 Ship cũng bắt buộc skill này.
+
 ### Catch-up (“những gì tôi chưa biết”)
 
 Tour Task #13–#18 (what/how/gaps) + terms from `CONTEXT.md` (not `knowledge.md`):  

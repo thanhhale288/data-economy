@@ -1,0 +1,14 @@
+---
+description: After every completed task, agents must write a plain-language close summary automatically — user does not need to ask.
+alwaysApply: true
+---
+
+# Plain task close (tự động sau mỗi task)
+
+Khi **hoàn thành** một task và gửi tin nhắn kết thúc cho user:
+
+1. **Đọc và làm theo** `.cursor/skills/plain-task-close/SKILL.md` — **mặc định**, không đợi user hỏi “giải thích dễ hiểu”.
+2. Mỗi task: **Một câu** + **Bạn sẽ thấy gì** + **Làm thế nào** (step-by-step) + **Hạn chế** + thuật ngữ giải thích inline + testing results.
+3. **Cấm** kết thúc chỉ bằng bullet chung chung, jargon không giải thích, hoặc list file không nói ý nghĩa.
+
+Catch-up nhiều task cũ (user chủ động hỏi): dùng `what-i-dont-know`, không thay skill này.

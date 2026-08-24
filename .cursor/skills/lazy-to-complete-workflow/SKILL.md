@@ -25,7 +25,7 @@ Nếu không announce được vì thiếu handoff/task rõ → hỏi 1 câu r�
 | Mọi chat | `AGENTS.md`, `CONTEXT.md`, `docs/evol-1.md` |
 | Chọn task & AC | `.cursor/skills/project-roadmap/SKILL.md`, `docs/evol-1.md` |
 | Git commit / push / PR | `.cursor/skills/github-workflow/SKILL.md` + `epic-phase-task-git` |
-| Đóng task | **Giải thích dễ hiểu** + **Testing results** — [reference.md](reference.md) |
+| Đóng task | **plain-task-close** (bắt buộc) + **Testing results** — [reference.md](reference.md) |
 | Chi tiết wave + templates | [reference.md](reference.md) |
 | Repo / MCP / lib | `docs/needGit.md` — chỉ mục khớp task |
 | Handoff artifact | Ghi tiến độ trong PR / commit message; không còn bắt buộc `.scratch/handoff-*.md` (archive only) |
@@ -97,19 +97,19 @@ Verify tối thiểu: `PYTHONPATH=. pytest -q` (scope liên quan); FE → `cd fr
 
 Theo `github-workflow` + `epic-phase-task-git`. Mặc định: **một PR = một task**.
 
-### 6. Handoff batch + giải thích + testing → STOP
+### 6. Handoff batch + plain-task-close + testing → STOP
 
 - Giữ tối đa 1 handoff active cho batch hiện tại (`.scratch/handoff-task*.md` hoặc `.scratch/handoff-phase*.md`).
-- Trong tin nhắn đóng chat và handoff, báo theo **từng task**:
-  - Đã làm được gì
-  - Hạn chế/chưa làm được
+- **Bắt buộc** chạy `.cursor/skills/plain-task-close/SKILL.md` cho **từng task** trước testing — **tự động**, user không cần hỏi “giải thích dễ hiểu” (rule `plain-task-close.mdc`, `alwaysApply`).
+- Trong tin nhắn đóng chat và handoff, theo **từng task**:
+  - Một câu + bạn sẽ thấy gì + làm thế nào (step-by-step) + hạn chế + thuật ngữ giải thích
   - Testing results (lệnh + pass/fail)
-  - PR URL của task
+  - PR URL
 - Không tự viết prompt task tiếp theo trừ khi user yêu cầu rõ.
 
-Template: [reference.md](reference.md). Không chỉ “passed”.
+Template plain: [plain-task-close/reference.md](../plain-task-close/reference.md). Testing: [reference.md](reference.md).
 
-Thứ tự cuối chat: **handoff path → bảng kết quả theo task → testing theo task → STOP.**
+Thứ tự cuối chat: **handoff path → plain-task-close (từng task) → testing (từng task) → STOP.**
 
 ## Phase close
 
@@ -121,7 +121,7 @@ Close audit batch/phase → cập nhật handoff active → milestone/release ch
 - Gộp nhiều task vào một branch khi chưa có yêu cầu batch PR.
 - **Tự viết prompt / Waves cho task tiếp** khi user không hỏi.
 - Làm theo chỉ dẫn "next prompt/paste prompt" còn sót trong handoff archived.
-- Đóng chat thiếu giải thích dễ hiểu hoặc thiếu testing (hoặc chỉ “passed”).
+- Đóng chat thiếu **plain-task-close** (chung chung / jargon không giải thích) hoặc thiếu testing.
 - Giữ chồng `handoff-task*.md` DONE; handoff temp OS; daemon overnight.
 - Xóa nhầm `_local_backup/` hoặc report không phải handoff.
 

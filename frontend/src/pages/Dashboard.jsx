@@ -11,6 +11,7 @@ import { latestIipAnomalyPoint, periodKey } from '../iipAnomalyChip'
 import {
   SHOW_DIGITAL_VA_UI,
   SHOW_IIP_FORECAST_UI,
+  SHOW_IIP_ANOMALY_UI,
   SHOW_MODEL_METRICS_UI,
 } from '../researchScope'
 
@@ -140,7 +141,9 @@ export default function Dashboard() {
           api.getVa('VA_C_NOMINAL'),
           api.getOecdVsGso(),
           api.getUniverseCoverage().catch(() => null),
-          api.getAnomalies().catch(() => null),
+          SHOW_IIP_ANOMALY_UI
+            ? api.getAnomalies().catch(() => null)
+            : Promise.resolve(null),
         ])
         if (cancelled) return
         setSummary(s)
@@ -219,7 +222,9 @@ export default function Dashboard() {
   const latestIipPeriod =
     summary?.latest_period
     ?? (iip.length ? iip[iip.length - 1].period : null)
-  const flaggedIipAnomaly = latestIipAnomalyPoint(anomaly, latestIipPeriod)
+  const flaggedIipAnomaly = SHOW_IIP_ANOMALY_UI
+    ? latestIipAnomalyPoint(anomaly, latestIipPeriod)
+    : null
 
   return (
     <div>
