@@ -30,6 +30,7 @@ def test_default_shop_matcher_is_hybrid():
     assert m._embedder_backend_pref == "tfidf"
 
 
+@pytest.mark.ml
 def test_sentence_transformers_importable():
     from sentence_transformers import SentenceTransformer
 

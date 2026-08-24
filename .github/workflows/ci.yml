@@ -11,27 +11,117 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
+  changes:
+    name: Detect changed paths
+    runs-on: ubuntu-latest
+    outputs:
+      backend: ${{ steps.filter.outputs.backend }}
+      ml: ${{ steps.filter.outputs.ml }}
+      frontend: ${{ steps.filter.outputs.frontend }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: dorny/paths-filter@v3
+        id: filter
+        with:
+          filters: |
+            backend:
+              - 'backend/**'
+              - 'crawlers/**'
+              - 'pipeline/**'
+              - 'ml/**'
+              - 'tests/**'
+              - 'data/seeds/**'
+              - 'requirements*.txt'
+              - 'pytest.ini'
+              - '.github/workflows/ci.yml'
+              - 'alembic/**'
+              - 'scripts/**'
+            ml:
+              - 'ml/**'
+              - 'tests/ml/**'
+              - 'tests/e2e/**'
+              - 'tests/shop_matcher/**'
+              - 'requirements-ml.txt'
+              - 'requirements.txt'
+              - 'backend/app/api/ml.py'
+              - 'backend/app/api/ml_monitoring.py'
+              - 'backend/app/services/ml_*.py'
+              - 'backend/app/services/forecast_narrative.py'
+              - 'backend/app/services/anomaly_service.py'
+              - '.github/workflows/ci.yml'
+            frontend:
+              - 'frontend/**'
+
+  # Keep display name "Backend tests" — branch protection requires this exact check.
   backend:
     name: Backend tests
+    needs: changes
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
 
+      - name: Skip lean suite (no backend paths on this PR)
+        if: github.event_name == 'pull_request' && needs.changes.outputs.backend != 'true'
+        run: echo "No backend-related paths changed — skipping pytest."
+
       - uses: actions/setup-python@v5
+        if: github.event_name == 'push' || needs.changes.outputs.backend == 'true'
         with:
           python-version: "3.12"
           cache: pip
+          cache-dependency-path: requirements-ci.txt
 
-      - name: Install dependencies
-        run: pip install -r requirements.txt
+      - name: Install lean dependencies
+        if: github.event_name == 'push' || needs.changes.outputs.backend == 'true'
+        run: pip install -r requirements-ci.txt
 
-      - name: Run pytest
+      - name: Run pytest (exclude ml / e2e)
+        if: github.event_name == 'push' || needs.changes.outputs.backend == 'true'
         env:
           PYTHONPATH: .
-        run: pytest -q
+        run: pytest -q -m "not ml"
 
+  backend-ml:
+    name: Backend ML tests
+    needs: changes
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Skip ML suite (no ml paths on this PR)
+        if: github.event_name == 'pull_request' && needs.changes.outputs.ml != 'true'
+        run: echo "No ML-related paths changed — skipping ML pytest."
+
+      - uses: actions/setup-python@v5
+        if: github.event_name == 'push' || needs.changes.outputs.ml == 'true'
+        with:
+          python-version: "3.12"
+          cache: pip
+          cache-dependency-path: |
+            requirements-ci.txt
+            requirements-ml.txt
+
+      - name: Install lean + ML dependencies (torch CPU)
+        if: github.event_name == 'push' || needs.changes.outputs.ml == 'true'
+        run: |
+          pip install -r requirements-ci.txt
+          pip install torch --index-url https://download.pytorch.org/whl/cpu
+          pip install -r requirements-ml.txt
+
+      - name: Run pytest (ml marker only)
+        if: github.event_name == 'push' || needs.changes.outputs.ml == 'true'
+        env:
+          PYTHONPATH: .
+          OMP_NUM_THREADS: "1"
+          OPENBLAS_NUM_THREADS: "1"
+          SHOP_MATCHER_BACKEND: tfidf
+        run: pytest -q -m ml
+
+  # Always report a status (never skip the job) — branch protection requires
+  # "CI / Frontend build"; a skipped required check blocks merge.
   frontend:
     name: Frontend build
+    needs: changes
     runs-on: ubuntu-latest
     defaults:
       run:
@@ -39,14 +129,38 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Skip frontend build (no frontend paths on this PR)
+        if: github.event_name == 'pull_request' && needs.changes.outputs.frontend != 'true'
+        run: echo "No frontend paths changed — skipping npm build."
+
       - uses: actions/setup-node@v4
+        if: github.event_name == 'push' || needs.changes.outputs.frontend == 'true'
         with:
           node-version: "20"
           cache: npm
           cache-dependency-path: frontend/package-lock.json
 
       - name: Install dependencies
+        if: github.event_name == 'push' || needs.changes.outputs.frontend == 'true'
         run: npm ci
 
       - name: Build
+        if: github.event_name == 'push' || needs.changes.outputs.frontend == 'true'
         run: npm run build
+
+  ci-gate:
+    name: CI gate
+    if: always()
+    needs: [changes, backend, backend-ml, frontend]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Fail if any executed job failed
+        run: |
+          results='${{ join(needs.*.result, ',') }}'
+          echo "needs results: $results"
+          if echo "$results" | grep -q failure; then
+            exit 1
+          fi
+          if echo "$results" | grep -q cancelled; then
+            exit 1
+          fi

@@ -46,6 +46,25 @@ trong DB. Không có task nào chờ GSO, chờ công văn, hay chờ tuyển si
 - **DoD:** bảng accuracy/precision/recall trên 28 DN + phân tích ca sai.
 - **Effort:** 1–2 ngày (agent + bạn duyệt ca sai). Branch: `cursor/evol1-task03-url-finder-v0`.
 - **Cho GVHD xem:** "URL-finder của em đạt X/28, các nước châu Âu công bố 83–88% — em đang ở đâu và vì sao".
+- **Kết quả v0 (chốt):** hit **12/28 (42.9%)**, precision among decided **66.7%**, abstain **35.7%**,
+  wrong **6** — artifacts: `data/processed/url_finder/{metrics,error_analysis,predictions}.json|md`.
+  Số này là **hypothesis-first + on-page evidence** (rules), không phải SERP live + LLM.
+- **Vì sao hit thấp (giữ để cải thiện sau, không “vá ảo”):**
+  1. **Search chết:** `html.duckduckgo.com` trả HTTP 202 → 28/28 ứng viên từ suy domain
+     (tên/alias/ticker), không có SERP. Cần backend có API (Brave/Serper/Google CSE) hoặc
+     search lab — **không** scrape HTML miễn phí.
+  2. **Brand không suy ra từ pháp nhân:** `idiseafood`, `ttcagris`, `tonnamkim`, `sochemvn`
+     nằm ngoài slug/combo generic → bắt buộc có search hoặc từ điển alias mở rộng có kiểm soát.
+  3. **`thin_margin`:** nhiều ca gold đứng top nhưng hòa điểm với domain anh em
+     (`.com` ↔ `.com.vn`, `fpt` ↔ `fptcorp`, redirect twins) → abstain có chủ đích; siết thêm
+     dễ tăng wrong. Ưu tiên LLM decide (T04) hoặc tie-break có đánh giá lại trên 28.
+  4. **Wrong related:** cùng pháp nhân nhưng không trùng eTLD+1 gold (`casumina.com.vn` vs
+     `.com`, `pvcfc.com` vs `.com.vn`, `dqc.vn` vs `dienquang.com`) — có thể nới metric
+     “related OK” riêng, không gộp vào hit cứng.
+  5. **LLM decide chưa chạy** trong số chốt (`--llm` off): lớp chọn/abstain chờ Ollama T04;
+     không kỳ vọng LLM tự tìm domain mới.
+- **Việc sau (không chặn đóng T03):** (a) gắn search API + denylist thư mục MST;
+  (b) eval `--llm` so với rules; (c) T08 Nhật = cùng pipeline, chỉ đổi locale config.
 
 ### T04 — Dựng LLM local trên GPU lab
 - **Việc làm:** chọn model open-weights cỡ 7–32B instruct, ghim phiên bản, script inference
