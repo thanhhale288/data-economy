@@ -8,5 +8,5 @@ alwaysApply: true
 - Một chat **được phép** chạy nhiều task **liên quan chặt** để tiết kiệm thời gian.
 - Ưu tiên tách việc bằng waves/subagents song song (FE/BE/test/review), nhưng giữ scope cùng phase/mục tiêu.
 - Git vẫn theo task: **1 task = 1 branch = 1 PR** (trừ khi user yêu cầu batch PR).
-- Mỗi task phải có: tóm tắt dễ hiểu (đã làm gì + hạn chế) + testing results riêng.
+- Mỗi task phải **tự động** có **plain-task-close** khi kết thúc (một câu + thấy gì + step-by-step + hạn chế + thuật ngữ giải thích) + testing results riêng — không đợi user hỏi.
 - Nếu task không liên quan hoặc scope phình to: tách chat mới để giảm rủi ro.

@@ -34,24 +34,11 @@ Waves dùng để chia và chạy **nhiều task liên quan** trong cùng chat. 
 
 Cùng W4: **không** append prompt task tiếp.
 
-## Giải thích dễ hiểu (cuối batch — theo từng task)
+## Plain-language close (cuối batch — theo từng task)
 
-```markdown
-## Task #<M> — tóm tắt dễ hiểu
+Dùng skill **plain-task-close** — template đầy đủ: [../plain-task-close/reference.md](../plain-task-close/reference.md).
 
-### Đã làm được gì
-- <bullet thường, 3–6 ý: user/demo thấy gì, API/trang nào, dữ liệu thật vs fallback>
-- Branch / PR: `…` / <url>
-
-### Hạn chế / chưa làm được
-- <thiếu nguồn, sample nhỏ, chưa live scrape, UI N/A khi thiếu peer, …>
-- <phạm vi cố ý không làm trong task này>
-
-### Ghi chú một dòng (tuỳ chọn)
-- Task kế trên roadmap: #<M+1> — chỉ khi user muốn làm tiếp mới mở chat mới.
-```
-
-Cấm: block `# Task` / `## Waves` / paste-prompt cho task sau trừ khi user yêu cầu riêng.
+Cấm: bullet chung chung; viết tắt không giải thích; paste-prompt task sau.
 
 ## Testing results template (theo từng task)
 
