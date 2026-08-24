@@ -1,22 +1,18 @@
 /**
- * Persistent honesty signal (ADR-0003): Digital VA / digitalization =
- * listed sample, not all of VSIC Section C.
- *
- * When ``coverageNote`` (UniverseCoverageNote from GET /api/universe/coverage)
- * is present, badge + copy use API sizes / claim instead of hard-coded ~28.
+ * Sample scope signal (ADR-0003): listed deep sample ≠ all of VSIC Section C.
  */
 
 export const SAMPLE_HONESTY_TEXT =
-  'Số liệu Digital VA và mức độ số hóa trên trang này tính trên mẫu ~28 doanh nghiệp niêm yết, không đại diện toàn ngành chế biến, chế tạo (VSIC Section C).'
+  'Số liệu doanh nghiệp trên nền tảng lấy từ mẫu niêm yết (~28 DN), không đại diện toàn ngành chế biến, chế tạo (VSIC Section C).'
 
 /** Vietnamese copy for UniverseCoverageNote.claim (contract #39). */
 export const COVERAGE_CLAIM_LABELS = {
   prototype_listed_sample:
-    'Số liệu Digital VA và mức độ số hóa trên trang này tính trên mẫu doanh nghiệp niêm yết trong nền tảng, không đại diện toàn ngành chế biến, chế tạo (VSIC Section C).',
+    'Số liệu doanh nghiệp trên nền tảng lấy từ mẫu niêm yết, không đại diện toàn ngành chế biến, chế tạo (VSIC Section C).',
   universe_shallow_only:
-    'Chỉ có vũ trụ DN nông (identity/VSIC) — chưa đủ mẫu sâu để suy ra chuẩn số hóa toàn Section C.',
+    'Chỉ có vũ trụ DN nông (identity/VSIC) — chưa đủ mẫu sâu để suy ra chuẩn toàn Section C.',
   official_macro:
-    'Đây là chỉ số macro chính thức (GSO/NSO) — không đồng nghĩa với Digital VA cấp doanh nghiệp trong mẫu.',
+    'Đây là chỉ số macro chính thức (GSO/NSO).',
   insufficient_data:
     'Chưa đủ dữ liệu universe/mẫu sâu để tuyên bố độ phủ ngành chế biến, chế tạo.',
 }

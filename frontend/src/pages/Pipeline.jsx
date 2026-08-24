@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import { api } from '../api'
+import { SHOW_MODEL_METRICS_UI } from '../researchScope'
 
 const CRAWLERS = [
   { id: 'all', label: 'Chạy tất cả' },
@@ -345,7 +346,7 @@ export default function Pipeline() {
                     <tr>
                       <th>Model</th>
                       <th>Drift</th>
-                      <th>MAPE</th>
+                      {SHOW_MODEL_METRICS_UI ? <th>MAPE</th> : null}
                       <th>MAE</th>
                       <th>Samples</th>
                       <th>Artifact</th>
@@ -367,7 +368,9 @@ export default function Pipeline() {
                               </span>
                             )}
                           </td>
-                          <td>{formatMetric(m.metrics?.mape)}</td>
+                          {SHOW_MODEL_METRICS_UI ? (
+                            <td>{formatMetric(m.metrics?.mape)}</td>
+                          ) : null}
                           <td>{formatMetric(m.metrics?.mae)}</td>
                           <td>{m.sample_count ?? '—'}</td>
                           <td>

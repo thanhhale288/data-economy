@@ -22,13 +22,13 @@ Nếu không announce được vì thiếu handoff/task rõ → hỏi 1 câu r�
 
 | Khi | Đọc / dùng |
 |-----|------------|
-| Mọi chat | `AGENTS.md`, `CONTEXT.md`, handoff đã dán / `.scratch/handoff-*.md` |
-| Chọn task & AC | `.cursor/skills/project-roadmap/SKILL.md`, `docs/plan.md` (hot) |
+| Mọi chat | `AGENTS.md`, `CONTEXT.md`, `docs/evol-1.md` |
+| Chọn task & AC | `.cursor/skills/project-roadmap/SKILL.md`, `docs/evol-1.md` |
 | Git commit / push / PR | `.cursor/skills/github-workflow/SKILL.md` + `epic-phase-task-git` |
 | Đóng task | **Giải thích dễ hiểu** + **Testing results** — [reference.md](reference.md) |
 | Chi tiết wave + templates | [reference.md](reference.md) |
 | Repo / MCP / lib | `docs/needGit.md` — chỉ mục khớp task |
-| Handoff artifact | Chỉ **một** `.scratch/handoff-task<M>.md` mới (+ phase active nếu cần). Xóa handoff task cũ trước khi ghi |
+| Handoff artifact | Ghi tiến độ trong PR / commit message; không còn bắt buộc `.scratch/handoff-*.md` (archive only) |
 
 **Không** dùng `writing-coding-prompts` để xuất prompt task sau trừ khi user **hỏi rõ** (“viết prompt task tiếp”).
 

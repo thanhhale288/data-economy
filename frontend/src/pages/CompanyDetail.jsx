@@ -5,6 +5,7 @@ import { api } from '../api'
 import { formatMoney, formatGrouped, formatIndex } from '../format'
 import SampleHonestyBanner from '../SampleHonestyBanner'
 import { websiteVerifyChip } from '../websiteVerifyChip'
+import { SHOW_DIGITAL_VA_UI } from '../researchScope'
 
 function formatVND(n) {
   return formatMoney(n, 'VND')
@@ -333,6 +334,7 @@ export default function CompanyDetail() {
               ? `${presence.filter((p) => p.is_active !== false).length} kênh đã ghi nhận.`
               : 'Chưa có digital_presence (không bịa kênh).'}
           </li>
+          {SHOW_DIGITAL_VA_UI && (
           <li>
             <strong>Online estimate</strong> —{' '}
             {latestMetric?.online_revenue_est != null
@@ -341,12 +343,15 @@ export default function CompanyDetail() {
                 ? 'Có listing nhưng chưa có digital_metrics — chạy job metrics.'
                 : 'Không có listing Shopee/TikTok/Lazada → online có thể = 0.'}
           </li>
+          )}
+          {SHOW_DIGITAL_VA_UI && (
           <li>
             <strong>Digital VA</strong> —{' '}
             {latestMetric?.digital_va_contribution != null
               ? formatVND(latestMetric.digital_va_contribution)
               : 'Chưa tính (thiếu metrics / margin). Công thức khóa trong CONTEXT.'}
           </li>
+          )}
           <li>
             <strong>Chất lượng dữ liệu</strong> —{' '}
             {quality
@@ -399,6 +404,7 @@ export default function CompanyDetail() {
             </div>
           )}
         </div>
+        {SHOW_DIGITAL_VA_UI && (
         <div className="card">
           <div className="label">Doanh thu TMĐT (ước tính)</div>
           <div className="value" style={{ fontSize: 20 }}>
@@ -409,10 +415,9 @@ export default function CompanyDetail() {
               ? `Kỳ ${periodLabel(latestMetric.period)} · chỉ listing Shopee/TikTok/Lazada`
               : 'Chưa có digital_metrics'}
           </div>
-          <div className="sub muted">
-            Industry-ratio chưa áp — online chỉ từ listing
-          </div>
         </div>
+        )}
+        {SHOW_DIGITAL_VA_UI && (
         <div className="card">
           <div className="label">
             Digital VA{' '}
@@ -421,8 +426,10 @@ export default function CompanyDetail() {
           <div className="value" style={{ fontSize: 20 }}>
             {formatVND(latestMetric?.digital_va_contribution)}
           </div>
-          <div className="sub muted">Công thức CONTEXT — không đổi · không phải VA_C GSO</div>
+          <div className="sub muted">Công thức CONTEXT — không phải VA_C GSO</div>
         </div>
+        )}
+        {SHOW_DIGITAL_VA_UI && (
         <div className="card">
           <div className="label">Đóng góp ngành (Digital VA)</div>
           <div className="value" style={{ fontSize: 20 }}>
@@ -432,6 +439,7 @@ export default function CompanyDetail() {
           </div>
           <div className="sub muted">Tỷ trọng trong nhóm VSIC cùng mẫu</div>
         </div>
+        )}
       </div>
 
       {!latestFin && (
