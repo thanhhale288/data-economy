@@ -1,0 +1,63 @@
+{
+  "task": "evol1-t04-local-llm-setup",
+  "created_at": "2026-08-24T11:01:25Z",
+  "base_url": "https://research.neu.edu.vn/ollama",
+  "model": "qwen3:8b",
+  "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "digest_pinned": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+  "digest_match": true,
+  "ollama_version": "0.17.4",
+  "quantization": "Q4_K_M",
+  "parameter_size": "8.2B",
+  "temperature": 0.0,
+  "seed": 42,
+  "think": false,
+  "prompt_sha256": "8b38d69903b744714d648ad66b583880cf7a4bad2f52c19ec99e202d792eeef4",
+  "schema_sha256": "a5518b7954fdea60da54241200372a429871fef0bbd92d962a2b51bfa49df807",
+  "warmup": {
+    "wall_s": 4.086,
+    "decision": "ok",
+    "load_duration_ns": 1536599500,
+    "eval_duration_ns": 2234820338
+  },
+  "n_pages": 10,
+  "mean_wall_s": 2.973,
+  "pages_per_hour_wall": 1210.92,
+  "mean_eval_s": 2.405,
+  "pages_per_hour_eval": 1496.87,
+  "decisions": {
+    "ok": 10,
+    "retry_ok": 0,
+    "abstain": 0
+  },
+  "running_models_before": [],
+  "running_models_after": [
+    {
+      "name": "qwen3:8b",
+      "model": "qwen3:8b",
+      "size": 10296627328,
+      "digest": "500a1f067a9f782620b40bee6f7b0c89e17ae61f686b92c24933e4ca4b2b8b41",
+      "details": {
+        "parent_model": "",
+        "format": "gguf",
+        "family": "qwen3",
+        "families": [
+          "qwen3"
+        ],
+        "parameter_size": "8.2B",
+        "quantization_level": "Q4_K_M"
+      },
+      "expires_at": "2026-08-24T11:06:25.957186278Z",
+      "size_vram": 10296627328,
+      "context_length": 32768
+    }
+  ],
+  "artifacts": {
+    "smoke_run": "data/processed/local_llm/smoke_run.json",
+    "pages_manifest": "data/raw/local_llm/pages_manifest.json"
+  },
+  "notes": [
+    "Throughput is a lab snapshot on a shared GPU — record timestamp.",
+    "Cost ~0 (lab Ollama open-weights). Not a P/R measurement (see T06)."
+  ]
+}
