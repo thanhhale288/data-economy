@@ -18,9 +18,12 @@ trong DB. Không có task nào chờ GSO, chờ công văn, hay chờ tuyển si
   các số này sai (rò rỉ nhãn, thua naive baseline, 13 dòng listing + hằng số tự đặt).
 - **Việc làm:** ẩn bảng MAPE model ở Dashboard + ML Lab (hoặc gắn nhãn "demo kỹ thuật —
   không phải kết quả nghiên cứu"); gỡ KPI "Tổng Digital VA" + heatmap VA + card "Cơ cấu
-  Digital VA"; giữ IIP/VA_C macro (dữ liệu GSO thật) và trang Companies/Benchmark.
+  Digital VA"; ẩn chip IIP anomaly, cột VSIC dự đoán từ tên listing, và panel ML
+  monitoring/drift — **ẩn, không xóa code** (matcher/crawler đóng băng cho T03/T05/T14).
+  Giữ IIP/VA_C macro (dữ liệu GSO thật) và trang Companies/Benchmark.
 - **DoD:** web chạy, không còn con số nào không bảo vệ được trước một người phản biện.
-- **Effort:** 0.5 ngày (agent làm, bạn duyệt). Branch: `cursor/evol1-task01-remove-invalid-kpis`.
+- **Effort:** 0.5 ngày (agent làm, bạn duyệt). Branch gốc: `cursor/evol1-task01-remove-invalid-kpis`.
+  Mở rộng ẩn surface còn sót: `cursor/evol1-task01b-hide-demo-surfaces`.
 - **Cho GVHD xem:** web demo sạch + 1 đoạn giải thích "em đã audit và chủ động gỡ số sai".
 
 ### T02 — Khung mẫu pilot từ nguồn công khai (không cần GSO)

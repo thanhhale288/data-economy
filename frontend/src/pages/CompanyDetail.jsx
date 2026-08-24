@@ -5,7 +5,7 @@ import { api } from '../api'
 import { formatMoney, formatGrouped, formatIndex } from '../format'
 import SampleHonestyBanner from '../SampleHonestyBanner'
 import { websiteVerifyChip } from '../websiteVerifyChip'
-import { SHOW_DIGITAL_VA_UI } from '../researchScope'
+import { SHOW_DIGITAL_VA_UI, SHOW_LISTING_VSIC_UI } from '../researchScope'
 
 function formatVND(n) {
   return formatMoney(n, 'VND')
@@ -169,7 +169,7 @@ export default function CompanyDetail() {
   }, [code])
 
   useEffect(() => {
-    if (!company) {
+    if (!SHOW_LISTING_VSIC_UI || !company) {
       setListingVsic({})
       return
     }
@@ -505,7 +505,7 @@ export default function CompanyDetail() {
                 <tr>
                   <th>Nền tảng</th>
                   <th>Sản phẩm</th>
-                  <th>VSIC dự đoán</th>
+                  {SHOW_LISTING_VSIC_UI ? <th>VSIC dự đoán</th> : null}
                   <th>Giá</th>
                   <th>Units est.</th>
                   <th>Revenue est.</th>
@@ -535,6 +535,7 @@ export default function CompanyDetail() {
                         ml.product_name
                       )}
                     </td>
+                    {SHOW_LISTING_VSIC_UI ? (
                     <td>
                       {listingVsic[ml.id]?.vsic_code ? (
                         listingVsic[ml.id].vsic_code
@@ -547,6 +548,7 @@ export default function CompanyDetail() {
                         </span>
                       )}
                     </td>
+                    ) : null}
                     <td>{ml.price != null ? formatVND(ml.price) : '—'}</td>
                     <td>{ml.units_sold_est != null ? formatGrouped(ml.units_sold_est) : '—'}</td>
                     <td>{formatVND(ml.revenue_est)}</td>
