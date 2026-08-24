@@ -1,0 +1,10 @@
+# Heavy ML / browser extras — not installed on the default CI backend job.
+# Install with: pip install -r requirements-ci.txt -r requirements-ml.txt
+# On CI, install torch from the CPU wheel index first (see .github/workflows/ci.yml).
+
+xgboost==2.1.3
+lightgbm==4.5.0
+statsmodels==0.14.4
+sentence-transformers==3.3.1
+playwright==1.49.1
+# torch is pinned in CI to the CPU wheel; for local GPU/CPU use requirements.txt.

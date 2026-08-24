@@ -12,6 +12,9 @@ Nền tảng đo **mức tham gia thương mại điện tử** của doanh nghi
 cp .env.example .env
 python3 -m venv .venv && source .venv/bin/activate
 pip install -r requirements.txt
+# Full stack (API + ML). Lean CI deps only: pip install -r requirements-ci.txt
+# ML extras alone:        pip install -r requirements-ci.txt -r requirements-ml.txt
+
 docker compose up -d db redis
 make bootstrap          # migrate + seed + metrics → clean → features → train
 make api                # http://localhost:8000/docs

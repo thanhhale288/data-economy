@@ -19,6 +19,9 @@ from backend.app.database import Base
 from backend.app.models import Company
 from backend.app.seed import load_companies, load_vsic_mappings
 
+# E2E trains ARIMA / touches ML artifacts — needs requirements-ml.txt.
+pytestmark = [pytest.mark.ml, pytest.mark.e2e]
+
 REPO_ROOT = Path(__file__).resolve().parents[2]
 GSO_FIXTURE_XML = REPO_ROOT / "tests" / "gso" / "fixtures" / "iip_sample.xml"
 OECD_INDIGO_FIXTURE = REPO_ROOT / "tests" / "oecd" / "fixtures" / "sdmx_indigo_vnm.json"

@@ -12,6 +12,9 @@ import numpy as np
 import pandas as pd
 import pytest
 
+# Entire tests/ml package needs requirements-ml.txt (torch / xgb / lgb / statsmodels).
+pytestmark = pytest.mark.ml
+
 
 @pytest.fixture()
 def monthly_periods_2020_2024() -> pd.DatetimeIndex:
