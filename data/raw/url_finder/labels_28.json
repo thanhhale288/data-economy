@@ -1,0 +1,170 @@
+[
+  {
+    "ticker": "RAL",
+    "gold_url": "https://rangdong.com.vn",
+    "gold_domain": "rangdong.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "HPG",
+    "gold_url": "https://www.hoaphat.com.vn",
+    "gold_domain": "hoaphat.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "VNM",
+    "gold_url": "https://vinamilk.com.vn",
+    "gold_domain": "vinamilk.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "FPT",
+    "gold_url": "https://fpt.com.vn",
+    "gold_domain": "fpt.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "GVR",
+    "gold_url": "https://vrg.vn",
+    "gold_domain": "vrg.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "DGC",
+    "gold_url": "https://ducgiangchem.vn",
+    "gold_domain": "ducgiangchem.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "MSN",
+    "gold_url": "https://masangroup.com",
+    "gold_domain": "masangroup.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "PNJ",
+    "gold_url": "https://pnj.com.vn",
+    "gold_domain": "pnj.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "REE",
+    "gold_url": "https://reecorp.com",
+    "gold_domain": "reecorp.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "BMP",
+    "gold_url": "https://binhminhplastic.com.vn",
+    "gold_domain": "binhminhplastic.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "VHC",
+    "gold_url": "https://vinhhoan.com",
+    "gold_domain": "vinhhoan.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "ANV",
+    "gold_url": "https://navicorp.com.vn",
+    "gold_domain": "navicorp.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "IDI",
+    "gold_url": "https://idiseafood.com",
+    "gold_domain": "idiseafood.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "SBT",
+    "gold_url": "https://ttcagris.com.vn",
+    "gold_domain": "ttcagris.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "QNS",
+    "gold_url": "https://qns.com.vn",
+    "gold_domain": "qns.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "HSG",
+    "gold_url": "https://hoasengroup.vn",
+    "gold_domain": "hoasengroup.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "NKG",
+    "gold_url": "https://tonnamkim.com",
+    "gold_domain": "tonnamkim.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "POM",
+    "gold_url": "http://www.pomina-steel.com",
+    "gold_domain": "pomina-steel.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "TLH",
+    "gold_url": "https://www.tienlengroup.vn",
+    "gold_domain": "tienlengroup.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "DQC",
+    "gold_url": "https://dienquang.com",
+    "gold_domain": "dienquang.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "GEE",
+    "gold_url": "https://gelex-electric.com",
+    "gold_domain": "gelex-electric.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "TYA",
+    "gold_url": "https://taya.com.vn",
+    "gold_domain": "taya.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "DPR",
+    "gold_url": "https://doruco.com.vn",
+    "gold_domain": "doruco.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "CSM",
+    "gold_url": "https://casumina.com",
+    "gold_domain": "casumina.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "AAA",
+    "gold_url": "https://anphatbioplastics.com",
+    "gold_domain": "anphatbioplastics.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "DCM",
+    "gold_url": "https://www.pvcfc.com.vn",
+    "gold_domain": "pvcfc.com.vn",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "BFC",
+    "gold_url": "https://binhdien.com",
+    "gold_domain": "binhdien.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  },
+  {
+    "ticker": "CSV",
+    "gold_url": "https://sochemvn.com",
+    "gold_domain": "sochemvn.com",
+    "note": "corporate website_url from data/seeds/companies.json; not digital_presence shop URL (e.g. FPT fpt.com.vn not fptshop.com.vn)"
+  }
+]
