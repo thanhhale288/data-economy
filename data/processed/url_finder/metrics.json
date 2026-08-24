@@ -1,0 +1,36 @@
+{
+  "n": 28,
+  "hits": 12,
+  "abstain": 10,
+  "wrong": 6,
+  "decided": 18,
+  "hit_rate": 0.4286,
+  "precision_among_decided": 0.6667,
+  "recall": 0.4286,
+  "abstain_rate": 0.3571,
+  "hit_rate_wilson95": [
+    0.2651,
+    0.6093
+  ],
+  "precision_wilson95": [
+    0.4375,
+    0.8372
+  ],
+  "error_counts": {
+    "hit": 12,
+    "abstain": 10,
+    "wrong_related_domain": 3,
+    "wrong_other": 3
+  },
+  "caveat": "n=28 listed manufacturers known to have websites. Not comparable to European 83–88% URL-finding on mixed SME samples. Wilson 95% CI is wide by design. When search is blocked, scores reflect domain-hypothesis + on-page evidence only (not a live SERP URL-finder).",
+  "missing_label": [],
+  "identity_sha256": "addd5e730b43831fd0e6723fb281762d273ecb85099f80ee7d49054bc6ba7f79",
+  "labels_sha256": "f2ed3eed39547ec3a5918b6b8201d8beaa75c43f379b389ee7c6cf3f80908ba7",
+  "seed_sha256": "12567a5b4120847de4cb503d83c86125748d38e889fb8948852a7029858a3326",
+  "generated_at": "2026-08-24T15:38:08Z",
+  "search_blocked": true,
+  "search_block_detail": "HTTP 202 duckduckgo_html",
+  "candidate_source_counts": {
+    "domain_hypothesis": 28
+  }
+}

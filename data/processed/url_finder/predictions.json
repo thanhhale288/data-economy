@@ -1,0 +1,3222 @@
+[
+  {
+    "ticker": "RAL",
+    "queries": [
+      "\"Công ty Cổ phần Bóng đèn Rạng Đông\" 0101526991",
+      "\"Công ty Cổ phần Bóng đèn Rạng Đông\" Hà Nội website"
+    ],
+    "n_candidates": 13,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://bongdenrangdong.com",
+    "predicted_domain": "bongdenrangdong.com",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:84,name_in_body:87,address_tokens:7,domain_tokens:bongdenrangd,bongdenrangdong",
+    "ranked": [
+      {
+        "url": "https://bongdenrangdong.com",
+        "domain": "bongdenrangdong.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:84",
+          "name_in_body:87",
+          "address_tokens:7",
+          "domain_tokens:bongdenrangd,bongdenrangdong",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://rangdong.vn",
+        "domain": "rangdong.vn",
+        "score": 8.25,
+        "reasons": [
+          "name_in_title:84",
+          "address_tokens:6",
+          "domain_tokens:rangdong",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://rangdong.com.vn",
+        "domain": "rangdong.com.vn",
+        "score": 8.0,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:8",
+          "domain_tokens:rangdong",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://bongdenrangdong.vn",
+        "domain": "bongdenrangdong.vn",
+        "score": 4.25,
+        "reasons": [
+          "domain_tokens:bongdenrangd,bongdenrangdong",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://rang.com.vn",
+        "domain": "rang.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:rang",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[SSL: TLSV1_ALERT_ACCESS_DENIED] tlsv1 alert access denied (_ssl.c:1032)"
+      },
+      {
+        "url": "https://rang.com",
+        "domain": "rang.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:rang",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ralaco.com",
+        "domain": "ralaco.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:ralaco",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ralacorp.com",
+        "domain": "ralacorp.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:ralacor",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "HPG",
+    "queries": [
+      "\"Tập đoàn Hòa Phát\" 0900189284",
+      "\"Tập đoàn Hòa Phát\" Hưng Yên website"
+    ],
+    "n_candidates": 14,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.0,
+    "reason": "thin_margin:9.5-9.5<1.0",
+    "ranked": [
+      {
+        "url": "https://hoaphatcorp.com",
+        "domain": "hoaphatcorp.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:7",
+          "domain_tokens:hoaphat",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphatplastic.com",
+        "domain": "hoaphatplastic.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:5",
+          "domain_tokens:hoaphat",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphatgroup.com.vn",
+        "domain": "hoaphatgroup.com.vn",
+        "score": 9.0,
+        "reasons": [
+          "name_in_title:100",
+          "address_tokens:4",
+          "domain_tokens:hoaphatgroup",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphatvn.vn",
+        "domain": "hoaphatvn.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:7",
+          "domain_tokens:hoaphat",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphatvn.com.vn",
+        "domain": "hoaphatvn.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:5",
+          "domain_tokens:hoaphat",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphat.com",
+        "domain": "hoaphat.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:6",
+          "domain_tokens:hoaphat",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphat.vn",
+        "domain": "hoaphat.vn",
+        "score": 4.25,
+        "reasons": [
+          "domain_tokens:hoaphat",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoaphat.com.vn",
+        "domain": "hoaphat.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:hoaphat",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  },
+  {
+    "ticker": "VNM",
+    "queries": [
+      "\"Công ty Cổ phần Sữa Việt Nam\" 0300588569",
+      "\"Công ty Cổ phần Sữa Việt Nam\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 17,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://vinamilk.com.vn",
+    "predicted_domain": "vinamilk.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:tax_id_on_page,name_in_title:100,name_in_body:100,address_tokens:5",
+    "ranked": [
+      {
+        "url": "https://vinamilk.com.vn",
+        "domain": "vinamilk.com.vn",
+        "score": 16.0,
+        "reasons": [
+          "tax_id_on_page",
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:5",
+          "domain_tokens:vinamilk",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnam.vn",
+        "domain": "vietnam.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:80",
+          "name_in_body:80",
+          "address_tokens:5",
+          "domain_tokens:vietnam",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://sua.vn",
+        "domain": "sua.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:2",
+          "domain_tokens:sua",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnamdairy.vn",
+        "domain": "vietnamdairy.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:4",
+          "domain_tokens:vietnamdairy",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnamgroup.vn",
+        "domain": "vietnamgroup.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:80",
+          "address_tokens:2",
+          "domain_tokens:vietnam",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vinamilk.com",
+        "domain": "vinamilk.com",
+        "score": 6.5,
+        "reasons": [
+          "name_in_title:80",
+          "domain_tokens:vinamilk",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnam.com",
+        "domain": "vietnam.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:2",
+          "domain_tokens:vietnam",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnamcorp.com",
+        "domain": "vietnamcorp.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:4",
+          "domain_tokens:vietnam",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "FPT",
+    "queries": [
+      "\"Tập đoàn FPT\" 0101248141",
+      "\"Tập đoàn FPT\" Hà Nội website"
+    ],
+    "n_candidates": 6,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://fpt.com.vn",
+    "predicted_domain": "fpt.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "ticker_breaks_tie:name_in_title:100,name_in_body:100,address_tokens:4,domain_tokens:fpt",
+    "ranked": [
+      {
+        "url": "https://fpt.com.vn",
+        "domain": "fpt.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:4",
+          "domain_tokens:fpt",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://fptcorp.com.vn",
+        "domain": "fptcorp.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:5",
+          "domain_tokens:fptcorp",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://fpt.vn",
+        "domain": "fpt.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:fpt",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://fpt.com",
+        "domain": "fpt.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:4",
+          "domain_tokens:fpt",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://fpt-corp.com",
+        "domain": "fpt-corp.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:3",
+          "domain_tokens:fpt,fptcorp",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://fptcorp.com",
+        "domain": "fptcorp.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:fptcorp"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[SSL: SSLV3_ALERT_HANDSHAKE_FAILURE] sslv3 alert handshake failure (_ssl.c:1032)"
+      }
+    ]
+  },
+  {
+    "ticker": "GVR",
+    "queries": [
+      "\"Tập đoàn Công nghiệp Cao su Việt Nam\" 0301266564",
+      "\"Tập đoàn Công nghiệp Cao su Việt Nam\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 24,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://vrg.vn",
+    "predicted_domain": "vrg.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,address_tokens:7,domain_tokens:vrg,tld_prefer:vn",
+    "ranked": [
+      {
+        "url": "https://vrg.vn",
+        "domain": "vrg.vn",
+        "score": 8.25,
+        "reasons": [
+          "name_in_title:100",
+          "address_tokens:7",
+          "domain_tokens:vrg",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnam.vn",
+        "domain": "vietnam.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:80",
+          "address_tokens:7",
+          "domain_tokens:vietnam",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietchem.com.vn",
+        "domain": "vietchem.com.vn",
+        "score": 5.5,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:5",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://caosu.vn",
+        "domain": "caosu.vn",
+        "score": 5.25,
+        "reasons": [
+          "address_tokens:2",
+          "domain_tokens:caosu",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://caosu.com.vn",
+        "domain": "caosu.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:caosu",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vietnam.com",
+        "domain": "vietnam.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:2",
+          "domain_tokens:vietnam",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vrg.com.vn",
+        "domain": "vrg.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:vrg",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      },
+      {
+        "url": "https://viet-nam.com.vn",
+        "domain": "viet-nam.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:vietnam",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      }
+    ]
+  },
+  {
+    "ticker": "DGC",
+    "queries": [
+      "\"Công ty Cổ phần Hóa chất Đức Giang\" 0101452588",
+      "\"Công ty Cổ phần Hóa chất Đức Giang\" Hà Nội website"
+    ],
+    "n_candidates": 6,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://ducgiangchem.vn",
+    "predicted_domain": "ducgiangchem.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:6,domain_tokens:ducgiangchem",
+    "ranked": [
+      {
+        "url": "https://ducgiangchem.vn",
+        "domain": "ducgiangchem.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:ducgiangchem",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ducgiang.vn",
+        "domain": "ducgiang.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:79",
+          "address_tokens:5",
+          "domain_tokens:ducgiang",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ducgiangchem.com.vn",
+        "domain": "ducgiangchem.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:5",
+          "domain_tokens:ducgiangchem",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ducgiangcorp.com.vn",
+        "domain": "ducgiangcorp.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:4",
+          "domain_tokens:ducgiangc",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoachatducgiang.vn",
+        "domain": "hoachatducgiang.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:hoachatducgi,hoachatducgiang",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=404"
+      },
+      {
+        "url": "https://ducgiang.com",
+        "domain": "ducgiang.com",
+        "score": -0.5,
+        "reasons": [
+          "address_tokens:1",
+          "domain_tokens:ducgiang",
+          "parking_page",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "MSN",
+    "queries": [
+      "\"Tập đoàn Masan\" 0303576603",
+      "\"Tập đoàn Masan\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 7,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://masangroup.com",
+    "predicted_domain": "masangroup.com",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:1,domain_tokens:masangroup",
+    "ranked": [
+      {
+        "url": "https://masangroup.com",
+        "domain": "masangroup.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:1",
+          "domain_tokens:masangroup",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://masan.com",
+        "domain": "masan.com",
+        "score": 8.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "domain_tokens:masan",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://msn.com",
+        "domain": "msn.com",
+        "score": 1.0,
+        "reasons": [
+          "name_in_body:75",
+          "weak_domain_core:msn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://masantech.com",
+        "domain": "masantech.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://masancorp.com",
+        "domain": "masancorp.com",
+        "score": 0.0,
+        "reasons": [],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=404"
+      },
+      {
+        "url": "https://msn.com.vn",
+        "domain": "msn.com.vn",
+        "score": -0.5,
+        "reasons": [
+          "url_only:weak_domain_core:msn",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=404"
+      },
+      {
+        "url": "https://msn.vn",
+        "domain": "msn.vn",
+        "score": -1.25,
+        "reasons": [
+          "url_only:weak_domain_core:msn",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  },
+  {
+    "ticker": "PNJ",
+    "queries": [
+      "\"Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận\" 0300521758",
+      "\"Công ty Cổ phần Vàng bạc Đá quý Phú Nhuận\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 7,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://pnj.com.vn",
+    "predicted_domain": "pnj.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:2,domain_tokens:pnj",
+    "ranked": [
+      {
+        "url": "https://pnj.com.vn",
+        "domain": "pnj.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:2",
+          "domain_tokens:pnj",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vangbacdaquy.com.vn",
+        "domain": "vangbacdaquy.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:3",
+          "domain_tokens:vangbacdaquy",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pnj.com",
+        "domain": "pnj.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:pnj",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://phunhuan.com",
+        "domain": "phunhuan.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:phunhuan",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pnj.vn",
+        "domain": "pnj.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:pnj",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://phu.vn",
+        "domain": "phu.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:phu",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=503"
+      },
+      {
+        "url": "https://vangbacdaquy.com",
+        "domain": "vangbacdaquy.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:vangbacdaquy"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      }
+    ]
+  },
+  {
+    "ticker": "REE",
+    "queries": [
+      "\"Công ty Cổ phần Cơ điện lạnh\" 0300741143",
+      "\"Công ty Cổ phần Cơ điện lạnh\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 9,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.75,
+    "reason": "thin_margin:7.25-6.5<1.0",
+    "ranked": [
+      {
+        "url": "https://reecorp.vn",
+        "domain": "reecorp.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:reecorp",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://reecorp.com",
+        "domain": "reecorp.com",
+        "score": 6.5,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:reecorp",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dienlanh.com",
+        "domain": "dienlanh.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:3",
+          "domain_tokens:dienlanh",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dienlanhgroup.com",
+        "domain": "dienlanhgroup.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:3",
+          "domain_tokens:dienlanh",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ree.vn",
+        "domain": "ree.vn",
+        "score": 4.25,
+        "reasons": [
+          "domain_tokens:ree",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ree.com.vn",
+        "domain": "ree.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:ree",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://reecorp.com.vn",
+        "domain": "reecorp.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:reecorp",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[SSL: TLSV1_UNRECOGNIZED_NAME] tlsv1 unrecognized name (_ssl.c:1032)"
+      },
+      {
+        "url": "https://dienlanh.com.vn",
+        "domain": "dienlanh.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:dienlanh",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  },
+  {
+    "ticker": "BMP",
+    "queries": [
+      "\"Công ty Cổ phần Nhựa Bình Minh\" 0301464823",
+      "\"Công ty Cổ phần Nhựa Bình Minh\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 13,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.0,
+    "reason": "thin_margin:11.0-11.0<1.0",
+    "ranked": [
+      {
+        "url": "https://nhuabinhminh.com.vn",
+        "domain": "nhuabinhminh.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:nhuabinhminh",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhminhplastic.com.vn",
+        "domain": "binhminhplastic.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:binhminhplas,binhminhplastic",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binh-minh.vn",
+        "domain": "binh-minh.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:85",
+          "address_tokens:5",
+          "domain_tokens:binhminh",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://nhuabinhminh.vn",
+        "domain": "nhuabinhminh.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:nhuabinhminh",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhminhplastic.vn",
+        "domain": "binhminhplastic.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:binhminhplas,binhminhplastic",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhminhplastic.com",
+        "domain": "binhminhplastic.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:binhminhplas,binhminhplastic",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhminh.com.vn",
+        "domain": "binhminh.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:4",
+          "domain_tokens:binhminh",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhminh.vn",
+        "domain": "binhminh.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:binhminh",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=404"
+      }
+    ]
+  },
+  {
+    "ticker": "VHC",
+    "queries": [
+      "\"Công ty Cổ phần Vĩnh Hoàn\" 1400112623",
+      "\"Công ty Cổ phần Vĩnh Hoàn\" Đồng Tháp website"
+    ],
+    "n_candidates": 16,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://vinhgroup.vn",
+    "predicted_domain": "vinhgroup.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 0.594,
+    "reason": "top_clear:name_in_body:100,address_tokens:6,tld_prefer:vn,fetch_ok",
+    "ranked": [
+      {
+        "url": "https://vinhgroup.vn",
+        "domain": "vinhgroup.vn",
+        "score": 4.75,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:6",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vinhhoan.vn",
+        "domain": "vinhhoan.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:vinhhoan",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://vinhtech.vn",
+        "domain": "vinhtech.vn",
+        "score": 2.75,
+        "reasons": [
+          "address_tokens:4",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vinhtech.com.vn",
+        "domain": "vinhtech.com.vn",
+        "score": 2.5,
+        "reasons": [
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vinhhoan.com",
+        "domain": "vinhhoan.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:vinhhoan"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ReadTimeout:The read operation timed out"
+      },
+      {
+        "url": "https://vinhhoangroup.com",
+        "domain": "vinhhoangroup.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:vinhhoan"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://vhc.com.vn",
+        "domain": "vhc.com.vn",
+        "score": 1.5,
+        "reasons": [
+          "address_tokens:3",
+          "weak_domain_core:vhc",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://vinhvn.com",
+        "domain": "vinhvn.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "ANV",
+    "queries": [
+      "\"Công ty Cổ phần Nam Việt\" 1600168736",
+      "\"Công ty Cổ phần Nam Việt\" An Giang website"
+    ],
+    "n_candidates": 24,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.0,
+    "reason": "thin_margin:11.0-11.0<1.0",
+    "ranked": [
+      {
+        "url": "https://navico.com.vn",
+        "domain": "navico.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:7",
+          "domain_tokens:navico",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://namviet.com.vn",
+        "domain": "namviet.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:namviet",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://navichem.com.vn",
+        "domain": "navichem.com.vn",
+        "score": 8.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:4",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://navico.vn",
+        "domain": "navico.vn",
+        "score": 8.25,
+        "reasons": [
+          "name_in_title:100",
+          "address_tokens:4",
+          "domain_tokens:navico",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://navicovn.vn",
+        "domain": "navicovn.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:navico",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://nam.com.vn",
+        "domain": "nam.com.vn",
+        "score": 6.5,
+        "reasons": [
+          "name_in_title:86",
+          "name_in_body:86",
+          "address_tokens:2",
+          "weak_domain_core:nam",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://navicorp.vn",
+        "domain": "navicorp.vn",
+        "score": 6.25,
+        "reasons": [
+          "name_in_body:100",
+          "domain_tokens:navico",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://navicorp.com.vn",
+        "domain": "navicorp.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:8",
+          "domain_tokens:navico",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "IDI",
+    "queries": [
+      "\"Công ty Cổ phần Đầu tư và Phát triển Đa Quốc Gia I.D.I\" 0303141296",
+      "\"Công ty Cổ phần Đầu tư và Phát triển Đa Quốc Gia I.D.I\" Đồng Tháp website"
+    ],
+    "n_candidates": 7,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.125,
+    "reason": "below_min_score:0.5<4.0",
+    "ranked": [
+      {
+        "url": "https://cong.com.vn",
+        "domain": "cong.com.vn",
+        "score": 0.5,
+        "reasons": [
+          "weak_domain_core:cong",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://cong.com",
+        "domain": "cong.com",
+        "score": 0.0,
+        "reasons": [
+          "address_tokens:2",
+          "weak_domain_core:cong",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://idi.vn",
+        "domain": "idi.vn",
+        "score": -0.25,
+        "reasons": [
+          "weak_domain_core:idi",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://idi.com",
+        "domain": "idi.com",
+        "score": -1.0,
+        "reasons": [
+          "weak_domain_core:idi",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://d-i.com",
+        "domain": "d-i.com",
+        "score": -1.0,
+        "reasons": [
+          "weak_domain_core:di",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://congtech.com",
+        "domain": "congtech.com",
+        "score": -3.0,
+        "reasons": [
+          "address_tokens:2",
+          "parking_page",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://conggroup.com",
+        "domain": "conggroup.com",
+        "score": -3.0,
+        "reasons": [
+          "address_tokens:2",
+          "parking_page",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "SBT",
+    "queries": [
+      "\"Công ty Cổ phần Thành Thành Công — Biên Hòa\" 3900244389",
+      "\"Công ty Cổ phần Thành Thành Công — Biên Hòa\" Tây Ninh website"
+    ],
+    "n_candidates": 9,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.25,
+    "reason": "thin_margin:4.75-4.5<1.0",
+    "ranked": [
+      {
+        "url": "https://thanh.vn",
+        "domain": "thanh.vn",
+        "score": 4.75,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:83",
+          "weak_domain_core:thanh",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://thanhthanh.com",
+        "domain": "thanhthanh.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:1",
+          "domain_tokens:thanhthanh",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://ttc.com",
+        "domain": "ttc.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:ttc",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://bienhoa.com",
+        "domain": "bienhoa.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:bienhoa",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://thanh-thanh.com",
+        "domain": "thanh-thanh.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:thanh,thanhthanh",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "ok"
+      },
+      {
+        "url": "https://ttc.vn",
+        "domain": "ttc.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:ttc",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://thanhthanh.vn",
+        "domain": "thanhthanh.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:thanhthanh",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      },
+      {
+        "url": "https://thanhgroup.com",
+        "domain": "thanhgroup.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "QNS",
+    "queries": [
+      "\"Công ty Cổ phần Đường Quảng Ngãi\" 4300205943",
+      "\"Công ty Cổ phần Đường Quảng Ngãi\" Quảng Ngãi website"
+    ],
+    "n_candidates": 9,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://qns.com.vn",
+    "predicted_domain": "qns.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:9,domain_tokens:qns",
+    "ranked": [
+      {
+        "url": "https://qns.com.vn",
+        "domain": "qns.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:9",
+          "domain_tokens:qns",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://qns.vn",
+        "domain": "qns.vn",
+        "score": 6.25,
+        "reasons": [
+          "name_in_body:100",
+          "domain_tokens:qns",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://quang.com.vn",
+        "domain": "quang.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:6",
+          "domain_tokens:quang",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://quang.vn",
+        "domain": "quang.vn",
+        "score": 5.25,
+        "reasons": [
+          "address_tokens:5",
+          "domain_tokens:quang",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://quangngai.com",
+        "domain": "quangngai.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:2",
+          "domain_tokens:quangngai",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://duongquangngai.com",
+        "domain": "duongquangngai.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:3",
+          "domain_tokens:duongquangng,duongquangngai",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://quangngai.com.vn",
+        "domain": "quangngai.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:quangngai",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      },
+      {
+        "url": "https://quang.com",
+        "domain": "quang.com",
+        "score": -1.5,
+        "reasons": [
+          "domain_tokens:quang",
+          "parking_page",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "HSG",
+    "queries": [
+      "\"Công ty Cổ phần Tập đoàn Hoa Sen\" 3700381324",
+      "\"Công ty Cổ phần Tập đoàn Hoa Sen\" Bình Dương website"
+    ],
+    "n_candidates": 17,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://hoasengroup.vn",
+    "predicted_domain": "hoasengroup.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:9,domain_tokens:hoasengroup",
+    "ranked": [
+      {
+        "url": "https://hoasengroup.vn",
+        "domain": "hoasengroup.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:9",
+          "domain_tokens:hoasengroup",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoasentech.com",
+        "domain": "hoasentech.com",
+        "score": 6.5,
+        "reasons": [
+          "name_in_body:86",
+          "address_tokens:7",
+          "domain_tokens:hoasent",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoasengroup.com.vn",
+        "domain": "hoasengroup.com.vn",
+        "score": 6.0,
+        "reasons": [
+          "address_tokens:6",
+          "domain_tokens:hoasengroup",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoasenplastic.com.vn",
+        "domain": "hoasenplastic.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:hoasen",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://hoasencorp.com",
+        "domain": "hoasencorp.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:hoasen",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoasen.vn",
+        "domain": "hoasen.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:hoasen",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://hoasenvn.vn",
+        "domain": "hoasenvn.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:hoasen",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=500"
+      },
+      {
+        "url": "https://hoasensteel.vn",
+        "domain": "hoasensteel.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:hoasen",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  },
+  {
+    "ticker": "NKG",
+    "queries": [
+      "\"Công ty Cổ phần Thép Nam Kim\" 3700477019",
+      "\"Công ty Cổ phần Thép Nam Kim\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 12,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.75,
+    "reason": "thin_margin:5.0-4.25<1.0",
+    "ranked": [
+      {
+        "url": "https://namkimsteel.com.vn",
+        "domain": "namkimsteel.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:namkimsteel",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://namkimsteel.vn",
+        "domain": "namkimsteel.vn",
+        "score": 4.25,
+        "reasons": [
+          "domain_tokens:namkimsteel",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://namkim.com",
+        "domain": "namkim.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:namkim",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://namkim.vn",
+        "domain": "namkim.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:namkim",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://namkimsteel.com",
+        "domain": "namkimsteel.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:namkimsteel"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://nam.com.vn",
+        "domain": "nam.com.vn",
+        "score": 1.5,
+        "reasons": [
+          "address_tokens:5",
+          "weak_domain_core:nam",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "http://www.telepathy.com",
+        "domain": "telepathy.com",
+        "score": 0.0,
+        "reasons": [],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=403"
+      },
+      {
+        "url": "https://nam.com",
+        "domain": "nam.com",
+        "score": -1.0,
+        "reasons": [
+          "weak_domain_core:nam",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "POM",
+    "queries": [
+      "\"Công ty Cổ phần Thép Pomina\" 3700321364",
+      "\"Công ty Cổ phần Thép Pomina\" Bình Dương website"
+    ],
+    "n_candidates": 10,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.75,
+    "reason": "thin_margin:5.0-4.25<1.0",
+    "ranked": [
+      {
+        "url": "https://pominasteel.com.vn",
+        "domain": "pominasteel.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:pominasteel",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pominasteel.vn",
+        "domain": "pominasteel.vn",
+        "score": 4.25,
+        "reasons": [
+          "domain_tokens:pominasteel",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pomina.com",
+        "domain": "pomina.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:pomina",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pomina-steel.com",
+        "domain": "pomina-steel.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:pomina,pominasteel,steel",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pominasteel.com",
+        "domain": "pominasteel.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:pominasteel",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pomina.vn",
+        "domain": "pomina.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:pomina",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://cong.com.vn",
+        "domain": "cong.com.vn",
+        "score": 0.5,
+        "reasons": [
+          "weak_domain_core:cong",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://cong.com",
+        "domain": "cong.com",
+        "score": -1.0,
+        "reasons": [
+          "weak_domain_core:cong",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "TLH",
+    "queries": [
+      "\"Công ty Cổ phần Tập đoàn Thép Tiến Lên\" 3600512830",
+      "\"Công ty Cổ phần Tập đoàn Thép Tiến Lên\" Đồng Nai website"
+    ],
+    "n_candidates": 19,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://tienlengroup.vn",
+    "predicted_domain": "tienlengroup.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:5,domain_tokens:tienlen",
+    "ranked": [
+      {
+        "url": "https://tienlengroup.vn",
+        "domain": "tienlengroup.vn",
+        "score": 10.25,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:5",
+          "domain_tokens:tienlen",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tienlen.com.vn",
+        "domain": "tienlen.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:tienlen",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tienlensteel.com.vn",
+        "domain": "tienlensteel.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:tienlensteel",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tienlen.com",
+        "domain": "tienlen.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:1",
+          "domain_tokens:tienlen",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tlh.com.vn",
+        "domain": "tlh.com.vn",
+        "score": 3.5,
+        "reasons": [
+          "name_in_body:77",
+          "address_tokens:3",
+          "weak_domain_core:tlh",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tienlensteel.com",
+        "domain": "tienlensteel.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:tienlensteel"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      },
+      {
+        "url": "https://tiengroup.com",
+        "domain": "tiengroup.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tienfood.vn",
+        "domain": "tienfood.vn",
+        "score": 0.75,
+        "reasons": [
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=526"
+      }
+    ]
+  },
+  {
+    "ticker": "DQC",
+    "queries": [
+      "\"Công ty Cổ phần Điện Quang\" 0300363808",
+      "\"Công ty Cổ phần Điện Quang\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 12,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://dqc.vn",
+    "predicted_domain": "dqc.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:tax_id_on_page,name_in_title:100,name_in_body:100,address_tokens:5",
+    "ranked": [
+      {
+        "url": "https://dqc.vn",
+        "domain": "dqc.vn",
+        "score": 10.75,
+        "reasons": [
+          "tax_id_on_page",
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:5",
+          "weak_domain_core:dqc",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dienquang.com",
+        "domain": "dienquang.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:5",
+          "domain_tokens:dienquang",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dienquang.com.vn",
+        "domain": "dienquang.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:dienquang",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dienquanggroup.com.vn",
+        "domain": "dienquanggroup.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:dienquanggro,dienquanggroup",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://dienquanggroup.com",
+        "domain": "dienquanggroup.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:dienquanggro,dienquanggroup"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://dien.com.vn",
+        "domain": "dien.com.vn",
+        "score": 1.5,
+        "reasons": [
+          "address_tokens:3",
+          "weak_domain_core:dien",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dientech.com",
+        "domain": "dientech.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://diencorp.com",
+        "domain": "diencorp.com",
+        "score": 0.0,
+        "reasons": [],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=403"
+      }
+    ]
+  },
+  {
+    "ticker": "GEE",
+    "queries": [
+      "\"Công ty Cổ phần Điện Gia Dụng Gelex\" 0107547109",
+      "\"Công ty Cổ phần Điện Gia Dụng Gelex\" Hà Nội website"
+    ],
+    "n_candidates": 8,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.25,
+    "reason": "thin_margin:7.5-7.25<1.0",
+    "ranked": [
+      {
+        "url": "https://gelex-electric.com",
+        "domain": "gelex-electric.com",
+        "score": 7.5,
+        "reasons": [
+          "name_in_title:84",
+          "address_tokens:5",
+          "domain_tokens:electric,gelex,gelexelectri,gelexelectric",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://gelex.vn",
+        "domain": "gelex.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:75",
+          "address_tokens:4",
+          "domain_tokens:gelex",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://gelexelectric.com.vn",
+        "domain": "gelexelectric.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:gelexelectri,gelexelectric",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://gelex-electric.vn",
+        "domain": "gelex-electric.vn",
+        "score": 4.25,
+        "reasons": [
+          "domain_tokens:electric,gelex,gelexelectri,gelexelectric",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://gelex.com.vn",
+        "domain": "gelex.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:gelex",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://gelex.com",
+        "domain": "gelex.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:gelex",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://gelexgroup.com",
+        "domain": "gelexgroup.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:gelexg",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://gelextech.vn",
+        "domain": "gelextech.vn",
+        "score": 0.75,
+        "reasons": [
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "http_fail status=404"
+      }
+    ]
+  },
+  {
+    "ticker": "TYA",
+    "queries": [
+      "\"Công ty Cổ phần Dây và Cáp điện Taya Việt Nam\" 3600241468",
+      "\"Công ty Cổ phần Dây và Cáp điện Taya Việt Nam\" Đồng Nai website"
+    ],
+    "n_candidates": 11,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://taya.com.vn",
+    "predicted_domain": "taya.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:8,domain_tokens:taya",
+    "ranked": [
+      {
+        "url": "https://taya.com.vn",
+        "domain": "taya.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:8",
+          "domain_tokens:taya",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://taya.vn",
+        "domain": "taya.vn",
+        "score": 5.25,
+        "reasons": [
+          "address_tokens:3",
+          "domain_tokens:taya",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://taya.com",
+        "domain": "taya.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:taya",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tayagroup.com.vn",
+        "domain": "tayagroup.com.vn",
+        "score": 3.5,
+        "reasons": [
+          "address_tokens:6",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tayacorp.com",
+        "domain": "tayacorp.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tayafood.com",
+        "domain": "tayafood.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tayatech.com",
+        "domain": "tayatech.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://tayagroup.vn",
+        "domain": "tayagroup.vn",
+        "score": 0.75,
+        "reasons": [
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  },
+  {
+    "ticker": "DPR",
+    "queries": [
+      "\"Công ty Cổ phần Cao su Đồng Phú\" 3800100376",
+      "\"Công ty Cổ phần Cao su Đồng Phú\" Đồng Nai website"
+    ],
+    "n_candidates": 9,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://doruco.com.vn",
+    "predicted_domain": "doruco.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:4,domain_tokens:doruco",
+    "ranked": [
+      {
+        "url": "https://doruco.com.vn",
+        "domain": "doruco.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:4",
+          "domain_tokens:doruco",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dong.com",
+        "domain": "dong.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:1",
+          "domain_tokens:dong",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dongphu.com.vn",
+        "domain": "dongphu.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:dongphu",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://doruco.com",
+        "domain": "doruco.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:doruco",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dongphu.com",
+        "domain": "dongphu.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:dongphu",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://dong.vn",
+        "domain": "dong.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:dong",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      },
+      {
+        "url": "https://dpr.com.vn",
+        "domain": "dpr.com.vn",
+        "score": 1.5,
+        "reasons": [
+          "address_tokens:1",
+          "weak_domain_core:dpr",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://doruchem.com",
+        "domain": "doruchem.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "CSM",
+    "queries": [
+      "\"Công ty Cổ phần Công nghiệp Cao su Miền Nam\" 0300419930",
+      "\"Công ty Cổ phần Công nghiệp Cao su Miền Nam\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 12,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://casumina.com.vn",
+    "predicted_domain": "casumina.com.vn",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:8,domain_tokens:casumina",
+    "ranked": [
+      {
+        "url": "https://casumina.com.vn",
+        "domain": "casumina.com.vn",
+        "score": 11.0,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:8",
+          "domain_tokens:casumina",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://casumina.com",
+        "domain": "casumina.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:8",
+          "domain_tokens:casumina",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://sumien.com",
+        "domain": "sumien.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:sumien",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://thesouthern.com",
+        "domain": "thesouthern.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:thesouthern",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://thesouthernsteel.com",
+        "domain": "thesouthernsteel.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:thesouthern",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://casumina.vn",
+        "domain": "casumina.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:casumina",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://thesouthern.vn",
+        "domain": "thesouthern.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:thesouthern",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://the-southern.com",
+        "domain": "the-southern.com",
+        "score": 2.5,
+        "reasons": [
+          "url_only:domain_tokens:southern,thesouthern"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  },
+  {
+    "ticker": "AAA",
+    "queries": [
+      "\"Công ty Cổ phần Nhựa An Phát Xanh\" 0800373586",
+      "\"Công ty Cổ phần Nhựa An Phát Xanh\" Hải Phòng website"
+    ],
+    "n_candidates": 22,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://anphatbioplastics.com",
+    "predicted_domain": "anphatbioplastics.com",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:75,address_tokens:8,domain_tokens:anphatbiopla,anphatbioplastics",
+    "ranked": [
+      {
+        "url": "https://anphatbioplastics.com",
+        "domain": "anphatbioplastics.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:75",
+          "address_tokens:8",
+          "domain_tokens:anphatbiopla,anphatbioplastics",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphatvn.com.vn",
+        "domain": "anphatvn.com.vn",
+        "score": 8.0,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:6",
+          "domain_tokens:anphat",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphatcorp.com.vn",
+        "domain": "anphatcorp.com.vn",
+        "score": 8.0,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:4",
+          "domain_tokens:anphat",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphatfood.com.vn",
+        "domain": "anphatfood.com.vn",
+        "score": 8.0,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:5",
+          "domain_tokens:anphat",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphatfood.vn",
+        "domain": "anphatfood.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:4",
+          "domain_tokens:anphat",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphattech.com",
+        "domain": "anphattech.com",
+        "score": 6.5,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:7",
+          "domain_tokens:anphat",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphat.vn",
+        "domain": "anphat.vn",
+        "score": 5.25,
+        "reasons": [
+          "address_tokens:7",
+          "domain_tokens:anphat",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://anphat.com.vn",
+        "domain": "anphat.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:anphat",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      }
+    ]
+  },
+  {
+    "ticker": "DCM",
+    "queries": [
+      "\"Công ty Cổ phần Đạm Cà Mau\" 2001012298",
+      "\"Công ty Cổ phần Đạm Cà Mau\" Cà Mau website"
+    ],
+    "n_candidates": 9,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://pvcfc.com",
+    "predicted_domain": "pvcfc.com",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 1.0,
+    "reason": "top_clear:name_in_title:100,name_in_body:100,address_tokens:3,domain_tokens:pvcfc",
+    "ranked": [
+      {
+        "url": "https://pvcfc.com",
+        "domain": "pvcfc.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:3",
+          "domain_tokens:pvcfc",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://pvcfc.com.vn",
+        "domain": "pvcfc.com.vn",
+        "score": 5.0,
+        "reasons": [
+          "domain_tokens:pvcfc",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://petrovietnam.com",
+        "domain": "petrovietnam.com",
+        "score": 4.5,
+        "reasons": [
+          "address_tokens:1",
+          "domain_tokens:petrovietnam",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://camau.com.vn",
+        "domain": "camau.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:camau",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://petrovietnam.com.vn",
+        "domain": "petrovietnam.com.vn",
+        "score": 4.0,
+        "reasons": [
+          "url_only:domain_tokens:petrovietnam",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1032)"
+      },
+      {
+        "url": "https://camau.com",
+        "domain": "camau.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:camau",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://damcamau.vn",
+        "domain": "damcamau.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:damcamau",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 54] Connection reset by peer"
+      },
+      {
+        "url": "https://petrovietnam.vn",
+        "domain": "petrovietnam.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:petrovietnam",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[SSL: DH_KEY_TOO_SMALL] dh key too small (_ssl.c:1032)"
+      }
+    ]
+  },
+  {
+    "ticker": "BFC",
+    "queries": [
+      "\"Công ty Cổ phần Phân bón Bình Điền\" 0302975517",
+      "\"Công ty Cổ phần Phân bón Bình Điền\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 10,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": null,
+    "predicted_domain": null,
+    "abstain": true,
+    "backend": "rules",
+    "confidence": 0.75,
+    "reason": "thin_margin:16.0-15.25<1.0",
+    "ranked": [
+      {
+        "url": "https://binhdien.com.vn",
+        "domain": "binhdien.com.vn",
+        "score": 16.0,
+        "reasons": [
+          "tax_id_on_page",
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:binhdien",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhdien.vn",
+        "domain": "binhdien.vn",
+        "score": 15.25,
+        "reasons": [
+          "tax_id_on_page",
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:binhdien",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhdien.com",
+        "domain": "binhdien.com",
+        "score": 14.5,
+        "reasons": [
+          "tax_id_on_page",
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:6",
+          "domain_tokens:binhdien",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://bfc.com",
+        "domain": "bfc.com",
+        "score": 9.5,
+        "reasons": [
+          "name_in_title:100",
+          "name_in_body:100",
+          "address_tokens:1",
+          "domain_tokens:bfc",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://bfc.vn",
+        "domain": "bfc.vn",
+        "score": 7.25,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:4",
+          "domain_tokens:bfc",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binh.vn",
+        "domain": "binh.vn",
+        "score": 2.75,
+        "reasons": [
+          "name_in_body:82",
+          "address_tokens:3",
+          "weak_domain_core:binh",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhvn.com",
+        "domain": "binhvn.com",
+        "score": 1.0,
+        "reasons": [
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://binhgroup.com",
+        "domain": "binhgroup.com",
+        "score": 0.0,
+        "reasons": [],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[SSL: TLSV1_ALERT_INTERNAL_ERROR] tlsv1 alert internal error (_ssl.c:1032)"
+      }
+    ]
+  },
+  {
+    "ticker": "CSV",
+    "queries": [
+      "\"Công ty Cổ phần Hóa chất Cơ bản miền Nam\" 0301446260",
+      "\"Công ty Cổ phần Hóa chất Cơ bản miền Nam\" Hồ Chí Minh website"
+    ],
+    "n_candidates": 10,
+    "candidate_source": "domain_hypothesis",
+    "search_blocked": true,
+    "search_block_detail": "HTTP 202 duckduckgo_html",
+    "baseline_first_non_aggregator": null,
+    "predicted_url": "https://hoachatvn.com",
+    "predicted_domain": "hoachatvn.com",
+    "abstain": false,
+    "backend": "rules",
+    "confidence": 0.812,
+    "reason": "top_clear:name_in_body:77,address_tokens:2,domain_tokens:hoacha,fetch_ok",
+    "ranked": [
+      {
+        "url": "https://hoachatvn.com",
+        "domain": "hoachatvn.com",
+        "score": 6.5,
+        "reasons": [
+          "name_in_body:77",
+          "address_tokens:2",
+          "domain_tokens:hoacha",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://south.com",
+        "domain": "south.com",
+        "score": 3.5,
+        "reasons": [
+          "domain_tokens:south",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoachat.com.vn",
+        "domain": "hoachat.com.vn",
+        "score": 3.5,
+        "reasons": [
+          "name_in_body:100",
+          "address_tokens:4",
+          "weak_domain_core:hoachat",
+          "tld_prefer:com.vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://south.vn",
+        "domain": "south.vn",
+        "score": 3.25,
+        "reasons": [
+          "url_only:domain_tokens:south",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      },
+      {
+        "url": "https://hoa.vn",
+        "domain": "hoa.vn",
+        "score": 0.75,
+        "reasons": [
+          "address_tokens:4",
+          "weak_domain_core:hoa",
+          "tld_prefer:vn",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoa.com.vn",
+        "domain": "hoa.com.vn",
+        "score": -0.5,
+        "reasons": [
+          "url_only:weak_domain_core:hoa",
+          "url_only:tld_prefer:com.vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectError:[Errno 61] Connection refused"
+      },
+      {
+        "url": "https://hoa.com",
+        "domain": "hoa.com",
+        "score": -1.0,
+        "reasons": [
+          "weak_domain_core:hoa",
+          "fetch_ok"
+        ],
+        "fetch_ok": true,
+        "fetch_detail": "cache"
+      },
+      {
+        "url": "https://hoachat.vn",
+        "domain": "hoachat.vn",
+        "score": -1.25,
+        "reasons": [
+          "url_only:weak_domain_core:hoachat",
+          "url_only:tld_prefer:vn"
+        ],
+        "fetch_ok": false,
+        "fetch_detail": "error:ConnectTimeout:timed out"
+      }
+    ]
+  }
+]
