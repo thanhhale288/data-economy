@@ -1,0 +1,902 @@
+[
+  {
+    "firm_id": "0101164727-001",
+    "tax_code": "0101164727-001",
+    "company_name": "KHÁCH SẠN HÒA BÌNH - CHI NHÁNH CÔNG TY CỔ PHẦN XÂY DỰNG VÀ DỊCH VỤ 369",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vu369.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0101552800-003",
+    "tax_code": "0101552800-003",
+    "company_name": "CHI NHÁNH CÔNG TY CỔ PHẦN SẢN XUẤT VÀ THƯƠNG MẠI KIÊN HÙNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://kienhung.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0103472639-002",
+    "tax_code": "0103472639-002",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THƯƠNG MẠI QUỐC TẾ ANH QUÂN TẠI HẢI DƯƠNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://haiduong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0104076740",
+    "tax_code": "0104076740",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI & XUẤT NHẬP KHẨU NHẤT LÂM",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhatlam.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0104937284-004",
+    "tax_code": "0104937284-004",
+    "company_name": "CHI NHÁNH 2 - CÔNG TY CỔ PHẦN DINH DƯỠNG NUTRICARE",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://duongnutricare.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0105196007",
+    "tax_code": "0105196007",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ RDOQ VIỆT NAM",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vurdoq.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0105365865",
+    "tax_code": "0105365865",
+    "company_name": "CÔNG TY CỔ PHẦN THƯƠNG MẠI VÀ ĐẦU TƯ XÂY DỰNG ĐỨC THÁI",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://ducthai.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0105906553",
+    "tax_code": "0105906553",
+    "company_name": "CÔNG TY TNHH KINH DOANH VÀ PHÁT TRIỂN QUANG MINH",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://quangminh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106069682",
+    "tax_code": "0106069682",
+    "company_name": "CÔNG TY TNHH THỰC PHẨM SƠN HÀ",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://sonha.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106149881",
+    "tax_code": "0106149881",
+    "company_name": "CÔNG TY CỔ PHẦN XUẤT NHẬP KHẨU THƯƠNG MẠI THANH HÙNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://thanhhung.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106194161-001",
+    "tax_code": "0106194161-001",
+    "company_name": "CHI NHÁNH THỊT CHUA NGHỊ THỊNH HIỆU LƯU LINH-CÔNG TY TNHH ĐẦU TƯ XÂY DỰNG NIMAX VIỆT NAM",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://dungnimax.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106250747",
+    "tax_code": "0106250747",
+    "company_name": "CÔNG TY TNHH ĐẦU TƯ SUMOFOOD VIỆT NAM",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://tusumofood.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106898305",
+    "tax_code": "0106898305",
+    "company_name": "CÔNG TY TNHH DỊCH VỤ VÀ KINH DOANH THƯƠNG MẠI HỢP THÀNH",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://hopthanh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107066638",
+    "tax_code": "0107066638",
+    "company_name": "CÔNG TY CỔ PHẦN TƯ VẤN, XÂY DỰNG, THƯƠNG MẠI VÀ CHẾ BIẾN THỰC PHẨM THỤY HƯƠNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://thuyhuong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107165501",
+    "tax_code": "0107165501",
+    "company_name": "CÔNG TY TNHH VFD VINA",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vfdvina.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107740399",
+    "tax_code": "0107740399",
+    "company_name": "CÔNG TY CP CHẾ BIẾN VÀ THƯƠNG MẠI THỰC PHẨM THUẬN PHÁT",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://thuanphat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107866095",
+    "tax_code": "0107866095",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT VÀ THƯƠNG MẠI BÁCH AN",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://bachan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0108241931",
+    "tax_code": "0108241931",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI & DỊCH VỤ RUVINA",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vuruvina.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111453157-005",
+    "tax_code": "0111453157-005",
+    "company_name": "CÔNG TY TNHH PHÁT TRIỂN TP QUANG TRƯỜNG - CHI NHÁNH 01SL",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanh01sl.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111453157-006",
+    "tax_code": "0111453157-006",
+    "company_name": "CÔNG TY TNHH PHÁT TRIỂN TP QUANG TRƯỜNG - CHI NHÁNH 02SL",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanh02sl.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111461775-004",
+    "tax_code": "0111461775-004",
+    "company_name": "CÔNG TY TNHH NGUYỄN HIỀN 82 - CHI NHÁNH ĐN02",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanhdn02.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111469100-015",
+    "tax_code": "0111469100-015",
+    "company_name": "CÔNG TY TNHH TMDV ÁNH FOODS - CHI NHÁNH 279",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanh279.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111469100-031",
+    "tax_code": "0111469100-031",
+    "company_name": "CÔNG TY TNHH TMDV ÁNH FOODS - CHI NHÁNH QN3",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanhqn3.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111469100-046",
+    "tax_code": "0111469100-046",
+    "company_name": "CÔNG TY TNHH TMDV ÁNH FOODS - CHI NHÁNH QN9",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanhqn9.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0111469100-049",
+    "tax_code": "0111469100-049",
+    "company_name": "CÔNG TY TNHH TMDV ÁNH FOODS - CHI NHÁNH QN2",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nhanhqn2.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0200344752-001",
+    "tax_code": "0200344752-001",
+    "company_name": "CHI NHÁNH CÔNG TY CỔ PHẦN ĐỒ HỘP HẠ LONG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://halong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0200580911",
+    "tax_code": "0200580911",
+    "company_name": "CÔNG TY CỔ PHẦN CHẾ BIẾN THỰC PHẨM XANH VINH PHÁT",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vinhphat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0201197927",
+    "tax_code": "0201197927",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI VIỄN ĐẠI",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://viendai.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0300606715-007",
+    "tax_code": "0300606715-007",
+    "company_name": "CHI NHÁNH CÔNG TY CỔ PHẦN SÀI GÒN LƯƠNG THỰC TẠI SA ĐÉC",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://sadec.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0304152188-003",
+    "tax_code": "0304152188-003",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH PHẠM TÔN TẠI TRUNG TÂM GIẾT MỔ GIA CẦM AN NHƠN",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://annhon.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0304244470-008",
+    "tax_code": "0304244470-008",
+    "company_name": "CHI NHÁNH CÔNG TY CỔ PHẦN BA HUÂN - NHÀ MÁY THỰC PHẨM BA HUÂN LONG AN",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://longan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0304531098-001",
+    "tax_code": "0304531098-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THỰC PHẨM MẠNH THẮNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://manhthang.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0304531098-002",
+    "tax_code": "0304531098-002",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THỰC PHẨM MẠNH THẮNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://manhthang.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0305755968-001",
+    "tax_code": "0305755968-001",
+    "company_name": "CÔNG TY TNHH SAN HÀ - CHI NHÁNH LONG AN",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://longan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0306043498-001",
+    "tax_code": "0306043498-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH XUẤT NHẬP KHẨU SẢN XUẤT THƯƠNG MẠI CHUNG MAI",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://chungmai.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0308808103-001",
+    "tax_code": "0308808103-001",
+    "company_name": "CHI NHÁNH CÔNG TY CỔ PHẦN THỰC PHẨM ĐÔNG NAM Á",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://donga.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0309129626-001",
+    "tax_code": "0309129626-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH MỘT THÀNH VIÊN SẢN XUẤT THƯƠNG MẠI THỰC PHẨM HƯNG PHÁT",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://hungphat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0309438342-001",
+    "tax_code": "0309438342-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THƯƠNG MẠI SẢN XUẤT THỰC PHẨM NHẬT NAM - XƯỞNG SẢN XUẤT",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://sanxuat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0310294688",
+    "tax_code": "0310294688",
+    "company_name": "CÔNG TY CỔ PHẦN THỰC PHẨM TRANG HÀ ANH",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://haanh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0310650135",
+    "tax_code": "0310650135",
+    "company_name": "DOANH NGHIỆP TƯ NHÂN THƯƠNG MẠI XUÂN HÒA VI NA",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vina.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311324198",
+    "tax_code": "0311324198",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI CHẾ BIẾN THỰC PHẨM NAM HỒNG",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://phamhong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311452915",
+    "tax_code": "0311452915",
+    "company_name": "CÔNG TY TNHH MỘT THÀNH VIÊN SẢN XUẤT THƯƠNG MẠI DỊCH VỤ THỰC PHẨM KỸ NGHỆ TRUNG NAM",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://nghetrung.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312159363-004",
+    "tax_code": "0312159363-004",
+    "company_name": "CHI NHÁNH TÂN BÌNH 2 - CÔNG TY CỔ PHẦN THỰC PHẨM TỐT",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://phamtot.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312159363-006",
+    "tax_code": "0312159363-006",
+    "company_name": "CHI NHÁNH THỦ ĐỨC - CÔNG TY CỔ PHẦN THỰC PHẨM TỐT",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://phamtot.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312358432",
+    "tax_code": "0312358432",
+    "company_name": "DOANH NGHIỆP TƯ NHÂN THƯƠNG MẠI DỊCH VỤ HIẾU HÂN",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://hieuhan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312421606",
+    "tax_code": "0312421606",
+    "company_name": "CÔNG TY TNHH S J FOODRO",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://jfoodro.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312448164",
+    "tax_code": "0312448164",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI VINH THUẬN",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://vinhthuan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312585026",
+    "tax_code": "0312585026",
+    "company_name": "CÔNG TY TNHH MỘT THÀNH VIÊN THỰC PHẨM HẢI MINH",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://haiminh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312761024",
+    "tax_code": "0312761024",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ AN KHÁNH FOOD",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://khanhfood.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0313063960",
+    "tax_code": "0313063960",
+    "company_name": "CÔNG TY TNHH NEM ĐỨC THỊNH",
+    "vsic_4digit": "1010",
+    "vsic_division": "10",
+    "website_url": "https://ducthinh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0102784064",
+    "tax_code": "0102784064",
+    "company_name": "CÔNG TY TNHH MTV CAO SU PHÙNG CƯỜNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://phungcuong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0102997947",
+    "tax_code": "0102997947",
+    "company_name": "CÔNG TY CỔ PHẦN KHO VẬN VÀ DỊCH VỤ THƯƠNG MẠI HÀ NỘI",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hanoi.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0105252117",
+    "tax_code": "0105252117",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT VÀ THƯƠNG MẠI TÂN MINH PHÁT",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://minhphat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0105494187",
+    "tax_code": "0105494187",
+    "company_name": "CÔNG TY CỔ PHẦN THƯƠNG MẠI DỊCH VỤ LỐP GIẢI PHÓNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://giaiphong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106171943",
+    "tax_code": "0106171943",
+    "company_name": "CÔNG TY TNHH LỐP EURO",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://lopeuro.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106459280",
+    "tax_code": "0106459280",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ VẬN TẢI VÀ SẢN XUẤT KIM LONG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://kimlong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106511406",
+    "tax_code": "0106511406",
+    "company_name": "CÔNG TY TNHH HD TÂY HÀ NỘI",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hanoi.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106667354",
+    "tax_code": "0106667354",
+    "company_name": "CÔNG TY TNHH DỊCH VỤ VÀ PHÁT TRIỂN MINH THÀNH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://minhthanh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106908257",
+    "tax_code": "0106908257",
+    "company_name": "CÔNG TY TNHH CAO SU VÀ NHỰA SÁNG TẠO",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://sangtao.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106936254",
+    "tax_code": "0106936254",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI AEOLUS HENAN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://aeolushenan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0106939946",
+    "tax_code": "0106939946",
+    "company_name": "CÔNG TY TNHH DỰ ĐOÁN KẾT QUẢ 365",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://qua365.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107600881",
+    "tax_code": "0107600881",
+    "company_name": "CÔNG TY CỔ PHẦN KỸ THUẬT CAO SU SAO VIỆT",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://susao.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107691977",
+    "tax_code": "0107691977",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ DC KIM CƯƠNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://kimcuong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0107752475",
+    "tax_code": "0107752475",
+    "company_name": "CÔNG TY TNHH XỬ LÝ NUỚC HUYỀN TRANG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://huyentrang.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0108501682",
+    "tax_code": "0108501682",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI VÀ DỊCH VỤ VĨNH HƯNG PHÁT",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hungphat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0108506747",
+    "tax_code": "0108506747",
+    "company_name": "CÔNG TY TNHH MỘT THÀNH VIÊN CAO SU THIÊN MÃ",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://thienma.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0108694240",
+    "tax_code": "0108694240",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI THIẾT BỊ VÀ PHỤ TÙNG HÀ THÀNH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hathanh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0110454750",
+    "tax_code": "0110454750",
+    "company_name": "CÔNG TY TNHH THIẾT KẾ XÂY DỰNG ĐÌNH VŨ",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://dinhvu.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0200835599",
+    "tax_code": "0200835599",
+    "company_name": "CÔNG TY TNHH CAO SU PT HẢI PHÒNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://haiphong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0200835599-001",
+    "tax_code": "0200835599-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH CAO SU PT HẢI PHÒNG TẠI NGHỆ AN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://nghean.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0201133137",
+    "tax_code": "0201133137",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT ĐẠT PHÁT",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://datphat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0201240026",
+    "tax_code": "0201240026",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT LỐP XE BRIDGESTONE VIỆT NAM",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://xebridgestone.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0201545349",
+    "tax_code": "0201545349",
+    "company_name": "CÔNG TY TNHH SỬA CHỮA ĐẮP LỐP VIỆT TRUNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://loptrung.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0309875328-001",
+    "tax_code": "0309875328-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH KINH DOANH LỐP XE BRIDGESTONE VIỆT NAM TẠI BÌNH DƯƠNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://binhduong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0310188640",
+    "tax_code": "0310188640",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI DỊCH VỤ THẮNG HOÀNG NAM",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://thanghoang.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0310258834-001",
+    "tax_code": "0310258834-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH TÂN VẠN TỶ",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://tanvan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0310486446",
+    "tax_code": "0310486446",
+    "company_name": "CÔNG TY TNHH MỘT THÀNH VIÊN TÂN RỒNG SINH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://rongsinh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0310515841-001",
+    "tax_code": "0310515841-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THƯƠNG MẠI HIỆP VÂN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hiepvan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311589797-002",
+    "tax_code": "0311589797-002",
+    "company_name": "CÔNG TY TNHH JET VIỆT NAM - CHI NHÁNH ĐỒNG NAI",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://dongnai.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311696460",
+    "tax_code": "0311696460",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT SẢN PHẨM CAO SU TOÀN CẦU",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://toancau.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311877065",
+    "tax_code": "0311877065",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI VÀ DỊCH VỤ VẠN PHƯỚC ANH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://phuocanh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311961327",
+    "tax_code": "0311961327",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ LỐP DÁN Ô TÔ HÙNG CƯỜNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hungcuong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0311961327-001",
+    "tax_code": "0311961327-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ LỐP DÁN Ô TÔ HÙNG CƯỜNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hungcuong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312194671",
+    "tax_code": "0312194671",
+    "company_name": "CÔNG TY TNHH ĐẦU TƯ THƯƠNG MẠI SẢN XUẤT HOÀNG ĐẠO",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hoangdao.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312199045",
+    "tax_code": "0312199045",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ LỐP DÁN Ô TÔ THỊNH HÙNG CƯỜNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hungcuong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312346035",
+    "tax_code": "0312346035",
+    "company_name": "DOANH NGHIỆP TƯ NHÂN CAO SU CƠ KHÍ TÍN LỘC",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://tinloc.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312346035-001",
+    "tax_code": "0312346035-001",
+    "company_name": "CHI NHÁNH DOANH NGHIỆP TƯ NHÂN CAO SU CƠ KHÍ TÍN LỘC",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://tinloc.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312496087",
+    "tax_code": "0312496087",
+    "company_name": "CÔNG TY TNHH CAO SU ĐỨC SƠN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://ducson.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312523968",
+    "tax_code": "0312523968",
+    "company_name": "CÔNG TY CỔ PHẦN VỎ XE CÔNG NGHIỆP SÀI GÒN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://saigon.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312765364-001",
+    "tax_code": "0312765364-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH ĐỨC MINH SÀI GÒN - XƯỞNG SẢN XUẤT",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://sanxuat.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0312842347",
+    "tax_code": "0312842347",
+    "company_name": "CÔNG TY TNHH MỘT THÀNH VIÊN LOPDAN.COM",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://lopdancom.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0313011747",
+    "tax_code": "0313011747",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI CAO SU THIÊN NHIÊN NAM KHÁNH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://nhienkhanh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0313176971",
+    "tax_code": "0313176971",
+    "company_name": "CÔNG TY TNHH SẢN XUẤT THƯƠNG MẠI TIẾN NGÂN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://tienngan.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0313206457",
+    "tax_code": "0313206457",
+    "company_name": "CÔNG TY TNHH PIRELLI VIỆT NAM",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://pirelli.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0313279409",
+    "tax_code": "0313279409",
+    "company_name": "CÔNG TY TNHH ANH LÙN",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://anhlun.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0314091135",
+    "tax_code": "0314091135",
+    "company_name": "CÔNG TY CỔ PHẦN THƯƠNG MẠI & SẢN XUẤT CHÁNH HỒNG",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://chanhhong.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0314163171",
+    "tax_code": "0314163171",
+    "company_name": "CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ Ô TÔ HÙNG THỊNH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hungthinh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0314163171-001",
+    "tax_code": "0314163171-001",
+    "company_name": "CHI NHÁNH CÔNG TY TNHH THƯƠNG MẠI DỊCH VỤ Ô TÔ HÙNG THỊNH",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://hungthinh.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0314202864",
+    "tax_code": "0314202864",
+    "company_name": "CÔNG TY TNHH ĐẠI THÀNH TOÀN CẦU",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://toancau.com.vn",
+    "notes": "domain_hypothesis"
+  },
+  {
+    "firm_id": "0314374292",
+    "tax_code": "0314374292",
+    "company_name": "CÔNG TY TNHH MỘT THÀNH VIÊN CAO SU TRUNG LÝ",
+    "vsic_4digit": "2211",
+    "vsic_division": "22",
+    "website_url": "https://trungly.com.vn",
+    "notes": "domain_hypothesis"
+  }
+]
