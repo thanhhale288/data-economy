@@ -3,6 +3,7 @@ import { Link, useSearchParams } from 'react-router-dom'
 import { api } from '../api'
 import { formatMoney } from '../format'
 import { digitalChannelNames, websiteVerifyChip } from '../websiteVerifyChip'
+import { SHOW_DIGITAL_VA_UI } from '../researchScope'
 
 export default function Companies() {
   const [searchParams] = useSearchParams()
@@ -56,7 +57,7 @@ export default function Companies() {
       </p>
       {vsicFilter ? (
         <div className="page-nav-actions filter-actions" role="group" aria-label="Thao tác bộ lọc VSIC">
-          <Link to="/#dashboard-heatmap" className="page-nav-chip">
+          <Link to="/" className="page-nav-chip">
             ← Quay lại Dashboard
           </Link>
           <Link to="/companies" className="page-nav-chip">
@@ -71,9 +72,9 @@ export default function Companies() {
           </Link>
         </div>
       ) : null}
-      {contributorsOnly && (
+      {contributorsOnly && SHOW_DIGITAL_VA_UI && (
         <p className="chart-note" style={{ marginTop: 0 }}>
-          Chỉ hiện doanh nghiệp có giá trị gia tăng số &gt; 0 trong mã VSIC này (từ heatmap Dashboard).
+          Chỉ hiện doanh nghiệp có giá trị gia tăng số &gt; 0 trong mã VSIC này.
           Tỷ trọng = đóng góp doanh nghiệp ÷ tổng đóng góp các doanh nghiệp đang liệt kê.
         </p>
       )}
@@ -93,8 +94,8 @@ export default function Companies() {
               <th>Mã CK</th>
               <th>Tên</th>
               <th>VSIC</th>
-              {contributorsOnly && <th>Giá trị gia tăng số</th>}
-              {contributorsOnly && <th>Tỷ trọng</th>}
+              {SHOW_DIGITAL_VA_UI && contributorsOnly && <th>Giá trị gia tăng số</th>}
+              {SHOW_DIGITAL_VA_UI && contributorsOnly && <th>Tỷ trọng</th>}
               <th>Website</th>
               <th>TMĐT</th>
               <th>Kênh số</th>
@@ -116,14 +117,14 @@ export default function Companies() {
                       {c.vsic_code}
                     </Link>
                   </td>
-                  {contributorsOnly && (
+                  {SHOW_DIGITAL_VA_UI && contributorsOnly && (
                     <td>
                       {c.digital_va_contribution != null
                         ? formatMoney(c.digital_va_contribution, 'VND')
                         : '—'}
                     </td>
                   )}
-                  {contributorsOnly && (
+                  {SHOW_DIGITAL_VA_UI && contributorsOnly && (
                     <td>
                       {c.digital_va_share_pct != null
                         ? `${Number(c.digital_va_share_pct).toFixed(1)}%`

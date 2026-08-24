@@ -4,9 +4,9 @@ Guidance for AI coding agents working in this repository.
 
 ## What this project is
 
-Web platform analyzing the **digital economy of Vietnam manufacturing** (VSIC Section C — chế biến, chế tạo): GSO/OECD macro series, listed-company digital presence, marketplace estimates, IIP forecasting, and SingStat-style benchmarks.
+Research platform + web demo for measuring **e-commerce participation** of Vietnam manufacturing firms (VSIC Section C) from web data (OBEC-style), with GSO/OECD macro context and listed-company case studies.
 
-Before inventing formulas, industry codes, or sample companies, read **`CONTEXT.md`** and **`docs/proposal-v2.md`**.
+Before inventing formulas, industry codes, or sample companies, read **`CONTEXT.md`**, **`docs/proposal-v4.md`**, and the active backlog **`docs/evol-1.md`**. Legacy proposal: `docs/archive/proposal-v2.md` (do not use for current scope).
 
 **Do not read `docs/knowledge.md`** — human glossary only (listed in `.cursorignore`). Domain for agents = `CONTEXT.md` + `docs/adr/` + `docs/economy-knowledge.md` when formulas need depth.
 
@@ -30,8 +30,8 @@ pipeline/    cleaning/, features/, dags/
 ml/          models/, evaluation/
 frontend/    React dashboard
 data/        mappings/, seeds/, models/, raw/
-docs/        proposal-v2.md, agents/, adr/
-.scratch/    local issue tracker (specs + tickets)
+docs/        proposal-v4.md, evol-1.md, agents/, adr/, archive/
+.scratch/    archive/ only (historical handoffs); active backlog = docs/evol-1.md
 .agents/     installed agent skills (mattpocock/skills)
 ```
 

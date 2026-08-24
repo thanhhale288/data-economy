@@ -1,11 +1,11 @@
 import { useEffect, useState } from 'react'
-import { BrowserRouter, NavLink, Route, Routes, useLocation } from 'react-router-dom'
+import { BrowserRouter, NavLink, Navigate, Route, Routes, useLocation } from 'react-router-dom'
 import Dashboard from './pages/Dashboard'
 import Companies from './pages/Companies'
 import CompanyDetail from './pages/CompanyDetail'
 import Pipeline from './pages/Pipeline'
-import MLLab from './pages/MLLab'
 import Benchmark from './pages/Benchmark'
+import { SHOW_ML_LAB } from './researchScope'
 
 function AppShell() {
   const [navOpen, setNavOpen] = useState(false)
@@ -74,7 +74,7 @@ function AppShell() {
           <NavLink to="/benchmark">Benchmark</NavLink>
           <NavLink to="/companies">Doanh nghiệp</NavLink>
           <NavLink to="/pipeline">Pipeline</NavLink>
-          <NavLink to="/ml">ML Lab</NavLink>
+          {SHOW_ML_LAB ? <NavLink to="/ml">ML Lab</NavLink> : null}
         </nav>
       </aside>
 
@@ -84,7 +84,7 @@ function AppShell() {
           <Route path="/companies" element={<Companies />} />
           <Route path="/companies/:code" element={<CompanyDetail />} />
           <Route path="/pipeline" element={<Pipeline />} />
-          <Route path="/ml" element={<MLLab />} />
+          <Route path="/ml" element={<Navigate to="/" replace />} />
           <Route path="/benchmark" element={<Benchmark />} />
         </Routes>
       </main>
