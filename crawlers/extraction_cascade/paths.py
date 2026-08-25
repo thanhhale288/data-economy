@@ -9,6 +9,7 @@ CONFIG_DIR = PACKAGE_DIR / "config"
 ROOT = PACKAGE_DIR.parents[1]
 RAW_DIR = ROOT / "data" / "raw" / "extraction_cascade"
 PROCESSED_DIR = ROOT / "data" / "processed" / "extraction_cascade"
+PAGES_CACHE_DIR = RAW_DIR / "pages_cache"
 COHORT_PATH = RAW_DIR / "cohort.json"
 INDICATORS_JSONL = PROCESSED_DIR / "indicators_raw.jsonl"
 INDICATORS_CSV = PROCESSED_DIR / "indicators_raw.csv"

@@ -23,7 +23,12 @@ from crawlers.extraction_cascade.cohort import (
     cohort_sha256,
     write_cohort,
 )
-from crawlers.extraction_cascade.fetch import USER_AGENT, fetch_page
+from crawlers.extraction_cascade.fetch import (
+    USER_AGENT,
+    fetch_page,
+    load_cached_page,
+    save_cached_page,
+)
 from crawlers.extraction_cascade.paths import (
     CONFLICT_NOTES_MD,
     CONFLICTS_CSV,
@@ -33,6 +38,7 @@ from crawlers.extraction_cascade.paths import (
     PROCESSED_DIR,
     PROVENANCE_MD,
     RAW_DIR,
+    ROOT,
     SUMMARY_JSON,
 )
 from crawlers.extraction_cascade.pipeline import flatten_indicator_rows, run_on_page
@@ -74,6 +80,21 @@ def parse_args() -> argparse.Namespace:
         type=float,
         default=0.4,
         help="Seconds between homepage fetches.",
+    )
+    p.add_argument(
+        "--cache-pages",
+        action="store_true",
+        help="Write HTML/meta under data/raw/extraction_cascade/pages_cache/.",
+    )
+    p.add_argument(
+        "--reuse-cache",
+        action="store_true",
+        help="Prefer cached HTML when present (skip live fetch).",
+    )
+    p.add_argument(
+        "--fetch-ok-only",
+        action="store_true",
+        help="Skip firms whose prior indicators_raw.jsonl row has fetch_ok=false.",
     )
     return p.parse_args()
 
@@ -217,10 +238,30 @@ def _provenance(
         "- Not a national estimate; pilot cohort only.",
         "- Does **not** crawl marketplace product listings (anti-bot / out of scope).",
         "- Frame-pilot URLs only included when `data/raw/extraction_cascade/frame_urls.json` "
-        "is supplied (from URL-finder); otherwise listed28 only.",
+        "is supplied (URL-finder and/or domain hypothesis); otherwise listed28 only.",
+        "- Domain-hypothesis frame URLs are silver candidates — many fail DNS/HTTP; "
+        "fetch_ok=false rows are skipped, never invented.",
         "",
     ]
     return "\n".join(lines)
+
+
+def _prior_fetch_ok_ids(path: Path) -> set[str] | None:
+    if not path.exists():
+        return None
+    ok_ids: set[str] = set()
+    with path.open(encoding="utf-8") as fh:
+        for line in fh:
+            line = line.strip()
+            if not line:
+                continue
+            try:
+                row = json.loads(line)
+            except json.JSONDecodeError:
+                continue
+            if row.get("fetch_ok") and row.get("firm_id"):
+                ok_ids.add(str(row["firm_id"]))
+    return ok_ids
 
 
 def main() -> int:
@@ -234,6 +275,10 @@ def main() -> int:
     )
     if args.listed_only:
         firms = [f for f in firms if f.source_cohort == "listed28"]
+    if args.fetch_ok_only:
+        prior = _prior_fetch_ok_ids(INDICATORS_JSONL)
+        if prior is not None:
+            firms = [f for f in firms if f.firm_id in prior]
     write_cohort(firms)
     if args.limit and args.limit > 0:
         firms = firms[: args.limit]
@@ -251,10 +296,16 @@ def main() -> int:
     ) as http_fetch:
         llm_client = None
         if args.llm:
-            llm_client = httpx.Client(base_url=settings.base_url, timeout=120.0)
+            llm_client = httpx.Client(base_url=settings.base_url, timeout=180.0)
         try:
             for i, firm in enumerate(firms):
-                page = fetch_page(firm.website_url, client=http_fetch)
+                page = None
+                if args.reuse_cache:
+                    page = load_cached_page(firm.firm_id, firm.website_url)
+                if page is None:
+                    page = fetch_page(firm.website_url, client=http_fetch)
+                    if args.cache_pages:
+                        save_cached_page(firm.firm_id, page)
                 result = run_on_page(
                     firm_id=firm.firm_id,
                     source_cohort=firm.source_cohort,
@@ -292,20 +343,11 @@ def main() -> int:
         "n": len(results),
         "llm_enabled": args.llm,
         "artifacts": {
-            "indicators_jsonl": str(INDICATORS_JSONL.relative_to(PROCESSED_DIR.parent.parent)),
-            "indicators_csv": str(INDICATORS_CSV.relative_to(PROCESSED_DIR.parent.parent)),
-            "conflicts_csv": str(CONFLICTS_CSV.relative_to(PROCESSED_DIR.parent.parent)),
-            "summary_json": str(SUMMARY_JSON.relative_to(PROCESSED_DIR.parent.parent)),
+            "indicators_jsonl": str(INDICATORS_JSONL.relative_to(ROOT)),
+            "indicators_csv": str(INDICATORS_CSV.relative_to(ROOT)),
+            "conflicts_csv": str(CONFLICTS_CSV.relative_to(ROOT)),
+            "summary_json": str(SUMMARY_JSON.relative_to(ROOT)),
         },
-    }
-    # Fix relative paths — use repo-relative from ROOT
-    from crawlers.extraction_cascade.paths import ROOT
-
-    manifest["artifacts"] = {
-        "indicators_jsonl": str(INDICATORS_JSONL.relative_to(ROOT)),
-        "indicators_csv": str(INDICATORS_CSV.relative_to(ROOT)),
-        "conflicts_csv": str(CONFLICTS_CSV.relative_to(ROOT)),
-        "summary_json": str(SUMMARY_JSON.relative_to(ROOT)),
     }
     MANIFEST_JSON.write_text(
         json.dumps(manifest, indent=2, ensure_ascii=False) + "\n", encoding="utf-8"

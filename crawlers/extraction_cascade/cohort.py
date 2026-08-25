@@ -78,6 +78,7 @@ def sample_frame_for_url_finder(
     *,
     frame_csv: Path | None = None,
     per_division: int = 40,
+    offset: int = 0,
 ) -> list[dict[str, Any]]:
     """Stratified sample from T02 frame (identity only — no website column)."""
     path = frame_csv or (ROOT / "data" / "raw" / "frame_pilot" / "frame_pilot.csv")
@@ -90,7 +91,9 @@ def sample_frame_for_url_finder(
             by_div.setdefault(div, []).append(row)
     sample: list[dict[str, Any]] = []
     for div in sorted(by_div):
-        sample.extend(by_div[div][:per_division])
+        rows = by_div[div]
+        start = max(0, offset)
+        sample.extend(rows[start : start + per_division])
     return sample
 
 
