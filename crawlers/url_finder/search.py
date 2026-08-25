@@ -141,12 +141,15 @@ class SearchClient:
         self.cache_dir = cache_dir or SERP_CACHE_DIR
         self.delay_seconds = delay_seconds
         self._owns = client is None
+        accept_language = str(
+            cfg.get("accept_language") or "vi-VN,vi;q=0.9,en;q=0.8"
+        )
         self.client = client or httpx.Client(
             timeout=timeout,
             follow_redirects=True,
             headers={
                 "User-Agent": BROWSER_UA,
-                "Accept-Language": "vi-VN,vi;q=0.9,en;q=0.8",
+                "Accept-Language": accept_language,
                 "Accept": "text/html,application/xhtml+xml",
             },
             trust_env=False,

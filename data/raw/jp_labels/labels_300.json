@@ -1,0 +1,2702 @@
+[
+  {
+    "ticker": "4080401011808",
+    "gold_url": "http://goto-riken.co.jp/index.php",
+    "gold_domain": "goto-riken.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 20,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080001011933",
+    "gold_url": "https://haraura.co.jp/",
+    "gold_domain": "haraura.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 9,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080101000657",
+    "gold_url": "http://www.sakura39.co.jp",
+    "gold_domain": "sakura39.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 19,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080001012517",
+    "gold_url": "https://kotobuki2010.wixsite.com/web-site",
+    "gold_domain": "wixsite.com",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 3,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080101010735",
+    "gold_url": "https://t-ib.jp/",
+    "gold_domain": "t-ib.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 6,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080001022562",
+    "gold_url": "https://www.big-advance.site/c/124/1249",
+    "gold_domain": "big-advance.site",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 10,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080001008037",
+    "gold_url": "http://garyubai.com/",
+    "gold_domain": "garyubai.com",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 9,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080001004838",
+    "gold_url": "http://www.lockpin.co.jp/",
+    "gold_domain": "lockpin.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 9,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1080402018391",
+    "gold_url": "https://ids-sol.co.jp/%e4%bc%9a%e7%a4%be%e6%96%b9%e9%87%9d%e3%83%bb%e5%8f%96%e3%82%8a%e7%b5%84%e3%81%bf/",
+    "gold_domain": "ids-sol.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 2,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080001012920",
+    "gold_url": "https://www.izumimokkou.com/company/",
+    "gold_domain": "izumimokkou.com",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 6,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401010240",
+    "gold_url": "https://mg-cosmic.co.jp/profile/index.html",
+    "gold_domain": "mg-cosmic.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 11,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080402008906",
+    "gold_url": "https://www.watase-castings.jp/",
+    "gold_domain": "watase-castings.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 11,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080101024097",
+    "gold_url": "https://www.techno-sack.com/",
+    "gold_domain": "techno-sack.com",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 1,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080101009811",
+    "gold_url": "https://www.miyoshiworks.com/index.html",
+    "gold_domain": "miyoshiworks.com",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 10,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401017646",
+    "gold_url": "http://www.daimaru-sp.co.jp",
+    "gold_domain": "daimaru-sp.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 15,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401011263",
+    "gold_url": "http://kiyohiko.hp.gogo.jp/pc/",
+    "gold_domain": "gogo.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 8,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080401016024",
+    "gold_url": "https://www.miyaden.com/",
+    "gold_domain": "miyaden.com",
+    "employee_stratum": "0-20",
+    "prefecture": "静岡県",
+    "employee_number": 13,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401014528",
+    "gold_url": "https://yamakeiseicha.com/index.html",
+    "gold_domain": "yamakeiseicha.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 30,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080001004699",
+    "gold_url": "https://hougetsu.com/",
+    "gold_domain": "hougetsu.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 38,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080001014089",
+    "gold_url": "https://motohashi-tape.co.jp",
+    "gold_domain": "motohashi-tape.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 50,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080001014649",
+    "gold_url": "https://www.ishida-tec.co.jp/",
+    "gold_domain": "ishida-tec.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 42,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080001013452",
+    "gold_url": "https://www.konaichi.co.jp/",
+    "gold_domain": "konaichi.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 28,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401004795",
+    "gold_url": "https://pci-dea.com/",
+    "gold_domain": "pci-dea.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 25,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080101010751",
+    "gold_url": "https://ito-k-g.com/",
+    "gold_domain": "ito-k-g.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 35,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401014395",
+    "gold_url": "http://www.chuen-ht.jp",
+    "gold_domain": "chuen-ht.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 36,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080101017509",
+    "gold_url": "https://aqua-ft.co.jp/",
+    "gold_domain": "aqua-ft.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 25,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080001015578",
+    "gold_url": "http://www.tyz.co.jp/miz/",
+    "gold_domain": "tyz.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 34,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080401001093",
+    "gold_url": "https://www.okayamakogyo.com/",
+    "gold_domain": "okayamakogyo.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 21,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7011001106596",
+    "gold_url": "https://advance-composite.co.jp/",
+    "gold_domain": "advance-composite.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 34,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080001012624",
+    "gold_url": "https://printing.shizuokaonline.com",
+    "gold_domain": "shizuokaonline.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 35,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1020001082687",
+    "gold_url": "http://www.kyoritsu-denki.com/",
+    "gold_domain": "kyoritsu-denki.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 50,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1080101001698",
+    "gold_url": "https://www.fujiseisakusholtd.co.jp",
+    "gold_domain": "fujiseisakusholtd.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 34,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080101008085",
+    "gold_url": "http://www.alpha-ltd.co.jp/",
+    "gold_domain": "alpha-ltd.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 43,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401004198",
+    "gold_url": "https://www.e-bunmeido.jp/",
+    "gold_domain": "e-bunmeido.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 45,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1080401016090",
+    "gold_url": "http://www.ichikawa-bk.jp/",
+    "gold_domain": "ichikawa-bk.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 33,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080101011814",
+    "gold_url": "https://www.hokuyo-p.jp/",
+    "gold_domain": "hokuyo-p.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 21,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080001013243",
+    "gold_url": "https://hirotacorp.jp/",
+    "gold_domain": "hirotacorp.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 28,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401016127",
+    "gold_url": "http://www.kksanwa.com/company/",
+    "gold_domain": "kksanwa.com",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 26,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401024001",
+    "gold_url": "https://www.magicshields.co.jp/company/",
+    "gold_domain": "magicshields.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 26,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080001015510",
+    "gold_url": "https://www.suzukatsu.co.jp",
+    "gold_domain": "suzukatsu.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 42,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1080401000879",
+    "gold_url": "http://www.ftc-japan.jp",
+    "gold_domain": "ftc-japan.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 48,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401003051",
+    "gold_url": "http://takahashi-tools.jp",
+    "gold_domain": "takahashi-tools.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "静岡県",
+    "employee_number": 45,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401004420",
+    "gold_url": "https://www.hamanetsu.co.jp",
+    "gold_domain": "hamanetsu.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 159,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080001013428",
+    "gold_url": "http://www.web-terada.jp",
+    "gold_domain": "web-terada.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 155,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080101003267",
+    "gold_url": "https://www.yamato-print.net/",
+    "gold_domain": "yamato-print.net",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 70,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080101002076",
+    "gold_url": "https://www.izurashi.co.jp/",
+    "gold_domain": "izurashi.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 124,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401010393",
+    "gold_url": "http://www.nippon-lock.co.jp",
+    "gold_domain": "nippon-lock.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 142,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080001013746",
+    "gold_url": "https://yabe-ss.co.jp/",
+    "gold_domain": "yabe-ss.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 136,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080101011413",
+    "gold_url": "http://www.satoseiki.co.jp/",
+    "gold_domain": "satoseiki.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 126,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401014857",
+    "gold_url": "http://www.ryoden-a.co.jp",
+    "gold_domain": "ryoden-a.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 140,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080001015327",
+    "gold_url": "http://www.yamamatsu-suisan.jp/",
+    "gold_domain": "yamamatsu-suisan.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 71,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080401001498",
+    "gold_url": "https://www.kunimotokogyo.co.jp/",
+    "gold_domain": "kunimotokogyo.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 67,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080401011469",
+    "gold_url": "http://www4.tokai.or.jp/kkinkyo/m-hamanapurasuchil.html",
+    "gold_domain": "tokai.or.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 128,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080001005278",
+    "gold_url": "https://www.mochipre.co.jp/",
+    "gold_domain": "mochipre.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 80,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080001013284",
+    "gold_url": "http://www.marushichi-group.jp/",
+    "gold_domain": "marushichi-group.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 145,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080401010241",
+    "gold_url": "http://www.hamana-works.co.jp",
+    "gold_domain": "hamana-works.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 278,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080101011357",
+    "gold_url": "http://www.kanaekogyo.co.jp/",
+    "gold_domain": "kanaekogyo.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 168,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401001310",
+    "gold_url": "https://www.kamiyariken.co.jp",
+    "gold_domain": "kamiyariken.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 130,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1080101010617",
+    "gold_url": "https://www.shikokupak.co.jp/",
+    "gold_domain": "shikokupak.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 131,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401026927",
+    "gold_url": "https://enshucreate.jp/index.html",
+    "gold_domain": "enshucreate.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 127,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080101008661",
+    "gold_url": "https://www.cs-jp.net",
+    "gold_domain": "cs-jp.net",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 148,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080001013432",
+    "gold_url": "http://www.nakadanet.co.jp",
+    "gold_domain": "nakadanet.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 152,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401005600",
+    "gold_url": "https://www.yamahafinetech.co.jp/",
+    "gold_domain": "yamahafinetech.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 106,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080401016005",
+    "gold_url": "http://www.nnp-denshi.co.jp",
+    "gold_domain": "nnp-denshi.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 100,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080101008583",
+    "gold_url": "https://yamakyo-paper.co.jp/",
+    "gold_domain": "yamakyo-paper.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 65,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080101003384",
+    "gold_url": "http://www.arumgroup.jp/index.html",
+    "gold_domain": "arumgroup.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 180,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080001016372",
+    "gold_url": "https://kpnet.co.jp",
+    "gold_domain": "kpnet.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 120,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080001010252",
+    "gold_url": "http://www.hoteifoods.co.jp",
+    "gold_domain": "hoteifoods.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 404,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080001013229",
+    "gold_url": "https://www.harada-tea.co.jp/",
+    "gold_domain": "harada-tea.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 353,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080401015750",
+    "gold_url": "http://www.iwakyu.com/",
+    "gold_domain": "iwakyu.com",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 1389,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080101011426",
+    "gold_url": "https://www.econecol.co.jp/",
+    "gold_domain": "econecol.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 347,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080001008119",
+    "gold_url": "http://www.sunsho.co.jp/",
+    "gold_domain": "sunsho.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 840,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080401000765",
+    "gold_url": "http://www.enkei.co.jp/",
+    "gold_domain": "enkei.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 329,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080401006195",
+    "gold_url": "https://www.atsumitec.co.jp",
+    "gold_domain": "atsumitec.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 570,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401010026",
+    "gold_url": "https://www.ad-asahidenso.co.jp/",
+    "gold_domain": "ad-asahidenso.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 560,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080001007508",
+    "gold_url": "http://www.itec-c.co.jp/",
+    "gold_domain": "itec-c.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 575,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401006049",
+    "gold_url": "https://www.hamanakodenso.co.jp",
+    "gold_domain": "hamanakodenso.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 1571,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080401010065",
+    "gold_url": "http://www.fcc-net.co.jp/",
+    "gold_domain": "fcc-net.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 1215,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080401005486",
+    "gold_url": "http://www.yasuzu.co.jp/",
+    "gold_domain": "yasuzu.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 700,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080401022211",
+    "gold_url": "https://www.tf-metal.jp/recruit/data",
+    "gold_domain": "tf-metal.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 350,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080001001232",
+    "gold_url": "https://www.kdwan.co.jp",
+    "gold_domain": "kdwan.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 385,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080001015453",
+    "gold_url": "http://www.iwakyu.com/",
+    "gold_domain": "iwakyu.com",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 311,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080001014031",
+    "gold_url": "http://www.nanbu.co.jp",
+    "gold_domain": "nanbu.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 698,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080401001260",
+    "gold_url": "http://www.kanetakogyo.co.jp",
+    "gold_domain": "kanetakogyo.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 423,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3080001008412",
+    "gold_url": "http://www.suruga-g.co.jp/",
+    "gold_domain": "suruga-g.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 769,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9080001002327",
+    "gold_url": "http://www.star-m.jp",
+    "gold_domain": "star-m.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 527,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2011001095571",
+    "gold_url": "https://www.toclas.co.jp/corporation/csr/index.html",
+    "gold_domain": "toclas.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 646,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8080101005263",
+    "gold_url": "https://www.arum-md.com",
+    "gold_domain": "arum-md.com",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 1719,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401018751",
+    "gold_url": "https://kikugawa-seal.com/",
+    "gold_domain": "kikugawa-seal.com",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 425,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080101015719",
+    "gold_url": "http://www.koito-ind.co.jp",
+    "gold_domain": "koito-ind.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 1069,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3010001082546",
+    "gold_url": "https://www.ajinomoto-bakery.co.jp/",
+    "gold_domain": "ajinomoto-bakery.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 399,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080401016338",
+    "gold_url": "http://www.snic.jp/",
+    "gold_domain": "snic.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 1275,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180001087987",
+    "gold_url": "http://www.asukatec.co.jp",
+    "gold_domain": "asukatec.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 6,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001097189",
+    "gold_url": "https://touei-choko.com/",
+    "gold_domain": "touei-choko.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 6,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001132317",
+    "gold_url": "https://meiwatech.com/",
+    "gold_domain": "meiwatech.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 11,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180001015297",
+    "gold_url": "http://nkc-kk.jp",
+    "gold_domain": "nkc-kk.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 5,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001090085",
+    "gold_url": "https://www.i-tec-japan.com",
+    "gold_domain": "i-tec-japan.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 17,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180001155050",
+    "gold_url": "https://illumimedical.com/",
+    "gold_domain": "illumimedical.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 10,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001001457",
+    "gold_url": "https://wakasugi-kozai.jp/",
+    "gold_domain": "wakasugi-kozai.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 10,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001075047",
+    "gold_url": "https://www.kotonear.com/ueny-kougyo/",
+    "gold_domain": "kotonear.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 17,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301020325",
+    "gold_url": "https://hachi-kk.co.jp",
+    "gold_domain": "hachi-kk.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 13,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001055196",
+    "gold_url": "https://ad-blue.jp/",
+    "gold_domain": "ad-blue.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 8,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180001044163",
+    "gold_url": "https://www.okc-corporation.jp",
+    "gold_domain": "okc-corporation.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 16,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180002074683",
+    "gold_url": "https://takara-ss.co.jp/",
+    "gold_domain": "takara-ss.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 20,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301013355",
+    "gold_url": "https://marusugi-tao.com",
+    "gold_domain": "marusugi-tao.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 1,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180001149564",
+    "gold_url": "https://sunf-m.co.jp/",
+    "gold_domain": "sunf-m.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 6,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180301010825",
+    "gold_url": "http://www.ichibun.com/",
+    "gold_domain": "ichibun.com",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 4,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180001011312",
+    "gold_url": "http://www.nippon-mask.co.jp/",
+    "gold_domain": "nippon-mask.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "愛知県",
+    "employee_number": 20,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180301018287",
+    "gold_url": "https://www.sunkey.co.jp/",
+    "gold_domain": "sunkey.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 48,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001096330",
+    "gold_url": "http://www.aihoseiki.co.jp",
+    "gold_domain": "aihoseiki.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 22,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001005989",
+    "gold_url": "https://www.auk.co.jp/asahimentex/",
+    "gold_domain": "auk.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 23,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180001093141",
+    "gold_url": "http://www.kasugaikanagata.co.jp",
+    "gold_domain": "kasugaikanagata.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 29,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001097361",
+    "gold_url": "https://gouhan.shop/csr-activities.html",
+    "gold_domain": "gouhan.shop",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 38,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301014566",
+    "gold_url": "https://www.yamadase.co.jp/pages/3/",
+    "gold_domain": "yamadase.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 50,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001024335",
+    "gold_url": "https://www.maruwanet.co.jp/csrsdgs/communication/",
+    "gold_domain": "maruwanet.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 30,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180301001348",
+    "gold_url": "http://techno21gr.com/",
+    "gold_domain": "techno21gr.com",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 37,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180001085166",
+    "gold_url": "https://artfriend.co.jp/",
+    "gold_domain": "artfriend.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 35,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001094673",
+    "gold_url": "http://ogawapipe.co.jp/",
+    "gold_domain": "ogawapipe.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 27,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001092569",
+    "gold_url": "https://taihei-t.jp",
+    "gold_domain": "taihei-t.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 36,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001029245",
+    "gold_url": "https://www.asahilaser.jp/recruit/",
+    "gold_domain": "asahilaser.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 40,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180301012890",
+    "gold_url": "http://www.sanwakanagata.co.jp/news/",
+    "gold_domain": "sanwakanagata.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 46,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180301006750",
+    "gold_url": "http://www.jop.co.jp/",
+    "gold_domain": "jop.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 50,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001084535",
+    "gold_url": "http://www.nakacoh.co.jp/",
+    "gold_domain": "nakacoh.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 41,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180301011354",
+    "gold_url": "https://www.marusens.com",
+    "gold_domain": "marusens.com",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 43,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301023073",
+    "gold_url": "https://mikawaindustry.com/about-us/action-plan/",
+    "gold_domain": "mikawaindustry.com",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 41,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180301019018",
+    "gold_url": "http://www.noba.co.jp/nox/nox.html",
+    "gold_domain": "noba.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 45,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001095662",
+    "gold_url": "http://k-tcn.co.jp/",
+    "gold_domain": "k-tcn.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 27,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180301009693",
+    "gold_url": "https://aichi-felt.com/",
+    "gold_domain": "aichi-felt.com",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 25,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001014913",
+    "gold_url": "http://www.chitoce.jp/sdgs/index.php",
+    "gold_domain": "chitoce.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 41,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001079057",
+    "gold_url": "http://www.chugaitoen.co.jp/",
+    "gold_domain": "chugaitoen.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 44,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180302000180",
+    "gold_url": "https://www.nakakyu.co.jp/",
+    "gold_domain": "nakakyu.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 46,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180001094134",
+    "gold_url": "http://k-kawani.jp/kawanihp/",
+    "gold_domain": "k-kawani.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 42,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180301006551",
+    "gold_url": "http://www.tgd.co.jp",
+    "gold_domain": "tgd.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "愛知県",
+    "employee_number": 48,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180001020644",
+    "gold_url": "http://www.hanagokoro.co.jp/",
+    "gold_domain": "hanagokoro.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 109,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001085796",
+    "gold_url": "http://www.sanko-kiki.co.jp/",
+    "gold_domain": "sanko-kiki.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 109,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001069511",
+    "gold_url": "https://www.meikikou.co.jp/",
+    "gold_domain": "meikikou.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 230,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001106645",
+    "gold_url": "https://mentai-park.com/",
+    "gold_domain": "mentai-park.com",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 238,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301018610",
+    "gold_url": "http://at-e.at-takaoka.co.jp/",
+    "gold_domain": "at-takaoka.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 82,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180301018850",
+    "gold_url": "http://www.tokaitekko.co.jp/",
+    "gold_domain": "tokaitekko.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 262,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180301009991",
+    "gold_url": "http://www.u-m.co.jp",
+    "gold_domain": "u-m.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 155,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001022745",
+    "gold_url": "http://houwa-gp.co.jp/",
+    "gold_domain": "houwa-gp.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 232,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301023973",
+    "gold_url": "http://www.ohtaka-sk.co.jp/",
+    "gold_domain": "ohtaka-sk.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 146,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180001009873",
+    "gold_url": "http://www.sekido.co.jp",
+    "gold_domain": "sekido.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 74,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001023238",
+    "gold_url": "https://www.igetado.co.jp/",
+    "gold_domain": "igetado.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 275,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301013618",
+    "gold_url": "http://www.aichigiken.co.jp/",
+    "gold_domain": "aichigiken.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 135,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180301033133",
+    "gold_url": "http://www.sanritsu-inc.co.jp",
+    "gold_domain": "sanritsu-inc.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 55,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180301014206",
+    "gold_url": "http://www.takeda-co.com",
+    "gold_domain": "takeda-co.com",
+    "employee_stratum": "51-300",
+    "prefecture": "",
+    "employee_number": 154,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001027475",
+    "gold_url": "http://www.moriso.jp/",
+    "gold_domain": "moriso.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 100,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180001053731",
+    "gold_url": "http://www.arbiz.co.jp/",
+    "gold_domain": "arbiz.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 160,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180001016360",
+    "gold_url": "http://www.owariseiki.co.jp/",
+    "gold_domain": "owariseiki.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 352,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301005268",
+    "gold_url": "http://www.ohba-seiken.co.jp",
+    "gold_domain": "ohba-seiken.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 265,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001011521",
+    "gold_url": "https://ansco.co.jp",
+    "gold_domain": "ansco.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 104,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180301018378",
+    "gold_url": "http://www.kk-jpc.co.jp/",
+    "gold_domain": "kk-jpc.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 143,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001085152",
+    "gold_url": "https://www.tgap.jp/recruit/job-description/",
+    "gold_domain": "tgap.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 119,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180301000341",
+    "gold_url": "http://www.okbread-gr.co.jp/",
+    "gold_domain": "okbread-gr.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 167,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180001092176",
+    "gold_url": "http://www.izuman.co.jp",
+    "gold_domain": "izuman.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 125,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301019524",
+    "gold_url": "http://www.yushinseiki.co.jp/",
+    "gold_domain": "yushinseiki.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 78,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001001474",
+    "gold_url": "https://www.aikosha.com",
+    "gold_domain": "aikosha.com",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 90,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6010001217933",
+    "gold_url": "https://www.oliverinc.co.jp",
+    "gold_domain": "oliverinc.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 562,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301023096",
+    "gold_url": "https://www.inatec-corp.com",
+    "gold_domain": "inatec-corp.com",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 338,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180001036822",
+    "gold_url": "http://www.sn-hoki.co.jp",
+    "gold_domain": "sn-hoki.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 752,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180001075843",
+    "gold_url": "http://www.sahashi-kogyo.co.jp/",
+    "gold_domain": "sahashi-kogyo.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 422,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001084265",
+    "gold_url": "http://www.sotoh.co.jp/",
+    "gold_domain": "sotoh.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 336,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001026725",
+    "gold_url": "https://www.noritake.co.jp/",
+    "gold_domain": "noritake.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 1875,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180301015856",
+    "gold_url": "http://www.tbseiko.co.jp/",
+    "gold_domain": "tbseiko.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 1162,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001040593",
+    "gold_url": "http://www.hondalex.co.jp/",
+    "gold_domain": "hondalex.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 417,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180301018771",
+    "gold_url": "http://www.toyota.co.jp/",
+    "gold_domain": "toyota.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 83533,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180301004110",
+    "gold_url": "https://www.kojima-tns.co.jp/daiwa-kasei/",
+    "gold_domain": "kojima-tns.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 394,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5180001092361",
+    "gold_url": "https://aido-ind.co.jp/",
+    "gold_domain": "aido-ind.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 344,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180001027309",
+    "gold_url": "http://www.miyukikeori.co.jp/",
+    "gold_domain": "miyukikeori.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 312,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001025070",
+    "gold_url": "http://www.kasugai.co.jp/",
+    "gold_domain": "kasugai.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 532,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001010714",
+    "gold_url": "https://www.toyotomi.jp/",
+    "gold_domain": "toyotomi.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 371,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301014312",
+    "gold_url": "https://www.tbkk.co.jp/",
+    "gold_domain": "tbkk.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 479,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301014056",
+    "gold_url": "https://www.shinsei21.co.jp/",
+    "gold_domain": "shinsei21.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 538,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180301013445",
+    "gold_url": "https://yutaka-japan.com/recruit/work/",
+    "gold_domain": "yutaka-japan.com",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 492,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180301007357",
+    "gold_url": "http://www.musashi.co.jp/",
+    "gold_domain": "musashi.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 1356,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001080700",
+    "gold_url": "http://www.imasen.co.jp/index.html",
+    "gold_domain": "imasen.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 1669,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180001096739",
+    "gold_url": "http://www.ntn-amc.com",
+    "gold_domain": "ntn-amc.com",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 313,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001085572",
+    "gold_url": "https://www.aikoku.co.jp",
+    "gold_domain": "aikoku.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 1103,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001035389",
+    "gold_url": "https://www.kitagawa-ind.com/",
+    "gold_domain": "kitagawa-ind.com",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 462,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4180001088600",
+    "gold_url": "https://www.technohorizon.co.jp/csr/womenempowerment/",
+    "gold_domain": "technohorizon.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 805,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180001068710",
+    "gold_url": "http://www.nasluck.co.jp/",
+    "gold_domain": "nasluck.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 359,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001032174",
+    "gold_url": "https://www.futamura.co.jp/recruit/data/",
+    "gold_domain": "futamura.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "愛知県",
+    "employee_number": 1408,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001252282",
+    "gold_url": "https://brnext.co.jp/",
+    "gold_domain": "brnext.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 3,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001012008",
+    "gold_url": "http://kamata-kakou.com/",
+    "gold_domain": "kamata-kakou.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 9,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3122001020895",
+    "gold_url": "https://kokubugiken.com/",
+    "gold_domain": "kokubugiken.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 6,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120101006989",
+    "gold_url": "http://www.mituyatec.co.jp/",
+    "gold_domain": "mituyatec.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 11,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001157189",
+    "gold_url": "http://om-tosou.sakura.ne.jp/",
+    "gold_domain": "sakura.ne.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 10,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3122001024129",
+    "gold_url": "http://www.fujita-kinzoku.jp",
+    "gold_domain": "fujita-kinzoku.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 19,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001197330",
+    "gold_url": "http://www.dlgbattery-japan.com",
+    "gold_domain": "dlgbattery-japan.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 4,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001222213",
+    "gold_url": "http://colorlab.co.jp",
+    "gold_domain": "colorlab.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 3,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4122001017742",
+    "gold_url": "https://www.inui-sangyo.co.jp/",
+    "gold_domain": "inui-sangyo.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 12,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9122001018752",
+    "gold_url": "https://www.shanai-tofu.com/",
+    "gold_domain": "shanai-tofu.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 17,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001013086",
+    "gold_url": "http://www.toa-print.com/",
+    "gold_domain": "toa-print.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 14,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2122001019360",
+    "gold_url": "https://dink.co.jp/",
+    "gold_domain": "dink.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 8,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001159117",
+    "gold_url": "http://tierra-club.com/",
+    "gold_domain": "tierra-club.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 4,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001019630",
+    "gold_url": "http://www.eitatsu-kikou.com/",
+    "gold_domain": "eitatsu-kikou.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 20,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001130362",
+    "gold_url": "http://re-fa.co.jp/",
+    "gold_domain": "re-fa.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 11,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120101055554",
+    "gold_url": "https://fj-shinku.co.jp/",
+    "gold_domain": "fj-shinku.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 5,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001157528",
+    "gold_url": "https://www.sankyounizai.com",
+    "gold_domain": "sankyounizai.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 19,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120101002364",
+    "gold_url": "http://www.kouryo.co.jp/",
+    "gold_domain": "kouryo.co.jp",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 5,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120001242451",
+    "gold_url": "https://sanki-ss.com/会社概要/",
+    "gold_domain": "sanki-ss.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 3,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6122001005778",
+    "gold_url": "http://www.nissin-techno.com",
+    "gold_domain": "nissin-techno.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 20,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001221509",
+    "gold_url": "https://www.raku-drain.com/",
+    "gold_domain": "raku-drain.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 10,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4122001000434",
+    "gold_url": "http://ishidaseiko.com/index.html",
+    "gold_domain": "ishidaseiko.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 20,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120901040430",
+    "gold_url": "https://torimotokogyo.com/",
+    "gold_domain": "torimotokogyo.com",
+    "employee_stratum": "0-20",
+    "prefecture": "大阪府",
+    "employee_number": 4,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001049508",
+    "gold_url": "https://kinkiseifun.jp/",
+    "gold_domain": "kinkiseifun.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 49,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120101029241",
+    "gold_url": "http://www.sugita-pridea.co.jp/",
+    "gold_domain": "sugita-pridea.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 44,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001000731",
+    "gold_url": "https://daiwakasei.net/company/",
+    "gold_domain": "daiwakasei.net",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 40,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8011001015607",
+    "gold_url": "https://tohan-denshi.co.jp/",
+    "gold_domain": "tohan-denshi.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 40,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001038620",
+    "gold_url": "http://www.suzuki-ap.co.jp",
+    "gold_domain": "suzuki-ap.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 21,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001044481",
+    "gold_url": "https://www.three-mmm.co.jp/",
+    "gold_domain": "three-mmm.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 42,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001018528",
+    "gold_url": "https://www.hariki-net.co.jp/",
+    "gold_domain": "hariki-net.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 35,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001174093",
+    "gold_url": "https://www.ecopipe.jp/",
+    "gold_domain": "ecopipe.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 25,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120101044236",
+    "gold_url": "https://www.tarui.co.jp/",
+    "gold_domain": "tarui.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 40,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5122001019829",
+    "gold_url": "https://www.higasinari.com/",
+    "gold_domain": "higasinari.com",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 22,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001053812",
+    "gold_url": "http://www.ishito.co.jp/index.html",
+    "gold_domain": "ishito.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 25,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120101044117",
+    "gold_url": "http://www.sanyo-paper.co.jp/",
+    "gold_domain": "sanyo-paper.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 43,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001000964",
+    "gold_url": "https://www.hasegawaseiko.com/",
+    "gold_domain": "hasegawaseiko.com",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 26,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1122001021128",
+    "gold_url": "http://nihonkeiki.com",
+    "gold_domain": "nihonkeiki.com",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 22,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120901009096",
+    "gold_url": "https://eiko-kiko.co.jp/",
+    "gold_domain": "eiko-kiko.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 31,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001012793",
+    "gold_url": "http://www.taiseitohtsu.co.jp/",
+    "gold_domain": "taiseitohtsu.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 40,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001027078",
+    "gold_url": "https://igeta-kk.co.jp/",
+    "gold_domain": "igeta-kk.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 47,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001015594",
+    "gold_url": "https://teitokusha.co.jp/",
+    "gold_domain": "teitokusha.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 34,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120901011290",
+    "gold_url": "https://www.daikokikai.co.jp/recruit/",
+    "gold_domain": "daikokikai.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 32,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001086195",
+    "gold_url": "http://www.nagai-yoriito.com",
+    "gold_domain": "nagai-yoriito.com",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 22,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8122001022615",
+    "gold_url": "https://www.kk-koshin.net/",
+    "gold_domain": "kk-koshin.net",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 40,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7122001017806",
+    "gold_url": "http://www.cosme-bisyodo.com",
+    "gold_domain": "cosme-bisyodo.com",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 30,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120101031304",
+    "gold_url": "https://e-yamagiwa.co.jp/",
+    "gold_domain": "e-yamagiwa.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 25,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120101041538",
+    "gold_url": "https://shoei4158.co.jp/",
+    "gold_domain": "shoei4158.co.jp",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 35,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120102017905",
+    "gold_url": "https://www.enomoto-k.com/",
+    "gold_domain": "enomoto-k.com",
+    "employee_stratum": "21-50",
+    "prefecture": "大阪府",
+    "employee_number": 29,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001150680",
+    "gold_url": "https://www.matsumura-weld.co.jp/",
+    "gold_domain": "matsumura-weld.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 120,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001066569",
+    "gold_url": "https://www.taisei-g.co.jp",
+    "gold_domain": "taisei-g.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 255,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001064984",
+    "gold_url": "https://www.shinohara-elec.co.jp/",
+    "gold_domain": "shinohara-elec.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 203,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1120001099630",
+    "gold_url": "http://www.utsumi-k.co.jp",
+    "gold_domain": "utsumi-k.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 154,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120001080604",
+    "gold_url": "http://www.cypnet.co.jp/",
+    "gold_domain": "cypnet.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 105,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120001017705",
+    "gold_url": "http://www.shoei-printing.com/",
+    "gold_domain": "shoei-printing.com",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 187,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001088566",
+    "gold_url": "https://www.fujimoto-chem.co.jp",
+    "gold_domain": "fujimoto-chem.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 279,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001050906",
+    "gold_url": "http://www.wire-techno.co.jp/",
+    "gold_domain": "wire-techno.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 102,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4122001005400",
+    "gold_url": "https://nakanos-s.co.jp/",
+    "gold_domain": "nakanos-s.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 72,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120001093390",
+    "gold_url": "https://www.nfy.co.jp/",
+    "gold_domain": "nfy.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 141,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120101000989",
+    "gold_url": "https://www.osaki-jpn.com/",
+    "gold_domain": "osaki-jpn.com",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 104,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120101030884",
+    "gold_url": "https://sanyo-mark.co.jp",
+    "gold_domain": "sanyo-mark.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 55,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001045702",
+    "gold_url": "https://www.toukousangyo.jp/",
+    "gold_domain": "toukousangyo.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 63,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001020640",
+    "gold_url": "https://www.seiritsu-k.co.jp/",
+    "gold_domain": "seiritsu-k.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 112,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001052398",
+    "gold_url": "https://t-terai.co.jp/",
+    "gold_domain": "t-terai.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 166,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001059654",
+    "gold_url": "https://www.sekisuiseikei.co.jp/",
+    "gold_domain": "sekisuiseikei.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 268,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2122001021242",
+    "gold_url": "https://www.shotoku-netsushori.co.jp/",
+    "gold_domain": "shotoku-netsushori.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 100,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001072994",
+    "gold_url": "https://www.nipponpaint-holdings.com/sustainability/social/diversity/",
+    "gold_domain": "nipponpaint-holdings.com",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 69,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001149386",
+    "gold_url": "http://www.kyoeisangyo-ltd.co.jp/",
+    "gold_domain": "kyoeisangyo-ltd.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 247,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8122001005165",
+    "gold_url": "http://www.towa-chemical.com",
+    "gold_domain": "towa-chemical.com",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 170,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001022131",
+    "gold_url": "http://www.osakaink.co.jp",
+    "gold_domain": "osakaink.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 163,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120101007614",
+    "gold_url": "http://www.yanagimoto.jp",
+    "gold_domain": "yanagimoto.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 84,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120901024698",
+    "gold_url": "http://www.tsubakimoto.jp/tbs/index.html",
+    "gold_domain": "tsubakimoto.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 185,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001127667",
+    "gold_url": "https://osk-planning.co.jp/",
+    "gold_domain": "osk-planning.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 85,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6122001019679",
+    "gold_url": "http://www.neige1955.co.jp",
+    "gold_domain": "neige1955.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 90,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001039721",
+    "gold_url": "http://www.fukuei.com",
+    "gold_domain": "fukuei.com",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 309,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001108995",
+    "gold_url": "https://www.mtpharma-f.co.jp/csr/flex.html",
+    "gold_domain": "mtpharma-f.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 473,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3120001041581",
+    "gold_url": "https://www.endo-lighting.co.jp/",
+    "gold_domain": "endo-lighting.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 675,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120001093267",
+    "gold_url": "https://www.nipponseika.co.jp/",
+    "gold_domain": "nipponseika.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 443,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001050011",
+    "gold_url": "https://www.daifuku.com/jp/",
+    "gold_domain": "daifuku.com",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 3691,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5011701010050",
+    "gold_url": "http://www.shinsei-printing.co.jp",
+    "gold_domain": "shinsei-printing.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 310,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3120901010347",
+    "gold_url": "http://www.alinco.co.jp/",
+    "gold_domain": "alinco.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 900,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120101000824",
+    "gold_url": "https://www.asahiseiko.co.jp/",
+    "gold_domain": "asahiseiko.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 342,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001078446",
+    "gold_url": "http://www.kurasen.co.jp/",
+    "gold_domain": "kurasen.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 317,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120901025775",
+    "gold_url": "http://www.marinfood.co.jp/",
+    "gold_domain": "marinfood.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 671,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001063899",
+    "gold_url": "https://www.kotaro.co.jp",
+    "gold_domain": "kotaro.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 358,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3120001264653",
+    "gold_url": "https://www.galilei.co.jp/",
+    "gold_domain": "galilei.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 1843,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4120001058385",
+    "gold_url": "http://www.bonchicorp.co.jp",
+    "gold_domain": "bonchicorp.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 400,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001049091",
+    "gold_url": "http://www.ag-ajikawa.co.jp/",
+    "gold_domain": "ag-ajikawa.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 320,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001027825",
+    "gold_url": "http://www.tayca.co.jp/",
+    "gold_domain": "tayca.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 746,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3120001069573",
+    "gold_url": "http://www.hirai.co.jp",
+    "gold_domain": "hirai.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 435,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001014301",
+    "gold_url": "http://www.itoki.jp/company/",
+    "gold_domain": "itoki.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 2491,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120101044042",
+    "gold_url": "https://www.sojitz-sric.com/",
+    "gold_domain": "sojitz-sric.com",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 547,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4122001004781",
+    "gold_url": "https://www.tatsuta.co.jp/esg/",
+    "gold_domain": "tatsuta.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 598,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001056461",
+    "gold_url": "https://www.daihen.co.jp/",
+    "gold_domain": "daihen.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 1086,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6120001059670",
+    "gold_url": "http://www.nkc-j.co.jp",
+    "gold_domain": "nkc-j.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 653,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7120001059661",
+    "gold_url": "https://www.espec.co.jp/sustainability/social/employee/diversity.html",
+    "gold_domain": "espec.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 986,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001059651",
+    "gold_url": "https://www.sekisuijushi.co.jp/sustainability/social/human-resources/",
+    "gold_domain": "sekisuijushi.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 833,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3120001050863",
+    "gold_url": "https://www.riko-kk.co.jp/",
+    "gold_domain": "riko-kk.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 328,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8120001059660",
+    "gold_url": "http://www.daikin.co.jp/index.html",
+    "gold_domain": "daikin.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 8913,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5080401010057",
+    "gold_url": "https://www.cretech.co.jp/",
+    "gold_domain": "cretech.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 102,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "4080101008939",
+    "gold_url": "http://www.daishowasiko.com/",
+    "gold_domain": "daishowasiko.com",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 553,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180301013816",
+    "gold_url": "https://www.karimoku.com/sustainability/social.html",
+    "gold_domain": "karimoku.com",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 138,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2120001156240",
+    "gold_url": "http://www.choyo-net.co.jp",
+    "gold_domain": "choyo-net.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 151,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1120001078320",
+    "gold_url": "http://www.kinseimatec.co.jp/",
+    "gold_domain": "kinseimatec.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 137,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "3180301013770",
+    "gold_url": "https://www.ogakie.co.jp/",
+    "gold_domain": "ogakie.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 120,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "5120001026242",
+    "gold_url": "http://www.ns-sha.com",
+    "gold_domain": "ns-sha.com",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 216,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7140001068512",
+    "gold_url": "https://www.kyokuto.com/company/aplan.html",
+    "gold_domain": "kyokuto.com",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 1180,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9120001077463",
+    "gold_url": "https://www.mt-pharma.co.jp/sustainability/social/employee_diversity.html",
+    "gold_domain": "mt-pharma.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "大阪府",
+    "employee_number": 2384,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "8180001021359",
+    "gold_url": "https://www.foodmach.co.jp/index_j.html",
+    "gold_domain": "foodmach.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 268,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2180001022049",
+    "gold_url": "http://www.suzutoyo.co.jp/archives/728/",
+    "gold_domain": "suzutoyo.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 180,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1120001271370",
+    "gold_url": "https://jabara.co.jp/",
+    "gold_domain": "jabara.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "大阪府",
+    "employee_number": 130,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "1180001028187",
+    "gold_url": "http://www.sanyo-ssc.co.jp/",
+    "gold_domain": "sanyo-ssc.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 79,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7180001074903",
+    "gold_url": "https://panasonic.co.jp/hvac/pesv/",
+    "gold_domain": "panasonic.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 127,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "2080401009985",
+    "gold_url": "http://www.rhythm-mp.co.jp",
+    "gold_domain": "rhythm-mp.co.jp",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 730,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "7080101008580",
+    "gold_url": "http://sankyohd.com/",
+    "gold_domain": "sankyohd.com",
+    "employee_stratum": "301+",
+    "prefecture": "静岡県",
+    "employee_number": 428,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "9180301019390",
+    "gold_url": "https://mitsuiya.jp/company-csr.html",
+    "gold_domain": "mitsuiya.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 200,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6180302016638",
+    "gold_url": "https://www.goldwork-job.com/",
+    "gold_domain": "goldwork-job.com",
+    "employee_stratum": "51-300",
+    "prefecture": "愛知県",
+    "employee_number": 160,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  },
+  {
+    "ticker": "6080401015889",
+    "gold_url": "http://www.taniko.co.jp",
+    "gold_domain": "taniko.co.jp",
+    "employee_stratum": "51-300",
+    "prefecture": "静岡県",
+    "employee_number": 69,
+    "note": "gBizINFO company_url (silver). Not hand-verified; T16 gold comes later."
+  }
+]

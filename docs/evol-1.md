@@ -122,9 +122,31 @@ trong DB. Không có task nào chờ GSO, chờ công văn, hay chờ tuyển si
   con số T03 trên 28 DN Việt Nam + PROVENANCE.md cho cả hai nguồn Nhật.
 - **Effort:** 1–1.5 ngày (agent; bạn duyệt ~30 ca lệch, khoảng 1 giờ).
   Branch: `cursor/evol1-task08-jp-calibration-pilot`.
-- **Cho GVHD xem:** "cùng một pipeline, ở Việt Nam em chấm được trên 28 ca, ở Nhật em chấm được
-  trên 300 ca có nhãn chính phủ — và đây là chênh lệch giữa hai nước." Đây cũng là con số duy
-  nhất trong bộ tài liệu **chạy trên dữ liệu Nhật**, tức thứ đính được vào thư gửi giáo sư Nhật.
+- **Kết quả v0 (chốt 2026-08-25):** hit **21/300 (7.0%)**, precision among decided
+  **35.6%**, abstain **80.3%**, wrong **38** — Wilson 95% CI hit-rate 4.6%–10.5%.
+  Artifacts: `data/processed/jp_calibration/{metrics,error_analysis,comparison_vn28,review_30,rq3_logic_changes}.*`.
+  Cùng pipeline T03, locale `ja` only. Search DuckDuckGo HTML bị HTTP 202 sau ~1 SERP
+  (ứng viên: search 1 / domain-hypothesis 104 / none 195) — **cùng hạn chế hypothesis-first
+  như T03**, không phải URL-finder có máy tìm kiếm sống.
+  Phân tầng lao động: 0–20 **0/56**; 21–50 **8/75 (10.7%)**; 51–300 **5/88 (5.7%)**;
+  301+ **8/81 (9.9%)**. Tỉnh: 静岡 97 / 愛知 98 / 大阪 104 (+1 thiếu tỉnh vì không khớp NTA).
+- **Khung mẫu:** n=300, seed 20260825, JSIC Division E = 製造業 (checkbox gBizINFO).
+  Identity **không URL** (`sha256` `8542b9f0…`); nhãn bạc `data/raw/jp_labels/`
+  (`01fdbd74…`). NTA 3 zip 静岡/愛知/大阪, 690 857 dòng KK/YK/GK mở. gBizINFO dùng
+  search công khai (không có `GBIZINFO_API_TOKEN`). Bỏ 623 hồ sơ không có URL;
+  DN nhỏ thiếu URL nên phần còn lại lấy từ leftover 51–300/301+ — DN lớn hơi thừa.
+- **So với T03 n=28:** VN listed 12/28 (42.9%) vs JP 21/300 (7.0%). **Không phải xếp hạng
+  hai nước** — mẫu khác (DN niêm yết đã biết website vs 株式会社 có URL tự khai trên
+  gBizINFO) + cùng search chết. File so sánh: `comparison_vn28.md`.
+- **Nhãn bạc tự sai:** chưa đo. Sheet 30 ca lệch: `review_30.csv` (cột human trống —
+  bạn duyệt ~1 giờ). T16 mới đo sai số nhãn gBizINFO.
+- **RQ3 (logic phải sửa, đã ghi):** 2LD `.co.jp`…; TLD bonus + `Accept-Language` đưa vào
+  locale JSON; loader 法人番号 13 số. **Không** sửa `decide_rules` / trọng số.
+  Chi tiết: `rq3_logic_changes.md`.
+- **Cho GVHD xem:** "cùng một pipeline, Việt Nam 12/28 (DN niêm yết đã biết website), Nhật
+  21/300 (株式会社 có URL tự khai trên gBizINFO) — hit thấp hơn vì mẫu SME + search chết,
+  không phải vì Nhật khó hơn Việt Nam." Đây là con số duy nhất trong bộ tài liệu **chạy trên
+  dữ liệu Nhật**, tức thứ đính được vào thư gửi giáo sư Nhật. Kèm `comparison_vn28.md`.
 - **Giới hạn tự đặt:** đúng một tuần công sức. Nếu phình ra, cắt còn bảng P/R và dừng
   (proposal-v4 mục 8, "chốt cứng về phạm vi").
 
@@ -169,13 +191,16 @@ Chi tiết lịch tuần và rủi ro: xem roadmap mục 8–9 của `proposal-v
    13 dòng dữ liệu — *em chủ động gỡ và tái định vị đề tài* theo chuẩn quốc tế
    (Eurostat OBEC / Istat experimental statistics). Đưa proposal-v4.
 2. **Kết quả chạy thật** (5'): khung mẫu pilot **n=800** từ nguồn công khai; URL-finder đạt
-   **12/28 (42.9%)** trên tập kiểm chứng; bảng chỉ tiêu thô cho **128** DN (**89** fetch_ok);
+   **12/28 (42.9%)** trên tập kiểm chứng Việt Nam; hiệu chuẩn Nhật **21/300 (7.0%)**
+   (nhãn bạc gBizINFO, search chết); bảng chỉ tiêu thô cho **128** DN (**89** fetch_ok);
    (nếu kịp) P/R đầu tiên trên mini gold standard. Nhấn: *tất cả làm không cần chờ dữ liệu xin*.
 
 3. **Đề xuất mới của v4 so với v3** (3'): thêm hiện trường hiệu chuẩn Nhật Bản, vì Nhật có đăng
    bạ pháp nhân mở và trường website trong dữ liệu chính phủ — nghĩa là **chấm được thiết bị đo
    trên hàng trăm ca có nhãn thay vì 28 ca**, và đo được *chồng kiểm định không nhãn của mình
-   sai bao nhiêu*. (Nếu T08 đã chạy: đưa luôn bảng P/R trên n≈300 DN Nhật.) Nhấn hai điểm:
+   sai bao nhiêu*. T08 đã chạy: hit **21/300 (7.0%)**, precision among decided **35.6%**,
+   abstain **80.3%** — cùng hạn chế search chết như T03; **không so trực tiếp** với 12/28
+   Việt Nam vì mẫu khác (DN niêm yết vs 株式会社 có URL bạc). Nhấn hai điểm:
    dữ liệu tải công khai nên **không phát sinh xin phép**, và ngân sách nhánh này là *một tuần*,
    không lấn phần Việt Nam.
 4. **Ba đề nghị cụ thể** (3'): (a) thầy/cô ký 2 công văn đã soạn sẵn — GSO (khung mẫu + bảng

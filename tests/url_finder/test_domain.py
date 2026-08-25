@@ -19,3 +19,10 @@ def test_fpt_corporate_is_not_fptshop():
 def test_empty_url():
     assert registrable_domain("") == ""
     assert not domains_match("", "https://example.com")
+
+
+def test_co_jp_is_one_public_suffix():
+    assert registrable_domain("https://www.aisin.com/jp/") == "aisin.com"
+    assert registrable_domain("https://www.toyota.co.jp/") == "toyota.co.jp"
+    assert domains_match("https://toyota.co.jp/", "https://www.toyota.co.jp/company")
+    assert not domains_match("https://toyota.co.jp/", "https://denso.co.jp/")

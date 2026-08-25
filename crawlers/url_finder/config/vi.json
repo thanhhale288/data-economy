@@ -1,5 +1,6 @@
 {
   "language": "vi",
+  "accept_language": "vi-VN,vi;q=0.9,en;q=0.8",
   "query_templates": [
     "\"{legal_name}\" {tax_id}",
     "\"{legal_name}\" {province} website",
@@ -93,6 +94,10 @@
     "weak_domain_penalty": 2.0,
     "tld_com_vn_bonus": 1.5,
     "tld_vn_bonus": 0.75,
+    "tld_bonuses": [
+      {"suffix": ".com.vn", "bonus": 1.5, "reason": "com.vn"},
+      {"suffix": ".vn", "bonus": 0.75, "reason": "vn"}
+    ],
     "parking_penalty": 5.0,
     "fetch_ok_bonus": 1.0,
     "name_title_threshold": 80.0,

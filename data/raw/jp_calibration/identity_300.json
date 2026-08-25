@@ -1,0 +1,5098 @@
+[
+  {
+    "ticker": "4080401011808",
+    "corporate_number": "4080401011808",
+    "legal_name": "株式会社ゴトー理研",
+    "tax_id": "4080401011808",
+    "address": "静岡県浜松市中央区原島町５０１番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080001011933",
+    "corporate_number": "6080001011933",
+    "legal_name": "株式会社原浦商店",
+    "tax_id": "6080001011933",
+    "address": "静岡県静岡市清水区由比町屋原１６４番地の２",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "haraurashouten"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080101000657",
+    "corporate_number": "3080101000657",
+    "legal_name": "株式会社さくら工業",
+    "tax_id": "3080101000657",
+    "address": "静岡県沼津市足高１３４番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sakurakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080001012517",
+    "corporate_number": "8080001012517",
+    "legal_name": "壽交易株式会社",
+    "tax_id": "8080001012517",
+    "address": "静岡県静岡市葵区北４丁目２７番２８号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kotobukikoueki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080101010735",
+    "corporate_number": "7080101010735",
+    "legal_name": "株式会社ティーアイビー",
+    "tax_id": "7080101010735",
+    "address": "静岡県富士市今泉１７７４番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080001022562",
+    "corporate_number": "2080001022562",
+    "legal_name": "株式会社リオテック",
+    "tax_id": "2080001022562",
+    "address": "静岡県静岡市駿河区東新田４丁目７番２号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "riotekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080001008037",
+    "corporate_number": "7080001008037",
+    "legal_name": "三和酒造株式会社",
+    "tax_id": "7080001008037",
+    "address": "静岡県静岡市清水区西久保５０１番地の１０",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sanwashuzou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080001004838",
+    "corporate_number": "6080001004838",
+    "legal_name": "株式会社ＭＡＴＳＵＯ",
+    "tax_id": "6080001004838",
+    "address": "静岡県静岡市駿河区富士見台１丁目１５番５号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "matsuo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1080402018391",
+    "corporate_number": "1080402018391",
+    "legal_name": "ＩＤＳソリューションズ株式会社",
+    "tax_id": "1080402018391",
+    "address": "静岡県菊川市下平川５８８番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "aidiesusoryushonzu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080001012920",
+    "corporate_number": "9080001012920",
+    "legal_name": "株式会社和泉",
+    "tax_id": "9080001012920",
+    "address": "静岡県島田市御請３４５番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "izumi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401010240",
+    "corporate_number": "3080401010240",
+    "legal_name": "株式会社コスミック",
+    "tax_id": "3080401010240",
+    "address": "静岡県浜松市浜名区中条１０１１番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kosumikku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080402008906",
+    "corporate_number": "9080402008906",
+    "legal_name": "ＷＡＴＡＳＥ　ｃａｓｔｉｎｇｓ株式会社",
+    "tax_id": "9080402008906",
+    "address": "静岡県浜松市中央区下石田町１８４番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "watasekyasutingu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080101024097",
+    "corporate_number": "9080101024097",
+    "legal_name": "株式会社テクノサック",
+    "tax_id": "9080101024097",
+    "address": "静岡県沼津市原１７６７番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "tekunosakku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080101009811",
+    "corporate_number": "6080101009811",
+    "legal_name": "三義ワークス株式会社",
+    "tax_id": "6080101009811",
+    "address": "静岡県富士市厚原２１４番地の２０",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "miyoshiwakusu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401017646",
+    "corporate_number": "6080401017646",
+    "legal_name": "大丸工業株式会社",
+    "tax_id": "6080401017646",
+    "address": "静岡県袋井市東同笠９３番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "daimarukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401011263",
+    "corporate_number": "3080401011263",
+    "legal_name": "株式会社キヨヒコ",
+    "tax_id": "3080401011263",
+    "address": "静岡県浜松市浜名区小林９０２番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080401016024",
+    "corporate_number": "2080401016024",
+    "legal_name": "株式会社ミヤデン",
+    "tax_id": "2080401016024",
+    "address": "静岡県磐田市高見丘４６１番地１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "miyaden"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401014528",
+    "corporate_number": "6080401014528",
+    "legal_name": "山啓製茶株式会社",
+    "tax_id": "6080401014528",
+    "address": "静岡県掛川市伊達方３２３番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yamakeiseicha"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080001004699",
+    "corporate_number": "4080001004699",
+    "legal_name": "株式会社豊月堂",
+    "tax_id": "4080001004699",
+    "address": "静岡県静岡市駿河区曲金１丁目１番１１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hougetsudou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080001014089",
+    "corporate_number": "2080001014089",
+    "legal_name": "本橋テープ株式会社",
+    "tax_id": "2080001014089",
+    "address": "静岡県榛原郡吉田町住吉３２１６番地の５",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "motohashitepu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080001014649",
+    "corporate_number": "4080001014649",
+    "legal_name": "株式会社イシダテック",
+    "tax_id": "4080001014649",
+    "address": "静岡県焼津市坂本３５５番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "ishidatekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080001013452",
+    "corporate_number": "4080001013452",
+    "legal_name": "株式会社宮村鐵工所",
+    "tax_id": "4080001013452",
+    "address": "静岡県島田市菊川１６８番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "miyamuratekkoujo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401004795",
+    "corporate_number": "3080401004795",
+    "legal_name": "株式会社ペーパークラフトイトウ",
+    "tax_id": "3080401004795",
+    "address": "静岡県浜松市中央区木戸町４番４３号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "pepakurafutoitou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080101010751",
+    "corporate_number": "7080101010751",
+    "legal_name": "株式会社伊東工業",
+    "tax_id": "7080101010751",
+    "address": "静岡県富士市依田橋２１５番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "itoukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401014395",
+    "corporate_number": "6080401014395",
+    "legal_name": "株式会社中遠熱処理技研",
+    "tax_id": "6080401014395",
+    "address": "静岡県掛川市薗ケ谷８４０番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "chuuennetsushorigiken"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080101017509",
+    "corporate_number": "6080101017509",
+    "legal_name": "株式会社アクア富士天間",
+    "tax_id": "6080101017509",
+    "address": "静岡県富士市天間７７７番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "akuafujitenma"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080001015578",
+    "corporate_number": "7080001015578",
+    "legal_name": "みずほ産業株式会社",
+    "tax_id": "7080001015578",
+    "address": "静岡県焼津市高新田４８５番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "mizuhosangyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080401001093",
+    "corporate_number": "9080401001093",
+    "legal_name": "株式会社岡山工業",
+    "tax_id": "9080401001093",
+    "address": "静岡県浜松市中央区大久保町４３２５番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "okayamakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7011001106596",
+    "corporate_number": "7011001106596",
+    "legal_name": "アドバンスコンポジット株式会社",
+    "tax_id": "7011001106596",
+    "address": "静岡県富士市大渕２２５９番地９",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "adobansukonpojitto"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080001012624",
+    "corporate_number": "8080001012624",
+    "legal_name": "株式会社静岡新聞総合印刷",
+    "tax_id": "8080001012624",
+    "address": "静岡県静岡市駿河区登呂３丁目１番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "shizuokashinbunsougouinsatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1020001082687",
+    "corporate_number": "1020001082687",
+    "legal_name": "株式会社共立電機製作所",
+    "tax_id": "1020001082687",
+    "address": "静岡県袋井市深見１５００番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "KYORITSU ELECTRIC CO.,LTD.",
+      "kyouritsudenkiseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1080101001698",
+    "corporate_number": "1080101001698",
+    "legal_name": "株式会社富士製作所",
+    "tax_id": "1080101001698",
+    "address": "静岡県沼津市杉崎町１１番１１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "fujiseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080101008085",
+    "corporate_number": "7080101008085",
+    "legal_name": "株式会社アルファ電子",
+    "tax_id": "7080101008085",
+    "address": "静岡県富士市伝法５５５番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "arufadenshi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401004198",
+    "corporate_number": "6080401004198",
+    "legal_name": "株式会社浜松文明堂",
+    "tax_id": "6080401004198",
+    "address": "静岡県浜松市中央区子安町１４０１番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hamamatsubunmeidou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1080401016090",
+    "corporate_number": "1080401016090",
+    "legal_name": "株式会社市川板金工業所",
+    "tax_id": "1080401016090",
+    "address": "静岡県磐田市富里２２４番地の１５",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "ichikawabankinkougyousho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080101011814",
+    "corporate_number": "9080101011814",
+    "legal_name": "北洋印刷株式会社",
+    "tax_id": "9080101011814",
+    "address": "静岡県富士宮市外神東町８４番地の２",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hokuyouinsatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080001013243",
+    "corporate_number": "7080001013243",
+    "legal_name": "株式会社ヒロタ",
+    "tax_id": "7080001013243",
+    "address": "静岡県島田市大柳南５３２番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hirota"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401016127",
+    "corporate_number": "7080401016127",
+    "legal_name": "株式会社サンワ",
+    "tax_id": "7080401016127",
+    "address": "静岡県磐田市一言３１２３番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sanwa"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401024001",
+    "corporate_number": "3080401024001",
+    "legal_name": "株式会社Ｍａｇｉｃ　Ｓｈｉｅｌｄｓ",
+    "tax_id": "3080401024001",
+    "address": "静岡県浜松市中央区鍛冶町１００－１ザザシティ浜松中央館Ｂ１Ｆ、ＦＵＳＥ",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "majikkushiruzu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080001015510",
+    "corporate_number": "9080001015510",
+    "legal_name": "株式会社鈴勝",
+    "tax_id": "9080001015510",
+    "address": "静岡県焼津市吉永１９１５番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "suzukatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1080401000879",
+    "corporate_number": "1080401000879",
+    "legal_name": "株式会社エフテーシー",
+    "tax_id": "1080401000879",
+    "address": "静岡県浜松市中央区高丘東２丁目１０番８号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "efuteshi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401003051",
+    "corporate_number": "6080401003051",
+    "legal_name": "高橋刃物工業株式会社",
+    "tax_id": "6080401003051",
+    "address": "静岡県浜松市中央区大柳町６２６番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "takahashihamonokougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401004420",
+    "corporate_number": "7080401004420",
+    "legal_name": "株式会社ハマネツ",
+    "tax_id": "7080401004420",
+    "address": "静岡県浜松市中央区砂山町３２５番地の６",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hamanetsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080001013428",
+    "corporate_number": "4080001013428",
+    "legal_name": "株式会社寺田製作所",
+    "tax_id": "4080001013428",
+    "address": "静岡県島田市牛尾８６９番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "teradaseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080101003267",
+    "corporate_number": "8080101003267",
+    "legal_name": "大和印刷株式会社",
+    "tax_id": "8080101003267",
+    "address": "静岡県裾野市深良３６４２番地の１２",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yamatoinsatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080101002076",
+    "corporate_number": "2080101002076",
+    "legal_name": "株式会社イズラシ",
+    "tax_id": "2080101002076",
+    "address": "静岡県沼津市大岡４０４４番地の２９",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "izurashi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401010393",
+    "corporate_number": "7080401010393",
+    "legal_name": "株式会社日本ロック",
+    "tax_id": "7080401010393",
+    "address": "静岡県浜松市浜名区横須賀３００番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "nihonrokku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080001013746",
+    "corporate_number": "8080001013746",
+    "legal_name": "株式会社矢部製作所",
+    "tax_id": "8080001013746",
+    "address": "静岡県牧之原市大江１３５９番地１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yabeseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080101011413",
+    "corporate_number": "5080101011413",
+    "legal_name": "株式会社佐藤精機",
+    "tax_id": "5080101011413",
+    "address": "静岡県富士宮市三園平５３１番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "satouseiki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401014857",
+    "corporate_number": "7080401014857",
+    "legal_name": "菱電旭テクニカ株式会社",
+    "tax_id": "7080401014857",
+    "address": "静岡県菊川市川上９３０番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "ryoudenasahitekunika"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080001015327",
+    "corporate_number": "2080001015327",
+    "legal_name": "山松水産株式会社",
+    "tax_id": "2080001015327",
+    "address": "静岡県焼津市利右衛門１３３４番地の２３",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yamamatsusuisan"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080401001498",
+    "corporate_number": "9080401001498",
+    "legal_name": "国本工業株式会社",
+    "tax_id": "9080401001498",
+    "address": "静岡県浜松市浜名区染地台６丁目３番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kunimotokougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080401011469",
+    "corporate_number": "4080401011469",
+    "legal_name": "株式会社浜名プラスチック",
+    "tax_id": "4080401011469",
+    "address": "静岡県湖西市吉美３４２４番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hamanapurasuchikku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080001005278",
+    "corporate_number": "2080001005278",
+    "legal_name": "株式会社望月プレス工業所",
+    "tax_id": "2080001005278",
+    "address": "静岡県袋井市広岡１３５９番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "mochizukipuresukougyousho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080001013284",
+    "corporate_number": "7080001013284",
+    "legal_name": "丸七製茶株式会社",
+    "tax_id": "7080001013284",
+    "address": "静岡県島田市本通６丁目８３７０番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "marushichiseicha"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080401010241",
+    "corporate_number": "2080401010241",
+    "legal_name": "株式会社浜名ワークス",
+    "tax_id": "2080401010241",
+    "address": "静岡県浜松市浜名区上島１７００番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hamanawakusu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080101011357",
+    "corporate_number": "3080101011357",
+    "legal_name": "カナエ工業株式会社",
+    "tax_id": "3080101011357",
+    "address": "静岡県富士宮市万野原新田３６８０番地の９",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kanaekougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401001310",
+    "corporate_number": "7080401001310",
+    "legal_name": "神谷理研株式会社",
+    "tax_id": "7080401001310",
+    "address": "静岡県浜松市中央区桜台１丁目８番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kamiyariken"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1080101010617",
+    "corporate_number": "1080101010617",
+    "legal_name": "四国パック株式会社",
+    "tax_id": "1080101010617",
+    "address": "静岡県富士市大渕４２２６番地２",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "shikokupakku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401026927",
+    "corporate_number": "7080401026927",
+    "legal_name": "株式会社遠州クリエイト",
+    "tax_id": "7080401026927",
+    "address": "静岡県浜松市中央区桜台１丁目１３番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "enshuukurieito"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080101008661",
+    "corporate_number": "9080101008661",
+    "legal_name": "シーズイシハラ株式会社",
+    "tax_id": "9080101008661",
+    "address": "静岡県富士市大野１００番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "shizuishihara"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080001013432",
+    "corporate_number": "8080001013432",
+    "legal_name": "ナカダ産業株式会社",
+    "tax_id": "8080001013432",
+    "address": "静岡県島田市金谷東２丁目１０４６番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "nakadasangyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401005600",
+    "corporate_number": "7080401005600",
+    "legal_name": "ヤマハファインテック株式会社",
+    "tax_id": "7080401005600",
+    "address": "静岡県浜松市中央区青屋町２８３番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yamahafaintekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080401016005",
+    "corporate_number": "5080401016005",
+    "legal_name": "ＮＮＰ電子株式会社",
+    "tax_id": "5080401016005",
+    "address": "静岡県磐田市匂坂中１４００番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "enuenupidenshi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080101008583",
+    "corporate_number": "4080101008583",
+    "legal_name": "株式会社山恭製紙所",
+    "tax_id": "4080101008583",
+    "address": "静岡県富士市川成島２１３番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yamakyouseishijo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080101003384",
+    "corporate_number": "6080101003384",
+    "legal_name": "アルムヒューマン株式会社",
+    "tax_id": "6080101003384",
+    "address": "静岡県三島市一番町１５番１９号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "arumuhyuman"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080001016372",
+    "corporate_number": "4080001016372",
+    "legal_name": "株式会社共立アイコム",
+    "tax_id": "4080001016372",
+    "address": "静岡県藤枝市高柳１丁目１７番２３号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kyouritsuaikomu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080001010252",
+    "corporate_number": "3080001010252",
+    "legal_name": "株式会社ホテイフーズコーポレーション",
+    "tax_id": "3080001010252",
+    "address": "静岡県静岡市清水区蒲原４丁目２６番６号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hoteifuzukoporeshon"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080001013229",
+    "corporate_number": "5080001013229",
+    "legal_name": "ハラダ製茶株式会社",
+    "tax_id": "5080001013229",
+    "address": "静岡県島田市岸町１９４番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "haradaseicha"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080401015750",
+    "corporate_number": "4080401015750",
+    "legal_name": "株式会社いわきゅう",
+    "tax_id": "4080401015750",
+    "address": "静岡県磐田市気子島９６１番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "iwakyuu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080101011426",
+    "corporate_number": "9080101011426",
+    "legal_name": "株式会社エコネコル",
+    "tax_id": "9080101011426",
+    "address": "静岡県富士宮市山宮３５０７番地の１９",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "ekonekoru"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080001008119",
+    "corporate_number": "8080001008119",
+    "legal_name": "三生医薬株式会社",
+    "tax_id": "8080001008119",
+    "address": "静岡県富士市厚原１４６８",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sanshouiyaku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080401000765",
+    "corporate_number": "8080401000765",
+    "legal_name": "エンケイ株式会社",
+    "tax_id": "8080401000765",
+    "address": "静岡県浜松市中央区板屋町１１１番地の２アクトタワー２６階",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "enkei"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080401006195",
+    "corporate_number": "5080401006195",
+    "legal_name": "マザーサンアツミテック・オートモーティブシステム株式会社",
+    "tax_id": "5080401006195",
+    "address": "静岡県浜松市中央区高丘西４丁目６番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "mazasanatsumitekkuotomotibushisutemu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401010026",
+    "corporate_number": "3080401010026",
+    "legal_name": "朝日電装株式会社",
+    "tax_id": "3080401010026",
+    "address": "静岡県浜松市浜名区染地台６丁目２番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "asahidensou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080001007508",
+    "corporate_number": "9080001007508",
+    "legal_name": "株式会社アイ・テック",
+    "tax_id": "9080001007508",
+    "address": "静岡県静岡市清水区三保３８７番地７",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "aitekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401006049",
+    "corporate_number": "3080401006049",
+    "legal_name": "浜名湖電装株式会社",
+    "tax_id": "3080401006049",
+    "address": "静岡県湖西市鷲津１３６番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "hamanakodensou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080401010065",
+    "corporate_number": "5080401010065",
+    "legal_name": "株式会社エフ・シー・シー",
+    "tax_id": "5080401010065",
+    "address": "静岡県浜松市浜名区細江町中川７０００番地の３６",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "efushishi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080401005486",
+    "corporate_number": "5080401005486",
+    "legal_name": "八鈴興業株式会社",
+    "tax_id": "5080401005486",
+    "address": "静岡県浜松市中央区神田町１４３７番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "yasuzukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080401022211",
+    "corporate_number": "3080401022211",
+    "legal_name": "株式会社ＴＦ‐ＭＥＴＡＬ",
+    "tax_id": "3080401022211",
+    "address": "静岡県湖西市新居町内山１５５８番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "tiefumetaru"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080001001232",
+    "corporate_number": "6080001001232",
+    "legal_name": "協立電機株式会社",
+    "tax_id": "6080001001232",
+    "address": "静岡県静岡市駿河区中田本町６１番１号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kyouritsudenki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080001015453",
+    "corporate_number": "8080001015453",
+    "legal_name": "株式会社いわきゅう駿河",
+    "tax_id": "8080001015453",
+    "address": "静岡県焼津市高新田２５４番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "iwakyuusuruga"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080001014031",
+    "corporate_number": "2080001014031",
+    "legal_name": "南部化成株式会社",
+    "tax_id": "2080001014031",
+    "address": "静岡県榛原郡吉田町大幡３５０番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "nanbukasei"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080401001260",
+    "corporate_number": "7080401001260",
+    "legal_name": "金田工業株式会社",
+    "tax_id": "7080401001260",
+    "address": "静岡県浜松市中央区高丘東３丁目１８番５号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "Kaneta Kogyo Co., Ltd.",
+      "kanetakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3080001008412",
+    "corporate_number": "3080001008412",
+    "legal_name": "株式会社駿河生産プラットフォーム",
+    "tax_id": "3080001008412",
+    "address": "静岡県静岡市清水区七ツ新屋５０５番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "SURUGA Production Platform Co., Ltd.",
+      "surugaseisanpurattofomu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9080001002327",
+    "corporate_number": "9080001002327",
+    "legal_name": "スター精密株式会社",
+    "tax_id": "9080001002327",
+    "address": "静岡県静岡市駿河区中吉田２０番１０号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sutaseimitsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2011001095571",
+    "corporate_number": "2011001095571",
+    "legal_name": "トクラス株式会社",
+    "tax_id": "2011001095571",
+    "address": "静岡県浜松市中央区西山町１３７０番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "tokurasu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8080101005263",
+    "corporate_number": "8080101005263",
+    "legal_name": "アルムメディカルサポート株式会社",
+    "tax_id": "8080101005263",
+    "address": "静岡県三島市寿町５番１０号",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "arumumedikarusapoto"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401018751",
+    "corporate_number": "6080401018751",
+    "legal_name": "ＮＯＫ静岡株式会社",
+    "tax_id": "6080401018751",
+    "address": "静岡県牧之原市地頭方５９０番地１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "enuokeshizuoka"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080101015719",
+    "corporate_number": "6080101015719",
+    "legal_name": "コイト電工株式会社",
+    "tax_id": "6080101015719",
+    "address": "静岡県駿東郡長泉町南一色７２０番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "koitodenkou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3010001082546",
+    "corporate_number": "3010001082546",
+    "legal_name": "味の素ベーカリー株式会社",
+    "tax_id": "3010001082546",
+    "address": "静岡県島田市大柳１１７７番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "ajinomotobekari"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080401016338",
+    "corporate_number": "2080401016338",
+    "legal_name": "株式会社スニック",
+    "tax_id": "2080401016338",
+    "address": "静岡県磐田市東平松１４０３番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sunikku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180001087987",
+    "corporate_number": "7180001087987",
+    "legal_name": "アスカテック株式会社",
+    "tax_id": "7180001087987",
+    "address": "愛知県岩倉市大地町上千１５番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "asukatekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001097189",
+    "corporate_number": "3180001097189",
+    "legal_name": "株式会社東栄超硬",
+    "tax_id": "3180001097189",
+    "address": "愛知県愛西市大井町樫ノ木１６３番地の２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001132317",
+    "corporate_number": "4180001132317",
+    "legal_name": "株式会社メイワテック",
+    "tax_id": "4180001132317",
+    "address": "愛知県安城市小川町的場丘２１番地４",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "meiwatekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180001015297",
+    "corporate_number": "5180001015297",
+    "legal_name": "エヌケーシー株式会社",
+    "tax_id": "5180001015297",
+    "address": "愛知県名古屋市南区明円町１９７番地の２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "enukeshi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001090085",
+    "corporate_number": "4180001090085",
+    "legal_name": "株式会社アイテック",
+    "tax_id": "4180001090085",
+    "address": "愛知県一宮市三ツ井３丁目７番２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aitekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180001155050",
+    "corporate_number": "7180001155050",
+    "legal_name": "イルミメディカル株式会社",
+    "tax_id": "7180001155050",
+    "address": "愛知県尾張旭市北原山町六田池２１４０番地９",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "irumimedikaru"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001001457",
+    "corporate_number": "2180001001457",
+    "legal_name": "若杉鋼材株式会社",
+    "tax_id": "2180001001457",
+    "address": "愛知県名古屋市守山区幸心４丁目４１９番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "wakasugikouzai"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001075047",
+    "corporate_number": "8120001075047",
+    "legal_name": "ウエニ工業株式会社",
+    "tax_id": "8120001075047",
+    "address": "愛知県豊田市御作町亀割１１６６番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "uenikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301020325",
+    "corporate_number": "8180301020325",
+    "legal_name": "ハチ工業株式会社",
+    "tax_id": "8180301020325",
+    "address": "愛知県豊田市久岡町２丁目２４番１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "hachikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001055196",
+    "corporate_number": "3180001055196",
+    "legal_name": "株式会社ブルー",
+    "tax_id": "3180001055196",
+    "address": "愛知県名古屋市中区新栄１丁目３５番８号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "buru"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180001044163",
+    "corporate_number": "6180001044163",
+    "legal_name": "株式会社オー・ケー・シー",
+    "tax_id": "6180001044163",
+    "address": "愛知県名古屋市中川区吉良町１７８番地の１８",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "okeshi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180002074683",
+    "corporate_number": "2180002074683",
+    "legal_name": "株式会社宝製作所",
+    "tax_id": "2180002074683",
+    "address": "愛知県丹羽郡大口町替地２丁目５番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "takaraseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301013355",
+    "corporate_number": "6180301013355",
+    "legal_name": "株式会社丸杉",
+    "tax_id": "6180301013355",
+    "address": "愛知県安城市御幸本町７番１５号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "marusugi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180001149564",
+    "corporate_number": "7180001149564",
+    "legal_name": "株式会社サンＦマシナリー",
+    "tax_id": "7180001149564",
+    "address": "愛知県名古屋市西区牛島町６番１号名古屋ルーセントタワー４０階",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sanefumashinari"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180301010825",
+    "corporate_number": "4180301010825",
+    "legal_name": "イチブン株式会社",
+    "tax_id": "4180301010825",
+    "address": "愛知県蒲郡市形原町西中田６番地１２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "ichibun"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180001011312",
+    "corporate_number": "6180001011312",
+    "legal_name": "横井定株式会社",
+    "tax_id": "6180001011312",
+    "address": "愛知県名古屋市瑞穂区鍵田町１丁目８番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "yokoisada"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180301018287",
+    "corporate_number": "7180301018287",
+    "legal_name": "株式会社サンキ",
+    "tax_id": "7180301018287",
+    "address": "愛知県豊田市花丘町２丁目７３番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sanki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001096330",
+    "corporate_number": "4180001096330",
+    "legal_name": "株式会社愛豊精機製作所",
+    "tax_id": "4180001096330",
+    "address": "愛知県津島市白浜町字小新開８番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aihouseikiseisakujo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001005989",
+    "corporate_number": "8180001005989",
+    "legal_name": "株式会社旭メンテックス",
+    "tax_id": "8180001005989",
+    "address": "愛知県名古屋市港区入船２丁目４番６号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "asahimentekkusu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180001093141",
+    "corporate_number": "9180001093141",
+    "legal_name": "株式会社春日井金型",
+    "tax_id": "9180001093141",
+    "address": "愛知県常滑市大谷字南原２０番地の１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "kasugaikanagata"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001097361",
+    "corporate_number": "4180001097361",
+    "legal_name": "アサイウッドマテリア株式会社",
+    "tax_id": "4180001097361",
+    "address": "愛知県弥富市竹田３丁目２２８番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "asaiuddomateria"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301014566",
+    "corporate_number": "8180301014566",
+    "legal_name": "株式会社山田製作所",
+    "tax_id": "8180301014566",
+    "address": "愛知県刈谷市小垣江町大津崎１番１８",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "yamadaseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001024335",
+    "corporate_number": "1180001024335",
+    "legal_name": "株式会社マルワ",
+    "tax_id": "1180001024335",
+    "address": "愛知県名古屋市天白区平針４丁目２１１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "maruwa"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180301001348",
+    "corporate_number": "1180301001348",
+    "legal_name": "株式会社テクノ二十一グループ",
+    "tax_id": "1180301001348",
+    "address": "愛知県岡崎市真伝町字亀山３５番地１１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "tekunonijuuichigurupu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180001085166",
+    "corporate_number": "6180001085166",
+    "legal_name": "株式会社アートフレンド",
+    "tax_id": "6180001085166",
+    "address": "愛知県一宮市明地字井之内３７番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "atofurendo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001094673",
+    "corporate_number": "3180001094673",
+    "legal_name": "株式会社尾川パイプ",
+    "tax_id": "3180001094673",
+    "address": "愛知県知多市新刀池２丁目２１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "ogawapaipu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001092569",
+    "corporate_number": "4180001092569",
+    "legal_name": "大平鉄工株式会社",
+    "tax_id": "4180001092569",
+    "address": "愛知県大府市横根町子新田１３番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "taiheitekkou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001029245",
+    "corporate_number": "8180001029245",
+    "legal_name": "旭金属株式会社",
+    "tax_id": "8180001029245",
+    "address": "愛知県名古屋市中村区井深町４番６２号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "asahikinzoku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180301012890",
+    "corporate_number": "9180301012890",
+    "legal_name": "株式会社サンワ金型",
+    "tax_id": "9180301012890",
+    "address": "愛知県安城市和泉町大海古６番地１７",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sanwakanagata"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180301006750",
+    "corporate_number": "2180301006750",
+    "legal_name": "日本オペレーター株式会社",
+    "tax_id": "2180301006750",
+    "address": "愛知県豊橋市西幸町字古並５１番１８",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "nihonopereta"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001084535",
+    "corporate_number": "2180001084535",
+    "legal_name": "株式会社中工",
+    "tax_id": "2180001084535",
+    "address": "愛知県一宮市木曽川町黒田字井桁畔１０６番地の２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "nakakou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180301011354",
+    "corporate_number": "2180301011354",
+    "legal_name": "丸千水産株式会社",
+    "tax_id": "2180301011354",
+    "address": "愛知県蒲郡市三谷町二舗５６番地の１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "marusensuisan"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301023073",
+    "corporate_number": "6180301023073",
+    "legal_name": "三河産業株式会社",
+    "tax_id": "6180301023073",
+    "address": "愛知県西尾市吉良町上横須賀宮前４６番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "mikawasangyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180301019018",
+    "corporate_number": "2180301019018",
+    "legal_name": "ノックス電子株式会社",
+    "tax_id": "2180301019018",
+    "address": "愛知県豊田市吉原町下細池７７番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "nokkusudenshi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001095662",
+    "corporate_number": "4180001095662",
+    "legal_name": "共和テクニカル株式会社",
+    "tax_id": "4180001095662",
+    "address": "愛知県大府市共和町炭焼７番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "kyouwatekunikaru"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180301009693",
+    "corporate_number": "4180301009693",
+    "legal_name": "愛知フエルト株式会社",
+    "tax_id": "4180301009693",
+    "address": "愛知県豊川市御津町泙野新屋敷２７番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aichifueruto"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001014913",
+    "corporate_number": "2180001014913",
+    "legal_name": "千年エンジニアリング株式会社",
+    "tax_id": "2180001014913",
+    "address": "愛知県名古屋市南区柴田町１丁目４番地４",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "chitoseenjiniaringu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001079057",
+    "corporate_number": "1180001079057",
+    "legal_name": "株式会社中外陶園",
+    "tax_id": "1180001079057",
+    "address": "愛知県瀬戸市薬師町５０番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "chuugaitouen"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180302000180",
+    "corporate_number": "4180302000180",
+    "legal_name": "ナカキュー株式会社",
+    "tax_id": "4180302000180",
+    "address": "愛知県岡崎市北野町字東河原２７番地８",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "nakakyu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180001094134",
+    "corporate_number": "6180001094134",
+    "legal_name": "株式会社川仁",
+    "tax_id": "6180001094134",
+    "address": "愛知県知多郡南知多町大字豊浜字西之平井２９番地７",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "kawani"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180301006551",
+    "corporate_number": "3180301006551",
+    "legal_name": "豊橋合同印刷株式会社",
+    "tax_id": "3180301006551",
+    "address": "愛知県豊橋市東脇４丁目８番地の１６",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "toyohashigoudouinsatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180001020644",
+    "corporate_number": "5180001020644",
+    "legal_name": "株式会社花ごころ",
+    "tax_id": "5180001020644",
+    "address": "愛知県名古屋市中川区高畑１丁目５２番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "hanagokoro"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001085796",
+    "corporate_number": "3180001085796",
+    "legal_name": "三工機器株式会社",
+    "tax_id": "3180001085796",
+    "address": "愛知県稲沢市奥田流町３６番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sankoukiki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001069511",
+    "corporate_number": "2180001069511",
+    "legal_name": "株式会社メイキコウ",
+    "tax_id": "2180001069511",
+    "address": "愛知県豊明市大久伝町東１８０番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "meikikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001106645",
+    "corporate_number": "1180001106645",
+    "legal_name": "株式会社かねふくめんたいパーク",
+    "tax_id": "1180001106645",
+    "address": "愛知県常滑市りんくう町１丁目２５番地の４",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "kanefukumentaipaku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301018610",
+    "corporate_number": "6180301018610",
+    "legal_name": "アイシン高丘エンジニアリング株式会社",
+    "tax_id": "6180301018610",
+    "address": "愛知県豊田市高丘新町天王１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aishintakaokaenjiniaringu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180301018850",
+    "corporate_number": "5180301018850",
+    "legal_name": "東海鉄工株式会社",
+    "tax_id": "5180301018850",
+    "address": "愛知県豊田市駒新町坂上２３１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "toukaitekkou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180301009991",
+    "corporate_number": "3180301009991",
+    "legal_name": "宇都宮工業株式会社",
+    "tax_id": "3180301009991",
+    "address": "愛知県豊川市大木町柏木２番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "utsunomiyakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001022745",
+    "corporate_number": "8180001022745",
+    "legal_name": "宝和工業株式会社",
+    "tax_id": "8180001022745",
+    "address": "愛知県名古屋市熱田区六番３丁目１５番２０号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "houwakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301023973",
+    "corporate_number": "6180301023973",
+    "legal_name": "大高精工株式会社",
+    "tax_id": "6180301023973",
+    "address": "愛知県新城市有海字高田１番地１０",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "ootakaseikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180001009873",
+    "corporate_number": "9180001009873",
+    "legal_name": "関戸機鋼株式会社",
+    "tax_id": "9180001009873",
+    "address": "愛知県名古屋市瑞穂区豊岡通３丁目１３番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sekidokikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001023238",
+    "corporate_number": "1180001023238",
+    "legal_name": "井桁堂株式会社",
+    "tax_id": "1180001023238",
+    "address": "愛知県豊田市高岡町松葉１４５番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "igetadou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301013618",
+    "corporate_number": "8180301013618",
+    "legal_name": "愛知技研株式会社",
+    "tax_id": "8180301013618",
+    "address": "愛知県刈谷市一ツ木町竹下５０番地の１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aichigiken"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180301033133",
+    "corporate_number": "3180301033133",
+    "legal_name": "株式会社サンリツ",
+    "tax_id": "3180301033133",
+    "address": "愛知県刈谷市一色町３丁目７番地１１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sanritsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180301014206",
+    "corporate_number": "5180301014206",
+    "legal_name": "株式会社タケダ（閉鎖）",
+    "tax_id": "5180301014206",
+    "address": "愛知県刈谷市一色町３丁目６番地６",
+    "province": "",
+    "prefecture": "",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": false,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001027475",
+    "corporate_number": "4180001027475",
+    "legal_name": "株式会社森創",
+    "tax_id": "4180001027475",
+    "address": "愛知県北名古屋市宇福寺村上３９番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "morisou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180001053731",
+    "corporate_number": "9180001053731",
+    "legal_name": "株式会社アビヅ",
+    "tax_id": "9180001053731",
+    "address": "愛知県名古屋市港区昭和町１４番地の２４",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "abizu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180001016360",
+    "corporate_number": "6180001016360",
+    "legal_name": "尾張精機株式会社",
+    "tax_id": "6180001016360",
+    "address": "愛知県尾張旭市下井町はねうち２３４５番地の１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "owariseiki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301005268",
+    "corporate_number": "8180301005268",
+    "legal_name": "大羽精研株式会社",
+    "tax_id": "8180301005268",
+    "address": "愛知県豊橋市寺沢町字深沢１７０番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "oobaseiken"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001011521",
+    "corporate_number": "3180001011521",
+    "legal_name": "株式会社アンスコ",
+    "tax_id": "3180001011521",
+    "address": "愛知県瀬戸市穴田町９８４番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "ansuko"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180301018378",
+    "corporate_number": "7180301018378",
+    "legal_name": "株式会社ＪＰＣ",
+    "tax_id": "7180301018378",
+    "address": "愛知県豊田市竜神町弥生５３番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "jiipishi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001085152",
+    "corporate_number": "3180001085152",
+    "legal_name": "ＴＧＡＰ株式会社",
+    "tax_id": "3180001085152",
+    "address": "愛知県一宮市千秋町加納馬場字井ノ上西４２５番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "tijiepi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180301000341",
+    "corporate_number": "1180301000341",
+    "legal_name": "オカザキ製パン株式会社",
+    "tax_id": "1180301000341",
+    "address": "愛知県岡崎市赤渋町字圦ノ口５０番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "okazakiseipan"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180001092176",
+    "corporate_number": "9180001092176",
+    "legal_name": "泉万醸造株式会社",
+    "tax_id": "9180001092176",
+    "address": "愛知県知多郡武豊町字里中７８番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "izumanjouzou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301019524",
+    "corporate_number": "8180301019524",
+    "legal_name": "友新精機株式会社",
+    "tax_id": "8180301019524",
+    "address": "愛知県豊田市前林町立圦１２番地５",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "yuushinseiki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001001474",
+    "corporate_number": "1180001001474",
+    "legal_name": "株式会社愛工舎",
+    "tax_id": "1180001001474",
+    "address": "愛知県名古屋市昭和区滝川町１１２番地の１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aikousha"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6010001217933",
+    "corporate_number": "6010001217933",
+    "legal_name": "株式会社オリバー",
+    "tax_id": "6010001217933",
+    "address": "愛知県岡崎市薮田１丁目１番地１２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "oriba"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301023096",
+    "corporate_number": "8180301023096",
+    "legal_name": "株式会社イナテック",
+    "tax_id": "8180301023096",
+    "address": "愛知県西尾市鳥羽町大入２０番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "inatekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180001036822",
+    "corporate_number": "5180001036822",
+    "legal_name": "新日本法規出版株式会社",
+    "tax_id": "5180001036822",
+    "address": "愛知県名古屋市中区大須４丁目１番６５号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "shinnipponhoukishuppan"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180001075843",
+    "corporate_number": "7180001075843",
+    "legal_name": "佐橋工業株式会社",
+    "tax_id": "7180001075843",
+    "address": "愛知県小牧市久保新町３２番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sahashikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001084265",
+    "corporate_number": "8180001084265",
+    "legal_name": "株式会社ソトー",
+    "tax_id": "8180001084265",
+    "address": "愛知県一宮市篭屋５丁目１番１号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "soto"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001026725",
+    "corporate_number": "4180001026725",
+    "legal_name": "ノリタケ株式会社",
+    "tax_id": "4180001026725",
+    "address": "愛知県名古屋市西区則武新町３丁目１番３６号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "NORITAKE CO., LIMITED",
+      "noritake"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180301015856",
+    "corporate_number": "5180301015856",
+    "legal_name": "トヨタ紡織精工株式会社",
+    "tax_id": "5180301015856",
+    "address": "愛知県高浜市新田町１丁目１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "toyotaboushokuseikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001040593",
+    "corporate_number": "4180001040593",
+    "legal_name": "本多金属工業株式会社",
+    "tax_id": "4180001040593",
+    "address": "愛知県名古屋市中区栄３丁目３２番２２号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "hondakinzokukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180301018771",
+    "corporate_number": "1180301018771",
+    "legal_name": "トヨタ自動車株式会社",
+    "tax_id": "1180301018771",
+    "address": "愛知県豊田市トヨタ町１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "toyotajidousha"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180301004110",
+    "corporate_number": "2180301004110",
+    "legal_name": "大和化成工業株式会社",
+    "tax_id": "2180301004110",
+    "address": "愛知県岡崎市保母町字上平地１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "daiwakaseikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5180001092361",
+    "corporate_number": "5180001092361",
+    "legal_name": "愛同工業株式会社",
+    "tax_id": "5180001092361",
+    "address": "愛知県大府市長草町山口５１番地の２",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aidoukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180001027309",
+    "corporate_number": "6180001027309",
+    "legal_name": "御幸毛織株式会社",
+    "tax_id": "6180001027309",
+    "address": "愛知県名古屋市西区市場木町３９０番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "miyukikeori"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001025070",
+    "corporate_number": "8180001025070",
+    "legal_name": "春日井製菓株式会社",
+    "tax_id": "8180001025070",
+    "address": "愛知県名古屋市西区花の木１丁目３番１４号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "kasugaiseika"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001010714",
+    "corporate_number": "2180001010714",
+    "legal_name": "株式会社トヨトミ",
+    "tax_id": "2180001010714",
+    "address": "愛知県名古屋市瑞穂区桃園町５番１７号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "toyotomi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301014312",
+    "corporate_number": "6180301014312",
+    "legal_name": "東海部品工業株式会社",
+    "tax_id": "6180301014312",
+    "address": "愛知県刈谷市一ツ木町竹下２５番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "toukaibuhinkougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301014056",
+    "corporate_number": "6180301014056",
+    "legal_name": "神星工業株式会社",
+    "tax_id": "6180301014056",
+    "address": "愛知県豊田市広美町北繁８２番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "shinseikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180301013445",
+    "corporate_number": "7180301013445",
+    "legal_name": "ユタカ工業株式会社",
+    "tax_id": "7180301013445",
+    "address": "愛知県安城市里町日吉１番地１７",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "yutakakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180301007357",
+    "corporate_number": "6180301007357",
+    "legal_name": "武蔵精密工業株式会社",
+    "tax_id": "6180301007357",
+    "address": "愛知県豊橋市植田町字大膳３９番地の５",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "Musashi Seimitsu Industry Co., Ltd.",
+      "musashiseimitsukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001080700",
+    "corporate_number": "1180001080700",
+    "legal_name": "株式会社今仙電機製作所",
+    "tax_id": "1180001080700",
+    "address": "愛知県犬山市字柿畑１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "imasendenkiseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180001096739",
+    "corporate_number": "9180001096739",
+    "legal_name": "ＮＴＮアドバンストマテリアルズ株式会社",
+    "tax_id": "9180001096739",
+    "address": "愛知県海部郡蟹江町大字蟹江新田字勝田場１０１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "enutienuadobansutomateriaruzu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001085572",
+    "corporate_number": "4180001085572",
+    "legal_name": "アイコクアルファ株式会社",
+    "tax_id": "4180001085572",
+    "address": "愛知県稲沢市祖父江町森上本郷十一、４番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "aikokuarufa"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001035389",
+    "corporate_number": "2180001035389",
+    "legal_name": "北川工業株式会社",
+    "tax_id": "2180001035389",
+    "address": "愛知県稲沢市目比町東折戸６９５番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "KITAGAWA INDUSTRIES CO., LTD.",
+      "kitagawakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4180001088600",
+    "corporate_number": "4180001088600",
+    "legal_name": "テクノホライゾン株式会社",
+    "tax_id": "4180001088600",
+    "address": "愛知県名古屋市南区千竈通２丁目１３番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "TECHNO HORIZON CO., LTD.",
+      "tekunohoraizon"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180001068710",
+    "corporate_number": "3180001068710",
+    "legal_name": "ナスラック株式会社",
+    "tax_id": "3180001068710",
+    "address": "愛知県名古屋市中区丸の内２丁目１番３３号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "nasurakku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001032174",
+    "corporate_number": "8180001032174",
+    "legal_name": "フタムラ化学株式会社",
+    "tax_id": "8180001032174",
+    "address": "愛知県名古屋市中村区名駅２丁目２９番１６号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "futamurakagaku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001252282",
+    "corporate_number": "7120001252282",
+    "legal_name": "株式会社ＢＲネクスト",
+    "tax_id": "7120001252282",
+    "address": "大阪府大阪市中央区南本町３丁目６番６号船場エコービル４階",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "biarunekusuto"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001012008",
+    "corporate_number": "9120001012008",
+    "legal_name": "蒲田化工株式会社",
+    "tax_id": "9120001012008",
+    "address": "大阪府大阪市東成区神路３丁目９番５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kamatakakou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3122001020895",
+    "corporate_number": "3122001020895",
+    "legal_name": "国分技研株式会社",
+    "tax_id": "3122001020895",
+    "address": "大阪府柏原市田辺１丁目１６番２２号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kokubugiken"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120101006989",
+    "corporate_number": "2120101006989",
+    "legal_name": "ミツヤテック株式会社",
+    "tax_id": "2120101006989",
+    "address": "大阪府堺市北区常磐町３丁１４番９号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "mitsuyatekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001157189",
+    "corporate_number": "2120001157189",
+    "legal_name": "オーエム工業株式会社",
+    "tax_id": "2120001157189",
+    "address": "大阪府門真市四宮３丁目９番２８号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "oemukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3122001024129",
+    "corporate_number": "3122001024129",
+    "legal_name": "藤田金属株式会社",
+    "tax_id": "3122001024129",
+    "address": "大阪府八尾市西弓削３丁目８番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "fujitakinzoku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001197330",
+    "corporate_number": "6120001197330",
+    "legal_name": "八洲電業株式会社",
+    "tax_id": "6120001197330",
+    "address": "大阪府大阪市東成区中本４丁目１３番３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "yashimadengyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001222213",
+    "corporate_number": "5120001222213",
+    "legal_name": "カラーラボ株式会社",
+    "tax_id": "5120001222213",
+    "address": "大阪府箕面市船場東１丁目９番３１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kararabo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4122001017742",
+    "corporate_number": "4122001017742",
+    "legal_name": "イヌイ技研株式会社",
+    "tax_id": "4122001017742",
+    "address": "大阪府八尾市小畑町３丁目７４番地の２",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "inuigiken"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9122001018752",
+    "corporate_number": "9122001018752",
+    "legal_name": "社内食品株式会社",
+    "tax_id": "9122001018752",
+    "address": "大阪府八尾市太田新町３丁目７９番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "shanaishokuhin"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001013086",
+    "corporate_number": "2120001013086",
+    "legal_name": "東亜印刷株式会社",
+    "tax_id": "2120001013086",
+    "address": "大阪府大阪市東成区東小橋１丁目１６番２６号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2122001019360",
+    "corporate_number": "2122001019360",
+    "legal_name": "ディンク株式会社",
+    "tax_id": "2122001019360",
+    "address": "大阪府八尾市太田新町６丁目９８番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "dinku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001159117",
+    "corporate_number": "5120001159117",
+    "legal_name": "株式会社ティエラ",
+    "tax_id": "5120001159117",
+    "address": "大阪府門真市三ツ島６丁目２５番３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "tiera"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001019630",
+    "corporate_number": "9120001019630",
+    "legal_name": "栄辰機工株式会社",
+    "tax_id": "9120001019630",
+    "address": "大阪府大阪市平野区加美北４丁目１１番２３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "eishinkikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001130362",
+    "corporate_number": "9120001130362",
+    "legal_name": "株式会社Ｒｅ－ｆａ",
+    "tax_id": "9120001130362",
+    "address": "大阪府大阪市西成区北津守４丁目４番１９号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "rifa"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120101055554",
+    "corporate_number": "5120101055554",
+    "legal_name": "エフジェイ真空株式会社",
+    "tax_id": "5120101055554",
+    "address": "大阪府八尾市高砂町３丁目３番６６号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "efujiishinkuu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001157528",
+    "corporate_number": "2120001157528",
+    "legal_name": "三協荷材株式会社",
+    "tax_id": "2120001157528",
+    "address": "大阪府門真市ひえ島町１番３４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sankyounizai"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120101002364",
+    "corporate_number": "7120101002364",
+    "legal_name": "向陵工業株式会社",
+    "tax_id": "7120101002364",
+    "address": "大阪府堺市堺区向陵東町１丁１番６号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kouryoukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120001242451",
+    "corporate_number": "4120001242451",
+    "legal_name": "株式会社三起工業製作所",
+    "tax_id": "4120001242451",
+    "address": "大阪府大阪市城東区東中浜６丁目９番２０号三起工業製作所",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sankikougyouseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6122001005778",
+    "corporate_number": "6122001005778",
+    "legal_name": "株式会社ニッシンテクノ",
+    "tax_id": "6122001005778",
+    "address": "大阪府東大阪市吉田１丁目１０番３０号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nisshintekuno"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001221509",
+    "corporate_number": "9120001221509",
+    "legal_name": "株式会社リープループ",
+    "tax_id": "9120001221509",
+    "address": "大阪府大阪市西区九条南２丁目１８番４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "ripurupu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4122001000434",
+    "corporate_number": "4122001000434",
+    "legal_name": "石田精工株式会社",
+    "tax_id": "4122001000434",
+    "address": "大阪府東大阪市水走５丁目１１番１１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "ishidaseikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120901040430",
+    "corporate_number": "8120901040430",
+    "legal_name": "株式会社鳥本工業",
+    "tax_id": "8120901040430",
+    "address": "大阪府摂津市鳥飼本町３丁目８番３１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "torimotokougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "0-20",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001049508",
+    "corporate_number": "5120001049508",
+    "legal_name": "近畿製粉株式会社",
+    "tax_id": "5120001049508",
+    "address": "大阪府大阪市西淀川区佃４丁目５番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kinkiseifun"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120101029241",
+    "corporate_number": "8120101029241",
+    "legal_name": "株式会社杉田プリディア",
+    "tax_id": "8120101029241",
+    "address": "大阪府大阪市中央区大手通２丁目２番１３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sugitapuridia"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001000731",
+    "corporate_number": "8120001000731",
+    "legal_name": "大和化成工業株式会社",
+    "tax_id": "8120001000731",
+    "address": "大阪府大阪市旭区中宮３丁目１番２７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "daiwakaseikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8011001015607",
+    "corporate_number": "8011001015607",
+    "legal_name": "東阪電子機器株式会社",
+    "tax_id": "8011001015607",
+    "address": "大阪府吹田市江の木町２９番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "touhandenshikiki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001038620",
+    "corporate_number": "2120001038620",
+    "legal_name": "鈴木美術印刷株式会社",
+    "tax_id": "2120001038620",
+    "address": "大阪府大阪市東成区神路２丁目４番４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "suzukibijutsuinsatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001044481",
+    "corporate_number": "7120001044481",
+    "legal_name": "スリーエム工業株式会社",
+    "tax_id": "7120001044481",
+    "address": "大阪府大阪市西区九条南４丁目３番１５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "suriemukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001018528",
+    "corporate_number": "6120001018528",
+    "legal_name": "榛木金属工業株式会社",
+    "tax_id": "6120001018528",
+    "address": "大阪府東大阪市角田１丁目１０番８号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "harikikinzokukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001174093",
+    "corporate_number": "2120001174093",
+    "legal_name": "株式会社エコパイプ",
+    "tax_id": "2120001174093",
+    "address": "大阪府大阪市中央区平野町４丁目６番１６号グロッツ・ベッケルトビル４階",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "ekopaipu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120101044236",
+    "corporate_number": "4120101044236",
+    "legal_name": "株式会社樽井鉄工所",
+    "tax_id": "4120101044236",
+    "address": "大阪府泉南市りんくう南浜３番１４",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "taruitekkousho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5122001019829",
+    "corporate_number": "5122001019829",
+    "legal_name": "東成鉄工株式会社",
+    "tax_id": "5122001019829",
+    "address": "大阪府八尾市跡部北の町３丁目２番３２号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "higashinaritekkou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001053812",
+    "corporate_number": "8120001053812",
+    "legal_name": "株式会社石戸電機製作所",
+    "tax_id": "8120001053812",
+    "address": "大阪府大阪市淀川区田川３丁目１番３２号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "ishitodenkiseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120101044117",
+    "corporate_number": "8120101044117",
+    "legal_name": "山陽製紙株式会社",
+    "tax_id": "8120101044117",
+    "address": "大阪府泉南市男里６丁目４番２５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sanyouseishi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001000964",
+    "corporate_number": "6120001000964",
+    "legal_name": "長谷川精工株式会社",
+    "tax_id": "6120001000964",
+    "address": "大阪府大阪市旭区大宮２丁目２番１５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "hasegawaseikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1122001021128",
+    "corporate_number": "1122001021128",
+    "legal_name": "日本計器株式会社",
+    "tax_id": "1122001021128",
+    "address": "大阪府柏原市円明町１０００番地１４４",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nihonkeiki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120901009096",
+    "corporate_number": "7120901009096",
+    "legal_name": "栄鋼機工株式会社",
+    "tax_id": "7120901009096",
+    "address": "大阪府摂津市鳥飼中３丁目４番３６号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "eikoukikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001012793",
+    "corporate_number": "7120001012793",
+    "legal_name": "株式会社大成トーツー",
+    "tax_id": "7120001012793",
+    "address": "大阪府大阪市東成区東小橋２丁目４番２４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "taiseitotsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001027078",
+    "corporate_number": "2120001027078",
+    "legal_name": "ヰゲタ鋼管工業株式会社",
+    "tax_id": "2120001027078",
+    "address": "大阪府大阪市大正区三軒家東３丁目１１番２５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "igetakoukankougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001015594",
+    "corporate_number": "2120001015594",
+    "legal_name": "貞徳舎株式会社",
+    "tax_id": "2120001015594",
+    "address": "大阪府大阪市鶴見区今津北２丁目４番４８号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "teitokusha"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120901011290",
+    "corporate_number": "8120901011290",
+    "legal_name": "株式会社大晃機械製作所",
+    "tax_id": "8120901011290",
+    "address": "大阪府高槻市北大樋町２０番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "daikoukikaiseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001086195",
+    "corporate_number": "5120001086195",
+    "legal_name": "永井撚糸株式会社",
+    "tax_id": "5120001086195",
+    "address": "大阪府大阪市西区靱本町１丁目２０番１３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nagaiyoriito"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8122001022615",
+    "corporate_number": "8122001022615",
+    "legal_name": "株式会社光伸",
+    "tax_id": "8122001022615",
+    "address": "大阪府八尾市竹渕東１丁目２３番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "koushin"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7122001017806",
+    "corporate_number": "7122001017806",
+    "legal_name": "株式会社ウエダ美粧堂",
+    "tax_id": "7122001017806",
+    "address": "大阪府八尾市太田新町４丁目１５２番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "uedabishoudou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120101031304",
+    "corporate_number": "9120101031304",
+    "legal_name": "株式会社ヤマギワ",
+    "tax_id": "9120101031304",
+    "address": "大阪府富田林市楠風台３丁目２番９号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "yamagiwa"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120101041538",
+    "corporate_number": "5120101041538",
+    "legal_name": "正栄工業株式会社",
+    "tax_id": "5120101041538",
+    "address": "大阪府和泉市国分町１４１９番地の１",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "shoueikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120102017905",
+    "corporate_number": "9120102017905",
+    "legal_name": "株式会社榎本金属製作所",
+    "tax_id": "9120102017905",
+    "address": "大阪府岸和田市新港町１０番地の３",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "enomotokinzokuseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "21-50",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001150680",
+    "corporate_number": "2120001150680",
+    "legal_name": "株式会社マツムラ",
+    "tax_id": "2120001150680",
+    "address": "大阪府大阪市中央区南本町３丁目６番６号船場エコービル４階",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "matsumura"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001066569",
+    "corporate_number": "5120001066569",
+    "legal_name": "大成化工株式会社",
+    "tax_id": "5120001066569",
+    "address": "大阪府大阪市北区豊崎６丁目８番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "taiseikakou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001064984",
+    "corporate_number": "6120001064984",
+    "legal_name": "篠原電機株式会社",
+    "tax_id": "6120001064984",
+    "address": "大阪府大阪市北区松ケ枝町６番３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "shinoharadenki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1120001099630",
+    "corporate_number": "1120001099630",
+    "legal_name": "ウツミリサイクルシステムズ株式会社",
+    "tax_id": "1120001099630",
+    "address": "大阪府大阪市中央区久太郎町２丁目４番２７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "utsumirisaikurushisutemuzu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120001080604",
+    "corporate_number": "4120001080604",
+    "legal_name": "株式会社ＳＡＮＹＯ‐ＣＹＰ",
+    "tax_id": "4120001080604",
+    "address": "大阪府大阪市城東区鴫野西２丁目６番１９号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sanyoshiwapi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120001017705",
+    "corporate_number": "4120001017705",
+    "legal_name": "昌栄印刷株式会社",
+    "tax_id": "4120001017705",
+    "address": "大阪府大阪市生野区桃谷１丁目３番２３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "shouei"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001088566",
+    "corporate_number": "2120001088566",
+    "legal_name": "藤本化学製品株式会社",
+    "tax_id": "2120001088566",
+    "address": "大阪府大阪市中央区道修町４丁目５番１３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "fujimotokagakuseihin"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001050906",
+    "corporate_number": "2120001050906",
+    "legal_name": "株式会社ワイヤーテクノ",
+    "tax_id": "2120001050906",
+    "address": "大阪府大阪市鶴見区今津北３丁目３番８号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "waiyatekuno"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4122001005400",
+    "corporate_number": "4122001005400",
+    "legal_name": "株式会社中農製作所",
+    "tax_id": "4122001005400",
+    "address": "大阪府東大阪市足代北１丁目１８番２６号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nakanoseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120001093390",
+    "corporate_number": "4120001093390",
+    "legal_name": "日本粉末薬品株式会社",
+    "tax_id": "4120001093390",
+    "address": "大阪府大阪市中央区道修町２丁目５番１１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nihonfunmatsuyakuhin"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120101000989",
+    "corporate_number": "5120101000989",
+    "legal_name": "大崎工業株式会社",
+    "tax_id": "5120101000989",
+    "address": "大阪府堺市西区上８９番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "oosakikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120101030884",
+    "corporate_number": "8120101030884",
+    "legal_name": "株式会社山陽マーク製作所",
+    "tax_id": "8120101030884",
+    "address": "大阪府富田林市中野町東２丁目２番３５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sanyoumakuseisakusho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001045702",
+    "corporate_number": "8120001045702",
+    "legal_name": "東興産業株式会社",
+    "tax_id": "8120001045702",
+    "address": "大阪府大阪市西区靱本町３丁目３番５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "toukousangyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001020640",
+    "corporate_number": "6120001020640",
+    "legal_name": "セイリツ工業株式会社",
+    "tax_id": "6120001020640",
+    "address": "大阪府大阪市平野区加美正覚寺４丁目７番４５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "seiritsukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001052398",
+    "corporate_number": "2120001052398",
+    "legal_name": "株式会社テライ",
+    "tax_id": "2120001052398",
+    "address": "大阪府大阪市東淀川区上新庄１丁目２番７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "terai"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001059654",
+    "corporate_number": "6120001059654",
+    "legal_name": "積水成型工業株式会社",
+    "tax_id": "6120001059654",
+    "address": "大阪府大阪市北区西天満２丁目４番４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sekisuiseikeikougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2122001021242",
+    "corporate_number": "2122001021242",
+    "legal_name": "株式会社松徳",
+    "tax_id": "2122001021242",
+    "address": "大阪府柏原市円明町１０００番地の３０",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "shoutoku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001072994",
+    "corporate_number": "7120001072994",
+    "legal_name": "日本ペイントホールディングス株式会社",
+    "tax_id": "7120001072994",
+    "address": "大阪府大阪市北区大淀北２丁目１番２号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nipponpeintohorudingusu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001149386",
+    "corporate_number": "9120001149386",
+    "legal_name": "共英産業株式会社",
+    "tax_id": "9120001149386",
+    "address": "大阪府枚方市北山１丁目８番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kyoueisangyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8122001005165",
+    "corporate_number": "8122001005165",
+    "legal_name": "濤和化学株式会社",
+    "tax_id": "8122001005165",
+    "address": "大阪府東大阪市若江東町６丁目６番３５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "touwakagaku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001022131",
+    "corporate_number": "8120001022131",
+    "legal_name": "ＯＰＩ株式会社",
+    "tax_id": "8120001022131",
+    "address": "大阪府大阪市平野区加美西２丁目８番３１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "opiai"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120101007614",
+    "corporate_number": "4120101007614",
+    "legal_name": "株式会社ヤナギモト",
+    "tax_id": "4120101007614",
+    "address": "大阪府堺市東区北野田１７３番地２６",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "yanagimoto"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120901024698",
+    "corporate_number": "7120901024698",
+    "legal_name": "株式会社椿本バルクシステム",
+    "tax_id": "7120901024698",
+    "address": "大阪府豊中市寺内２丁目４番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "tsubakimotobarukushisutemu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001127667",
+    "corporate_number": "6120001127667",
+    "legal_name": "株式会社ＯＳＫプランニング",
+    "tax_id": "6120001127667",
+    "address": "大阪府大阪市生野区巽南１丁目１７番２５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6122001019679",
+    "corporate_number": "6122001019679",
+    "legal_name": "株式会社ネージュ",
+    "tax_id": "6122001019679",
+    "address": "大阪府八尾市若林町２丁目９０番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "neju"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001039721",
+    "corporate_number": "7120001039721",
+    "legal_name": "福栄鋼材株式会社",
+    "tax_id": "7120001039721",
+    "address": "大阪府大阪市中央区道修町３丁目６番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "fukueikouzai"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001108995",
+    "corporate_number": "8120001108995",
+    "legal_name": "田辺ファーマファクトリー株式会社",
+    "tax_id": "8120001108995",
+    "address": "大阪府大阪市中央区道修町３丁目２番１０号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "tanabefamafakutori"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3120001041581",
+    "corporate_number": "3120001041581",
+    "legal_name": "株式会社遠藤照明",
+    "tax_id": "3120001041581",
+    "address": "大阪府大阪市中央区本町１丁目６番１９号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "endoushoumei"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120001093267",
+    "corporate_number": "4120001093267",
+    "legal_name": "日本精化株式会社",
+    "tax_id": "4120001093267",
+    "address": "大阪府大阪市中央区備後町２丁目４番９号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nipponseika"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001050011",
+    "corporate_number": "5120001050011",
+    "legal_name": "株式会社ダイフク",
+    "tax_id": "5120001050011",
+    "address": "大阪府大阪市西淀川区御幣島３丁目２番１１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "daifuku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5011701010050",
+    "corporate_number": "5011701010050",
+    "legal_name": "真生印刷株式会社",
+    "tax_id": "5011701010050",
+    "address": "大阪府堺市堺区神南辺町５丁１５２番地２",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "shinseiinsatsu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3120901010347",
+    "corporate_number": "3120901010347",
+    "legal_name": "アルインコ株式会社",
+    "tax_id": "3120901010347",
+    "address": "大阪府高槻市三島江１丁目１番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "aruinko"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120101000824",
+    "corporate_number": "5120101000824",
+    "legal_name": "旭精工株式会社",
+    "tax_id": "5120101000824",
+    "address": "大阪府堺市西区鳳東町６丁５７０番地１",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "asahiseikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001078446",
+    "corporate_number": "8120001078446",
+    "legal_name": "倉敷繊維加工株式会社",
+    "tax_id": "8120001078446",
+    "address": "大阪府大阪市中央区久太郎町２丁目４番３１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kurashikisenikakou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120901025775",
+    "corporate_number": "2120901025775",
+    "legal_name": "マリンフード株式会社",
+    "tax_id": "2120901025775",
+    "address": "大阪府豊中市豊南町東４丁目５番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "marinfudo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001063899",
+    "corporate_number": "2120001063899",
+    "legal_name": "小太郎漢方製薬株式会社",
+    "tax_id": "2120001063899",
+    "address": "大阪府大阪市北区中津２丁目５番２３号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kotaroukanpouseiyaku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3120001264653",
+    "corporate_number": "3120001264653",
+    "legal_name": "フクシマガリレイ株式会社",
+    "tax_id": "3120001264653",
+    "address": "大阪府大阪市西淀川区竹島２丁目６番１８号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "fukushimagarirei"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4120001058385",
+    "corporate_number": "4120001058385",
+    "legal_name": "ぼんち株式会社",
+    "tax_id": "4120001058385",
+    "address": "大阪府大阪市淀川区三津屋中２丁目１５番４１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "bonchi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001049091",
+    "corporate_number": "8120001049091",
+    "legal_name": "安治川鉄工株式会社",
+    "tax_id": "8120001049091",
+    "address": "大阪府大阪市西淀川区竹島４丁目１１番８８号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "ajikawatekkou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001027825",
+    "corporate_number": "7120001027825",
+    "legal_name": "テイカ株式会社",
+    "tax_id": "7120001027825",
+    "address": "大阪府大阪市大正区船町１丁目３番４７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "teika"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3120001069573",
+    "corporate_number": "3120001069573",
+    "legal_name": "平井精密工業株式会社",
+    "tax_id": "3120001069573",
+    "address": "大阪府大阪市北区天満橋３丁目４番３４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "hiraiseimitsukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001014301",
+    "corporate_number": "9120001014301",
+    "legal_name": "株式会社イトーキ",
+    "tax_id": "9120001014301",
+    "address": "大阪府大阪市中央区淡路町１丁目６番１１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "itoki"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120101044042",
+    "corporate_number": "8120101044042",
+    "legal_name": "双日ロイヤルインフライトケイタリング株式会社",
+    "tax_id": "8120101044042",
+    "address": "大阪府泉南市泉州空港南１番地",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "Sojitz Royal In-flight Catering Co., Ltd.",
+      "soujitsuroiyaruinfuraitokeitaringu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4122001004781",
+    "corporate_number": "4122001004781",
+    "legal_name": "タツタ電線株式会社",
+    "tax_id": "4122001004781",
+    "address": "大阪府東大阪市岩田町２丁目３番１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "TATSUTA Electric Wire and Cable Co., Ltd.",
+      "tatsutadensen"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001056461",
+    "corporate_number": "6120001056461",
+    "legal_name": "株式会社ダイヘン",
+    "tax_id": "6120001056461",
+    "address": "大阪府大阪市淀川区田川２丁目１番１１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "daihen"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6120001059670",
+    "corporate_number": "6120001059670",
+    "legal_name": "中西金属工業株式会社",
+    "tax_id": "6120001059670",
+    "address": "大阪府大阪市北区天満橋３丁目３番５号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nakanishikinzokukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7120001059661",
+    "corporate_number": "7120001059661",
+    "legal_name": "エスペック株式会社",
+    "tax_id": "7120001059661",
+    "address": "大阪府大阪市北区天神橋３丁目５番６号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "esupekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001059651",
+    "corporate_number": "9120001059651",
+    "legal_name": "積水樹脂株式会社",
+    "tax_id": "9120001059651",
+    "address": "大阪府大阪市北区西天満２丁目４番４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "sekisuijushi"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3120001050863",
+    "corporate_number": "3120001050863",
+    "legal_name": "利高工業株式会社",
+    "tax_id": "3120001050863",
+    "address": "大阪府大阪市西淀川区御幣島５丁目６番１４号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "rikoukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8120001059660",
+    "corporate_number": "8120001059660",
+    "legal_name": "ダイキン工業株式会社",
+    "tax_id": "8120001059660",
+    "address": "大阪府大阪市北区梅田１丁目１３番１号大阪梅田ツインタワーズ・サウス",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "daikinkougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5080401010057",
+    "corporate_number": "5080401010057",
+    "legal_name": "クリエイティブテクノロジー株式会社",
+    "tax_id": "5080401010057",
+    "address": "静岡県浜松市浜名区中瀬５３００番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "kurieitibutekunoroji"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "4080101008939",
+    "corporate_number": "4080101008939",
+    "legal_name": "大昭和紙工産業株式会社",
+    "tax_id": "4080101008939",
+    "address": "静岡県富士市依田橋６１番地の１",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "daishouwashikousangyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180301013816",
+    "corporate_number": "8180301013816",
+    "legal_name": "カリモク皆栄株式会社",
+    "tax_id": "8180301013816",
+    "address": "愛知県刈谷市広小路３丁目１７番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "karimokukaiei"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2120001156240",
+    "corporate_number": "2120001156240",
+    "legal_name": "株式会社朝陽",
+    "tax_id": "2120001156240",
+    "address": "大阪府守口市藤田町２丁目２５番７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "chouyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1120001078320",
+    "corporate_number": "1120001078320",
+    "legal_name": "キンセイマテック株式会社",
+    "tax_id": "1120001078320",
+    "address": "大阪府大阪市中央区平野町２丁目３番７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "KINSEI MATEC CO., LTD.",
+      "kinseimatekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "3180301013770",
+    "corporate_number": "3180301013770",
+    "legal_name": "株式会社小垣江鉄工所",
+    "tax_id": "3180301013770",
+    "address": "愛知県刈谷市半城土町高林１０８番１０",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "ogakietekkousho"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "5120001026242",
+    "corporate_number": "5120001026242",
+    "legal_name": "日鉄神鋼シャーリング株式会社",
+    "tax_id": "5120001026242",
+    "address": "大阪府大阪市此花区常吉２丁目６番３７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "nittetsushinkousharingu"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7140001068512",
+    "corporate_number": "7140001068512",
+    "legal_name": "極東開発工業株式会社",
+    "tax_id": "7140001068512",
+    "address": "大阪府大阪市中央区淡路町２丁目５番１１号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "kyokutoukaihatsukougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9120001077463",
+    "corporate_number": "9120001077463",
+    "legal_name": "田辺ファーマ株式会社",
+    "tax_id": "9120001077463",
+    "address": "大阪府大阪市中央区道修町３丁目２番１０号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "tanabefama"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "8180001021359",
+    "corporate_number": "8180001021359",
+    "legal_name": "ワタナベフーマック株式会社",
+    "tax_id": "8180001021359",
+    "address": "愛知県名古屋市中川区露橋２丁目１２番２６号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "watanabefumakku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2180001022049",
+    "corporate_number": "2180001022049",
+    "legal_name": "鈴豊精鋼株式会社",
+    "tax_id": "2180001022049",
+    "address": "愛知県名古屋市熱田区桜田町１６番１１号",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "suzutoyoseikou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1120001271370",
+    "corporate_number": "1120001271370",
+    "legal_name": "株式会社ジャバラ",
+    "tax_id": "1120001271370",
+    "address": "大阪府大阪市中央区本町３丁目５番７号",
+    "province": "大阪府",
+    "prefecture": "大阪府",
+    "aliases": [
+      "jabara"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "1180001028187",
+    "corporate_number": "1180001028187",
+    "legal_name": "株式会社三洋製作所",
+    "tax_id": "1180001028187",
+    "address": "愛知県名古屋市緑区鳴海町字下汐田１８３番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "sanyouseisakujo"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7180001074903",
+    "corporate_number": "7180001074903",
+    "legal_name": "パナソニックエコシステムズベンテック株式会社",
+    "tax_id": "7180001074903",
+    "address": "愛知県春日井市鷹来町４０１７番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "panasonikkuekoshisutemuzubentekku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "2080401009985",
+    "corporate_number": "2080401009985",
+    "legal_name": "リズム・オートモーティブ・ジャパン株式会社",
+    "tax_id": "2080401009985",
+    "address": "静岡県浜松市中央区御給町２８３番地の３",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "rizumuotomotibujapan"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "7080101008580",
+    "corporate_number": "7080101008580",
+    "legal_name": "株式会社三協",
+    "tax_id": "7080101008580",
+    "address": "静岡県富士市伝法５７３番地の１３",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "sankyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "301+",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "9180301019390",
+    "corporate_number": "9180301019390",
+    "legal_name": "三井屋工業株式会社",
+    "tax_id": "9180301019390",
+    "address": "愛知県豊田市三軒町３丁目１番地",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "mitsuiyakougyou"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6180302016638",
+    "corporate_number": "6180302016638",
+    "legal_name": "株式会社ゴールドワーク",
+    "tax_id": "6180302016638",
+    "address": "愛知県安城市福釜町矢場７１番地１",
+    "province": "愛知県",
+    "prefecture": "愛知県",
+    "aliases": [
+      "gorudowaku"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  },
+  {
+    "ticker": "6080401015889",
+    "corporate_number": "6080401015889",
+    "legal_name": "株式会社タニコー",
+    "tax_id": "6080401015889",
+    "address": "静岡県磐田市南平松５番地",
+    "province": "静岡県",
+    "prefecture": "静岡県",
+    "aliases": [
+      "taniko"
+    ],
+    "jsic_raw": "E.製造業",
+    "jsic_division": "E",
+    "employee_stratum": "51-300",
+    "source_nta": true,
+    "source_gbizinfo": true
+  }
+]

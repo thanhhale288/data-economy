@@ -69,6 +69,29 @@ _PARKING_MARKERS = (
 )
 
 
+def _tld_bonus_rules(ev: dict[str, Any], locale: str) -> list[tuple[str, float, str]]:
+    """Longest-suffix-first TLD bonuses from locale config (not ``if locale ==``)."""
+    raw = ev.get("tld_bonuses")
+    rules: list[tuple[str, float, str]] = []
+    if isinstance(raw, list):
+        for item in raw:
+            if not isinstance(item, dict):
+                continue
+            suffix = str(item.get("suffix") or "").strip().lower()
+            if not suffix:
+                continue
+            if not suffix.startswith("."):
+                suffix = f".{suffix}"
+            reason = str(item.get("reason") or suffix.lstrip("."))
+            rules.append((suffix, float(item.get("bonus") or 0.0), reason))
+    if not rules and locale == "vi":
+        rules = [
+            (".com.vn", float(ev.get("tld_com_vn_bonus") or 1.5), "com.vn"),
+            (".vn", float(ev.get("tld_vn_bonus") or 0.75), "vn"),
+        ]
+    return sorted(rules, key=lambda row: -len(row[0]))
+
+
 def _vi_ascii_table() -> dict[int, int]:
     marks = (
         "àáảãạăằắẳẵặâầấẩẫậ"
@@ -174,17 +197,22 @@ class PageFetcher:
         delay_seconds: float = 0.25,
         client: httpx.Client | None = None,
         timeout: float = 5.0,
+        locale: str = "vi",
     ) -> None:
         self.cache_dir = cache_dir or PAGE_CACHE_DIR
         self.delay_seconds = delay_seconds
         self._owns = client is None
+        cfg = load_config(locale)
+        accept_language = str(
+            cfg.get("accept_language") or "vi-VN,vi;q=0.9,en;q=0.8"
+        )
         self.client = client or httpx.Client(
             timeout=timeout,
             follow_redirects=True,
             verify=False,  # evidence crawl: many VN corporate certs are broken
             headers={
                 "User-Agent": BROWSER_UA,
-                "Accept-Language": "vi-VN,vi;q=0.9,en;q=0.8",
+                "Accept-Language": accept_language,
             },
             trust_env=False,
         )
@@ -317,16 +345,15 @@ def score_html(
         score -= float(ev.get("weak_domain_penalty") or 2.0)
         reasons.append(f"weak_domain_core:{core}")
 
-    # Locale TLD preference: Vietnamese firms lean .com.vn / .vn over .com of the
-    # same brand (pvcfc.com vs pvcfc.com.vn, fpt.com vs fpt.com.vn).
+    # Locale TLD preference lives in config (vi: .com.vn; ja: .co.jp). Longest
+    # suffix wins so .com.vn is not double-counted as .vn.
     host = strip_www(registrable_domain(url) or "")
-    if locale == "vi":
-        if host.endswith(".com.vn"):
-            score += float(ev.get("tld_com_vn_bonus") or 1.5)
-            reasons.append("tld_prefer:com.vn")
-        elif host.endswith(".vn") and not host.endswith(".com.vn"):
-            score += float(ev.get("tld_vn_bonus") or 0.75)
-            reasons.append("tld_prefer:vn")
+    tld_rules = _tld_bonus_rules(ev, locale)
+    for suffix, bonus, reason in tld_rules:
+        if host.endswith(suffix):
+            score += bonus
+            reasons.append(f"tld_prefer:{reason}")
+            break
 
     lower_html = (html or "").lower()
     if has_page and any(marker in lower_html for marker in _PARKING_MARKERS):

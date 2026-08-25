@@ -1,0 +1,29 @@
+{
+  "task": "evol1-t08-jp-calibration-pilot",
+  "n": 300,
+  "seed": 20260825,
+  "prefectures": [
+    "静岡県",
+    "愛知県",
+    "大阪府"
+  ],
+  "jsic_division": "E",
+  "jsic_division_confirmed": "gBizINFO search checkbox labels manufacturing as Division E (製造業); profile 業種 field uses the same E.製造業 string.",
+  "identity_sha256": "8542b9f01b7d96e540f286910151185cc88ac1b7d79050472178ff1e867cb860",
+  "labels_sha256": "01fdbd74832cd402ada914393c0ad5be5f23acd44f44444761fc9b47a903c531",
+  "search_pool_n": 5579,
+  "search_pool_sha256": "55125aec136f4a1b8269cde0ec8cf4545c7c1c2dc608f57bae57cda9ef2cfec9",
+  "nta_join_hits": 299,
+  "skipped_no_url": 623,
+  "skipped_not_manufacturing": 0,
+  "stratum_counts": {
+    "0-20": 56,
+    "21-50": 75,
+    "51-300": 88,
+    "301+": 81
+  },
+  "generated_at": "2026-08-25T11:36:19Z",
+  "label_path": "/Users/hale/Code/AI in Data Economy-t08/data/raw/jp_labels/labels_300.json",
+  "identity_path": "/Users/hale/Code/AI in Data Economy-t08/data/raw/jp_calibration/identity_300.json",
+  "leak_fence": "Finder reads identity_300.json only. Silver URLs live in data/raw/jp_labels/labels_300.json and are opened after predictions."
+}
