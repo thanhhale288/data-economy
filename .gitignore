@@ -25,8 +25,11 @@ data/raw/*
 !data/raw/local_llm/**
 !data/raw/url_finder/
 !data/raw/url_finder/**
+!data/raw/extraction_cascade/
+!data/raw/extraction_cascade/**
 # Full HTML page dumps are regenerable; keep SERP JSON + identity/labels
 data/raw/url_finder/pages_cache/
+data/raw/extraction_cascade/pages_cache/
 data/models/*.pkl
 data/models/*.pt
 # LightGBM train artifacts (Task #71) — regenerate locally; do not commit binaries

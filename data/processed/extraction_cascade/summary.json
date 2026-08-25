@@ -1,0 +1,68 @@
+{
+  "generated_at": "2026-08-25T01:16:01Z",
+  "n_cohort": 128,
+  "n_listed28": 28,
+  "n_frame_pilot": 100,
+  "n_fetch_ok": 89,
+  "fetch_ok_rate": 0.6953,
+  "tier1_rates_among_fetch_ok": {
+    "has_product_catalog": 0.7416,
+    "has_order_cart": 0.5169,
+    "has_payment_methods": 0.0674,
+    "has_social_links": 0.5281,
+    "has_marketplace_links": 0.0674
+  },
+  "tier_compare_counts": {
+    "agree": 130,
+    "conflict": 26,
+    "abstain": 378,
+    "skip": 39
+  },
+  "tier_compare_by_field": {
+    "has_product_catalog": {
+      "agree": 9,
+      "conflict": 0,
+      "abstain": 80,
+      "skip": 0
+    },
+    "has_order_cart": {
+      "agree": 4,
+      "conflict": 0,
+      "abstain": 85,
+      "skip": 0
+    },
+    "payment_methods": {
+      "agree": 17,
+      "conflict": 8,
+      "abstain": 64,
+      "skip": 0
+    },
+    "social_links": {
+      "agree": 5,
+      "conflict": 16,
+      "abstain": 68,
+      "skip": 0
+    },
+    "marketplace_links": {
+      "agree": 10,
+      "conflict": 2,
+      "abstain": 77,
+      "skip": 0
+    },
+    "website_language": {
+      "agree": 85,
+      "conflict": 0,
+      "abstain": 4,
+      "skip": 0
+    },
+    "*": {
+      "agree": 0,
+      "conflict": 0,
+      "abstain": 0,
+      "skip": 39
+    }
+  },
+  "caveat": "Pilot descriptive rates only — not weighted national estimates. No survey weights, no confidence intervals for population inference. Marketplace signals are outbound links on the company website, not scraped Shopee/TikTok/Lazada listings.",
+  "llm_enabled": true,
+  "elapsed_seconds": 674.6
+}

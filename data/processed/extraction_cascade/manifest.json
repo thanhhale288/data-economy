@@ -1,0 +1,13 @@
+{
+  "task": "evol1-t05-extraction-cascade-v0",
+  "generated_at": "2026-08-25T01:16:01Z",
+  "cohort_sha256": "559219276da8401be60d3665792de2637400252d561bcfe60c19d5ea127a1e44",
+  "n": 128,
+  "llm_enabled": true,
+  "artifacts": {
+    "indicators_jsonl": "data/processed/extraction_cascade/indicators_raw.jsonl",
+    "indicators_csv": "data/processed/extraction_cascade/indicators_raw.csv",
+    "conflicts_csv": "data/processed/extraction_cascade/tier_conflicts.csv",
+    "summary_json": "data/processed/extraction_cascade/summary.json"
+  }
+}

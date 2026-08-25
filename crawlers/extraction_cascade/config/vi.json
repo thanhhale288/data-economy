@@ -1,0 +1,63 @@
+{
+  "locale": "vi",
+  "catalog_keywords": [
+    "sản phẩm",
+    "product",
+    "cửa hàng",
+    "cửa hàng trực tuyến",
+    "online store",
+    "danh mục",
+    "catalog",
+    "shop"
+  ],
+  "order_cart_keywords": [
+    "giỏ hàng",
+    "cart",
+    "checkout",
+    "mua ngay",
+    "đặt hàng",
+    "add to cart",
+    "thêm vào giỏ",
+    "thanh toán",
+    "shop now"
+  ],
+  "order_cart_href_patterns": [
+    "checkout",
+    "/cart\\b",
+    "gio-hang",
+    "giỏ-hàng",
+    "thanh-toan",
+    "thanh-toán",
+    "/basket\\b"
+  ],
+  "order_cart_form_patterns": [
+    "cart",
+    "checkout",
+    "gio-hang",
+    "thanh-toan",
+    "add[_-]?to[_-]?cart"
+  ],
+  "payment_markers": {
+    "vnpay": ["vnpay", "vn pay", "vnpay.vn"],
+    "momo": ["momo", "ví momo", "momo.vn"],
+    "cod": ["cod", "thu hộ", "thanh toán khi nhận", "cash on delivery"]
+  },
+  "marketplace_hosts": {
+    "shopee": ["shopee.vn", "shopee.com"],
+    "tiktok": ["tiktok.com", "shop.tiktok.com"],
+    "lazada": ["lazada.vn", "lazada.com"]
+  },
+  "social_hosts": {
+    "facebook": ["facebook.com", "fb.com", "fb.me"],
+    "youtube": ["youtube.com", "youtu.be"],
+    "linkedin": ["linkedin.com"],
+    "zalo": ["zalo.me", "zalo.vn"],
+    "instagram": ["instagram.com"],
+    "x": ["twitter.com", "x.com"],
+    "tiktok": ["tiktok.com"]
+  },
+  "language_hints": {
+    "vi": ["à", "ả", "ã", "ạ", "ă", "ắ", "ầ", "ề", "ệ", "ỉ", "ị", "ọ", "ố", "ộ", "ớ", "ở", "ợ", "ụ", "ủ", "ữ", "ỳ", "đ"],
+    "en": [" the ", " and ", " with ", " for ", " product ", " about "]
+  }
+}
