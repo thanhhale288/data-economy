@@ -97,6 +97,9 @@ trong DB. Không có task nào chờ GSO, chờ công văn, hay chờ tuyển si
   và 2 dự thảo công văn (Phụ lục A–B của proposal-v3, giữ nguyên nội dung) chỉ chờ điền tên + ký.
 - **DoD:** bộ tài liệu in được, kể được trong 15 phút.
 - **Effort:** 0.5 ngày (agent nháp, bạn sửa giọng). Branch: `cursor/evol1-task07-advisor-brief`.
+- **Nháp sẵn:** `docs/advisor-brief/` — README checklist in, `one-pager.md`, `slides.md` (7 trang /
+  15′), `cong-van-a-gso.md`, `cong-van-b-idea.md`. Số liệu điền từ T02–T05 (khung 800;
+  URL-finder 12/28; cascade 128/89). Bạn sửa giọng trước buổi gặp; điền `[…]` trên công văn.
 
 ### T08 — Pilot hiệu chuẩn Nhật: chấm URL-finder trên nhãn quy mô lớn
 - **Vì sao:** T03 chấm bộ dò URL trên 28 ca — đủ để có con số đầu tiên, không đủ để nói gì
@@ -165,9 +168,10 @@ Chi tiết lịch tuần và rủi ro: xem roadmap mục 8–9 của `proposal-v
    phát hiện tầng dự báo rò rỉ nhãn và thua naive baseline, chỉ số Digital VA đứng trên
    13 dòng dữ liệu — *em chủ động gỡ và tái định vị đề tài* theo chuẩn quốc tế
    (Eurostat OBEC / Istat experimental statistics). Đưa proposal-v4.
-2. **Kết quả chạy thật** (5'): khung mẫu pilot n=XXX từ nguồn công khai; URL-finder đạt X/28
-   trên tập kiểm chứng; bảng chỉ tiêu thô cho ~128 DN; (nếu kịp) P/R đầu tiên trên mini
-   gold standard. Nhấn: *tất cả làm không cần chờ dữ liệu xin*.
+2. **Kết quả chạy thật** (5'): khung mẫu pilot **n=800** từ nguồn công khai; URL-finder đạt
+   **12/28 (42.9%)** trên tập kiểm chứng; bảng chỉ tiêu thô cho **128** DN (**89** fetch_ok);
+   (nếu kịp) P/R đầu tiên trên mini gold standard. Nhấn: *tất cả làm không cần chờ dữ liệu xin*.
+
 3. **Đề xuất mới của v4 so với v3** (3'): thêm hiện trường hiệu chuẩn Nhật Bản, vì Nhật có đăng
    bạ pháp nhân mở và trường website trong dữ liệu chính phủ — nghĩa là **chấm được thiết bị đo
    trên hàng trăm ca có nhãn thay vì 28 ca**, và đo được *chồng kiểm định không nhãn của mình
