@@ -127,7 +127,7 @@ def find_url(
     assert_no_url_fields(payload, context="url_finder.find_url")
     hits, queries, candidate_source = collect_hits(payload, searcher, locale=locale)
     owns_fetcher = fetcher is None
-    page_client = fetcher or PageFetcher()
+    page_client = fetcher or PageFetcher(locale=locale)
     try:
         scored: list[ScoredCandidate] = []
         for hit in hits:

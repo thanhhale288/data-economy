@@ -27,6 +27,11 @@ FORBIDDEN_IDENTITY_KEYS = frozenset(
         "gold_domain",
         "official_url",
         "homepage",
+        "homepage_url",
+        "company_url",
+        "companyurl",
+        "web_site",
+        "websiteurl",
     }
 )
 TAX_IN_H1_RE = re.compile(r"^(\d{10})(?:-\d{3})?\s*[-–]\s*(.+)$")

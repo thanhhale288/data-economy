@@ -1,0 +1,352 @@
+[
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "全国",
+    "file_no": "27660",
+    "label": "zip 254MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "北海道",
+    "file_no": "27663",
+    "label": "zip 11MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "青森県",
+    "file_no": "27667",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "岩手県",
+    "file_no": "27670",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "宮城県",
+    "file_no": "27673",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "秋田県",
+    "file_no": "27676",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "山形県",
+    "file_no": "27679",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "福島県",
+    "file_no": "27682",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "茨城県",
+    "file_no": "27685",
+    "label": "zip 5MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "栃木県",
+    "file_no": "27688",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "群馬県",
+    "file_no": "27691",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "埼玉県",
+    "file_no": "27694",
+    "label": "zip 12MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "千葉県",
+    "file_no": "27698",
+    "label": "zip 11MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "東京都",
+    "file_no": "27703",
+    "label": "分割1 zip 36MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "東京都",
+    "file_no": "27704",
+    "label": "分割2 zip 23MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "神奈川県",
+    "file_no": "27715",
+    "label": "zip 17MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "新潟県",
+    "file_no": "27720",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "富山県",
+    "file_no": "27723",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "石川県",
+    "file_no": "27726",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "福井県",
+    "file_no": "27729",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "山梨県",
+    "file_no": "27732",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "長野県",
+    "file_no": "27735",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "岐阜県",
+    "file_no": "27738",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "静岡県",
+    "file_no": "27741",
+    "label": "zip 6MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "愛知県",
+    "file_no": "27744",
+    "label": "zip 14MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "三重県",
+    "file_no": "27748",
+    "label": "zip 3MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "滋賀県",
+    "file_no": "27751",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "京都府",
+    "file_no": "27754",
+    "label": "zip 6MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "大阪府",
+    "file_no": "27757",
+    "label": "zip 22MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "兵庫県",
+    "file_no": "27762",
+    "label": "zip 10MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "奈良県",
+    "file_no": "27766",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "和歌山県",
+    "file_no": "27769",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "鳥取県",
+    "file_no": "27772",
+    "label": "zip 871KB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "島根県",
+    "file_no": "27775",
+    "label": "zip 1009KB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "岡山県",
+    "file_no": "27778",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "広島県",
+    "file_no": "27781",
+    "label": "zip 5MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "山口県",
+    "file_no": "27784",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "徳島県",
+    "file_no": "27787",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "香川県",
+    "file_no": "27790",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "愛媛県",
+    "file_no": "27793",
+    "label": "zip 3MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "高知県",
+    "file_no": "27796",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "福岡県",
+    "file_no": "27799",
+    "label": "zip 10MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "佐賀県",
+    "file_no": "27803",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "長崎県",
+    "file_no": "27806",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "熊本県",
+    "file_no": "27809",
+    "label": "zip 4MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "大分県",
+    "file_no": "27812",
+    "label": "zip 3MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "宮崎県",
+    "file_no": "27815",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "鹿児島県",
+    "file_no": "27818",
+    "label": "zip 3MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "沖縄県",
+    "file_no": "27821",
+    "label": "zip 3MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  },
+  {
+    "section": "CSV形式・Unicode",
+    "prefecture": "国外",
+    "file_no": "27824",
+    "label": "zip 2MB",
+    "retrieved_at": "2026-08-25T11:15:41Z"
+  }
+]

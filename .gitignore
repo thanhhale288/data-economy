@@ -27,9 +27,21 @@ data/raw/*
 !data/raw/url_finder/**
 !data/raw/extraction_cascade/
 !data/raw/extraction_cascade/**
+!data/raw/jp_calibration/
+!data/raw/jp_calibration/**
+!data/raw/jp_labels/
+!data/raw/jp_labels/**
 # Full HTML page dumps are regenerable; keep SERP JSON + identity/labels
 data/raw/url_finder/pages_cache/
 data/raw/extraction_cascade/pages_cache/
+data/raw/jp_calibration/nta_zips/
+data/raw/jp_calibration/nta_csv/
+data/raw/jp_calibration/pages_cache/
+data/raw/jp_calibration/serps_cache/
+data/raw/jp_calibration/profile_cache/
+data/raw/jp_calibration/search_cache/
+# Regenerable search listing (~5k firms); keep identity/labels only
+data/raw/jp_calibration/gbizinfo_search_pool.json
 data/models/*.pkl
 data/models/*.pt
 # LightGBM train artifacts (Task #71) — regenerate locally; do not commit binaries
