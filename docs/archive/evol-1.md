@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-08** — không còn nguồn sự thật. Hướng hiện tại: [`docs/plan.md`](../plan.md).
+
 # Evol-1 — Kế hoạch theo từng task, ưu tiên việc KHÔNG cần chờ dữ liệu
 
 **Mục tiêu đợt này:** đến buổi gặp GVHD tuần sau, có **kết quả chạy thật + con số đo được**

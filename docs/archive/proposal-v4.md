@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-08** — không còn nguồn sự thật. Hướng hiện tại: [`docs/plan.md`](../plan.md). Nhật là phụ lục, không phải thân đề tài lab.
+
 # Đề xuất v4 — Thiết bị đo tham gia thương mại điện tử từ dữ liệu web: hiệu chuẩn ở Nhật Bản, triển khai ở Việt Nam
 
 **Trạng thái:** dự thảo trình GVHD duyệt · mở rộng proposal-v3 bằng hiện trường hiệu chuẩn thứ hai

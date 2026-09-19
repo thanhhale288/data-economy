@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-08** — kịch bản gặp GVHD theo proposal-v4. Hướng hiện tại: [`../plan.md`](../plan.md).
+
 # Gói trình bày buổi gặp GVHD (Evol-1 T07)
 
 Bộ tài liệu **in được**, kể được trong **~15 phút**. Số liệu chỉ lấy từ artifact đã chạy

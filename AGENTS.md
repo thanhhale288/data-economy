@@ -4,11 +4,11 @@ Guidance for AI coding agents working in this repository.
 
 ## What this project is
 
-Research platform + web demo for measuring **e-commerce participation** of Vietnam manufacturing firms (VSIC Section C) from web data (OBEC-style), with GSO/OECD macro context and listed-company case studies.
+Research platform + web demo (website flags, crawlers, listed-firm tools). **Current human plan:** hand off / withdraw from the GVHD measurement topic — see **`docs/plan.md`**. Do not implement a full lab-report sprint unless the user explicitly stays on the topic.
 
-Before inventing formulas, industry codes, or sample companies, read **`CONTEXT.md`**, **`docs/proposal-v4.md`**, and the active backlog **`docs/evol-1.md`**. Legacy proposal: `docs/archive/proposal-v2.md` (do not use for current scope).
+Before inventing formulas, industry codes, or sample companies, read **`docs/plan.md`**, then **`CONTEXT.md`**. Do not follow archived proposals (`docs/archive/proposal-v*.md`, `docs/archive/evol-1.md`) for current scope.
 
-**Do not read `docs/knowledge.md`** — human glossary only (listed in `.cursorignore`). Domain for agents = `CONTEXT.md` + `docs/adr/` + `docs/economy-knowledge.md` when formulas need depth.
+**Do not read `docs/knowledge.md`** — human glossary only (listed in `.cursorignore`). Domain for agents = `docs/plan.md` + `CONTEXT.md` + `docs/adr/`. Digital VA / IIP forecast formulas in `CONTEXT.md` are leftover demo code, not lab-report targets.
 
 ## Stack
 
@@ -30,8 +30,8 @@ pipeline/    cleaning/, features/, dags/
 ml/          models/, evaluation/
 frontend/    React dashboard
 data/        mappings/, seeds/, models/, raw/
-docs/        proposal-v4.md, evol-1.md, agents/, adr/, archive/
-.scratch/    archive/ only (historical handoffs); active backlog = docs/evol-1.md
+docs/        plan.md (source of truth), agents/, adr/, archive/
+.scratch/    archive/ only (historical handoffs); active backlog = docs/plan.md
 .agents/     installed agent skills (mattpocock/skills)
 ```
 
@@ -53,7 +53,7 @@ cd frontend && npm install && npm run dev
 ## Boundaries
 
 - Do **not** invent OECD/GSO numbers when crawl fails — use explicit fallback and record it; prefer real SDMX over random series.
-- Do **not** change Digital VA / VDEI formulas without updating `CONTEXT.md` and preferably an ADR under `docs/adr/`.
+- Do **not** treat Digital VA / VDEI / IIP forecast as lab-report KPIs (`docs/plan.md`). Do not change leftover demo formulas without updating `CONTEXT.md` and an ADR.
 - Sample listed companies live in `data/seeds/companies.json` (allowlist derived from seed; Epic 2 ~25–30 with VSIC peer clusters). Expand via seed + `scripts/onboard_company.py`, not ad-hoc DB rows.
 - Prefer Vietnamese domain terms from `CONTEXT.md` when talking about economics; keep code identifiers in English.
 - Do **not** read `docs/knowledge.md` (human glossary; `.cursorignore`).
@@ -71,7 +71,7 @@ Default roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human
 
 ### Domain docs
 
-Single-context: root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+Single-context: `docs/plan.md` + root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
 
 ### GitHub workflow
 

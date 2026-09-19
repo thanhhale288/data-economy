@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-08** — công thức Digital VA / IIP forecast thuộc demo cũ. Hướng lab: [`docs/plan.md`](../plan.md).
+
 # Kinh tế số ngành Chế biến, Chế tạo — Sổ kiến thức dự án
 
 Tài liệu này giải thích **mục tiêu kinh tế**, **ý nghĩa các thành phần**, **công thức** và **mối liên hệ** dùng trong Manufacturing Data Economy Platform. Không chứa code — đọc trước khi hoàn thiện hoặc thay đổi logic số liệu.

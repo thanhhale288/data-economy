@@ -15,7 +15,7 @@ Handoff cũ sau prune: `.scratch/archive/handoffs/`. Chỉ mở **một** file k
 
 Active: `.scratch/handoff-task51.md` · Epic 4: `.scratch/epic4-ai-ml-plan.md`  
 Phase cũ: `.scratch/archive/handoffs/handoff-phase4.md` (etc.)  
-Checklist DONE dài: `docs/plan-archive.md`
+Checklist DONE dài (Epic 1–5): `docs/archive/plan-archive.md`
 
 ## Story arc
 

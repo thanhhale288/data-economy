@@ -2,6 +2,8 @@
 
 Shared language for the Manufacturing Data Economy Platform — Vietnam manufacturing digital economy analytics (macro GSO/OECD + micro listed companies + marketplace + IIP forecast + benchmark).
 
+> **Lab report (tháng 12/2026):** nguồn sự thật là [`docs/plan.md`](docs/plan.md). Các mục Digital VA / VDEI / dự báo IIP dưới đây mô tả **code demo cũ**, không phải KPI báo cáo lab.
+
 ## Industry & classifications
 
 **VSIC Section C**:
