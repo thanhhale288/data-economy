@@ -22,8 +22,8 @@ Nếu không announce được vì thiếu handoff/task rõ → hỏi 1 câu r�
 
 | Khi | Đọc / dùng |
 |-----|------------|
-| Mọi chat | `AGENTS.md`, `CONTEXT.md`, `docs/evol-1.md` |
-| Chọn task & AC | `.cursor/skills/project-roadmap/SKILL.md`, `docs/evol-1.md` |
+| Mọi chat | `AGENTS.md`, `CONTEXT.md`, `docs/plan.md` |
+| Chọn task & AC | `.cursor/skills/project-roadmap/SKILL.md`, `docs/plan.md` |
 | Git commit / push / PR | `.cursor/skills/github-workflow/SKILL.md` + `epic-phase-task-git` |
 | Đóng task | **plain-task-close** (bắt buộc) + **Testing results** — [reference.md](reference.md) |
 | Chi tiết wave + templates | [reference.md](reference.md) |

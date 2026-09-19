@@ -56,7 +56,7 @@ microdata) is wired yet; Task #39 must not invent a count or crawl the country.
 - Agents and APIs must not treat `companies` row count as “Section C coverage.”
 - Future shallow ingest lands in the universe stub path first; deep pipelines
   stay allowlist-scoped.
-- `docs/economy-knowledge.md` and `CONTEXT.md` document the three tiers.
+- `docs/archive/economy-knowledge.md` and `CONTEXT.md` document the three tiers (legacy platform). Lab KPIs: `docs/plan.md`.
 - Empty `data/raw/company_universe/rows.json` (`[]`) is intentional — not a bug.
 
 ## Alternatives considered

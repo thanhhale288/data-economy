@@ -4,12 +4,11 @@ How the engineering skills should consume this repo's domain documentation when 
 
 ## Before exploring, read these
 
-- **`CONTEXT.md`** at the repo root
+- **`docs/plan.md`** — current lab direction (website flags + survey %; Japan in appendix)
+- **`CONTEXT.md`** at the repo root — terms; Digital VA / IIP forecast are leftover demo, not lab KPIs
 - **`docs/adr/`** — read ADRs that touch the area you're about to work in
-- **`docs/proposal-v4.md`** — current research design (OBEC / e-commerce participation measurement)
-- **`docs/evol-1.md`** — active execution backlog (T01–T21)
 
-Legacy method doc: `docs/archive/proposal-v2.md` — do not use for current scope.
+Archived research drafts: `docs/archive/proposal-v*.md`, `docs/archive/evol-1.md` — do not use for current scope.
 
 If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) creates them lazily when terms or decisions actually get resolved.
 
@@ -21,8 +20,7 @@ Single-context repo:
 /
 ├── CONTEXT.md
 ├── docs/
-│   ├── proposal-v4.md
-│   ├── evol-1.md
+│   ├── plan.md
 │   ├── adr/
 │   └── archive/
 ├── backend/

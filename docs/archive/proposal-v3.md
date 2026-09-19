@@ -1,3 +1,5 @@
+> **ARCHIVED 2026-09-08** — không còn nguồn sự thật. Hướng hiện tại: [`docs/plan.md`](../plan.md).
+
 # Đề xuất v3 — Đo lường mức độ tham gia thương mại điện tử của doanh nghiệp chế biến, chế tạo Việt Nam từ dữ liệu web
 
 **Trạng thái:** dự thảo trình GVHD duyệt · thay thế định hướng đo "Digital VA" của proposal-v2
