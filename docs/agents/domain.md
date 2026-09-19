@@ -4,7 +4,7 @@ How the engineering skills should consume this repo's domain documentation when 
 
 ## Before exploring, read these
 
-- **`docs/plan.md`** — current lab direction (website flags + survey %; Japan in appendix)
+- **`docs/plan.md`** — source of truth: withdraw/handoff from the GVHD measurement topic (do not finish a lab sprint unless the user stays on it)
 - **`CONTEXT.md`** at the repo root — terms; Digital VA / IIP forecast are leftover demo, not lab KPIs
 - **`docs/adr/`** — read ADRs that touch the area you're about to work in
 
