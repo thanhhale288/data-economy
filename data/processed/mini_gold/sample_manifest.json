@@ -1,0 +1,15 @@
+{
+  "task": "evol1-t06-handbook-mini-gold",
+  "generated_at": "2026-08-25T09:33:25Z",
+  "n_fetch_ok": 89,
+  "cohort_counts": {
+    "frame_pilot": 62,
+    "listed28": 27
+  },
+  "cascade_jsonl": "data/processed/extraction_cascade/indicators_raw.jsonl",
+  "cascade_jsonl_sha256": "a67466aa8014b5a6fefe60182a2c4c778a2d121d8799c9e76c6f9e01649958b1",
+  "cascade_manifest_sha256": "71febd6c727281cab742689ab70ffd90d16af5d1ac6d9e5c950a6761c0f1607a",
+  "worksheet_csv": "data/processed/mini_gold/worksheet_89.csv",
+  "worksheet_sha256": "a737427af7020c188631d4a907b870c7a8a1476921528d6b36b310959ead0b4d",
+  "note": "Gold columns are blank. Humans fill gold_* and set reviewed=true. pre_* columns are machine hints only — not gold."
+}

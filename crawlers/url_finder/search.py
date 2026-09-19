@@ -5,6 +5,7 @@ from __future__ import annotations
 import hashlib
 import json
 import logging
+import os
 import time
 from dataclasses import asdict, dataclass
 from pathlib import Path
@@ -15,12 +16,14 @@ import httpx
 from bs4 import BeautifulSoup
 
 from crawlers.companies.website_detector import HTTP_TIMEOUT
-from crawlers.url_finder.config_loader import load_config
+from crawlers.url_finder.config_loader import load_config, resolve_search_backend
 from crawlers.url_finder.paths import SERP_CACHE_DIR
 
 logger = logging.getLogger(__name__)
 
 DDG_HTML = "https://html.duckduckgo.com/html/"
+SERPER_ENDPOINT = "https://google.serper.dev/search"
+SERPER_KEY_ENV = "SERPER_API_KEY"
 BROWSER_UA = (
     "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) "
     "AppleWebKit/537.36 (KHTML, like Gecko) Chrome/128.0.0.0 Safari/537.36"
@@ -84,6 +87,32 @@ def parse_ddg_html(html: str) -> list[SearchHit]:
     return hits
 
 
+def parse_serper_payload(payload: Any) -> list[SearchHit]:
+    if not isinstance(payload, dict):
+        return []
+    organic = payload.get("organic")
+    if not isinstance(organic, list):
+        return []
+    hits: list[SearchHit] = []
+    seen: set[str] = set()
+    for row in organic:
+        if not isinstance(row, dict):
+            continue
+        url = str(row.get("link") or "").strip()
+        if not url.startswith("http") or url in seen:
+            continue
+        seen.add(url)
+        hits.append(
+            SearchHit(
+                title=str(row.get("title") or ""),
+                url=url,
+                snippet=str(row.get("snippet") or ""),
+                source="search",
+            )
+        )
+    return hits
+
+
 def _read_cache(path: Path) -> list[SearchHit] | None:
     if not path.exists():
         return None
@@ -137,7 +166,7 @@ class SearchClient:
         timeout: float = HTTP_TIMEOUT,
     ) -> None:
         cfg = load_config(locale)
-        self.backend = str(cfg.get("search_backend") or "duckduckgo_html")
+        self.backend = resolve_search_backend(cfg)
         self.cache_dir = cache_dir or SERP_CACHE_DIR
         self.delay_seconds = delay_seconds
         self._owns = client is None
@@ -201,6 +230,8 @@ class SearchClient:
         logger.warning("Search blocked (%s) — skipping further live queries", detail)
 
     def _search_live(self, query: str) -> list[SearchHit]:
+        if self.backend == "serper":
+            return self._search_serper(query)
         if self.backend != "duckduckgo_html":
             raise ValueError(f"unsupported search backend: {self.backend}")
         if self.blocked:
@@ -226,6 +257,47 @@ class SearchClient:
         hits = parse_ddg_html(response.text)
         if not hits:
             # Bot interstitial / empty page: keep live empty out of cache.
+            logger.warning("Search parsed 0 hits query=%r — not caching", query)
+            return []
+        logger.info("Search %r → %s hits", query, len(hits))
+        return hits
+
+    def _search_serper(self, query: str) -> list[SearchHit]:
+        if self.blocked:
+            return []
+        key = (os.environ.get(SERPER_KEY_ENV) or "").strip()
+        if not key:
+            self._mark_blocked("missing_SERPER_API_KEY")
+            return []
+        self._throttle()
+        try:
+            response = self.client.post(
+                SERPER_ENDPOINT,
+                json={"q": query, "num": 10},
+                headers={"X-API-KEY": key, "Accept": "application/json"},
+            )
+            self._last_at = time.monotonic()
+        except Exception as exec_exc:  # noqa: BLE001 — network; never invent hits
+            logger.warning("Search fail query=%r: %s", query, exec_exc)
+            self._last_at = time.monotonic()
+            return []
+        if response.status_code in {401, 403, 429}:
+            self._mark_blocked(f"HTTP {response.status_code} {self.backend}")
+            return []
+        if response.status_code != 200:
+            logger.warning(
+                "Search HTTP %s query=%r — not caching empty result",
+                response.status_code,
+                query,
+            )
+            return []
+        try:
+            payload = response.json()
+        except Exception as parse_exc:  # noqa: BLE001 — never invent hits
+            logger.warning("Search JSON fail query=%r: %s", query, parse_exc)
+            return []
+        hits = parse_serper_payload(payload)
+        if not hits:
             logger.warning("Search parsed 0 hits query=%r — not caching", query)
             return []
         logger.info("Search %r → %s hits", query, len(hits))
