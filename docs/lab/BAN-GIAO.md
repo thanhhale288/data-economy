@@ -1,11 +1,13 @@
 # Gói xin rút và bàn giao đề tài lab
 
-**Ngày:** 19/9/2026  
-**Người gửi:** sinh viên đang phụ trách repo  
-**Người nhận:** cô giáo hướng dẫn (GVHD)  
-**Nguồn sự thật trên repo:** [`docs/plan.md`](../plan.md) (cập nhật 14/9/2026)
+> **TẠM HOÃN GỬI** (19/9/2026). File này **vẫn đúng** khi sau này bàn giao. **Đừng gửi cô hôm nay.** Việc đang làm: bề nổi còn lại trên repo — xem [`docs/plan.md`](../plan.md).
 
-Đây **không** phải báo cáo lab 25 trang. Đây là **gói một buổi**: đoạn xin rút, chỗ đã có trên repo, số đã chạy (đã đối chiếu file trên đĩa, 19/9/2026), việc nhóm sau, và checklist gặp 15 phút.
+**Ngày soạn:** 19/9/2026  
+**Người gửi:** sinh viên đang phụ trách repo  
+**Người nhận:** cô giáo hướng dẫn (GVHD) — **chưa gửi**  
+**Nguồn sự thật trên repo:** [`docs/plan.md`](../plan.md) (cập nhật 19/9/2026)
+
+Đây **không** phải báo cáo lab 25 trang. Đây là **gói một buổi** (bản nháp): đoạn xin rút, chỗ đã có trên repo, số đã chạy (đã đối chiếu file trên đĩa, 19/9/2026), việc nhóm sau, và checklist gặp 15 phút.
 
 ---
 

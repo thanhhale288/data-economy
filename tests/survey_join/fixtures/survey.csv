@@ -1,0 +1,4 @@
+mst,company_name,vsic_4digit,ticker,website_url_self_report,has_website,has_product_catalog,has_order_cart,payment_methods,has_social_links,has_marketplace_links,marketplace_names,online_revenue_share_bin,revenue_vnd,revenue_year,respondent_role,respondent_email,notes
+ 0000000000 ,Fake MST Co,1010,,https://fake-mst.example,true,true,false,cod,true,false,,10to25,1000000000,2024,owner,fake@example.test,synthetic fixture — not a real response
+1111111111,Fake Ticker Co,2410,TEST,https://fake-ticker.example,true,true,false,,false,false,,lt5,,,staff,fake2@example.test,synthetic fixture — not a real response
+9999999999,Unmatched Co,2511,,https://nowhere.example,false,false,false,,false,false,,unknown,5000,2024,other,fake3@example.test,synthetic fixture — not a real response
