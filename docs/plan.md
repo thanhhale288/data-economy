@@ -64,7 +64,7 @@ Không bỏ mục. Phân **đang làm được trên repo** và **vẫn chặn**
 | [x] | Khung nhãn 6 cờ trên 89 site | [`docs/annotation-handbook-v1.md`](annotation-handbook-v1.md) + `data/processed/mini_gold/worksheet_89.csv`; **ô nhãn người vẫn trống** |
 | [x] | Khớp form ↔ web theo MST | [`docs/lab/KHOP-FORM-WEB.md`](lab/KHOP-FORM-WEB.md) + `crawlers/survey_join/` — test fixture giả; **chưa** có form thật |
 | [x] | Dàn ý báo cáo | [`docs/lab/DAN-Y-BAO-CAO.md`](lab/DAN-Y-BAO-CAO.md) — dàn ý, **không** phải báo cáo 25 trang |
-| [x] | Code `DT × %` (fixture) | Chỉ nhân khi `revenue_vnd` dương; **không** lấy số seed demo |
+| [x] | Glue form (recode + MST listed + unmatched plan + Serper tùy chọn) | `crawlers/survey_join` recode/plan; URL-finder `SERPER_API_KEY` — không phiếu thật |
 | [blocked] | `DT × %` trên mẫu thật | Chưa có phiếu khảo sát / doanh thu DN khai |
 | [blocked] | Gửi form 100–200 DN | Cần cô gửi / kênh phát form — không tự spam DN |
 | [blocked] | Nhãn tay đủ (tối thiểu ~20, đủ thì 89) → P/R | Người dán; máy không thay |

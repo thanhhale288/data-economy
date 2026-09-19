@@ -12,7 +12,9 @@
 Khi cô (hoặc nhóm sau) gửi CSV khảo sát, lệnh:
 
 ```bash
-PYTHONPATH=. python3 -m crawlers.survey_join --survey path.csv --out dir
+PYTHONPATH=. python3 -m crawlers.survey_join recode --src form.csv --dest locked.csv
+PYTHONPATH=. python3 -m crawlers.survey_join --survey locked.csv --out dir
+PYTHONPATH=. python3 -m crawlers.survey_join plan --survey locked.csv --out dir
 ```
 
 ghép từng dòng form với cờ máy đã chạy trên website (`data/processed/extraction_cascade/indicators_raw.jsonl`) và, **chỉ khi form có doanh thu dương**, nhân với điểm giữa (midpoint) của khoảng `% doanh thu online`.
@@ -31,9 +33,12 @@ Phía web: `firm_id` trong JSONL cascade = **mã cổ phiếu** với DN niêm y
 
 1. `survey.mst` == `cascade.firm_id` (ghi `web_match_via=mst`; nếu MST cũng có trong khung `frame_pilot` thì bước 2 được ưu tiên ghi nhận)  
 2. `survey.mst` == `frame_pilot.tax_code` rồi map sang cascade cùng MST đó (`web_match_via=frame_pilot`)  
-3. nếu còn ticker: `survey.ticker` == `cascade.firm_id` (`web_match_via=ticker`)
+3. nếu còn ticker: `survey.ticker` == `cascade.firm_id` (`web_match_via=ticker`)  
+4. phiếu **chỉ MST**, không ticker: `survey.mst` → `tax_id` trong [`data/raw/url_finder/identity_28.json`](../../data/raw/url_finder/identity_28.json) → ticker → cascade (`web_match_via=listed_tax_id`). File identity thiếu thì bỏ bước này, không crash, không bịa URL.
 
 Dòng form **không khớp** vẫn giữ trong file ra: `web_match=false`, cờ web = null — **không bịa URL**.
+
+Hàm / lệnh `plan`: DN unmatched có URL tự khai `http(s)` → `cascade_self_report` (file `frame_urls_self_report.json` cho `--frame-urls`); có tên+MST không URL → `needs_url_finder` (không đoán domain); thiếu trường → `unactionable`.
 
 Cột lệch form vs máy (chỉ khi đã khớp **và** `fetch_ok`): `disagree_has_order_cart` và các cờ tương ứng (catalog, MXH, link sàn, thanh toán, có website).
 

@@ -9,6 +9,7 @@ from typing import Any, Iterable
 
 from crawlers.survey_join.estimate import estimate_online_revenue
 from crawlers.survey_join.paths import (
+    IDENTITY_28,
     JOINED_CSV_NAME,
     JOINED_JSONL_NAME,
     SUMMARY_JSON_NAME,
@@ -16,7 +17,7 @@ from crawlers.survey_join.paths import (
     WEB_FLAG_FIELDS,
 )
 
-MatchVia = str  # "mst" | "frame_pilot" | "ticker"
+MatchVia = str  # "mst" | "frame_pilot" | "ticker" | "listed_tax_id"
 
 
 class SurveyJoinError(ValueError):
@@ -127,6 +128,24 @@ def load_frame_tax_codes(path: Path | None) -> set[str]:
         return out
 
 
+def load_identity_tax_id_to_ticker(path: Path | None) -> dict[str, str]:
+    """Map identity ``tax_id`` → ticker. Missing file → empty map (no invent)."""
+    if path is None or not path.is_file():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    if not isinstance(data, list):
+        return {}
+    out: dict[str, str] = {}
+    for rec in data:
+        if not isinstance(rec, dict):
+            continue
+        tax_id = normalize_mst(rec.get("tax_id"))
+        ticker = normalize_ticker(rec.get("ticker"))
+        if tax_id and ticker:
+            out.setdefault(tax_id, ticker)
+    return out
+
+
 def index_cascade(records: Iterable[dict[str, Any]]) -> dict[str, dict[str, Any]]:
     """First record wins per normalized firm_id."""
     by_id: dict[str, dict[str, Any]] = {}
@@ -147,14 +166,20 @@ def match_cascade(
     ticker: str,
     cascade_by_id: dict[str, dict[str, Any]],
     frame_tax_codes: set[str],
+    tax_id_to_ticker: dict[str, str] | None = None,
 ) -> tuple[dict[str, Any] | None, MatchVia | None]:
-    """Match order: (1) survey MST == cascade.firm_id, (2) frame_pilot tax_code, (3) ticker.
+    """Match order: (1) MST == cascade.firm_id, (2) frame_pilot, (3) ticker,
+    (4) identity tax_id → listed ticker.
 
     Frame-pilot firms use tax_code as cascade ``firm_id``. When the MST is in
     ``frame_pilot.tax_code``, (2) maps that tax_code onto the cascade row and
     records ``web_match_via=frame_pilot`` (otherwise (1) would always win).
     In-frame but not in cascade → no website invented; fall through to ticker.
+    Listed cascade rows use ticker as ``firm_id``; (4) maps survey MST through
+    identity ``tax_id`` then ``cascade_by_id[ticker]`` as ``listed_tax_id``.
+    Unknown MST / missing identity / ticker not in cascade → unmatched.
     """
+    listed_map = tax_id_to_ticker or {}
     # (1) Direct cascade firm_id. Skip when the MST is a frame_pilot tax_code so
     # (2) can record web_match_via=frame_pilot (same row; tax_code IS firm_id).
     if mst and mst in cascade_by_id and mst not in frame_tax_codes:
@@ -165,6 +190,12 @@ def match_cascade(
             return mapped, "frame_pilot"
     if ticker and ticker in cascade_by_id:
         return cascade_by_id[ticker], "ticker"
+    if mst:
+        listed_ticker = listed_map.get(mst, "")
+        if listed_ticker:
+            mapped = cascade_by_id.get(listed_ticker)
+            if mapped is not None:
+                return mapped, "listed_tax_id"
     return None, None
 
 
@@ -338,6 +369,7 @@ def join_rows(
     survey_rows: list[dict[str, str]],
     cascade_records: list[dict[str, Any]],
     frame_tax_codes: set[str],
+    tax_id_to_ticker: dict[str, str] | None = None,
 ) -> list[dict[str, Any]]:
     cascade_by_id = index_cascade(cascade_records)
     joined: list[dict[str, Any]] = []
@@ -349,6 +381,7 @@ def join_rows(
             ticker=ticker,
             cascade_by_id=cascade_by_id,
             frame_tax_codes=frame_tax_codes,
+            tax_id_to_ticker=tax_id_to_ticker,
         )
         web_match = rec is not None
         web = web_flags_from_cascade(rec)
@@ -386,7 +419,7 @@ def summarize_join(
     frame_pilot_path: Path | None,
     frame_pilot_loaded: bool,
 ) -> dict[str, Any]:
-    via_counts = {"mst": 0, "frame_pilot": 0, "ticker": 0}
+    via_counts = {"mst": 0, "frame_pilot": 0, "ticker": 0, "listed_tax_id": 0}
     skip_reasons: dict[str, int] = {}
     disagree_counts = {f"disagree_{name}": 0 for name in WEB_FLAG_FIELDS}
     n_matched = 0
@@ -472,12 +505,14 @@ def join_survey(
     out_dir: Path,
     cascade_path: Path,
     frame_pilot_path: Path | None = None,
+    identity_path: Path | None = IDENTITY_28,
 ) -> dict[str, Any]:
     survey_rows = load_survey_csv(survey_path)
     cascade_records = load_cascade_jsonl(cascade_path)
     frame_loaded = frame_pilot_path is not None and frame_pilot_path.exists()
     frame_tax_codes = load_frame_tax_codes(frame_pilot_path)
-    rows = join_rows(survey_rows, cascade_records, frame_tax_codes)
+    tax_id_to_ticker = load_identity_tax_id_to_ticker(identity_path)
+    rows = join_rows(survey_rows, cascade_records, frame_tax_codes, tax_id_to_ticker)
     summary = summarize_join(
         rows,
         survey_path=survey_path,
