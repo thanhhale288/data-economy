@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## What this project is
 
-Research platform + web demo (website flags, crawlers, listed-firm tools). **Current human plan:** hand off / withdraw from the GVHD measurement topic — see **`docs/plan.md`**. Do not implement a full lab-report sprint unless the user explicitly stays on the topic.
+Research platform + web demo (website flags, crawlers, listed-firm tools). **Current human plan:** hand off / withdraw from the GVHD measurement topic — see **`docs/plan.md`**. One-pager to send GVHD: **`docs/lab/BAN-GIAO.md`**. Do not implement a full lab-report sprint unless the user explicitly stays on the topic.
 
 Before inventing formulas, industry codes, or sample companies, read **`docs/plan.md`**, then **`CONTEXT.md`**. Do not follow archived proposals (`docs/archive/proposal-v*.md`, `docs/archive/evol-1.md`) for current scope.
 

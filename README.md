@@ -46,7 +46,8 @@ docs/         plan.md, adr/, archive/
 
 | File | Dùng khi |
 |------|----------|
-| [`docs/plan.md`](./docs/plan.md) | Định hướng, backlog tháng 12, dàn ý báo cáo lab |
+| [`docs/plan.md`](./docs/plan.md) | Quyết định xin rút / bàn giao (không hoàn thiện lab, không backlog tháng 12) |
+| [`docs/lab/BAN-GIAO.md`](./docs/lab/BAN-GIAO.md) | Một trang gửi GVHD (xin rút / bàn giao) |
 | [`CONTEXT.md`](./CONTEXT.md) | Thuật ngữ domain (Digital VA / IIP = demo cũ) |
 | [`docs/adr/`](./docs/adr/) | Quyết định kiến trúc |
 | [`AGENTS.md`](./AGENTS.md) | Quy tắc cho AI agent |
@@ -66,7 +67,7 @@ Glossary người đọc: `docs/knowledge.md` (không dùng cho agent context).
 | Giai đoạn | Status |
 |-----------|--------|
 | Epic 1–5 (platform học kỳ) | Shipped — `docs/archive/plan-archive.md` |
-| **Đề tài lab (GVHD)** | **Xin rút / bàn giao** — `docs/plan.md` |
+| **Đề tài lab (GVHD)** | **Xin rút / bàn giao** — `docs/plan.md` · gửi cô: [`docs/lab/BAN-GIAO.md`](./docs/lab/BAN-GIAO.md) |
 
 ## Dev / agent
 
