@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import csv
 import json
 from pathlib import Path
 
@@ -29,6 +30,19 @@ def _survey(**overrides: str) -> dict[str, str]:
     row = {c: "" for c in SURVEY_COLUMNS}
     row.update(overrides)
     return row
+
+
+def _write_survey_csv(path: Path, rows: list[dict[str, str]]) -> None:
+    with path.open("w", encoding="utf-8", newline="") as f:
+        writer = csv.DictWriter(f, fieldnames=list(SURVEY_COLUMNS))
+        writer.writeheader()
+        for row in rows:
+            writer.writerow({c: row.get(c, "") for c in SURVEY_COLUMNS})
+
+
+SYNTHETIC_LISTED_MST = "0000000001"
+SYNTHETIC_LISTED_TICKER = "TEST"
+UNKNOWN_MST = "2222222222"
 
 
 def test_normalize_mst_strips_spaces_keeps_hyphen():
@@ -242,3 +256,149 @@ def test_fixture_survey_is_not_real_frame_pilot_rows():
     rows = load_survey_csv(FIXTURES / "survey.csv")
     assert len(rows) == 3
     assert {r["ticker"].strip() for r in rows} <= {"", "TEST"}
+
+
+def test_mst_only_joins_listed_via_identity_tax_id(tmp_path: Path):
+    identity = tmp_path / "identity.json"
+    identity.write_text(
+        json.dumps(
+            [
+                {
+                    "ticker": SYNTHETIC_LISTED_TICKER,
+                    "tax_id": f" {SYNTHETIC_LISTED_MST} ",
+                }
+            ]
+        ),
+        encoding="utf-8",
+    )
+    cascade = tmp_path / "cascade.jsonl"
+    cascade.write_text(
+        json.dumps(
+            {
+                "firm_id": SYNTHETIC_LISTED_TICKER,
+                "source_cohort": "listed28",
+                "website_url": "https://test.example",
+                "fetch_ok": True,
+                "tier1": {"has_order_cart": False},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    survey = tmp_path / "survey.csv"
+    _write_survey_csv(
+        survey,
+        [_survey(mst=SYNTHETIC_LISTED_MST, company_name="Synthetic listed MST only")],
+    )
+    survey_text = survey.read_text(encoding="utf-8")
+    assert "0101526991" not in survey_text
+    assert "RAL" not in survey_text
+
+    result = join_survey(
+        survey_path=survey,
+        out_dir=tmp_path / "out",
+        cascade_path=cascade,
+        identity_path=identity,
+    )
+    row = result["rows"][0]
+    assert row["web_match"] is True
+    assert row["web_match_via"] == "listed_tax_id"
+    assert row["web_firm_id"] == SYNTHETIC_LISTED_TICKER
+    assert row["ticker_normalized"] is None
+    assert result["summary"]["n_matched_via"]["listed_tax_id"] == 1
+
+
+def test_unknown_mst_unmatched_even_when_identity_present(tmp_path: Path):
+    identity = tmp_path / "identity.json"
+    identity.write_text(
+        json.dumps([{"ticker": SYNTHETIC_LISTED_TICKER, "tax_id": SYNTHETIC_LISTED_MST}]),
+        encoding="utf-8",
+    )
+    cascade = tmp_path / "cascade.jsonl"
+    cascade.write_text(
+        json.dumps(
+            {
+                "firm_id": SYNTHETIC_LISTED_TICKER,
+                "source_cohort": "listed28",
+                "website_url": "https://test.example",
+                "fetch_ok": True,
+                "tier1": {},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    survey = tmp_path / "survey.csv"
+    _write_survey_csv(survey, [_survey(mst=UNKNOWN_MST, company_name="Unknown MST")])
+    assert "0101526991" not in survey.read_text(encoding="utf-8")
+
+    result = join_survey(
+        survey_path=survey,
+        out_dir=tmp_path / "out",
+        cascade_path=cascade,
+        identity_path=identity,
+    )
+    row = result["rows"][0]
+    assert row["web_match"] is False
+    assert row["web_match_via"] is None
+    assert row["web_firm_id"] is None
+    assert row["web_website_url"] is None
+    assert row["web_has_website"] is None
+
+
+def test_missing_identity_file_skips_listed_tax_id(tmp_path: Path):
+    cascade = tmp_path / "cascade.jsonl"
+    cascade.write_text(
+        json.dumps(
+            {
+                "firm_id": SYNTHETIC_LISTED_TICKER,
+                "source_cohort": "listed28",
+                "website_url": "https://test.example",
+                "fetch_ok": True,
+                "tier1": {},
+            }
+        )
+        + "\n",
+        encoding="utf-8",
+    )
+    survey = tmp_path / "survey.csv"
+    _write_survey_csv(survey, [_survey(mst=SYNTHETIC_LISTED_MST)])
+    result = join_survey(
+        survey_path=survey,
+        out_dir=tmp_path / "out",
+        cascade_path=cascade,
+        identity_path=tmp_path / "missing_identity.json",
+    )
+    row = result["rows"][0]
+    assert row["web_match"] is False
+    assert row["web_match_via"] is None
+    assert row["web_website_url"] is None
+
+
+def test_ticker_wins_over_listed_tax_id():
+    cascade = index_cascade(
+        [
+            {
+                "firm_id": SYNTHETIC_LISTED_TICKER,
+                "source_cohort": "listed28",
+                "fetch_ok": True,
+                "tier1": {},
+            },
+            {
+                "firm_id": "OTHR",
+                "source_cohort": "listed28",
+                "fetch_ok": True,
+                "tier1": {},
+            },
+        ]
+    )
+    rec, via = match_cascade(
+        mst=SYNTHETIC_LISTED_MST,
+        ticker="OTHR",
+        cascade_by_id=cascade,
+        frame_tax_codes=set(),
+        tax_id_to_ticker={SYNTHETIC_LISTED_MST: SYNTHETIC_LISTED_TICKER},
+    )
+    assert via == "ticker"
+    assert rec is not None
+    assert rec["firm_id"] == "OTHR"

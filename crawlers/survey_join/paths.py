@@ -9,6 +9,7 @@ ROOT = PACKAGE_DIR.parents[1]
 
 CASCADE_JSONL = ROOT / "data" / "processed" / "extraction_cascade" / "indicators_raw.jsonl"
 FRAME_PILOT_CSV = ROOT / "data" / "raw" / "frame_pilot" / "frame_pilot.csv"
+IDENTITY_28 = ROOT / "data" / "raw" / "url_finder" / "identity_28.json"
 # Leftover demo financials — survey_join must never read this for DT × %.
 SEED_COMPANIES_JSON = ROOT / "data" / "seeds" / "companies.json"
 

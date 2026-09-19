@@ -434,7 +434,15 @@ mst,company_name,vsic_4digit,ticker,website_url_self_report,has_website,has_prod
 
 ### 6.2. Recode → schema khóa
 
-1. Đổi tên cột theo mục 5.
+Có thể chạy:
+
+```bash
+PYTHONPATH=. python3 -m crawlers.survey_join recode --src form_export.csv --dest locked.csv
+```
+
+(thay cho bước đổi tên cột tay). Dòng thiếu “có website” / `has_website` không hợp lệ sẽ **bỏ**, không bịa cờ.
+
+1. Đổi tên cột theo mục 5 (hoặc dùng lệnh recode trên).
 2. Recode Có/Không/Không biết → `true`/`false`/`unknown`.
 3. Câu 13 → đúng một mã bin; không để nguyên chữ tiếng Việt.
 4. Câu 9 → token viết thường, cách nhau bằng `,`.
