@@ -4,8 +4,7 @@ How the engineering skills should consume this repo's domain documentation when 
 
 ## Before exploring, read these
 
-- **`docs/plan.md`** — source of truth: postpone sending the GVHD withdraw; remaining surface work vs still blocked (do not treat this as a “finish the lab by December” sprint; do not pretend the research is complete)
-- **`docs/lab/BAN-GIAO.md`** — handoff one-pager **draft**; do not send to GVHD while plan says postponed
+- **`docs/plan.md`** — source of truth: remaining surface work vs still blocked (do not treat this as a “finish the lab by December” sprint; do not pretend the research is complete)
 - **`docs/lab/KHAO-SAT-DOANH-NGHIEP.md`** — survey question draft (not a sent form)
 - **`docs/lab/DAN-Y-BAO-CAO.md`** — report outline (not a 25-page submission)
 - **`docs/lab/KHOP-FORM-WEB.md`** — survey↔web join + DT×% on fixtures only
@@ -20,8 +19,7 @@ If any of these files don't exist, **proceed silently**. Don't flag their absenc
 
 | File | Role |
 |------|------|
-| `docs/plan.md` | Source of truth: postponed send; remaining surface vs blocked |
-| `docs/lab/BAN-GIAO.md` | Handoff draft — do not send while postponed |
+| `docs/plan.md` | Source of truth: remaining surface vs blocked |
 | `docs/lab/KHAO-SAT-DOANH-NGHIEP.md` | Survey question draft |
 | `docs/lab/DAN-Y-BAO-CAO.md` | Report outline (not a 25-page lab report) |
 | `docs/lab/KHOP-FORM-WEB.md` | Survey↔web join + DT×% (fixtures only) |
