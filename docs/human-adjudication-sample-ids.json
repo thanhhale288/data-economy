@@ -1,0 +1,288 @@
+[
+  {
+    "url": "https://sonha.com.vn",
+    "firm_ids": [
+      "106069682"
+    ],
+    "stratum": "B",
+    "row_numbers": [
+      4
+    ],
+    "title": "Son Hà",
+    "domain": "sonha.com.vn"
+  },
+  {
+    "url": "https://lugia.com.vn",
+    "firm_ids": [
+      "318193000"
+    ],
+    "stratum": "B",
+    "row_numbers": [
+      48
+    ],
+    "title": "Lugia",
+    "domain": "lugia.com.vn"
+  },
+  {
+    "url": "https://qns.com.vn",
+    "firm_ids": [
+      "QNS"
+    ],
+    "stratum": "B",
+    "row_numbers": [
+      83
+    ],
+    "title": "QNS",
+    "domain": "qns.com.vn"
+  },
+  {
+    "url": "https://hungphat.com.vn",
+    "firm_ids": [
+      "108501682",
+      "0309129626-001",
+      "0314342318-001"
+    ],
+    "stratum": "A",
+    "row_numbers": [
+      13,
+      24,
+      42
+    ],
+    "title": "Hưng Phát",
+    "domain": "hungphat.com.vn"
+  },
+  {
+    "url": "https://manhthang.com.vn",
+    "firm_ids": [
+      "0304531098-001",
+      "0304531098-002"
+    ],
+    "stratum": "A",
+    "row_numbers": [
+      20,
+      21
+    ],
+    "title": "Mạnh Thắng",
+    "domain": "manhthang.com.vn"
+  },
+  {
+    "url": "https://anphatbioplastics.com",
+    "firm_ids": [
+      "AAA"
+    ],
+    "stratum": "A",
+    "row_numbers": [
+      64
+    ],
+    "title": "An Phát Bioplastics",
+    "domain": "anphatbioplastics.com"
+  },
+  {
+    "url": "https://biendong.com.vn",
+    "firm_ids": [
+      "601171842"
+    ],
+    "stratum": "C",
+    "row_numbers": [
+      53
+    ],
+    "title": "Biển Đông",
+    "domain": "biendong.com.vn"
+  },
+  {
+    "url": "https://dinhvu.com.vn",
+    "firm_ids": [
+      "110454750"
+    ],
+    "stratum": "C",
+    "row_numbers": [
+      15
+    ],
+    "title": "Đình Vũ",
+    "domain": "dinhvu.com.vn"
+  },
+  {
+    "url": "https://hopthanh.com.vn",
+    "firm_ids": [
+      "106898305"
+    ],
+    "stratum": "D",
+    "row_numbers": [
+      7
+    ],
+    "title": "Hợp Thành",
+    "domain": "hopthanh.com.vn"
+  },
+  {
+    "url": "https://datphat.vn",
+    "firm_ids": [
+      "201133137"
+    ],
+    "stratum": "D",
+    "row_numbers": [
+      18
+    ],
+    "title": "Đạt Phát",
+    "domain": "datphat.vn"
+  },
+  {
+    "url": "https://annhon.com",
+    "firm_ids": [
+      "0304152188-003"
+    ],
+    "stratum": "D",
+    "row_numbers": [
+      19
+    ],
+    "title": "An Nhơn (parking)",
+    "domain": "annhon.com"
+  },
+  {
+    "url": "https://giaiphong.com.vn",
+    "firm_ids": [
+      "105494187",
+      "1801488750"
+    ],
+    "stratum": "E",
+    "row_numbers": [
+      3,
+      62
+    ],
+    "title": "Giải Phóng",
+    "domain": "giaiphong.com.vn"
+  },
+  {
+    "url": "https://thuongmaidichvu.com.vn",
+    "firm_ids": [
+      "105196007",
+      "312761024"
+    ],
+    "stratum": "E",
+    "row_numbers": [
+      2,
+      34
+    ],
+    "title": "Thương mại Dịch vụ",
+    "domain": "thuongmaidichvu.com.vn"
+  },
+  {
+    "url": "https://fpt.com.vn",
+    "firm_ids": [
+      "FPT"
+    ],
+    "stratum": "E",
+    "row_numbers": [
+      74
+    ],
+    "title": "FPT",
+    "domain": "fpt.com.vn"
+  },
+  {
+    "url": "https://kimlong.vn",
+    "firm_ids": [
+      "106459280"
+    ],
+    "stratum": "F",
+    "row_numbers": [
+      6
+    ],
+    "title": "Kim Long",
+    "domain": "kimlong.vn"
+  },
+  {
+    "url": "https://dienquang.com",
+    "firm_ids": [
+      "DQC"
+    ],
+    "stratum": "F",
+    "row_numbers": [
+      73
+    ],
+    "title": "Điện Quang",
+    "domain": "dienquang.com"
+  },
+  {
+    "url": "https://vinamilk.com.vn",
+    "firm_ids": [
+      "VNM"
+    ],
+    "stratum": "F",
+    "row_numbers": [
+      90
+    ],
+    "title": "Vinamilk",
+    "domain": "vinamilk.com.vn"
+  },
+  {
+    "url": "https://ducthinh.com",
+    "firm_ids": [
+      "313063960"
+    ],
+    "stratum": "G",
+    "row_numbers": [
+      36
+    ],
+    "title": "Đức Thịnh",
+    "domain": "ducthinh.com"
+  },
+  {
+    "url": "https://taya.com.vn",
+    "firm_ids": [
+      "TYA"
+    ],
+    "stratum": "G",
+    "row_numbers": [
+      88
+    ],
+    "title": "Taya",
+    "domain": "taya.com.vn"
+  },
+  {
+    "url": "https://rangdong.com.vn",
+    "firm_ids": [
+      "RAL"
+    ],
+    "stratum": "H",
+    "row_numbers": [
+      84
+    ],
+    "title": "Rạng Đông",
+    "domain": "rangdong.com.vn"
+  },
+  {
+    "url": "https://ducgiangchem.vn",
+    "firm_ids": [
+      "DGC"
+    ],
+    "stratum": "H",
+    "row_numbers": [
+      71
+    ],
+    "title": "Đức Giang",
+    "domain": "ducgiangchem.vn"
+  },
+  {
+    "url": "https://www.tienlengroup.vn",
+    "firm_ids": [
+      "TLH"
+    ],
+    "stratum": "I",
+    "row_numbers": [
+      87
+    ],
+    "title": "Tiến Lên Group",
+    "domain": "tienlengroup.vn"
+  },
+  {
+    "url": "https://anha.vn",
+    "firm_ids": [
+      "313344351"
+    ],
+    "stratum": "I",
+    "row_numbers": [
+      40
+    ],
+    "title": "An Hà",
+    "domain": "anha.vn"
+  }
+]
