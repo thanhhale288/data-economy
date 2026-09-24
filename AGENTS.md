@@ -4,7 +4,7 @@ Guidance for AI coding agents working in this repository.
 
 ## What this project is
 
-Research platform + web demo (website flags, crawlers, listed-firm tools). **Current human plan:** hand off / withdraw from the GVHD measurement topic — see **`docs/plan.md`**. Do not implement a full lab-report sprint unless the user explicitly stays on the topic.
+Research platform + web demo (website flags, crawlers, listed-firm tools). **Current human plan:** finish remaining **surface** work (survey draft, 6-flag label frame, MST join on fixtures, report outline) — see **`docs/plan.md`**. Do not run a “finish the thesis by December” sprint. Do not pretend the research is complete.
 
 Before inventing formulas, industry codes, or sample companies, read **`docs/plan.md`**, then **`CONTEXT.md`**. Do not follow archived proposals (`docs/archive/proposal-v*.md`, `docs/archive/evol-1.md`) for current scope.
 
@@ -30,8 +30,8 @@ pipeline/    cleaning/, features/, dags/
 ml/          models/, evaluation/
 frontend/    React dashboard
 data/        mappings/, seeds/, models/, raw/
-docs/        plan.md (source of truth), agents/, adr/, archive/
-.scratch/    archive/ only (historical handoffs); active backlog = docs/plan.md
+docs/        plan.md (source of truth), lab/ (KHAO-SAT; DAN-Y; KHOP-FORM), agents/, adr/, archive/
+.scratch/    archive/ only (historical handoffs); active backlog = docs/plan.md §3 surface items
 .agents/     installed agent skills (mattpocock/skills)
 ```
 
@@ -72,6 +72,13 @@ Default roles: `needs-triage`, `needs-info`, `ready-for-agent`, `ready-for-human
 ### Domain docs
 
 Single-context: `docs/plan.md` + root `CONTEXT.md` + `docs/adr/`. See `docs/agents/domain.md`.
+
+| File | Role |
+|------|------|
+| `docs/plan.md` | Source of truth: remaining surface vs blocked |
+| `docs/lab/KHAO-SAT-DOANH-NGHIEP.md` | Survey question draft |
+| `docs/lab/DAN-Y-BAO-CAO.md` | Report outline (not a 25-page lab report) |
+| `docs/lab/KHOP-FORM-WEB.md` | Survey↔web join + DT×% (fixtures only) |
 
 ### GitHub workflow
 

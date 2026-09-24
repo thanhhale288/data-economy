@@ -4,13 +4,25 @@ How the engineering skills should consume this repo's domain documentation when 
 
 ## Before exploring, read these
 
-- **`docs/plan.md`** — current lab direction (website flags + survey %; Japan in appendix)
+- **`docs/plan.md`** — source of truth: remaining surface work vs still blocked (do not treat this as a “finish the lab by December” sprint; do not pretend the research is complete)
+- **`docs/lab/KHAO-SAT-DOANH-NGHIEP.md`** — survey question draft (not a sent form)
+- **`docs/lab/DAN-Y-BAO-CAO.md`** — report outline (not a 25-page submission)
+- **`docs/lab/KHOP-FORM-WEB.md`** — survey↔web join + DT×% on fixtures only
 - **`CONTEXT.md`** at the repo root — terms; Digital VA / IIP forecast are leftover demo, not lab KPIs
 - **`docs/adr/`** — read ADRs that touch the area you're about to work in
 
 Archived research drafts: `docs/archive/proposal-v*.md`, `docs/archive/evol-1.md` — do not use for current scope.
 
 If any of these files don't exist, **proceed silently**. Don't flag their absence; don't suggest creating them upfront. The `/domain-modeling` skill (reached via `/grill-with-docs` and `/improve-codebase-architecture`) creates them lazily when terms or decisions actually get resolved.
+
+## Docs (current scope)
+
+| File | Role |
+|------|------|
+| `docs/plan.md` | Source of truth: remaining surface vs blocked |
+| `docs/lab/KHAO-SAT-DOANH-NGHIEP.md` | Survey question draft |
+| `docs/lab/DAN-Y-BAO-CAO.md` | Report outline (not a 25-page lab report) |
+| `docs/lab/KHOP-FORM-WEB.md` | Survey↔web join + DT×% (fixtures only) |
 
 ## File structure
 
@@ -21,6 +33,7 @@ Single-context repo:
 ├── CONTEXT.md
 ├── docs/
 │   ├── plan.md
+│   ├── lab/
 │   ├── adr/
 │   └── archive/
 ├── backend/
